@@ -695,6 +695,36 @@ input:-webkit-autofill:focus{
 .app .perm-acc .perm-acc-t{flex:1; min-width:0; display:flex; align-items:center; background:transparent; border:0; padding:0; text-align:left; cursor:pointer; color:inherit; font:inherit}
 .app .perm-acc .perm-acc-a{display:flex; align-items:center; gap:var(--s05); flex:none}
 .app .perm-acc .perm-acc-c{flex:none; display:grid; place-items:center; background:transparent; border:0; padding:0; cursor:pointer; color:inherit}
+/* CREATE ROLE PERMISSIONS (Maryam, 12 Oct 2026, the Create Role story): module groups
+   are collapsed `<details>` rows — name, live "n of m" count, chevron — with the
+   group's actions underneath; sensitive and reserved permissions are flat lists; the
+   reserved two are locked (disabled box, lock glyph). `crp-` namespace: `.rp-*`
+   already ships in the DS. */
+.app .crp-lede{display:block; margin:var(--s02) 0 var(--s04)}
+.app .crp-list{border-top:1px solid var(--rule)}
+.app .crp-g{border-bottom:1px solid var(--rule)}
+.app .crp-h{display:flex; align-items:center; gap:var(--s04); padding:var(--s04) 0; cursor:pointer; list-style:none}
+.app .crp-h::-webkit-details-marker{display:none}
+.app .crp-n{flex:1; min-width:0; font-size:var(--t-body-size); color:var(--text-primary)}
+.app .crp-ct{color:var(--text-secondary)}
+.app .crp-ct.on{color:var(--accent-text)}
+.app .crp-chev{width:18px; height:18px; flex:none; transition:transform .15s}
+.app .crp-g[open] .crp-chev{transform:rotate(180deg)}
+.app .crp-b{display:flex; flex-wrap:wrap; gap:var(--s02) var(--s06); padding:0 0 var(--s04)}
+.app .crp-flat{display:flex; flex-direction:column; gap:var(--s02)}
+.app .crp-sh{display:block; margin-top:var(--s06); margin-bottom:var(--s03)}
+.app .crp-o{position:relative; display:flex; align-items:center; gap:var(--s04); padding:var(--s02) 0; cursor:pointer}
+.app .crp-in{position:absolute; opacity:0; width:1px; height:1px; margin:0; pointer-events:none}
+.app .crp-ck{width:22px; height:22px; flex:none; color:var(--border-strong-01)}
+.app .crp-ck-on{display:none; color:var(--accent)}
+.app .crp-in:checked ~ .crp-ck-off{display:none}
+.app .crp-in:checked ~ .crp-ck-on{display:block}
+.app .crp-in:focus-visible ~ .crp-ck{outline:2px solid var(--accent); outline-offset:1px; border-radius:6px}
+.app .crp-t{font-size:var(--t-body-size); line-height:var(--t-compact-lh); color:var(--text-primary)}
+.app .crp-lock{cursor:not-allowed}
+.app .crp-lock .crp-ck{color:var(--gray-20)}
+.app .crp-lock .crp-t{color:var(--text-secondary)}
+.app .crp-lk{width:16px; height:16px; margin-left:auto; color:var(--text-secondary); flex:none}
 /* Sensitive / Reserved "Governs" tables: the Permission is the anchor column, the
    Governs prose wraps freely and reads in the description grey. */
 .app .perm-gov td:last-child{color:var(--text-secondary);white-space:normal}
@@ -1843,49 +1873,50 @@ const ROLE_BY_K={}; ROLES.forEach(r => ROLE_BY_K[r.k]=r);
 
 /* ══ EPIC 4 — ROLES & PERMISSIONS (the story's permission model) ═════════════
    Rebuilt to the user-stories shape (Maryam, 24 Sep 2026): a Module × Action
-   matrix (12 modules × View/Create/Edit/Delete, restricted per module), ten
+   matrix (14 modules × View/Create/Edit/Delete, restricted per module), eight
    named SENSITIVE permissions of their own, and two RESERVED-to-Super-Admin
    rows. Screens-only — there is no runtime `can()` gate in this single-Super-
    Admin prototype. This model drives the Roles page only; the older CAPS/MATRIX
    (the Program/Business wall, the staff-detail capability chips) is a separate
    SA-journey surface and is left intact. A permission key is `module:action`
    for a module action, or the bare key for a sensitive/reserved one. */
-/* The action set per module is EXACTLY the Permission Catalogue (story 4.1): a
-   dash in the catalogue means the permission does not exist, so it is not in the
-   list and draws no matrix row. Notes from the catalogue:
-   - Levelling carries View only — every level decision is made under the
-     sensitive Approve candidate level.
-   - Marketplace / Interviews carry View + Edit only (no Create, no Delete).
-   - Cohorts carries no Delete — an unwanted cohort is cancelled through
-     intervention (7.6) and stays on the list as Cancelled.
-   - Users carries no Delete — deleting an external account is governed by the
-     sensitive Accounts: Delete.
-   - Finance carries no Create or Delete — discount codes are created under
-     Change fee, refunds under Approve refund. */
+/* THE MODULE SET AND ITS ACTIONS ARE THE CREATE ROLE STORY'S (Maryam, 12 Oct 2026,
+   "align our create role form with this user story"). Modules in NAVIGATION ORDER:
+   Dashboard, Staff, Users, Roles, Levelling, Marketplace, Cohorts, Courses,
+   Interviews, Support Requests, Finance, Audit Log, Onboarding Questions, Settings.
+   Every module offers View / Create / Edit / Delete EXCEPT the six the story names:
+   Dashboard View only · Audit Log View only · Onboarding Questions View + Edit ·
+   Settings View + Edit · Courses View + Create + Edit · Support Requests View + Edit.
+   This SUPERSEDES the 24 Sep story-4.1 catalogue (Users no Delete, Levelling View
+   only, Marketplace/Interviews View + Edit, Cohorts no Delete, Finance View + Edit),
+   and adds Courses + Support Requests. One list, so the Create Role form and the
+   per-role grids below always show the same matrix. */
 const PERM_MODULES = [
   ['dashboard', 'Dashboard', ['view']],
   ['staff', 'Staff', ['view', 'create', 'edit', 'delete']],
-  ['users', 'Users', ['view', 'create', 'edit']],
+  ['users', 'Users', ['view', 'create', 'edit', 'delete']],
   ['roles', 'Roles', ['view', 'create', 'edit', 'delete']],
-  ['levelling', 'Levelling', ['view']],
-  ['marketplace', 'Marketplace', ['view', 'edit']],
-  ['cohorts', 'Cohorts', ['view', 'create', 'edit']],
-  ['interviews', 'Interviews', ['view', 'edit']],
-  ['finance', 'Finance', ['view', 'edit']],
+  ['levelling', 'Levelling', ['view', 'create', 'edit', 'delete']],
+  ['marketplace', 'Marketplace', ['view', 'create', 'edit', 'delete']],
+  ['cohorts', 'Cohorts', ['view', 'create', 'edit', 'delete']],
+  ['courses', 'Courses', ['view', 'create', 'edit']],
+  ['interviews', 'Interviews', ['view', 'create', 'edit', 'delete']],
+  ['support', 'Support Requests', ['view', 'edit']],
+  ['finance', 'Finance', ['view', 'create', 'edit', 'delete']],
   ['audit', 'Audit Log', ['view']],
   ['onboarding', 'Onboarding Questions', ['view', 'edit']],
   ['settings', 'Settings', ['view', 'edit']]
 ];
 const PERM_ACT_LABEL = {view:'View', create:'Create', edit:'Edit', delete:'Delete'};
-/* Sensitive permissions (story 4.1) — each is a permission of its own rather than
-   folded into a module's Edit. The third element is the catalogue's "Governs". */
+/* Sensitive permissions — the Create Role story's EIGHT, in its order (12 Oct 2026;
+   Approve refund and Accounts: Delete are gone — the refunds module is retired and no
+   user is ever deleted, 7 Oct). Each is a permission of its own rather than folded into
+   a module's Edit. The third element is the catalogue's "Governs". */
 const PERM_SENSITIVE = [
   ['approvelevel', 'Approve candidate level', 'Approving, denying or overriding a level (5.2, 5.3), and Override level on the candidate detail (3.7)'],
   ['approvescore', 'Approve agent score', 'The quarterly Agent Score review'],
   ['releasepayout', 'Release payout', 'Releasing payouts, placing and clearing holds, early release, and escrow clearing inside 3.4 and 3.6'],
-  ['changefee', 'Change fee', 'Agent commission (3.2, 3.9 and the agent record), course price (7.1), discount codes, and partner invoices (9.8, with Finance: Edit)'],
-  ['approverefund', 'Approve refund', 'Refund decisions and retries, and refund clearing inside 3.4 and 3.6'],
-  ['accountsdelete', 'Accounts: Delete', 'Deleting an external account (3.6)'],
+  ['changefee', 'Change fee', 'Agent commission (3.2, 3.9 and the agent record), course price (7.1) and discount codes'],
   ['dataexport', 'Data: Export', 'Every export on the platform'],
   ['viewrawscore', 'View AI raw score', 'Seeing the AI raw score (3.7 and the levelling stories)'],
   ['setrange', 'Set assessment range', 'Setting an agent’s assessment range (3.8, 6.1)'],
@@ -4251,6 +4282,7 @@ function syncSettingsSave(){
 }
 function syncSheetSubmit(){
   syncSettingsSave();
+  if(S._fieldErr){ markFieldErr(S._fieldErr[0], S._fieldErr[1]); S._fieldErr = null; }
   /* a restored form draft sets `.value`; mirror it to the attribute so attribute-keyed
      CSS reveals (Add User's role sections) follow it after a re-render. */
   device.querySelectorAll('.adduser-form input[type="hidden"][data-f]').forEach(i => i.setAttribute('value', i.value));
@@ -4295,6 +4327,10 @@ function saveRecord(kind, id){
   const fields = typeof K.fields === 'function' ? K.fields(id === 'new' ? null : K.find(id)) : K.fields;
   const missing = fields.find(f => f.req && (vals[f.k] === '' || vals[f.k] == null || (Array.isArray(vals[f.k]) && !vals[f.k].length)));
   if(missing){ toast(`${missing.l} is required`, 'warn'); return 'keep'; }
+  /* a KIND may add rules beyond "required" (the role name's charset + uniqueness):
+     `validate(vals, id)` returns [fieldKey, message] or null; the message sits under
+     the field like every inline error and the sheet stays open. */
+  if(K.validate){ const bad = K.validate(vals, id === 'new' ? null : id); if(bad){ S._fieldErr = bad; return 'keep'; }   /* the 'keep' re-render rebuilds the sheet, so syncSheetSubmit stamps it after */ clearFieldErr('name'); }
   if(id === 'new'){
     const rec = K.create(vals);
     audit(K.createdAudit || `Added ${K.label}`, K.name(rec), K.mod, K.sev);
@@ -7011,19 +7047,77 @@ ACTIONS.dodelext = key => {
   S.clearNote = ''; S.clearNoteFor = null; S.clearRepl = {};
 };
 
+/* THE CREATE ROLE FORM (Maryam, 12 Oct 2026, off the Create Role user story).
+   Role name (1–50, letters/numbers/spaces, unique across every role built-in and
+   custom) · Description (1–255) · Permissions: this role's column of the matrix,
+   nothing granted when the form opens. The module groups are native `<details>` in
+   NAVIGATION ORDER (PERM_MODULES), each collapsed on open, each offering only its own
+   actions. Then the eight sensitive permissions, each grantable, then the two reserved
+   to Super Admin shown LOCKED (a disabled box with no `data-f`, so readForm never sees
+   it). Every grant is a native checkbox sharing `data-f="perms"`, so readForm collects
+   them as an array and nothing renders on a tick (trap 9); a group's "n of m" count is
+   refreshed in the input listener (`crpCount`). Edit keeps name + description only —
+   permissions are edited per role in the grids below. */
+/* THE CHECKBOX IS HUGEICONS (Maryam, 12 Oct 2026: "why you are not using the checkboxes
+   icons from hugeicons?"). The platform set is HugeIcons Stroke Rounded, so the box is the
+   official `Square` (unticked) and `Checkmark Square 02` (ticked), pasted verbatim from
+   @hugeicons/core-free-icons@4.3.5 on the 24 box — not the DS `.cbx .box` filled square.
+   The native input stays (visually hidden) so readForm and keyboard toggling are unchanged;
+   CSS shows one glyph or the other off `:checked`, no render. */
+const HI_SQUARE = '<path d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z" stroke="currentColor" stroke-width="1.5" fill="none"/>';
+const HI_SQUARE_CHECK = HI_SQUARE + '<path d="M8 12.5L10.5 15L16 9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill="none"/>';
+const crpMark = `<svg class="crp-ck crp-ck-off" viewBox="0 0 24 24" aria-hidden="true">${HI_SQUARE}</svg><svg class="crp-ck crp-ck-on" viewBox="0 0 24 24" aria-hidden="true">${HI_SQUARE_CHECK}</svg>`;
+const crpBox = (pk, label) => `<label class="crp-o"><input type="checkbox" class="crp-in" data-f="perms" value="${esc(pk)}">${crpMark}<span class="crp-t">${esc(label)}</span></label>`;
+function rolePermsField(){
+  const groups = PERM_MODULES.map(([m, label, acts]) => `
+    <details class="crp-g" data-crp="${esc(m)}">
+      <summary class="crp-h"><span class="crp-n">${esc(label)}</span><span class="crp-ct t-label" data-crpct="${esc(m)}">0 of ${acts.length}</span><svg class="crp-chev" viewBox="0 0 24 24" aria-hidden="true">${inner('chevDown')}</svg></summary>
+      <div class="crp-b">${acts.map(a => crpBox(m + ':' + a, PERM_ACT_LABEL[a])).join('')}</div>
+    </details>`).join('');
+  return `<div class="f crp">
+    <span class="lbl">Permissions</span>
+    <span class="t-desc crp-lede">Nothing is granted until you tick it.</span>
+    <div class="crp-list">${groups}</div>
+    <span class="lbl crp-sh">Sensitive permissions</span>
+    <div class="crp-flat">${PERM_SENSITIVE.map(([k, l]) => crpBox(k, l)).join('')}</div>
+    <span class="lbl crp-sh">Reserved to Super Admin</span>
+    <div class="crp-flat">${PERM_RESERVED.map(([, l]) => `<label class="crp-o crp-lock" title="Held by Super Admin only; it can’t be granted here."><input type="checkbox" class="crp-in" disabled>${crpMark}<span class="crp-t">${esc(l)}</span><svg class="crp-lk" viewBox="0 0 24 24" aria-hidden="true">${inner('locked')}</svg></label>`).join('')}</div>
+  </div>`;
+}
+function crpCount(){
+  device.querySelectorAll('.crp-g').forEach(g => {
+    const all = g.querySelectorAll('input[data-f="perms"]'), on = g.querySelectorAll('input[data-f="perms"]:checked');
+    const c = g.querySelector('[data-crpct]'); if(c){ c.textContent = `${on.length} of ${all.length}`; c.classList.toggle('on', on.length > 0); }
+  });
+}
+const ROLE_NAME_RE = /^[A-Za-z0-9 ]+$/;
 KINDS.role = {
   label:'role', mod:'Users & Roles', after:'users/roles',
   find: k => ROLE_BY_K[k], name: r => r.name,
   /* Every role added here is INTERNAL (Maryam, 19 Sep 2026: "the roles added by
      the Super Admin ... will be treated as the system's internal roles"), so the
      Kind field is gone and create/update fix `kind:'internal'`. */
-  fields: [
+  fields: rec => [
     {k:'name', l:'Role name', t:'text', req:1, max:50, ph:'e.g. Calibration Lead'},
-    {k:'desc', l:'Description', t:'textarea', req:1, max:255, ph:'One sentence a new admin can read'}
+    {k:'desc', l:'Description', t:'textarea', req:1, max:255, ph:'One sentence a new admin can read'},
+    ...(rec ? [] : [{k:'perms', t:'html', html: () => rolePermsField()}])
   ],
-  help:'A new custom role starts with no permissions. Grant them in the permission matrix below; the change is logged.',
+  /* name rules beyond "required": letters/numbers/spaces, and unique across every
+     role (case-insensitive, built-in and custom). Read by saveRecord's `validate`. */
+  validate: (v, id) => {
+    const n = String(v.name || '').trim();
+    if(!ROLE_NAME_RE.test(n)) return ['name', 'Use letters, numbers and spaces only.'];
+    if(ROLES.some(r => r.k !== id && r.name.toLowerCase() === n.toLowerCase())) return ['name', 'A role with this name already exists.'];
+    return null;
+  },
   okNew:'Create Role',
-  create: v => { const k = v.name.toLowerCase().replace(/[^a-z0-9]+/g, '') || newId('role', ROLES); const r = {k, name:v.name, short:v.name, kind:'internal', desc:v.desc}; ROLES.push(r); ROLE_BY_K[k] = r; MATRIX[k] = {}; PERMSET[k] = new Set(); return r; },
+  create: v => { let k = v.name.toLowerCase().replace(/[^a-z0-9]+/g, '');
+    if(!k || ROLE_BY_K[k]) k = newId('role', ROLES);   /* "Admin 2" must not land on the built-in admin2 key */
+    const r = {k, name:v.name, short:v.name, kind:'internal', desc:v.desc}; ROLES.push(r); ROLE_BY_K[k] = r; MATRIX[k] = {};
+    PERMSET[k] = new Set((v.perms || []).filter(pk => !permIsReserved(pk)));   /* the reserved two can never be granted */
+    return r; },
+  createdAudit:'Created role',
+  createdMsg: r => `Role created — ${r.name}, ${PERMSET[r.k].size} permission${PERMSET[r.k].size === 1 ? '' : 's'}`,
   update: (r, v) => { r.name = v.name; r.short = v.name; r.kind = 'internal'; r.desc = v.desc; },
   remove: r => { ROLES.splice(ROLES.indexOf(r), 1); delete ROLE_BY_K[r.k]; delete MATRIX[r.k]; delete PERMSET[r.k]; USERS.forEach(u => { u.roles = u.roles.filter(x => x !== r.k); }); },
   /* Every role except Super Admin is a custom role and can be deleted once it has
@@ -16355,6 +16449,8 @@ device.addEventListener('paste', e => {
    state and the page re-renders; `SRCH_FOCUS` puts the caret back. */
 device.addEventListener('input', e => {
   if(e.target.closest('.page [data-f]')) syncSettingsSave();
+  if(e.target.closest('.crp')) crpCount();
+  if(e.target.dataset && e.target.dataset.f === 'name' && device.querySelector('.sheet-f [data-act^="save:role:"]')) clearFieldErr('name');
   /* the set-password checklist ticks live as the rules are met (no render, trap 9). */
   if(e.target.id === 'np'){ syncPwRules(); }
   /* the step-up confirm's Release/Delete/… button is disabled until the password is
