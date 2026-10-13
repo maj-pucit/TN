@@ -1391,12 +1391,12 @@ function dsScoreCard(g){
   const pct = nb ? Math.round((g.pts-prev)/(nb.need-prev)*100) : 100;
   return `<div class="score">
     <div class="score-top">
-      <div class="score-pts"><div class="l">Points</div><div class="n">${g.pts.toLocaleString()}</div></div>
-      <div class="score-rank"><div class="n"><img class="rank-mk" src="${AWARD['rank'+g.rank]}" alt="">${RANKS[g.rank-1].n}</div><div class="l">${g.badges} of 4 badges</div></div>
+      <div class="score-pts"><div class="l">Your Points</div><div class="n">${g.pts.toLocaleString()}</div></div>
+      <div class="score-rank"><div class="n"><img class="rank-mk" src="${AWARD['rank'+g.rank]}" alt="">${RANKS[g.rank-1].n}</div><div class="l">Badges: ${g.badges} of 4 earned</div></div>
     </div>
     ${nb?`<div class="score-next">
       <div class="pb-track"><div class="pb-fill" style="width:${pct}%"></div></div>
-      <div class="score-meta"><span>${(nb.need-g.pts).toLocaleString()} points to ${nb.n}</span><span>${pct}%</span></div>
+      <div class="score-meta"><span>${(nb.need-g.pts).toLocaleString()} points to go</span><span>${pct}% of the way to ${nb.n}</span></div>
     </div>`:''}
   </div>`;
 }

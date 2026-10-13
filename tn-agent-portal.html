@@ -36,7 +36,7 @@
      rule sweep clean on 21 screens, 84 screen-width combos with no overflow,
      zero thrown errors.
      ========================================================================== -->
-<link rel="stylesheet" href="design-system/talentnext-ds.css?b=0e1d3ba9">
+<link rel="stylesheet" href="design-system/talentnext-ds.css?b=ad5ea3cd">
 
 <style>
 /* ==========================================================================
@@ -156,6 +156,23 @@
 </style>
 
 <style>
+/* Upcoming interview page (Maryam, 13 Oct 2026): the two quiet card actions hug
+   their labels so the three buttons sit closer; the brief's sub-heading line;
+   the 90-day summary link is the platform blue; the summary modal's blocks. */
+.app .crow-a > .btn.iv-qbtn{min-width:0}
+.app .btn.ms-add{gap:var(--s02)}
+/* The options still to add: a checkbox list under the chips (Maryam, 13 Oct 2026). */
+.app .ms-pick{display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:var(--s04) var(--s06); margin-top:var(--s06)}
+.app .ms-opt{display:flex; align-items:center; gap:var(--s03); background:none; border:0; padding:0; font:inherit; color:var(--text-primary); cursor:pointer; text-align:left}
+.app .ms-opt svg{width:20px; height:20px; flex:none; color:var(--border-subtle-02)}
+.app .ms-opt.on svg{color:var(--accent)}
+.app .iv-brief-sub{display:block; color:var(--text-primary); margin-bottom:var(--s02)}
+.app .iv-sumlink{background:none; border:0; padding:0; font:inherit; color:var(--link); cursor:pointer; text-align:left}
+.app .clsum-b{margin-top:var(--s06)}
+.app .clsum-b h3{margin-bottom:var(--s03)}
+.app .clsum-b p{color:var(--text-secondary)}
+</style>
+<style>
 /* ==========================================================================
    INTERVIEW SCREEN — stack "Interview recording" and "Tal's read" (Maryam,
    22 Sep 2026: "both content should be below the heading, the Tal's read
@@ -171,6 +188,10 @@
   .app .sec:has(> .tal-eval){display:block}
   .app .sec:has(> .iv-rec) > .sec-h,
   .app .sec:has(> .tal-eval) > .sec-h{border-right:0; min-height:0; margin-bottom:var(--sec-h-gap); padding:0 var(--pad-x)}
+  /* Profile: Training module, Industries, Intents stack too (Maryam, 13 Oct 2026:
+     "the chips should be below the heading, the headings should be in one line"). */
+  .app .sec.sec-stack{display:block}
+  .app .sec.sec-stack > .sec-h{border-right:0; min-height:0; margin-bottom:var(--sec-h-gap); padding:0 var(--pad-x)}
 }
 /* Tal's read paragraph runs full width (Maryam, 22 Sep 2026). The DS caps BOTH
    `.ai-body` and `.ai-body p` at 68ch (the reading measure) and lifts them only
@@ -307,7 +328,7 @@
        somebody choosing a stage would want it. -->
 </div>
 
-<script src="design-system/talentnext-ds.js?b=0e1d3ba9"></script>
+<script src="design-system/talentnext-ds.js?b=ad5ea3cd"></script>
 <script>
 /* ==========================================================================
    THE TALENT AGENT PORTAL
@@ -976,20 +997,12 @@ const IVS = [
       key phrases highlighted (Maryam, 6 Sep 2026: "extensive … some highlighting
       points … content highlights"). Authored placeholder in the shape a real
       transcript pass would fill: the `<b>` phrases take Tal's text ramp (§70). */
-   talEval:`<p>Tal suggests <b>Explorer – E3</b>. On the transcript Sofia reads as a
-       <b>planner, not an announcer</b>: specific, evidenced delegation and one clean
-       handover, thinner on the conversations she starts herself. What earns E3: two
-       delegation examples with <b>named owners and checkpoints</b>, and a <b>planned
-       handover of the vendor review</b> described in enough detail to show a designed
-       handoff, not a declared one. She talks about her team of four in specifics, not
-       generalities. What holds it below E4: every hard-conversation example was <b>one
-       she was handed, not one she opened</b>: no evidence yet of naming a problem before
-       it became urgent, or of asking for what she needs. Ask in the room: one conflict
-       she started, and how it landed. A real outcome there is what would put <b>E4</b>
-       on the table.</p>`,
-   seedStrength:'Plans handovers rather than announcing them. She described handing over the vendor review in enough detail to show a plan, not a headline. Talks about her team of four in specifics.',
-   seedGrowth:'Hard conversations she has to open herself, and asking for what she needs before it is urgent.',
-   seedWhy:'E3 matches the delegation she evidenced: a planned handover of the vendor review, described in specifics. Held below E4 because the hard-conversation examples were ones she was handed, not ones she opened.'},
+   talEval:`<p>Tal suggests <b>Explorer – E3</b>. The transcript presents Sofia as a <b>planner rather than an announcer</b>: she gives specific, evidence-based examples of delegation and describes one well-planned handover, but offers less evidence of initiating difficult conversations herself.</p>
+       <p class="mt5">What supports E3: Two delegation examples with <b>named owners and checkpoints</b>, plus a <b>detailed plan for handing over the vendor review</b>. She discusses her team of four with specific examples rather than generalities.</p>
+       <p class="mt5">What holds her below E4: Her examples of difficult conversations were <b>situations she was brought into</b>, rather than ones she initiated. There is not yet evidence of addressing problems before they become urgent or asking for what she needs. Ask her about a conflict she initiated and how it turned out. A concrete outcome could support consideration for <b>E4</b>.</p>`,
+   seedStrength:'Plans handovers rather than simply announcing them. Described the vendor review handover in detail and gave specific examples of managing her team of four.',
+   seedGrowth:'Initiating difficult conversations and asking for support before problems become urgent.',
+   seedWhy:'E3 reflects Sofia’s demonstrated delegation skills, including a detailed plan for handing over the vendor review. E4 is not yet supported because her examples of difficult conversations involved situations she was asked to handle, rather than ones she initiated.', pr:['she','her','her']},
 
   /* FIVE MORE AWAITING EVALUATION (Maryam, 7 Sep 2026: "add 4-5 more evaluations
      here, this feels very empty"). The Evaluations tab was one row in a tall
@@ -1511,6 +1524,16 @@ const chipOf = s => {
        : n < 7 ? WD_S[wdOf(s.y, s.m, s.d)]
        : `${WD_S[wdOf(s.y, s.m, s.d)]} ${s.d}`;
 };
+/* The Interviews diary column spells the day out (Maryam, 13 Oct 2026):
+   "Monday", "Thursday, 27th". */
+const ordSfx = d => d + ((d % 100 >= 11 && d % 100 <= 13) ? 'th' : ({1:'st',2:'nd',3:'rd'}[d % 10] || 'th'));
+const chipLong = s => {
+  const n = daysOut(s);
+  return n === 0 ? 'Today' : n === 1 ? 'Tomorrow'
+       : n < 7 ? WD_L[wdOf(s.y, s.m, s.d)]
+       : `${WD_L[wdOf(s.y, s.m, s.d)]}, ${ordSfx(s.d)}`;
+};
+const kindLabel = k => k.replace(/^First interview$/i, 'First Interview');
 const longDate = s => `${WD_L[wdOf(s.y, s.m, s.d)]} ${s.d} ${MON_L[s.m]}`;
 
 /* --------------------------------------------------------------------------
@@ -1635,7 +1658,7 @@ const PAGESUM = {
     setup:   'Approved on 12 June, and the agent role sits on the account you already had. Your public profile, your fee and payouts are all still open.',
     training:'Three of four lessons done, and calibration is Thursday 20 June with Derek Hale. Certification is the last thing before you can be booked.',
     live:    'Listed since Monday and nothing booked yet. Six slots are open over the next fortnight, and Friday at 5:00 PM is the first.',
-    working: 'Sofia Marek’s recording is waiting for you to confirm, which releases her pay, and Rafael Ortiz is Thursday at 3:00 PM. $204 is held for you in escrow.',
+    working: 'Sofia Marek’s recording needs your confirmation to release payment. Your next interview with Rafael Ortiz is Thursday at 3:00 PM. You have $204 awaiting release in escrow.',
     reviewed:'Nadia widened your range on 1 October, so you can assess E1 to B2 now. Two bookings arrived in the week since.'
   },
 
@@ -1673,7 +1696,9 @@ const PAGESUM = {
     _:       () => {
       const up = IVS.filter(x => ivSt(x) === 'next').length;
       const owed = IVS.filter(x => x.st === 'report').length;
-      return `${up} interviews are booked, the first tomorrow. ${owed} recording${owed === 1 ? '' : 's'} ${owed === 1 ? 'is' : 'are'} waiting to confirm, which is what releases your pay. ${f().ivs} finished in total.`;
+      /* The Awaiting tab has its own line (Maryam, 13 Oct 2026). */
+      if(S.tab === 'eval') return `You have ${owed} interview recommendation${owed === 1 ? '' : 's'} pending. Submit ${owed === 1 ? 'it' : 'them'} to release your payments.`;
+      return `You have ${up} upcoming interview${up === 1 ? '' : 's'}, starting tomorrow, and ${owed} recording${owed === 1 ? '' : 's'} awaiting confirmation to release your payments. You’ve completed ${f().ivs} interviews to date.`;
     }
   },
 
@@ -1685,7 +1710,7 @@ const PAGESUM = {
        this page too, and what the agent did to it was confirm the time. Where
        the fee sits at that moment is the one thing `S.req`'s note flags as not
        modelled, so the sentence states the half this portal can vouch for. */
-    if(ivSt(v) === 'next') return `${v.n} is ${v.day.split(' ')[0]} at ${v.time}, confirmed and in your diary. ${v.summary ? 'It’s a re-interview, so their 90-day summary is on the brief.' : 'They’re straight off the quiz, so no level exists yet.'}`;
+    if(ivSt(v) === 'next') return `${v.n}’s ${v.summary ? 're-interview' : 'interview'} is booked for ${v.day.split(' ')[0]} at ${v.time}. ${v.summary ? 'Their 90-day summary is attached to help you prepare.' : 'They’re straight off the quiz, so no level exists yet.'}`;
     if(v.st === 'report') return `You interviewed ${v.n} yesterday. Send your recommended level, with strengths, growth areas and your overall read. Tal has a read off the transcript to weigh against, and TalentNext confirms the final level after that.`;
     return `${v.n}, ${v.day.replace(/^\w+ /,'')}, levelled at ${v.level} by TalentNext off the transcript. Follow-up scored ${v.follow} and depth ${v.depth}.`;
   },
@@ -2088,8 +2113,8 @@ function head({title, sub, back, col, plate, noSum}){
 const statCell = (ic, label, value, note) => `
   <div class="stat">
     <span class="stat-ic">${I[ic]}</span>
-    <div class="stat-top"><div class="l">${label}</div><div class="n">${value}</div></div>
-    ${note ? `<div class="d">${note}</div>` : ''}
+    <div class="stat-top"><div class="l">${label}</div>${value === '' ? `<div class="d">${note}</div>` : `<div class="n">${value}</div>`}</div>
+    ${note && value !== '' ? `<div class="d">${note}</div>` : ''}
   </div>`;
 const stats = cells => `<div class="stats">${cells.map(c => statCell(...c)).join('')}</div>`;
 
@@ -3269,9 +3294,9 @@ const moneyCol = v => {
       <div class="prog">
         <div class="prog-top">
           <div><div class="prog-pct">${money(v.earned)}</div>
-            <div class="prog-l">earned this month</div></div>
+            <div class="prog-l">Earned This Month</div></div>
           <div class="prog-day"><div class="prog-dn">${money(v.escrow)}</div>
-            <div class="prog-l">held for you</div></div>
+            <div class="prog-l">Awaiting Release</div></div>
         </div>
         <div class="prog-seg">${rail.map((p, i) =>
           `<i class="${i < 4 ? 'done' : 'now'}" title="${p.n} &middot; ${p.s}"></i>`).join('')}</div>
@@ -3298,9 +3323,9 @@ const moneyCol = v => {
               beside "held for you", which is `held`'s own rule and is exactly
               the pair the deleted row printed as "$204 / of $255 in escrow". */''}
         <div class="prog-figs">
-          <span><i class="prog-ic">${I.video}</i><span class="prog-fb"><b>${v.month}</b> interviews</span></span>
-          <span><i class="prog-ic">${I.wallet}</i><span class="prog-fb"><b>${money(v.share)}</b> an interview</span></span>
-          <span><i class="prog-ic">${I.creditCard}</i><span class="prog-fb"><b>${money(held(v))}</b> in escrow</span></span>
+          <span><i class="prog-ic">${I.video}</i><span class="prog-fb"><b>${v.month}</b> Interviews</span></span>
+          <span><i class="prog-ic">${I.wallet}</i><span class="prog-fb"><b>${money(v.share)}</b> Interview Fee</span></span>
+          <span><i class="prog-ic">${I.creditCard}</i><span class="prog-fb"><b>${money(held(v))}</b> In Escrow</span></span>
         </div>
       </div>
     </div>
@@ -3677,12 +3702,12 @@ const reqRow = x => `<article class="rqc">
 const diary = (v, not) => IVS.filter(x => ivSt(x) === 'next' && x.id !== not)
   .map(x => ({x, s: slotForIv(x.id)})).filter(r => r.s)
   .map(({x, s}) => ({
-    ord: daysOut(s), chip: chipOf(s), time: x.time, id: x.id, i: x.i, iv: x.id,
+    ord: daysOut(s), chip: chipLong(s), time: x.time, id: x.id, i: x.i, iv: x.id,
     now: daysOut(s) === 0, go: 'interview',
-    t: `${x.kind} &middot; ${x.n}`,
-    d: `45 minutes, recorded &middot; ` + (x.summary
-        ? 'their 90-day summary is attached, so you read that first'
-        : `${money(v.fee)} already in escrow`)
+    t: x.n,
+    d: `${kindLabel(x.kind)} &middot; 45 minutes &middot; Recorded` + (x.summary
+        ? `</span><span class="cardrow-d">Review the candidate’s 90-day summary before the call.`
+        : ` &middot; ${money(v.fee)} in escrow`)
   })).sort((a, b) => a.ord - b.ord);
 
 const money = n => '$' + n.toLocaleString('en-US');
@@ -4119,13 +4144,13 @@ V.dashboard = v => {
      derived value with no reader is the same dead weight as a class nothing
      writes. `V.interviews`' `owed` is the surviving one. */
   return band(callCard({
-      title: 'Your next interview',
-      when: `${next.day.replace(/^\w+ /, '')}, ${next.time}`,
+      title: 'Upcoming Interview',
+      when: `${next.day.replace(/^\w+ /, '')} &middot; ${next.time}`,
       urgent: true,
       av: next.i, photo: AV.lena, name: next.n,
-      role: `${next.kind} &middot; ${next.band}`,
-      detail: `45 minutes, recorded &middot; ${money(v.fee)} already paid into escrow`,
-      actions: `<button class="btn btn-p btn-sm noic">Join the call ${I.video}</button>`
+      role: `${next.kind.replace(/\b\w/g, c => c.toUpperCase())} &middot; ${next.band.replace(', predicted by the quiz', ' track predicted by quiz')}`,
+      detail: `45 minutes &middot; Recorded &middot; ${money(v.fee)} in escrow`,
+      actions: `<button class="btn btn-p btn-sm noic">Join Call ${I.video}</button>`
     })) + `
     ${/* THE FOUR FIGURE CELLS AND THEIR RULE ARE GONE (Maryam, 2 Sep 2026:
           "remove the 4 blocks below the black card and the line below those 4
@@ -4224,8 +4249,8 @@ V.dashboard = v => {
           bare title was thin on and exactly what a Quick Action wants. Kept short
           enough to stay on one line at the two-card row's ~386px per card. */''}
     ${quickActions([
-      {ic: I.checkOutline, hue: 'ic-stand', go: 'interviews', tab: 'eval', t: 'Recordings To Confirm', d: 'Confirm to release your pay'},
-      {ic: I.video,       hue: 'ic-prep',  go: 'interviews', tab: 'next', t: 'Upcoming Interviews', d: 'Calls booked ahead'}
+      {ic: I.checkOutline, hue: 'ic-stand', go: 'interviews', tab: 'eval', t: 'Recordings to Confirm', d: 'For pending payment release.'},
+      {ic: I.video,       hue: 'ic-prep',  go: 'interviews', tab: 'next', t: 'Upcoming Interviews', d: 'View your scheduled interviews.'}
     ])}`;
 };
 
@@ -4354,9 +4379,9 @@ V.interviews = v => {
         model changes. See DESIGN.md §3 "Talent Agent — V1 model". */''}
   <section class="sec sec-cs">
     <div class="cs">
-      <button class="${S.tab === 'next' ? 'on' : ''}" data-tab="next">Upcoming</button>
-      <button class="${S.tab === 'eval' ? 'on' : ''}" data-tab="eval">To Confirm${owed.length ? ` (${owed.length})` : ''}</button>
-      <button class="${S.tab === 'done' ? 'on' : ''}" data-tab="done">Past Interviews</button>
+      <button class="${S.tab === 'next' ? 'on' : ''}" data-tab="next">Upcoming${v.busy ? ` ${IVS.filter(x => ivSt(x) === 'next').length}` : ''}</button>
+      <button class="${S.tab === 'eval' ? 'on' : ''}" data-tab="eval">Pending Recommendations${owed.length ? ` ${owed.length}` : ''}</button>
+      <button class="${S.tab === 'done' ? 'on' : ''}" data-tab="done">Past Interviews${v.busy ? ` ${f().ivs}` : ''}</button>
     </div>
   </section>
 
@@ -4382,21 +4407,21 @@ V.interviews = v => {
     const soon = dn[0] ? iv(dn[0].id) : null;
     return `
   ${soon ? callCard({
-      title: 'Your next interview',
-      when: `${dn[0].chip}, ${soon.time}`,
+      title: 'Your Next Interview',
+      when: `${dn[0].chip} &middot; ${soon.time}`,
       urgent: dn[0].ord <= 1,
       av: soon.i, photo: PHOTOS[soon.id], name: soon.n,
-      role: `${soon.kind} &middot; ${soon.band}`,
-      detail: `45 minutes, recorded &middot; ` + (soon.summary
-          ? 'their 90-day summary is attached, so you read that first'
-          : `${money(v.fee)} already in escrow`),
-      actions: `<button class="btn btn-p btn-sm noic">Join the call ${I.video}</button>`
+      role: `${kindLabel(soon.kind)} &middot; ${soon.band.replace(', predicted by the quiz', ' track predicted by quiz')}`,
+      detail: `45 minutes &middot; Recorded` + (soon.summary
+          ? ' &middot; Review the candidate’s 90-day summary before the call.'
+          : ` &middot; ${money(v.fee)} in escrow`),
+      actions: `<button class="btn btn-p btn-sm noic">Join Call ${I.video}</button>`
     }) : ''}
   <section class="sec">
     ${/* "Awaiting Decisions" — reports still owed — lives on the Past Interviews
           table now; this tab is the diary alone. Heading "Upcoming Calls", no
           standfirst (the "In the order they happen" line was dropped). */''}
-    ${aiHead(soon ? 'The rest of your week' : 'Upcoming Calls', '',
+    ${aiHead(soon ? 'Your Schedule' : 'Upcoming Calls', '',
       `<button class="btn btn-g btn-sm noic" data-go="availability">Availability ${I.arrowRight}</button>`)}
     <div class="tile-stack">
       ${diary(v, dn[0] && dn[0].id).map(bookedRow).join('')}
@@ -4411,10 +4436,10 @@ V.interviews = v => {
         read sits read-only; TalentNext sets the level after analysis. The row says
         "recording to confirm" so the queue reads as work to do, not history. */''}
   <section class="sec">
-    <div class="sec-h"><h2>Recordings To Confirm</h2></div>
+    <div class="sec-h"><h2>Pending Recommendations</h2></div>
     <div class="tile-stack">
       ${owed.map(x => faceRow(x,
-        `${x.kind} &middot; interviewed ${x.day.replace(/^\w+ /, '')} &middot; recording to confirm`,
+        `${kindLabel(x.kind)} &middot; ${x.day.replace(/^\w+ /, '').replace(/ (\w{3})\w*$/, ' $1')}`,
         'interview')).join('')}
     </div>
   </section>` : `
@@ -4535,18 +4560,19 @@ V.interview = v => {
     const when = out === 0 ? 'today' : out === 1 ? 'tomorrow'
                : out === null ? '' : `in ${out} days`;
     return band() + callCard({
-      title: x.kind,
-      when: `${x.day.replace(/^\w+ /, '')}, ${x.time}`,
+      title: `Upcoming ${x.kind.replace(/\b\w/g, c => c.toUpperCase())}`,
+      when: `${x.day.replace(/^\w+ /, '')} &middot; ${x.time}`,
       urgent: soon,
-      av: x.i, photo: PHOTO[x.id], name: x.n, role: x.band,
-      detail: `45 minutes &middot; video, recorded${when ? ` &middot; ${when}` : ''}`,
+      av: x.i, photo: PHOTO[x.id], name: x.n,
+      role: x.band.replace(', set ', ' &middot; Level set ').replace(', predicted by the quiz', ' track predicted by quiz'),
+      detail: `45 minutes &middot; Video recorded${when ? ` &middot; ${when[0].toUpperCase() + when.slice(1)}` : ''}`,
       /* CANCEL INTERVIEW (13.5) is an action on an upcoming interview — the
          release valve now that there is no accept/decline. `data-sheet="cancel"`
          opens the reason panel on this interview (`S.iv`). Quiet danger button so
          Join stays the primary. */
-      actions: `<button class="btn btn-sm noic ic-l">${I.calendar}Add to calendar</button>
-        <button class="btn btn-sm noic danger" data-sheet="cancel">Cancel interview</button>
-        <button class="btn btn-p btn-sm noic">Join the call ${I.video}</button>`
+      actions: `<button class="btn btn-sm noic ic-l iv-qbtn">${I.calendar}Add <span style="text-transform:none">to</span> Calendar</button>
+        <button class="btn btn-sm noic danger iv-qbtn" data-sheet="cancel">Cancel Interview</button>
+        <button class="btn btn-p btn-sm noic">Join Call ${I.video}</button>`
     }) + `
     ${/* THE SHEET IS ON THE BRIEF'S OWN HEADING ROW. "Add a note to the brief"
           was a `.btn-row` in a section of its own at the foot of the page — a
@@ -4554,14 +4580,13 @@ V.interview = v => {
           §73 was written to end. It acts on the brief, so it belongs on the
           brief's row. */''}
     <section class="sec">
-      ${aiHead('Their brief', `What ${x.n.split(' ')[0]} asked for, in their words`,
-        `<button class="btn btn-g btn-sm noic" data-sheet="brief">Add a note</button>`)}
+      ${aiHead('Candidate Brief', `<span class="iv-brief-sub">What ${x.n.split(' ')[0]} Wants to Focus On</span>Their priorities, in their own words.`, '')}
       ${kv([
-        ['Where they are', x.band],
-        ['Asked to be assessed on', x.asked],
-        ['Booked', x.paid],
-        ['Fee', money(v.fee)],
-        ...(x.summary ? [['Attached', 'Their 90-day summary']] : [])])}
+        ['Current Level', x.band.replace(', set ', ' &middot; Set ').replace(', predicted by the quiz', ' track predicted by quiz')],
+        ['Assessment Areas', x.asked.replace(', and ', ' and ') + '.'],
+        ['Booking Status', 'Booked &middot; ' + x.paid.replace('Paid at booking, ', 'Paid at booking on ')],
+        ['Interview Fee', money(v.fee)],
+        ...(x.summary ? [['Cohort Leader Evaluation', `<button type="button" class="iv-sumlink" data-sheet="clsum">${x.n.split(' ')[0]}’s 90-day summary</button>`]] : [])])}
     </section>
 
     ${/* THE THREE STEPS ARE A DISCLOSURE — the same three every time, and by the
@@ -4569,15 +4594,15 @@ V.interview = v => {
           heading as the whole claim, and the `.all-desc` line carries the one
           fact inside the block that changes what you do BEFORE opening it: the
           report is due within a day. */''}
-    ${foundSec('Before it', 'before', `
+    ${foundSec('Before the Interview', 'before', `
       <ol class="steps mt5">
-        <li><span class="s-n">1</span><span class="s-b"><b>Read the brief</b>
-          Two minutes. It is what they asked for, in their words.</span></li>
-        <li><span class="s-n">2</span><span class="s-b"><b>Open the room early</b>
-          The recording starts when you both join, and they are told that.</span></li>
-        <li><span class="s-n">3</span><span class="s-b"><b>Confirm the recording after the call</b>
-          Tal drafts a read off the transcript. You confirm the recording is clean; TalentNext sets the level after analysis.</span></li>
-      </ol>`, 'Three things. The last one, confirming the recording, is what releases your payout.')}`;
+        <li><span class="s-n">1</span><span class="s-b"><b>Review the Brief</b>
+          Take two minutes to review the candidate’s goals and assessment priorities.</span></li>
+        <li><span class="s-n">2</span><span class="s-b"><b>Open the Room Early</b>
+          Join before the scheduled time. Recording starts when you both join, and the candidate is notified.</span></li>
+        <li><span class="s-n">3</span><span class="s-b"><b>Submit Your Recommendation</b>
+          Tal drafts a recommendation from the transcript. Review it and submit your recommendation. TALENTnext determines the final level after analysis.</span></li>
+      </ol>`, 'Three steps to prepare. Sending your recommendation after the call releases your payout.')}`;
   }
 
   if(x.st === 'report'){
@@ -4635,12 +4660,12 @@ V.interview = v => {
     ${/* sec-noline: no divider between "The interview" and "Interview recording"
           (Maryam, 22 Sep 2026). */''}
     <section class="sec sec-noline">
-      <div class="sec-h"><h2>The interview</h2></div>
+      <div class="sec-h"><h2>The Interview</h2></div>
       <div class="stats eval-stats">${[
-        ['calendar', 'Held', `${x.day.replace(/^\w+ /, '').replace(/ (\w{3})\w*$/, ' $1')} &middot; ${x.time}`, ''],
-        ['time', 'Total Time', '48 min', ''],
-        ['document', 'Transcript', `<span class="stat-link" data-go="transcript" data-iv="${x.id}">Ready ${I.arrowRight}</span>`, ''],
-        ['video', 'Recording', 'Ready to confirm', '']
+        ['calendar', 'Held', '', `${x.day.replace(/^\w+ /, '').replace(/ (\w{3})\w*$/, ' $1')} &middot; ${x.time}`],
+        ['time', 'Total Duration', '', '48 min'],
+        ['document', 'Transcript', '', `<span class="stat-link" data-go="transcript" data-iv="${x.id}">Ready ${I.arrowRight}</span>`],
+        ['video', 'Recording', '', 'Ready for recommendation']
       ].map(c => statCell(...c)).join('')}</div>
     </section>
 
@@ -4673,13 +4698,13 @@ V.interview = v => {
             paragraph, not separate lines. `.tal-eval` is kept only for the `<b>`
             highlight styling (`.tal-eval .ai-body p b`), which needs the class in
             the ancestry. */''}
-      <div class="sec-h"><h2>Tal's read</h2></div>
+      <div class="sec-h"><h2>Tal’s Recommendation</h2></div>
       <div class="tal-eval">
         <div class="ai-body">${x.talEval}
           ${/* Which of the six T·A·L·E·N·T lenses Tal reads the candidate through
                 (Maryam, 22 Sep 2026). The `<b>` takes Tal's accent ramp; the
                 meaning is Maryam's supplied copy. */''}
-          <p class="mt5">Tal reads ${first} as a <b>${talType}</b>.</p></div>
+          <p class="mt5">Tal identifies ${first} as a <b>${talType}</b>.</p></div>
       </div>
     </section>
 
@@ -4691,9 +4716,9 @@ V.interview = v => {
           analysis. `.eval-form` opts the section out of the label column
           (§10.15). */''}
     <section class="sec">
-      <div class="sec-h"><h2>Your decision</h2></div>
+      <div class="sec-h"><h2>Your Recommendation</h2></div>
       <div class="eval-form">
-        <p class="t-body-02">Tal suggests <b>${x.talLevel}</b> off the transcript. Set the level you would give ${first} across the fifteen rungs, and the TALENT letters that describe what they showed. TalentNext confirms the final level after analysis.</p>
+        <p class="t-body-02">Tal suggests <b>${x.talLevel}</b> based on the transcript. Select the level you would recommend for ${first} across the 15 rungs and the TALENT letters that best describe ${x.pr ? x.pr[1] : 'them'}. TALENTnext will determine ${x.pr ? x.pr[2] : 'their'} final level after analysis.</p>
         ${/* THE LEVEL LADDER IS THE PICKER (Maryam, 22 Sep 2026), and Tal's own
               suggested rung is marked beside it (13.13 "Tal recommends [level]").
               The divergence note appears when the agent's rung differs from Tal's. */''}
@@ -4708,13 +4733,13 @@ V.interview = v => {
               `S.slotForm.evalLetters`. This REPLACES the single TALENT-type picker. */''}
         ${/* The "Tal recommends {letters}" line is removed (Maryam, 2 Oct 2026);
               the chips carry Tal's suggestion as their prefilled selection. */''}
-        <div class="f mt5"><span class="lbl">TALENT letters</span>
+        <div class="f mt5"><span class="lbl">TALENT Letters</span>
           ${/* The "Pick one to six …" hint is removed (Maryam, 2 Oct 2026). */''}
           ${lettersPicker(curLetters)}</div>
         ${/* WHY THIS LEVEL (mandatory) — the "Overall" field renamed to the story's
               own label; it seeds from Tal's read so the agent edits rather than
               starts blank. */''}
-        <label class="f mt5"><span class="lbl">Why this level</span>
+        <label class="f mt5"><span class="lbl">Why This Level?</span>
           <textarea class="inp" rows="3">${x.seedWhy}</textarea></label>
         ${/* WHY NOT TAL'S LEVEL — shown ONLY when the agent's rung differs from
               Tal's suggested rung, and mandatory then (13.13). */''}
@@ -4722,10 +4747,10 @@ V.interview = v => {
           <textarea class="inp" rows="3" placeholder="What made you set a different level from Tal's suggestion."></textarea></label>` : ''}
         <label class="f mt5"><span class="lbl">Strengths</span>
           <textarea class="inp" rows="3">${x.seedStrength}</textarea></label>
-        <label class="f mt5"><span class="lbl">Growth areas</span>
+        <label class="f mt5"><span class="lbl">Growth Areas</span>
           <textarea class="inp" rows="3">${x.seedGrowth}</textarea></label>
-        <label class="f mt5"><span class="lbl">Anything else about ${first} <span class="lbl-opt">(optional)</span></span>
-          <textarea class="inp" rows="3" placeholder="Internal only — not shown to the candidate."></textarea></label>
+        <label class="f mt5"><span class="lbl">Additional Notes About ${first} <span class="lbl-opt">(Optional)</span></span>
+          <textarea class="inp" rows="3" placeholder="Internal notes only — not shared with the candidate."></textarea></label>
       </div>
     </section>
 
@@ -4735,7 +4760,7 @@ V.interview = v => {
     <section class="sec">
       <div class="btn-row eval-actions">
         <button class="btn btn-g noic" data-confirm="savedraft">Save Draft</button>
-        <button class="btn btn-p noic ic-l" data-confirm="sendrec">${I.checkFilled}Send Evaluation</button></div>
+        <button class="btn btn-p noic ic-l" data-confirm="sendrec">${I.checkFilled}Send Recommendation</button></div>
     </section>`;
   }
 
@@ -5356,7 +5381,7 @@ V.earnings = v => {
           <span class="cardrow-t">${x.n}</span>
           <span class="cardrow-d">Interviewed ${x.day.replace(/^\w+ /, '')} &middot; ${money(v.share)} waiting on the recording</span>
         </span>
-        <span class="cardrow-a"><button class="btn btn-sm noic acc-link" data-go="interview" data-iv="${x.id}">Evaluate ${x.n.split(' ')[0]} ${I.arrowRight}</button></span>
+        <span class="cardrow-a"><button class="btn btn-sm noic acc-link" data-go="interview" data-iv="${x.id}">Send Recommendation ${I.arrowRight}</button></span>
       </div>`).join('')}
     </div>
   </section>` : ''}
@@ -5707,7 +5732,7 @@ V.profile = v => head({title: 'Profile'}) + `
         Owen is certified on every operating stage, so it reads Complete. Hidden
         while the details form is open. */''}
   ${S.pfEdit === 'details' ? '' : `
-  <section class="sec">
+  <section class="sec sec-stack">
     <div class="sec-h"><h2>Training module</h2></div>
     ${v.certified
       ? `<p class="t-body-02 tm-done">${I.checkOutline} Complete on ${PUB.trainingDate}. Completion does not expire.</p>`
@@ -5765,16 +5790,8 @@ V.profile = v => head({title: 'Profile'}) + `
         a pencil edit-mode, because a fixed option set toggles in place. Hidden
         while the details form is open. */''}
   ${S.pfEdit === 'details' ? '' : `
-  <section class="sec">
-    <div class="sec-h"><h2>Industries you work with</h2></div>
-    ${multiPicker('pubInd', INDUSTRIES, S.pubInd || PUB.industries)}
-    <span class="ltr-hint">Pick at least one. Tal shows candidates the agents who fit them first.</span>
-  </section>
-  <section class="sec">
-    <div class="sec-h"><h2>Intents you work with</h2></div>
-    ${multiPicker('pubInt', INTENTS, S.pubInt || PUB.intents)}
-    <span class="ltr-hint">Pick at least one. These help Tal put you in front of the right candidates.</span>
-  </section>`}
+  ${multiSec('ind', 'pubInd', 'Industries you work with', 'Add Industry', INDUSTRIES, S.pubInd || PUB.industries)}
+  ${multiSec('int', 'pubInt', 'Intents you work with', 'Add Intent', INTENTS, S.pubInt || PUB.intents)}`}
 
   ${v.listed ? `
   <section class="sec">
@@ -5899,17 +5916,17 @@ V.profile = v => head({title: 'Profile'}) + `
   ${S.pfTab === 'notif' ? `
   <section class="sec">
     <div class="sec-h"><h2>What reaches you</h2></div>
-    <label class="tg"><div class="tb"><b>A candidate books you</b>
-      <span>As soon as a slot is taken, with the brief attached</span></div>
+    <label class="tg"><div class="tb"><b>New Interview Booking</b>
+      <span>Get notified when a candidate books a slot, with their brief attached.</span></div>
       <input type="checkbox" data-pfn="booking"${S.pfNotif.booking ? ' checked' : ''}><span class="sw"></span></label>
-    <label class="tg"><div class="tb"><b>A recording is waiting to confirm</b>
-      <span>After a call, so your pay is not held up on it</span></div>
+    <label class="tg"><div class="tb"><b>Recommendation Needed</b>
+      <span>Get notified after a call when a recommendation is ready to submit.</span></div>
       <input type="checkbox" data-pfn="report"${S.pfNotif.report ? ' checked' : ''}><span class="sw"></span></label>
-    <label class="tg"><div class="tb"><b>Money settles</b>
-      <span>When escrow releases and when a payout lands</span></div>
+    <label class="tg"><div class="tb"><b>Payout Updates</b>
+      <span>Get notified when escrow is released and payouts arrive.</span></div>
       <input type="checkbox" data-pfn="payout"${S.pfNotif.payout ? ' checked' : ''}><span class="sw"></span></label>
-    <label class="tg"><div class="tb"><b>Product news</b>
-      <span>What changed in the portal, at most once a month</span></div>
+    <label class="tg"><div class="tb"><b>Product Updates</b>
+      <span>Receive portal updates no more than once a month.</span></div>
       <input type="checkbox" data-pfn="product"${S.pfNotif.product ? ' checked' : ''}><span class="sw"></span></label>
     ${/* NO CLOSING LINE (Maryam, 7 Sep 2026: "remove this 'Everything here also
           appears in the bell' line and the divider above this line"). The last
@@ -5946,7 +5963,7 @@ V.profile = v => head({title: 'Profile'}) + `
         so the switch component keeps a caller. */''}
   ${S.pfTab === 'privacy' ? `
   <section class="sec">
-    <div class="sec-h"><h2>Sign in and security</h2></div>
+    <div class="sec-h"><h2>Sign-In &amp; Security</h2></div>
     ${''/* TWO `.pf-sr` ROWS, NO RULE BETWEEN THEM — the candidate's own shape
           (§111.14): a bare 20px glyph in a named hue (blue for the address,
           violet for the lock) rather than a tinted chip, and `.pf-sr` turns the
@@ -5956,7 +5973,7 @@ V.profile = v => head({title: 'Profile'}) + `
       <div class="cardrow pfe-row pf-sr">
         <span class="pf-sr-ic" style="--mk:var(--mk-1)">${I.email}</span>
         <span class="cardrow-b"><span class="cardrow-t">${A.email}</span>
-          <span class="cardrow-d">The address you sign in with &middot; change it under My Profile</span></span>
+          <span class="cardrow-d">Your email address is used to sign in and cannot be changed.</span></span>
       </div>
       <div class="cardrow pfe-row pf-sr">
         <span class="pf-sr-ic" style="--mk:var(--mk-3)">${I.locked}</span>
@@ -5964,7 +5981,7 @@ V.profile = v => head({title: 'Profile'}) + `
           <span class="cardrow-d">Last changed 12 June</span></span>
         ${S.pfPw
           ? `<button class="btn btn-g btn-sm" data-pfpw="0">Cancel ${I.close}</button>`
-          : `<button class="btn btn-g btn-sm" data-pfpw="1">Reset password ${I.renew}</button>`}
+          : `<button class="btn btn-g btn-sm noic" data-pfpw="1">${I.renew} Reset Password</button>`}
       </div>
     </div>
     ${S.pfPw ? `
@@ -5989,14 +6006,14 @@ V.profile = v => head({title: 'Profile'}) + `
   </section>
 
   <section class="sec">
-    <div class="sec-h"><h2>Closing your account</h2></div>
+    <div class="sec-h"><h2>Close Your Account</h2></div>
     ${''/* THE ACTION SITS ON THE LINE IT IS EXPLAINED BY — `.close-b`, the
           candidate's own layout: the sentence left, the danger control held at
           the right end. */}
     <div class="close-b">
-      <p class="t-body close-x">Deleting your account removes your profile, your notes and your interview recordings. Certificates you have already earned stay valid and stay downloadable.</p>
+      <p class="t-body close-x">Closing your account permanently deletes your profile, notes, and interview recordings. Any certificates you’ve earned remain valid and available to download.</p>
       <div class="close-a">
-        <button class="btn btn-t danger" data-confirm="delacct">Delete my account ${I.misuse}</button>
+        <button class="btn btn-p danger" data-confirm="delacct">Delete Account</button>
       </div>
     </div>
   </section>` : ''}`;
@@ -6533,7 +6550,7 @@ const CONFIRMS = {
      letters, Tal's proposal, and the written sections go to a reviewer who has 24
      hours to approve. The agent cannot change or withdraw it after sending. Filing
      it starts the payout release delay (three working days from the call). */
-  sendrec: ['Send this evaluation?', 'Your proposed level and TALENT letters go to a reviewer, who has 24 hours to approve them. You cannot change them after sending. This files your report and releases your payout three working days after the call.', 'Send Evaluation', null, 'checkFilled'],
+  sendrec: ['Send this recommendation?', 'Your proposed level and TALENT letters go to a reviewer, who has 24 hours to approve them. You cannot change them after sending. This files your report and releases your payout three working days after the call.', 'Send Recommendation', null, 'checkFilled'],
   /* SAVE DRAFT (13.13). A draft is visible to nobody but the agent; it keeps the
      interview in the Evaluations queue and the payout blocked until it is sent.
      A prototype, so it does not persist — the dialog states what a real draft does. */
@@ -6717,11 +6734,42 @@ function lettersPicker(sel){
   return `<div class="ltr-cloud">${TALENT_LETTERS.map(l => `
     <button type="button" class="ltr-chip${sel.includes(l.k) ? ' on' : ''}" data-ltrtoggle="${l.k}"
       aria-pressed="${sel.includes(l.k)}" title="${l.name} — ${l.d}">
-      <span class="ltr-c">${l.c}</span><span class="ltr-n">${l.name}</span></button>`).join('')}</div>`;
+      <span class="ltr-c">${l.c}</span><span class="ltr-n">— ${l.name}</span></button>`).join('')}</div>`;
 }
 /* A FIXED-OPTION MULTI-SELECT chip cloud (13.16, Industries + Intents), reusing
    the letters-chip skin. `key` is the S list key (`pubInd`/`pubInt`), `opts` the
    options, `sel` the current selection; each chip toggles via `data-multi`. */
+/* INDUSTRIES / INTENTS ON MY PROFILE (Maryam, 13 Oct 2026, off the candidate
+   Skills flow): the read view shows ONLY the selected chips with a red "Add"
+   button on the heading row; pressing it opens the candidate's in-place edit —
+   Discard / Save in the heading, the selected chips with a remove cross, and the
+   remaining options as "Name +" chips that add. `S.pfEdit` is 'ind' / 'int';
+   the snapshot for Discard is `S.multiSnap`. At least one stays selected. */
+/* HugeIcons Stroke Rounded `Square` / `Checkmark Square 02`, pasted verbatim. */
+const HG_SQ = '<path d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z" stroke="currentColor" stroke-width="1.5"/>';
+const HG_TICK = '<path d="M8 12.5L10.5 15L16 9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>';
+function multiSec(ed, key, title, addLabel, opts, sel){
+  const on = S.pfEdit === ed, rest = opts.filter(o => !sel.includes(o));
+  return `<section class="sec sec-stack">
+    <div class="sec-h"><h2>${title}</h2>
+      <div class="pfe-acts sec-h-act">
+        ${on
+          ? `<button class="btn btn-t btn-sm danger pfe-discard" data-multidiscard>${I.delete} Discard Changes</button>
+             <button class="btn btn-p btn-sm noic" data-multisave="${key}">Save Changes ${I.check}</button>`
+          : `<button class="btn btn-sm noic acc-link ms-add" data-pfedit="${ed}">${I.add} ${addLabel}</button>`}
+      </div>
+    </div>
+    ${on ? `<div class="skl pfe-chips">
+        ${sel.map(o => `<span class="skl-c pfe-chip">${o}<button class="pfe-chip-x" data-multi="${key}:${o}" aria-label="Remove ${o}">${I.close}</button></span>`).join('')}
+      </div>
+      ${rest.length ? `<div class="ms-pick">${rest.map(o => {
+        const ck = (S.multiPick || []).includes(o);
+        return `<button type="button" class="ms-opt${ck ? ' on' : ''}" data-multipick="${o}" role="checkbox" aria-checked="${ck}">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">${HG_SQ}${ck ? HG_TICK : ''}</svg><span>${o}</span></button>`;
+      }).join('')}</div>` : ''}`
+      : `<div class="skl">${sel.map(o => `<span class="skl-c">${o}</span>`).join('')}</div>`}
+  </section>`;
+}
 function multiPicker(key, opts, sel){
   sel = sel || [];
   return `<div class="ltr-cloud">${opts.map(o => `
@@ -6737,6 +6785,11 @@ function multiPicker(key, opts, sel){
 const IV_REC_STILL = 'data:image/webp;base64,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';
 const recStill = x => IV_REC_STILL;
 
+const CL_SUM = {
+  _: {by:'Priya Nair',
+      grew:'Amara started out listening more than speaking and finished the 90 days running the cohort’s Hard Conversations practice for her pair. Her answers moved from describing the chapter to describing what she tried at work and how it landed.',
+      next:'Amara holds her position well in the room but softens it in writing afterwards. Following through on a decision once it has been challenged is the next step at her level.'}
+};
 const SHEETS = {
   listing: ['Your public profile', () => {
     const gaps = f().cardGaps || [];
@@ -6793,6 +6846,17 @@ const SHEETS = {
      refund and the late-cancel consequence are stated here so the panel doubles as
      the confirmation. `S.iv` is the interview; `S.slotForm.cancelreason` holds the
      picked reason. See DESIGN.md §3 "Talent Agent — V1 model". */
+  /* THE COHORT LEADER'S 90-DAY SUMMARY, read-only (Maryam, 13 Oct 2026), in the
+     leader portal's published-evaluation shape: "Where {first} Grew" over
+     "Areas to Develop Next". The words are AUTHORED PLACEHOLDER (§74), keyed by
+     the open interview (`S.iv`); the fourth slot 'read' gives a Close-only footer. */
+  clsum: [(() => `${(CL_SUM[S.iv] || CL_SUM._).by} Evaluation`), () => {
+    const x = iv(S.iv) || {}, first = (x.n || '').split(' ')[0];
+    const e = CL_SUM[x.id] || CL_SUM._;
+    return `<p class="t-desc">Written by ${e.by}, ${first}’s cohort leader.</p>
+      <div class="clsum-b"><h3 class="t-h4">Where ${first} Grew</h3><p class="t-body">${e.grew}</p></div>
+      <div class="clsum-b"><h3 class="t-h4">Areas to Develop Next</h3><p class="t-body">${e.next}</p></div>`;
+  }, 'Close', 'read'],
   cancel: ['Cancel this interview', () => {
     const x = iv(S.iv), first = x.n.split(' ')[0];
     const s = slotForIv(x.id), out = s ? daysOut(s) : null;
@@ -6833,17 +6897,17 @@ function editSheet(){
   const isCancel = S.sheet === 'cancel';
   return `<div class="modal ${S.sheet ? 'on' : ''}" data-close="sheet">
     <div class="sheet">
-      <div class="sheet-h"><h2>${s ? s[0] : ''}</h2>
+      <div class="sheet-h"><h2>${s ? (typeof s[0] === 'function' ? s[0]() : s[0]) : ''}</h2>
         <button class="x" data-close="sheet" aria-label="Close">${I.close}</button></div>
       <div class="sheet-b${S.dd ? ' dd-open' : ''}">${s ? (typeof s[1] === 'function' ? s[1]() : s[1]) : ''}</div>
       <div class="sheet-f">
-        <button class="btn btn-s noic" data-close="sheet">${isCancel ? 'Keep the interview' : 'Cancel'}</button>
+        ${s && s[3] === 'read' ? '' : `<button class="btn btn-s noic" data-close="sheet">${isCancel ? 'Keep the interview' : 'Cancel'}</button>`}
         ${/* THE SLOT SHEET'S SAVE ACTUALLY ADDS THE SLOT (Maryam, 2 Oct 2026: "when
               I add a slot and click add I should see it in the calendar"). It carries
               `data-saveslot`, whose handler pushes the chosen day+time into `SLOTS`
               on the viewed week and re-renders, so the new block appears; every other
               sheet is still a prototype that just closes. */''}
-        <button class="btn ${isCancel ? 'btn-p danger' : 'btn-p'} noic"${S.sheet === 'slot' ? ' data-saveslot="1"' : ' data-close="sheet"'}>${saveLabel}</button>
+        <button class="btn ${isCancel ? 'btn-p danger' : s && s[3] === 'read' ? 'btn-s' : 'btn-p'} noic"${S.sheet === 'slot' ? ' data-saveslot="1"' : ' data-close="sheet"'}>${saveLabel}</button>
       </div>
     </div>
   </div>`;
@@ -7282,7 +7346,7 @@ device.addEventListener('click', e => {
      for it is written, the markup carries the attribute, and the click never
      reaches either because `closest` was not looking for it. `data-peek` cost
      exactly that. */
-  const t = e.target.closest('[data-go],[data-stage],[data-portal],[data-toggle],[data-close],[data-tab],[data-pftab],[data-pfedit],[data-pfpw],[data-specdel],[data-specadd],[data-specaddopen],[data-specaddclose],[data-specdiscard],[data-req],[data-confirm],[data-sheet],[data-peek],[data-readall],[data-cal],[data-calview],[data-cal-nav],[data-cal-today],[data-cal-day],[data-ddtoggle],[data-ddset],[data-ltrtoggle],[data-multi],[data-txf],[data-feesave],[data-feedone],[data-paytab],[data-addcard],[data-setdef],[data-delcard],[data-payclose],[data-saveslot]');
+  const t = e.target.closest('[data-go],[data-stage],[data-portal],[data-toggle],[data-close],[data-tab],[data-pftab],[data-pfedit],[data-pfpw],[data-specdel],[data-specadd],[data-specaddopen],[data-specaddclose],[data-specdiscard],[data-multidiscard],[data-multisave],[data-multipick],[data-req],[data-confirm],[data-sheet],[data-peek],[data-readall],[data-cal],[data-calview],[data-cal-nav],[data-cal-today],[data-cal-day],[data-ddtoggle],[data-ddset],[data-ltrtoggle],[data-multi],[data-txf],[data-feesave],[data-feedone],[data-paytab],[data-addcard],[data-setdef],[data-delcard],[data-payclose],[data-saveslot]');
 
   /* A CLICK OUTSIDE THE ACCOUNT MENU SHUTS IT, AND IT IS ANSWERED BEFORE THE
      GUARD ABOVE RETURNS — that is the whole reason this sits here rather than
@@ -7438,8 +7502,16 @@ device.addEventListener('click', e => {
      lazily seeded here too, in case an edit control is pressed before
      `V.profile` has run once. */
   if(d.specdiscard !== undefined){ if(S.specSnap) S.spec = S.specSnap; S.specSnap = null; S.pfEdit = null; S.specAdding = false; return render(); }
+  if(d.multidiscard !== undefined){ if(S.multiSnap) S[S.multiSnap.k] = S.multiSnap.v; S.multiSnap = null; S.multiPick = null; S.pfEdit = null; return render(); }
+  /* The ticked options are pending until Save adds them to the chips. */
+  if(d.multipick !== undefined){ const p = S.multiPick = S.multiPick || [], at = p.indexOf(d.multipick); at >= 0 ? p.splice(at, 1) : p.push(d.multipick); return render(); }
+  if(d.multisave !== undefined){ const k = d.multisave, base = (S[k] || (k === 'pubInd' ? PUB.industries : PUB.intents)).slice(); (S.multiPick || []).forEach(o => { if(!base.includes(o)) base.push(o); }); S[k] = base; S.multiPick = null; S.multiSnap = null; S.pfEdit = null; return render(); }
   if(d.pfedit !== undefined){
     if(!S.spec) S.spec = SPECIALISMS.slice();
+    if(d.pfedit === 'ind') S.multiSnap = {k:'pubInd', v:(S.pubInd || PUB.industries).slice()};
+    if(d.pfedit === 'int') S.multiSnap = {k:'pubInt', v:(S.pubInt || PUB.intents).slice()};
+    if(!d.pfedit) S.multiSnap = null;
+    S.multiPick = null;
     if(d.pfedit === 'specs') S.specSnap = S.spec.slice();
     if(!d.pfedit) S.specSnap = null;
     S.pfEdit = d.pfedit || null;

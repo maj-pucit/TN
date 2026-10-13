@@ -989,3 +989,8 @@
 .app .atd-yes{color:var(--support-success-ink)}
 .app .atd-no{color:var(--text-secondary)}
 .app .atd-na{color:var(--text-helper);font-style:normal}
+
+/* PAST COHORT ROW: AIR BETWEEN THE NAME AND ITS FACTS LINE (Maryam, 13 Oct
+   2026: "add gap between these two rows"). The two spans stacked with no gap;
+   the body is a column with `--s02` between them. Its grey is §63's. */
+.app .lead-past-row .cardrow-b{display:flex;flex-direction:column;gap:var(--s02)}

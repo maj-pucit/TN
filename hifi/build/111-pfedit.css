@@ -475,6 +475,8 @@
    for `.ai-body p` is the case FOR the measure; the case against it is that
    this block has a full-width neighbour 24px above it. */
 .app .sec > .pfe-about{margin:0;max-width:none}
+/* A multi-paragraph About (the leader bio, Maryam 13 Oct 2026) keeps air between paragraphs. */
+.app .sec > .pfe-about + .pfe-about{margin-top:var(--s04)}
 
 /* A READ-ONLY FIELD DOES NOT ARM ON FOCUS — the General form's email (Maryam,
    7 Sep 2026: "which will not be editable"). §12.621 already draws `[readonly]`
@@ -530,6 +532,8 @@
    `.qa-ic` and `.tg-mk`.
    -------------------------------------------------------------------------- */
 .app .cardrow.pf-sr{border-bottom:0}
+/* §18.216 redraws the row line as an inset ::after; switch that off too (Maryam, 13 Oct 2026: "remove divider between email and password rows"). */
+.app .view-col .main .page .cardrow.pf-sr::after{content:none}
 .app .pf-sr-ic{
   flex:none;display:grid;place-items:center;
   align-self:flex-start;

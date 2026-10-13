@@ -5618,3 +5618,11 @@
    chosen" wears, over `.t-body`'s book. This rule (0,2,0, later) beats `.t-body`
    on both. */
 .app .rev-cap-t{color:var(--accent);font-weight:var(--t-w-strong)}
+
+/* The past-cohort row's facts line is a description: `--text-secondary`
+   (Maryam, 13 Oct 2026: "second row should be in grey color"). */
+.app .lead-past-row .cardrow-s{color:var(--text-secondary)}
+
+/* The profile About paragraphs are a description: `--text-secondary`
+   (Maryam, 13 Oct 2026: "about desc should be in grey"). */
+.app .sec > .pfe-about{color:var(--text-secondary)}

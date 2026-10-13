@@ -104,7 +104,7 @@ S.ldrNotes = {
   'James Whitby':[{k:'develop', b:'Re-taking assessments rather than moving on. Told him on the call to leave three and four at 65 and come back after chapter 6 — the material builds, the score does not.', wk:4, d:'18 Sep 2026'},
                   {k:'strength', b:'Asked for the handover framework twice and put it straight to use on the delegation task. Slow to start, but he does the reading once he has the tool.', wk:3, d:'11 Sep 2026'}],
   'Owen Clarke':[{k:'strength', b:'Ran the Thursday call twice when I was out. Stepped in without being asked and kept the group on the agenda both times. The cohort listens to him.', wk:8, d:'6 Aug 2026'},
-                 {k:'develop', b:'Writes the answer before the working. Strong instincts, but the report skips how he got there. Asked him to show the steps so the next reader can follow the decision.', wk:9, d:'13 Aug 2026'}],
+                 {k:'develop', b:'Writes the answer before showing the working. His instincts are strong, but the report skips how he reached his conclusion. I asked him to show the steps so others can follow his reasoning.', wk:9, d:'13 Aug 2026'}],
   'Lena Fischer':[{k:'develop', b:'Quiet on calls, thorough on the board. Rarely speaks up live, but her written feedback to peers is the most detailed in the cohort. Worth drawing out in the room.', wk:7, d:'30 Jul 2026'}]
 };
 /* today, for a newly-written note's date stamp (§74, static prototype) */
@@ -302,11 +302,11 @@ function ldrNoteReadRow(n){
 function ldrNotesRead(name){
   const notes = lnotes(name);
   if(!notes.length) return '';
-  const groups = [['strength','Strengths'],['develop','Areas to develop']];
+  const groups = [['strength','Strengths'],['develop','Areas for Development']];
   return groups.map(([k,label])=>{
     const rows = notes.filter(n => (n.k||'develop') === k);
     if(!rows.length) return '';
-    return `<div class="note-group"><h3 class="note-group-h">${label}</h3>
+    return `<div class="note-group"><h3 class="note-group-h" style="color:var(--text-primary)">${label}</h3>
       <div class="note-list">${rows.map(ldrNoteReadRow).join('')}</div></div>`;
   }).join('');
 }

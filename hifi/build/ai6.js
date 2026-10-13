@@ -957,7 +957,9 @@ const PAGESUM = {
        ("eight 90-day summaries"), and only the VERB agrees with the pending
        count. The old form toggled both, so one pending read "eight 90-day
        summary is" (doc §7). */
-    return `${_W(ps.length)} of Cohort ${s0.cohort}&rsquo;s ${size} 90-day summaries ${ps.length === 1 ? 'is' : 'are'} still waiting on you. ${s0.name}&rsquo;s numbers are the argument; the recommendation is the part only you can write.`;
+    const scs = ps.map(x => `${x.name} scored ${(lmemOf(lcoOf(x.cohort), x.name) || {}).avg}%`);
+    const who = scs.length < 3 ? scs.join(', and ') : scs.slice(0,-1).join(', ') + ', and ' + scs[scs.length-1];
+    return `${_W(ps.length)} of Cohort ${s0.cohort}&rsquo;s ${size} candidates ${ps.length === 1 ? 'is' : 'are'} awaiting evaluation. ${who}. Review their progress and submit your ${ps.length === 1 ? 'recommendation' : 'recommendations'} to move them forward.`;
   },
 
   leadSum: () => {
@@ -1062,7 +1064,7 @@ const PAGESUM = {
      halves HOLD rather than that there are two of them. First clause is the
      listing (the Public tab's whole subject), second is everything a candidate
      never sees. */
-  leadProfile: 'Your listing is what candidates read when they choose you. The bio is yours to write, the assessing range comes from your certifications. The rest is the account behind it.'
+  leadProfile: 'Your public profile helps candidates decide if you’re the right fit. Update your bio and <b>specialities</b>, while your certifications determine the levels you can assess.'
 };
 
 function pageSummary(){

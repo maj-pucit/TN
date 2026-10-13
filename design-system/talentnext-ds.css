@@ -14,7 +14,7 @@
 
        cd design-system && python3 build-ds.py
 
-   Rules kept: 6446.  Rules dropped as product-specific: 225.
+   Rules kept: 6453.  Rules dropped as product-specific: 225.
    Fonts are embedded, so this one file is the whole dependency.
    Hover state layers are disarmed, as in the portal.
    ========================================================================== */
@@ -5696,6 +5696,7 @@ button.btn-p:active,
 .app .atd-yes{color:var(--support-success-ink)}
 .app .atd-no{color:var(--text-secondary)}
 .app .atd-na{color:var(--text-helper); font-style:normal}
+.app .lead-past-row .cardrow-b{display:flex; flex-direction:column; gap:var(--s02)}
 
 /* ---- 32-week.css ---- */
 .app .wkc{display:flex; flex-direction:column}
@@ -5904,6 +5905,8 @@ button.btn-p:active,
   .app .sec:has(> .msgs) > .sec-h,
   .app .sec:has(> .ivt-lines) > .sec-h,
   .app .sec:has(> .note-group) > .sec-h{border-right:0; min-height:0; margin-bottom:var(--sec-h-gap); padding:0 var(--pad-x)}
+  .app .sec:has(> .close-b){display:block}
+  .app .sec:has(> .close-b) > .sec-h{border-right:0; min-height:0; margin-bottom:var(--sec-desc-gap); padding:0 var(--pad-x)}
 }
 .app .cs button > .lf-n{margin-left:var(--s03); font-size:11px; font-weight:600; font-variant-numeric:tabular-nums; color:var(--text-helper)}
 .app .cs button.on > .lf-n{color:inherit; opacity:.7}
@@ -7804,6 +7807,8 @@ button.btn-p:active,
 .app .tag.tag-you{color:var(--accent-text)}
 .app .conf-a .btn svg{color:inherit}
 .app .rev-cap-t{color:var(--accent); font-weight:var(--t-w-strong)}
+.app .lead-past-row .cardrow-s{color:var(--text-secondary)}
+.app .sec > .pfe-about{color:var(--text-secondary)}
 
 /* ---- 64-quietbtn.css ---- */
 .app .btn-s,
@@ -9485,9 +9490,11 @@ button.btn-p:active,
 .app .btn.pfe-discard{border-color:transparent; padding-left:var(--s03)}
 .app .pfe-row-x{display:block; margin-top:var(--s02)}
 .app .sec > .pfe-about{margin:0; max-width:none}
+.app .sec > .pfe-about + .pfe-about{margin-top:var(--s04)}
 .app .inp.pfe-ro{cursor:default}
 .app .inp.pfe-ro:focus{border-bottom:1px dashed var(--rule); padding-bottom:0}
 .app .cardrow.pf-sr{border-bottom:0}
+.app .view-col .main .page .cardrow.pf-sr::after{content:none}
 .app .pf-sr-ic{flex:none; display:grid; place-items:center; align-self:flex-start; width:20px; height:20px; margin-top:1px}
 .app .pf-sr-ic svg{width:18px; height:18px; color:var(--icon-primary)}
 .app .note.cl-ok > span svg{color:var(--support-success)}

@@ -6946,6 +6946,7 @@ button.btn-p:active,
 .app .atd-yes{color:var(--support-success-ink)}
 .app .atd-no{color:var(--text-secondary)}
 .app .atd-na{color:var(--text-helper);font-style:normal}
+.app .lead-past-row .cardrow-b{display:flex;flex-direction:column;gap:var(--s02)}
 .app .wkc{display:flex;flex-direction:column}
 .app .wkc-top{
   display:flex;align-items:center;gap:var(--s05);padding-bottom:var(--s05)}
@@ -7303,6 +7304,10 @@ button.btn-p:active,
   .app .sec:has(> .ivt-lines) > .sec-h,
   .app .sec:has(> .note-group) > .sec-h{
     border-right:0;min-height:0;margin-bottom:var(--sec-h-gap);
+    padding:0 var(--pad-x)}
+  .app .sec:has(> .close-b){display:block}
+  .app .sec:has(> .close-b) > .sec-h{
+    border-right:0;min-height:0;margin-bottom:var(--sec-desc-gap);
     padding:0 var(--pad-x)}
 }
 .app .cs button > .lf-n{
@@ -10710,6 +10715,8 @@ button.btn-p:active,
 .app .tag.tag-you{color:var(--accent-text)}
 .app .conf-a .btn svg{color:inherit}
 .app .rev-cap-t{color:var(--accent);font-weight:var(--t-w-strong)}
+.app .lead-past-row .cardrow-s{color:var(--text-secondary)}
+.app .sec > .pfe-about{color:var(--text-secondary)}
 .app .btn-s,.app .btn-t,.app .btn-g,
 .app .btn-s:hover:where(.__nh),.app .btn-t:hover:where(.__nh),.app .btn-g:hover:where(.__nh),
 .app .on-dark .btn-s,.app .sec.on-dark .btn-s,
@@ -13583,9 +13590,11 @@ button.btn-p:active,
 .app .btn.pfe-discard{border-color:transparent;padding-left:var(--s03)}
 .app .pfe-row-x{display:block;margin-top:var(--s02)}
 .app .sec > .pfe-about{margin:0;max-width:none}
+.app .sec > .pfe-about + .pfe-about{margin-top:var(--s04)}
 .app .inp.pfe-ro{cursor:default}
 .app .inp.pfe-ro:focus{border-bottom:1px dashed var(--rule);padding-bottom:0}
 .app .cardrow.pf-sr{border-bottom:0}
+.app .view-col .main .page .cardrow.pf-sr::after{content:none}
 .app .pf-sr-ic{
   flex:none;display:grid;place-items:center;
   align-self:flex-start;
@@ -27006,7 +27015,7 @@ render();
 const LEADER = {n:COHORT_LEAD.n, i:'PN', img:AV.priya,
   range:COHORT_LEAD.range, since:COHORT_LEAD.since,
   email:'priya.nair@nextinleadership.org',
-  bio:'Fifteen years running operations teams. I am direct, I move quickly, and I do not pad feedback — if something is not working I will say so in the first ten minutes.',
+  bio:'I’ve spent 15 years leading operations teams and helping people grow into confident, effective leaders. My approach is direct, practical, and focused on results. I believe in addressing challenges early, giving honest feedback, and turning difficult situations into opportunities to learn.\n\nI specialise in first-line leadership, delegation, prioritisation, and stakeholder management. I work closely with leaders to strengthen their decision-making, navigate team dynamics, and build trust through clear communication. Whether I’m coaching someone through a difficult conversation or helping them manage competing priorities, my goal is to make leadership feel practical and achievable.\n\nHaving led both remote and hybrid teams, I understand the importance of adaptability, accountability, and creating an environment where people can do their best work. I encourage candidates to challenge their assumptions, reflect on their decisions, and put what they learn into practice.',
   specs:['Operations teams','First-line leadership','Delegation','Prioritisation','Stakeholder management','Coaching for growth','Remote and hybrid teams']};
 
 
@@ -27211,29 +27220,29 @@ const LEAD_SUMMARIES = [
   {id:'m1', name:'Owen Clarke',     i:'OC', img:'owen',   cohort:33, status:'pending'},
   {id:'m2', name:'Lena Fischer',    i:'LF', img:'lena',   cohort:33, status:'pending'},
   {id:'m3', name:'Samuel Adeyemi',  i:'SA', img:'samuel', cohort:33, status:'done',
-   rec:'Ready to promote',
-   growth:'Came in quiet and finished the 90 days running half of the Hard Conversations call himself. His answers stopped being about what the chapter said and started being about what he had tried.',
-   develop:'He sits every assessment twice. Nothing in the scores says he needs to, and the next level moves faster than that.'},
+   rec:'Promote by One Level',
+   growth:'Samuel started quietly and finished by leading half of the Hard Conversations call himself. His answers shifted from repeating chapter concepts to sharing what he had put into practice.',
+   develop:'Samuel retakes every assessment twice, even when his scores suggest he doesn&rsquo;t need to. Building confidence in his first attempt will help him keep pace at the next level.'},
   {id:'m4', name:'Hana Kim',        i:'HK', img:'hana',   cohort:33, status:'done',
-   rec:'Ready to promote',
+   rec:'Promote by One Level',
    growth:'83% on the assessments at 1.2 attempts a chapter, which is the most consistent record in the cohort. She was also the one who brought the group back to the point on the weeks it drifted.',
    develop:'She defers on anything she has not read twice. At E2 the room will expect an opinion before she is certain of it.'},
   {id:'m5', name:'Marco Rossi',     i:'MR', img:'owen',   cohort:33, status:'done',
-   rec:'Hold at this level',
+   rec:'Hold at Current Level',
    why:'Finished the chapters but sat every assessment twice to clear 75%. Another cohort at E1 is the cheaper way to make that stick.',
    growth:'Attendance never slipped and Conflict and Repair clearly landed — he brought a real disagreement from work to the call and worked it through in front of the group.',
    develop:'The reading is the gap, not the effort. Another 90 days at E1 with one chapter at a time rather than three in a weekend.'},
   {id:'m6', name:'Grace Mwangi',    i:'GM', img:'priya',  cohort:33, status:'done',
-   rec:'Ready to promote',
+   rec:'Promote by One Level',
    growth:'88% first time on every assessment and 1.0 attempts a chapter — she is through the course as cleanly as anyone has been. She asks the question the rest of the room is avoiding.',
    develop:'She has not had to carry a call yet. The re-interview should ask what she does when the group goes quiet.'},
   {id:'m7', name:'Ivan Petrov',     i:'IP', img:'samuel', cohort:33, status:'done',
-   rec:'Hold at this level',
+   rec:'Hold at Current Level',
    why:'70% on assessments at 1.7 attempts a chapter. He is close, and the gap is the reading rather than the effort.',
    growth:'Turned up to every call in the second half after a slow start, and the Why We Exist chapter is the one he can now argue rather than recite.',
    develop:'Assessments at 70% with almost two goes each. He is guessing where he should be checking, and one more cohort at E1 is where that becomes a habit.'},
   {id:'m8', name:'Zoe Bennett',     i:'ZB', img:'lena',   cohort:33, status:'done',
-   rec:'Hold at this level',
+   rec:'Hold at Current Level',
    why:'66% is the lowest in the cohort and it did not move after week 8. Repeating E1 with the calls she missed is the honest answer.',
    growth:'She finished 80% of the course while missing four calls, which took real work on her own.',
    develop:'The calls are the half she skipped and the scores show it. Repeating E1 with the group in the room is the whole of my recommendation.'}
@@ -27451,7 +27460,7 @@ S.ldrNotes = {
   'James Whitby':[{k:'develop', b:'Re-taking assessments rather than moving on. Told him on the call to leave three and four at 65 and come back after chapter 6 — the material builds, the score does not.', wk:4, d:'18 Sep 2026'},
                   {k:'strength', b:'Asked for the handover framework twice and put it straight to use on the delegation task. Slow to start, but he does the reading once he has the tool.', wk:3, d:'11 Sep 2026'}],
   'Owen Clarke':[{k:'strength', b:'Ran the Thursday call twice when I was out. Stepped in without being asked and kept the group on the agenda both times. The cohort listens to him.', wk:8, d:'6 Aug 2026'},
-                 {k:'develop', b:'Writes the answer before the working. Strong instincts, but the report skips how he got there. Asked him to show the steps so the next reader can follow the decision.', wk:9, d:'13 Aug 2026'}],
+                 {k:'develop', b:'Writes the answer before showing the working. His instincts are strong, but the report skips how he reached his conclusion. I asked him to show the steps so others can follow his reasoning.', wk:9, d:'13 Aug 2026'}],
   'Lena Fischer':[{k:'develop', b:'Quiet on calls, thorough on the board. Rarely speaks up live, but her written feedback to peers is the most detailed in the cohort. Worth drawing out in the room.', wk:7, d:'30 Jul 2026'}]
 };
 const LEAD_TODAY = '29 Sep 2026';
@@ -27552,11 +27561,11 @@ function ldrNoteReadRow(n){
 function ldrNotesRead(name){
   const notes = lnotes(name);
   if(!notes.length) return '';
-  const groups = [['strength','Strengths'],['develop','Areas to develop']];
+  const groups = [['strength','Strengths'],['develop','Areas for Development']];
   return groups.map(([k,label])=>{
     const rows = notes.filter(n => (n.k||'develop') === k);
     if(!rows.length) return '';
-    return `<div class="note-group"><h3 class="note-group-h">${label}</h3>
+    return `<div class="note-group"><h3 class="note-group-h" style="color:var(--text-primary)">${label}</h3>
       <div class="note-list">${rows.map(ldrNoteReadRow).join('')}</div></div>`;
   }).join('');
 }
@@ -29185,8 +29194,8 @@ V.leadEvals = () => {
   ${ph('Evaluations')}
   <div class="sec sec-cs lead-evtabs">
     <div class="cs">
-      <button class="${tab === 'awaiting' ? 'on' : ''}" data-ldrevtab="awaiting">Awaiting Evaluations${ps.length ? ` <span class="lf-n">${ps.length}</span>` : ''}</button>
-      <button class="${tab === 'evaluated' ? 'on' : ''}" data-ldrevtab="evaluated">Evaluated Candidates${published.length ? ` <span class="lf-n">${published.length}</span>` : ''}</button>
+      <button class="${tab === 'awaiting' ? 'on' : ''}" data-ldrevtab="awaiting">Awaiting Evaluation${ps.length ? ` <span class="lf-n">${ps.length}</span>` : ''}</button>
+      <button class="${tab === 'evaluated' ? 'on' : ''}" data-ldrevtab="evaluated">Evaluations Completed${published.length ? ` <span class="lf-n">${published.length}</span>` : ''}</button>
     </div>
   </div>
   ${tab === 'awaiting'
@@ -29196,11 +29205,11 @@ V.leadEvals = () => {
 };
 
 const LDR_RECS = [
-  ['promote',  'Ready to promote',        'The end 90 days are built for.',        '--support-success-ink'],
-  ['promote2', 'Promote two levels',      'More than 90 days can normally move.',  '--support-success-ink'],
-  ['hold',     'Hold at this level',      'Another 90 days at the same level.',    '--support-attention'],
-  ['down',     'Move down a level',       'The level was set too high.',           '--danger-ink'],
-  ['notready', 'Not ready to re-interview','Not enough here to assess yet.',       '']];
+  ['promote',  'Promote by One Level',        'The end 90 days are built for.',        '--support-success-ink'],
+  ['promote2', 'Promote by Two Levels',      'More than 90 days can normally move.',  '--support-success-ink'],
+  ['hold',     'Hold at Current Level',      'Another 90 days at the same level.',    '--support-attention'],
+  ['down',     'Move Down One Level',       'The level was set too high.',           '--danger-ink'],
+  ['notready', 'Not Ready for Re-Interview','Not enough here to assess yet.',       '']];
 
 const ldrRecHue = rec => (LDR_RECS.filter(r => r[1] === rec)[0] || [])[3] || '';
 const ldrRecTag = rec => { const h = ldrRecHue(rec);
@@ -29233,10 +29242,10 @@ V.leadSum = () => {
       <span class="av-ph" style="width:72px;height:72px"><i>${s.i}</i><img src="${AV[s.img]}" alt=""></span>
       <div class="idhead-b">
         <span class="idname">${s.name}</span>
-        <span class="idmeta">${lname(c)} &middot; 90 days complete</span>
-        <span class="tag sm">${llevel(c)}</span>
+        <span class="idmeta">${lname(c)} &middot; 90-day journey complete</span>
+        <span class="tag sm">${llevel(c).replace(' &ndash; ', ' &middot; ')}</span>
       </div>
-      <div class="idhead-a"><button class="btn btn-g" data-ldrco="${c.id}" data-ldrmem="${s.name}" data-go="leadMember">View Candidates Progress ${I.arrowRight}</button></div>
+      <div class="idhead-a"><button class="btn btn-g" data-ldrco="${c.id}" data-ldrmem="${s.name}" data-go="leadMember">View Candidate Progress ${I.arrowRight}</button></div>
     </div>
   </div>
   ${''/* NO "read-only" HELPER AND NO FOOT DIVIDER (Maryam, 9 Sep 2026: "remove
@@ -29244,19 +29253,18 @@ V.leadSum = () => {
          below 4 cards"). `sec-noline` drops §10.2's foot hairline so the figures
          run straight into "Your recommendation". */}
   <div class="sec sec-noline">
-    <div class="sec-h"><h2>What the 90 days produced</h2></div>
+    <div class="sec-h"><h2>90-Day Performance</h2></div>
     <div class="stats">
-      ${statCell(I.book,  'Chapters', lchDone(m) + '<small> of 13</small>', m.pc + '% complete')}
-      ${statCell(I.chart, 'Assessment average', m.avg + '<small>%</small>', m.avg >= 85 ? 'well above the pass mark' : 'above the pass mark')}
-      ${statCell(I.time,  'Time on the course', lhrs(lmins(m)), Math.round(lmins(m)/lchDone(m)) + ' min a chapter')}
-      ${statCell(I.renew, 'Chapters retaken', retakes, m.att.toFixed(1) + ' attempts on average')}
+      ${statCell(I.book,  'Chapters Completed', lchDone(m) + '<small> of 13</small>', m.pc + '% complete')}
+      ${statCell(I.chart, 'Assessment Average', m.avg + '<small>%</small>', m.avg >= 85 ? 'Well above the pass mark' : 'Above the pass mark')}
+      ${statCell(I.time,  'Learning Time', lhrs(lmins(m)), Math.round(lmins(m)/lchDone(m)) + 'min per chapter')}
+      ${statCell(I.renew, 'Chapter Retakes', retakes, 'Completed chapters')}
     </div>
   </div>
   ${''/* EPIC 12.9 — attendance, read-only, from the register the platform keeps.
          Sessions with no participation data are left out of both figures. */}
   ${(() => { const a = leadAttn(m, c); return `<div class="sec sec-noline">
-    <div class="sec-h"><h2>Attendance</h2></div>
-    <div class="kv"><span class="k">Sessions attended</span><span class="v">${a.held ? a.att + ' of ' + a.held + ' since they joined' : 'no sessions held'}</span></div>
+    <div class="att-stack" style="display:flex;flex-direction:column;gap:var(--s02)"><span class="t-label" style="color:var(--text-secondary)">Session Attendance</span><span class="t-body" style="color:var(--text-primary)">${a.held ? a.att + ' of ' + a.held + ' sessions attended' : 'No sessions held'}</span></div>
   </div>`; })()}
   ${''/* THE LEADER'S OWN NOTES ON THIS CANDIDATE (Maryam, 9 Sep 2026: "there
          needs to be a section of the notes taken by the cohort leader about this
@@ -29269,7 +29277,7 @@ V.leadSum = () => {
          private notes). Nothing when the candidate has no notes yet. */}
   ${lnotes(s.name).length ? `
   <div class="sec">
-    <div class="sec-h"><h2>Your notes on ${first}</h2></div>
+    <div class="sec-h"><h2>Your Observations</h2></div>
     ${ldrNotesRead(s.name)}
   </div>` : ''}
   ${/* ONE BAND OF FIGURES, NOT TWO. A `.facts` row of four sat directly under
@@ -29295,7 +29303,7 @@ V.leadSum = () => {
         tint either, so the two states of this page now stand on the same
         ground. */''}
   <div class="sec">
-    <div class="sec-h"><h2>Your recommendation</h2></div>
+    <div class="sec-h"><h2>Your Recommendation</h2></div>
     <div class="tile">
       ${/* THE CHOICE IS A RADIO LIST, NOT A BUTTON STRIP (Maryam, 2 Sep 2026:
             "instead of arrows and full button type selection, give radio buttons
@@ -29317,7 +29325,8 @@ V.leadSum = () => {
             "Why not a promotion?" box below is a consequence of this answer, and
             a five-across strip put the cause and the effect on the same line. */''}
       <div class="f">
-        <label>Where ${first} stands after 90 days</label>
+        <label>Where ${first} Stands After 90 Days</label>
+        <p class="t-desc" style="margin-bottom:var(--s04)">Choose the recommendation that best reflects ${first}&rsquo;s progress and readiness for the next stage.</p>
         <div class="ldr-recs">
           ${LDR_RECS.map(([k,l]) => `<label class="rad ldr-rec" data-ldrrec="${k}"><input type="radio" name="ldrrec"${rec === k ? ' checked' : ''}><span class="box"></span><span class="txt">${l}</span></label>`).join('')}
         </div>
@@ -29333,11 +29342,12 @@ V.leadSum = () => {
           ? 'A double promotion is you saying 90 days did more than they are built to. Say why, and it goes on the summary the next agent reads.'
           : 'Anything other than a promotion is you saying the 90 days did not do what they were meant to. Say why, and it goes on the summary.'}</div></div>` : ''}
       ` : ''}
-      <div class="f mt5"><label for="ldrGrowth">Where they grew${S.ldrGrowErr?' <span class="f-req-err">Required</span>':''}</label>
-        <textarea class="inp" id="ldrGrowth" rows="3" maxlength="2000" placeholder="What changed over the 90 days that the numbers above do not show."></textarea></div>
-      <div class="f mt5"><label for="ldrDev">Still to develop${S.ldrDevErr?' <span class="f-req-err">Required</span>':''}</label>
-        <textarea class="inp" id="ldrDev" rows="3" maxlength="2000" placeholder="What the next 90 days, or the re-interview, should look at."></textarea></div>
-      <p class="t-helper-01">Published to ${first} and to whichever agent runs their re-interview. Your private notes stay private.</p>
+      <h3 class="t-h4 mt6">Growth &amp; Development</h3>
+      <div class="f mt5"><label for="ldrGrowth">Where ${first} Grew${S.ldrGrowErr?' <span class="f-req-err">Required</span>':''}</label>
+        <textarea class="inp" id="ldrGrowth" rows="3" maxlength="2000" placeholder="What changed over the 90 days that the performance metrics alone don&rsquo;t capture?"></textarea></div>
+      <div class="f mt5"><label for="ldrDev">Areas to Develop Next${S.ldrDevErr?' <span class="f-req-err">Required</span>':''}</label>
+        <textarea class="inp" id="ldrDev" rows="3" maxlength="2000" placeholder="What should the next 90 days or re-interview focus on?"></textarea></div>
+      <div class="note mt5"><span>${I.info}</span><div class="nb"><b>Before You Submit</b><span style="color:var(--text-secondary)">Your recommendation will be shared with ${first} and the agent conducting the re-interview. Your private notes will remain confidential.</span></div></div>
     </div>
     ${/* ONE BUTTON, AND ITS WORDS ARE THE ACT (Maryam, 2 Sep 2026). "Send
           Recommendation" rather than "Publish the summary": the section above it
@@ -29353,8 +29363,8 @@ V.leadSum = () => {
           drawn. `.btn-set` stays on the wrapper for the spacing even with one
           child, which is what `.mt5` is measured against. */''}
     <div class="btn-set mt5 ldr-eval-a">
-      <button class="btn btn-s" data-ldrdraft="${s.id}">Save draft</button>
-      <button class="btn btn-p" data-ldrpub="${s.id}">Send Recommendation</button>
+      <button class="btn btn-s noic" data-ldrdraft="${s.id}">Save Draft</button>
+      <button class="btn btn-p" data-ldrpub="${s.id}">Send Evaluation</button>
     </div>
     ${S.ldrDraftSaved === s.id ? `<p class="ldr-draft-note">Draft saved. ${first} stays in Awaiting until you send it.</p>` : ''}
   </div>
@@ -29395,23 +29405,24 @@ V.leadSum = () => {
       <span class="av-ph" style="width:72px;height:72px"><i>${s.i}</i><img src="${AV[s.img]}" alt=""></span>
       <div class="idhead-b">
         <span class="idname">${s.name} ${ldrRecTag(s.rec)}</span>
-        <span class="idmeta">${lname(c)} &middot; 90 days complete</span>
-        <span class="tag sm">${llevel(c)}</span>
+        <span class="idmeta">${lname(c)} &middot; 90-day journey complete</span>
+        <span class="tag sm">${llevel(c).replace(' &ndash; ', ' &middot; ')}</span>
       </div>
-      <div class="idhead-a"><button class="btn btn-g" data-ldrco="${c.id}" data-ldrmem="${s.name}" data-go="leadMember">View Candidates Progress ${I.arrowRight}</button></div>
+      <div class="idhead-a"><button class="btn btn-g" data-ldrco="${c.id}" data-ldrmem="${s.name}" data-go="leadMember">View Candidate Progress ${I.arrowRight}</button></div>
     </div>
   </div>
   <div class="sec sec-noline">
+    <div class="sec-h"><h2>90-Day Performance</h2></div>
     <div class="stats">
-      ${statCell(I.book,  'Overall progress', m.pc + '<small>%</small>', lchDone(m) + ' of 13 chapters')}
-      ${statCell(I.chart, 'Assessment average', m.avg + '<small>%</small>', m.avg >= 85 ? 'well above the pass mark' : 'above the pass mark')}
-      ${statCell(I.time,  'Time on the course', lhrs(lmins(m)), Math.round(lmins(m)/Math.max(1,lchDone(m))) + ' min a chapter')}
-      ${statCell(I.renew, 'Chapters retaken', retakes, m.att.toFixed(1) + ' attempts on average')}
+      ${statCell(I.book,  'Overall Progress', m.pc + '<small>%</small>', lchDone(m) + '/13 chapters')}
+      ${statCell(I.chart, 'Assessment Average', m.avg + '<small>%</small>', m.avg >= 85 ? 'Well above pass mark' : 'Above pass mark')}
+      ${statCell(I.time,  'Learning Time', lhrs(lmins(m)), Math.round(lmins(m)/Math.max(1,lchDone(m))) + 'm/chapter')}
+      ${statCell(I.renew, 'Chapter Retakes', retakes, 'chapters')}
     </div>
   </div>
   <div class="sec">
     <div class="sump-b">
-      <div class="sec-h"><h2>Your recommendation</h2></div>
+      <div class="sec-h"><h2 style="font-size:var(--t-sec-size);line-height:var(--t-sec-lh)">Your Evaluation</h2></div>
         ${''/* NO GREEN BANNER (Maryam, 7 Oct 2026: "remove the green banner and
               show a ready to promote chip next to the name just like we have on
               the previous page"). The recommendation is `ldrRecTag(s.rec)` beside
@@ -29427,10 +29438,10 @@ V.leadSum = () => {
               recommendation is not a promotion, so it is the one that can be
               absent on a legitimate record. */''}
         <div class="sump-prose">
-          ${s.why ? `<div class="sump-p"><h3>${s.rec === 'Promote two levels'
+          ${s.why ? `<div class="sump-p"><h3>${s.rec === 'Promote by Two Levels'
             ? 'Why two levels' : 'Why this rather than a promotion'}</h3><p>${s.why}</p></div>` : ''}
-          ${s.growth ? `<div class="sump-p"><h3>Where they grew</h3><p>${s.growth}</p></div>` : ''}
-          ${s.develop ? `<div class="sump-p"><h3>Still to develop</h3><p>${s.develop}</p></div>` : ''}
+          ${s.growth ? `<div class="sump-p"><h3>Where ${s.name.split(' ')[0]} Grew</h3><p>${s.growth}</p></div>` : ''}
+          ${s.develop ? `<div class="sump-p"><h3>Areas to Develop Next</h3><p>${s.develop}</p></div>` : ''}
           ${!s.why && !s.growth && !s.develop
             ? `<p class="t-helper-01">No notes were added to this summary.</p>` : ''}
         </div>
@@ -29511,7 +29522,7 @@ function leadEvalConfirmSheet(){
       </div>
       <div class="sheet-f conf-a">
         <button class="btn btn-s noic" data-epclose="1">Cancel</button>
-        <button class="btn btn-p noic" data-ldrdopub="${id}">Send Recommendation</button>
+        <button class="btn btn-p noic" data-ldrdopub="${id}">Send Evaluation</button>
       </div>
     </div>
   </div>`;
@@ -29959,26 +29970,25 @@ V.leadProfile = () => `<main class="main"><div class="page">
               'Volunteer cohort leader · ' and make the next word 'Leading' L
               capital"). The unpaid/volunteer fact lives elsewhere; the sub-line
               is the tenure. */}
-        <span class="idmeta">Leading since ${LEADER.since}</span>
+        <span class="idmeta">Leading since ${LEADER.since} · Assesses ${LEADER.range}</span>
         ${''/* THE ASSESS RANGE IS A BORDERLESS LINE, LEFT-ALIGNED WITH THE NAME
               (Maryam, 9 Sep 2026: "remove the border of Assesses E1–E3 and align
               it with other above content"). It was a `.tag sm` chip, indented by
               its own border and padding; a plain `.idmeta` line sits at the same
               left edge as the name and the tenure. */}
-        <span class="idmeta">Assesses ${LEADER.range}</span>
       </div>
-      <div class="idhead-a"><button class="btn btn-g" data-ldrprof="1">Edit details ${I.edit}</button></div>
+      <div class="idhead-a"><button class="btn btn-g" data-ldrprof="1">Edit Profile ${I.edit}</button></div>
     </div>
     <div class="facts pf-facts">
-      ${pfFact(I.star, '--mk-2', 'Candidate rating', '4.9')}
-      ${pfFact(I.group, '--mk-1', 'Cohorts led', '8')}
-      ${pfFact(I.chart, '--mk-3', 'Completion rate', '84%')}
-      ${pfFact(I.growth, '--mk-4', 'Level movement', '+0.8 levels')}
+      ${pfFact(I.starOutline, '--mk-2', 'Candidate Rating', '4.9')}
+      ${pfFact(I.group, '--mk-1', 'Cohorts Led', '8')}
+      ${pfFact(I.chart, '--mk-3', 'Completion Rate', '84%')}
+      ${pfFact(I.growth, '--mk-4', 'Average Level Movement', '+0.8 levels')}
     </div>
   </div>
   <div class="sec">
     <div class="sec-h"><h2>About</h2></div>
-    <p class="t-body pfe-about">${LEADER.bio}</p>
+    ${LEADER.bio.split('\n\n').map(t => `<p class="t-body pfe-about">${t}</p>`).join('')}
   </div>
   ${''/* SPECIALITIES ON THE GENERAL TAB TOO (Maryam, 9 Sep 2026: "the cohort
          leader profile should have specialities as well"). The same `.skl` chip
@@ -30027,7 +30037,7 @@ V.leadProfile = () => `<main class="main"><div class="page">
   </div>
   <div class="sec sec-noline">
     <div class="sec-h"><h2>About</h2></div>
-    <p class="t-body pfe-about">${LEADER.bio}</p>
+    ${LEADER.bio.split('\n\n').map(t => `<p class="t-body pfe-about">${t}</p>`).join('')}
   </div>
   <div class="sec">
     <div class="sec-h"><h2>Specialities</h2></div>
@@ -30037,28 +30047,28 @@ V.leadProfile = () => `<main class="main"><div class="page">
   ${S.ldrPfTab === 'notif' ? `
   <div class="sec">
     <div class="sec-h"><h2>Notifications</h2></div>
-    <label class="tg"><div class="tb"><b>A candidate goes quiet</b><span>After four days without a sign-in</span></div><input type="checkbox" checked><span class="sw"></span></label>
-    <label class="tg"><div class="tb"><b>A cohort call is an hour away</b><span>One reminder, on the day</span></div><input type="checkbox" checked><span class="sw"></span></label>
-    <label class="tg"><div class="tb"><b>Posts on a cohort board</b><span>A daily digest rather than each one</span></div><input type="checkbox" checked><span class="sw"></span></label>
-    <label class="tg"><div class="tb"><b>Summary reminders</b><span>A week before a cohort reaches day 90</span></div><input type="checkbox"><span class="sw"></span></label>
+    <label class="tg"><div class="tb"><b>Candidate Inactivity</b><span>Notify me when a candidate hasn’t signed in for four days.</span></div><input type="checkbox" checked><span class="sw"></span></label>
+    <label class="tg"><div class="tb"><b>Upcoming Cohort Call</b><span>Send one reminder an hour before a cohort call.</span></div><input type="checkbox" checked><span class="sw"></span></label>
+    <label class="tg"><div class="tb"><b>Cohort Board Activity</b><span>Send a daily digest of new cohort posts.</span></div><input type="checkbox" checked><span class="sw"></span></label>
+    <label class="tg"><div class="tb"><b>90-Day Summary Reminder</b><span>Remind me one week before a cohort reaches day 90.</span></div><input type="checkbox"><span class="sw"></span></label>
   </div>` : ''}
 
   ${S.ldrPfTab === 'privacy' ? `
   <div class="sec">
-    <div class="sec-h"><h2>Sign in and security</h2></div>
+    <div class="sec-h"><h2>Sign-In &amp; Security</h2></div>
     <div class="tile-stack">
       <div class="cardrow pfe-row pf-sr">
         <span class="pf-sr-ic" style="--mk:var(--mk-1)">${I.email}</span>
         <span class="cardrow-b"><span class="cardrow-t">${LEADER.email}</span>
-          <span class="cardrow-d">The address you sign in with &middot; change it under General Profile</span></span>
+          <span class="cardrow-d">Your email address is used to sign in and cannot be changed.</span></span>
       </div>
       <div class="cardrow pfe-row pf-sr">
         <span class="pf-sr-ic" style="--mk:var(--mk-3)">${I.locked}</span>
         <span class="cardrow-b"><span class="cardrow-t">Password</span>
-          <span class="cardrow-d">Last changed ${PF_PW_SET}</span></span>
+          <span class="cardrow-d">Last changed ${PF_PW_SET}.</span></span>
         ${S.pfPw
           ? `<button class="btn btn-g btn-sm" data-pfpw="0">Cancel ${I.close}</button>`
-          : `<button class="btn btn-g btn-sm" data-pfpw="1">Reset password ${I.renew}</button>`}
+          : `<button class="btn btn-g btn-sm noic" data-pfpw="1">${I.renew} Reset Password</button>`}
       </div>
     </div>
     ${S.pfPw ? `
@@ -30073,11 +30083,11 @@ V.leadProfile = () => `<main class="main"><div class="page">
     </div>` : ''}
   </div>
   <div class="sec">
-    <div class="sec-h"><h2>Closing your account</h2></div>
+    <div class="sec-h"><h2>Close Your Account</h2></div>
     <div class="close-b">
-      <p class="t-body close-x">Deleting your account removes your profile, your cohort notes and the record of everything you have led. Certificates you have already earned stay valid and stay downloadable.</p>
+      <p class="t-body close-x">Deleting your account permanently removes your profile, cohort notes, and leadership history. Any certificates you’ve earned remain valid and available to download.</p>
       <div class="close-a">
-        <button class="btn btn-t danger" data-del="1">Delete my account ${I.misuse}</button>
+        <button class="btn btn-p danger" data-del="1">Delete Account</button>
       </div>
     </div>
   </div>` : ''}
@@ -30102,7 +30112,7 @@ function ldrProfileSheet(){
         <div class="f"><label for="ldrPs">Specialism</label>
           <input class="inp" id="ldrPs" value="Operations teams, first-line leadership"></div>
         <div class="f"><label for="ldrPb">Bio shown on your card</label>
-          <textarea class="inp" id="ldrPb" rows="3">Fifteen years running operations teams. I am direct, I move quickly, and I do not pad feedback — if something is not working I will say so in the first ten minutes.</textarea></div>
+          <textarea class="inp" id="ldrPb" rows="8">${LEADER.bio}</textarea></div>
         <div class="f"><label for="ldrPl">Cohort call length</label>
           <select class="inp" id="ldrPl"><option>60 minutes</option><option>45 minutes</option><option>90 minutes</option></select></div>
         <p class="t-helper-01">Your assessing range comes from your certifications and cannot be set here.</p>
@@ -30550,7 +30560,9 @@ const PAGESUM = {
     const s0 = ps[0];
     if(!ps.length) return 'Nothing is waiting on your signature. Every 90-day summary is published.';
     const size = _w(lcoOf(s0.cohort).members.length);
-    return `${_W(ps.length)} of Cohort ${s0.cohort}&rsquo;s ${size} 90-day summaries ${ps.length === 1 ? 'is' : 'are'} still waiting on you. ${s0.name}&rsquo;s numbers are the argument; the recommendation is the part only you can write.`;
+    const scs = ps.map(x => `${x.name} scored ${(lmemOf(lcoOf(x.cohort), x.name) || {}).avg}%`);
+    const who = scs.length < 3 ? scs.join(', and ') : scs.slice(0,-1).join(', ') + ', and ' + scs[scs.length-1];
+    return `${_W(ps.length)} of Cohort ${s0.cohort}&rsquo;s ${size} candidates ${ps.length === 1 ? 'is' : 'are'} awaiting evaluation. ${who}. Review their progress and submit your ${ps.length === 1 ? 'recommendation' : 'recommendations'} to move them forward.`;
   },
 
   leadSum: () => {
@@ -30604,7 +30616,7 @@ const PAGESUM = {
 
   leadCerts: () => `${_W(LDR_CERTS.length)} earned and one in progress, off eight cohorts led. Candidate Mentoring is the open one, and it opens the Builder band.`,
 
-  leadProfile: 'Your listing is what candidates read when they choose you. The bio is yours to write, the assessing range comes from your certifications. The rest is the account behind it.'
+  leadProfile: 'Your public profile helps candidates decide if you’re the right fit. Update your bio and <b>specialities</b>, while your certifications determine the levels you can assess.'
 };
 
 function pageSummary(){

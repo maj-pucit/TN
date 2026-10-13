@@ -609,8 +609,8 @@ V.leadEvals = () => {
   ${ph('Evaluations')}
   <div class="sec sec-cs lead-evtabs">
     <div class="cs">
-      <button class="${tab === 'awaiting' ? 'on' : ''}" data-ldrevtab="awaiting">Awaiting Evaluations${ps.length ? ` <span class="lf-n">${ps.length}</span>` : ''}</button>
-      <button class="${tab === 'evaluated' ? 'on' : ''}" data-ldrevtab="evaluated">Evaluated Candidates${published.length ? ` <span class="lf-n">${published.length}</span>` : ''}</button>
+      <button class="${tab === 'awaiting' ? 'on' : ''}" data-ldrevtab="awaiting">Awaiting Evaluation${ps.length ? ` <span class="lf-n">${ps.length}</span>` : ''}</button>
+      <button class="${tab === 'evaluated' ? 'on' : ''}" data-ldrevtab="evaluated">Evaluations Completed${published.length ? ` <span class="lf-n">${published.length}</span>` : ''}</button>
     </div>
   </div>
   ${tab === 'awaiting'
@@ -698,11 +698,11 @@ V.leadEvals = () => {
    The empty string is what `ldrRecTag` reads, so no `--mk` is written and
    nothing in §31.6 matches. */
 const LDR_RECS = [
-  ['promote',  'Ready to promote',        'The end 90 days are built for.',        '--support-success-ink'],
-  ['promote2', 'Promote two levels',      'More than 90 days can normally move.',  '--support-success-ink'],
-  ['hold',     'Hold at this level',      'Another 90 days at the same level.',    '--support-attention'],
-  ['down',     'Move down a level',       'The level was set too high.',           '--danger-ink'],
-  ['notready', 'Not ready to re-interview','Not enough here to assess yet.',       '']];
+  ['promote',  'Promote by One Level',        'The end 90 days are built for.',        '--support-success-ink'],
+  ['promote2', 'Promote by Two Levels',      'More than 90 days can normally move.',  '--support-success-ink'],
+  ['hold',     'Hold at Current Level',      'Another 90 days at the same level.',    '--support-attention'],
+  ['down',     'Move Down One Level',       'The level was set too high.',           '--danger-ink'],
+  ['notready', 'Not Ready for Re-Interview','Not enough here to assess yet.',       '']];
 
 /* THE CHIP, KEYED ON THE LABEL BECAUSE THAT IS WHAT THE RECORD HOLDS.
    `LEAD_SUMMARIES[].rec` is the string a leader chose ("Ready to promote"),
@@ -817,10 +817,10 @@ V.leadSum = () => {
       <span class="av-ph" style="width:72px;height:72px"><i>${s.i}</i><img src="${AV[s.img]}" alt=""></span>
       <div class="idhead-b">
         <span class="idname">${s.name}</span>
-        <span class="idmeta">${lname(c)} &middot; 90 days complete</span>
-        <span class="tag sm">${llevel(c)}</span>
+        <span class="idmeta">${lname(c)} &middot; 90-day journey complete</span>
+        <span class="tag sm">${llevel(c).replace(' &ndash; ', ' &middot; ')}</span>
       </div>
-      <div class="idhead-a"><button class="btn btn-g" data-ldrco="${c.id}" data-ldrmem="${s.name}" data-go="leadMember">View Candidates Progress ${I.arrowRight}</button></div>
+      <div class="idhead-a"><button class="btn btn-g" data-ldrco="${c.id}" data-ldrmem="${s.name}" data-go="leadMember">View Candidate Progress ${I.arrowRight}</button></div>
     </div>
   </div>
   ${''/* NO "read-only" HELPER AND NO FOOT DIVIDER (Maryam, 9 Sep 2026: "remove
@@ -828,19 +828,18 @@ V.leadSum = () => {
          below 4 cards"). `sec-noline` drops §10.2's foot hairline so the figures
          run straight into "Your recommendation". */}
   <div class="sec sec-noline">
-    <div class="sec-h"><h2>What the 90 days produced</h2></div>
+    <div class="sec-h"><h2>90-Day Performance</h2></div>
     <div class="stats">
-      ${statCell(I.book,  'Chapters', lchDone(m) + '<small> of 13</small>', m.pc + '% complete')}
-      ${statCell(I.chart, 'Assessment average', m.avg + '<small>%</small>', m.avg >= 85 ? 'well above the pass mark' : 'above the pass mark')}
-      ${statCell(I.time,  'Time on the course', lhrs(lmins(m)), Math.round(lmins(m)/lchDone(m)) + ' min a chapter')}
-      ${statCell(I.renew, 'Chapters retaken', retakes, m.att.toFixed(1) + ' attempts on average')}
+      ${statCell(I.book,  'Chapters Completed', lchDone(m) + '<small> of 13</small>', m.pc + '% complete')}
+      ${statCell(I.chart, 'Assessment Average', m.avg + '<small>%</small>', m.avg >= 85 ? 'Well above the pass mark' : 'Above the pass mark')}
+      ${statCell(I.time,  'Learning Time', lhrs(lmins(m)), Math.round(lmins(m)/lchDone(m)) + 'min per chapter')}
+      ${statCell(I.renew, 'Chapter Retakes', retakes, 'Completed chapters')}
     </div>
   </div>
   ${''/* EPIC 12.9 — attendance, read-only, from the register the platform keeps.
          Sessions with no participation data are left out of both figures. */}
   ${(() => { const a = leadAttn(m, c); return `<div class="sec sec-noline">
-    <div class="sec-h"><h2>Attendance</h2></div>
-    <div class="kv"><span class="k">Sessions attended</span><span class="v">${a.held ? a.att + ' of ' + a.held + ' since they joined' : 'no sessions held'}</span></div>
+    <div class="att-stack" style="display:flex;flex-direction:column;gap:var(--s02)"><span class="t-label" style="color:var(--text-secondary)">Session Attendance</span><span class="t-body" style="color:var(--text-primary)">${a.held ? a.att + ' of ' + a.held + ' sessions attended' : 'No sessions held'}</span></div>
   </div>`; })()}
   ${''/* THE LEADER'S OWN NOTES ON THIS CANDIDATE (Maryam, 9 Sep 2026: "there
          needs to be a section of the notes taken by the cohort leader about this
@@ -853,7 +852,7 @@ V.leadSum = () => {
          private notes). Nothing when the candidate has no notes yet. */}
   ${lnotes(s.name).length ? `
   <div class="sec">
-    <div class="sec-h"><h2>Your notes on ${first}</h2></div>
+    <div class="sec-h"><h2>Your Observations</h2></div>
     ${ldrNotesRead(s.name)}
   </div>` : ''}
   ${/* ONE BAND OF FIGURES, NOT TWO. A `.facts` row of four sat directly under
@@ -879,7 +878,7 @@ V.leadSum = () => {
         tint either, so the two states of this page now stand on the same
         ground. */''}
   <div class="sec">
-    <div class="sec-h"><h2>Your recommendation</h2></div>
+    <div class="sec-h"><h2>Your Recommendation</h2></div>
     <div class="tile">
       ${/* THE CHOICE IS A RADIO LIST, NOT A BUTTON STRIP (Maryam, 2 Sep 2026:
             "instead of arrows and full button type selection, give radio buttons
@@ -901,7 +900,8 @@ V.leadSum = () => {
             "Why not a promotion?" box below is a consequence of this answer, and
             a five-across strip put the cause and the effect on the same line. */''}
       <div class="f">
-        <label>Where ${first} stands after 90 days</label>
+        <label>Where ${first} Stands After 90 Days</label>
+        <p class="t-desc" style="margin-bottom:var(--s04)">Choose the recommendation that best reflects ${first}&rsquo;s progress and readiness for the next stage.</p>
         <div class="ldr-recs">
           ${LDR_RECS.map(([k,l]) => `<label class="rad ldr-rec" data-ldrrec="${k}"><input type="radio" name="ldrrec"${rec === k ? ' checked' : ''}><span class="box"></span><span class="txt">${l}</span></label>`).join('')}
         </div>
@@ -917,11 +917,12 @@ V.leadSum = () => {
           ? 'A double promotion is you saying 90 days did more than they are built to. Say why, and it goes on the summary the next agent reads.'
           : 'Anything other than a promotion is you saying the 90 days did not do what they were meant to. Say why, and it goes on the summary.'}</div></div>` : ''}
       ` : ''}
-      <div class="f mt5"><label for="ldrGrowth">Where they grew${S.ldrGrowErr?' <span class="f-req-err">Required</span>':''}</label>
-        <textarea class="inp" id="ldrGrowth" rows="3" maxlength="2000" placeholder="What changed over the 90 days that the numbers above do not show."></textarea></div>
-      <div class="f mt5"><label for="ldrDev">Still to develop${S.ldrDevErr?' <span class="f-req-err">Required</span>':''}</label>
-        <textarea class="inp" id="ldrDev" rows="3" maxlength="2000" placeholder="What the next 90 days, or the re-interview, should look at."></textarea></div>
-      <p class="t-helper-01">Published to ${first} and to whichever agent runs their re-interview. Your private notes stay private.</p>
+      <h3 class="t-h4 mt6">Growth &amp; Development</h3>
+      <div class="f mt5"><label for="ldrGrowth">Where ${first} Grew${S.ldrGrowErr?' <span class="f-req-err">Required</span>':''}</label>
+        <textarea class="inp" id="ldrGrowth" rows="3" maxlength="2000" placeholder="What changed over the 90 days that the performance metrics alone don&rsquo;t capture?"></textarea></div>
+      <div class="f mt5"><label for="ldrDev">Areas to Develop Next${S.ldrDevErr?' <span class="f-req-err">Required</span>':''}</label>
+        <textarea class="inp" id="ldrDev" rows="3" maxlength="2000" placeholder="What should the next 90 days or re-interview focus on?"></textarea></div>
+      <div class="note mt5"><span>${I.info}</span><div class="nb"><b>Before You Submit</b><span style="color:var(--text-secondary)">Your recommendation will be shared with ${first} and the agent conducting the re-interview. Your private notes will remain confidential.</span></div></div>
     </div>
     ${/* ONE BUTTON, AND ITS WORDS ARE THE ACT (Maryam, 2 Sep 2026). "Send
           Recommendation" rather than "Publish the summary": the section above it
@@ -937,8 +938,8 @@ V.leadSum = () => {
           drawn. `.btn-set` stays on the wrapper for the spacing even with one
           child, which is what `.mt5` is measured against. */''}
     <div class="btn-set mt5 ldr-eval-a">
-      <button class="btn btn-s" data-ldrdraft="${s.id}">Save draft</button>
-      <button class="btn btn-p" data-ldrpub="${s.id}">Send Recommendation</button>
+      <button class="btn btn-s noic" data-ldrdraft="${s.id}">Save Draft</button>
+      <button class="btn btn-p" data-ldrpub="${s.id}">Send Evaluation</button>
     </div>
     ${S.ldrDraftSaved === s.id ? `<p class="ldr-draft-note">Draft saved. ${first} stays in Awaiting until you send it.</p>` : ''}
   </div>
@@ -979,23 +980,24 @@ V.leadSum = () => {
       <span class="av-ph" style="width:72px;height:72px"><i>${s.i}</i><img src="${AV[s.img]}" alt=""></span>
       <div class="idhead-b">
         <span class="idname">${s.name} ${ldrRecTag(s.rec)}</span>
-        <span class="idmeta">${lname(c)} &middot; 90 days complete</span>
-        <span class="tag sm">${llevel(c)}</span>
+        <span class="idmeta">${lname(c)} &middot; 90-day journey complete</span>
+        <span class="tag sm">${llevel(c).replace(' &ndash; ', ' &middot; ')}</span>
       </div>
-      <div class="idhead-a"><button class="btn btn-g" data-ldrco="${c.id}" data-ldrmem="${s.name}" data-go="leadMember">View Candidates Progress ${I.arrowRight}</button></div>
+      <div class="idhead-a"><button class="btn btn-g" data-ldrco="${c.id}" data-ldrmem="${s.name}" data-go="leadMember">View Candidate Progress ${I.arrowRight}</button></div>
     </div>
   </div>
   <div class="sec sec-noline">
+    <div class="sec-h"><h2>90-Day Performance</h2></div>
     <div class="stats">
-      ${statCell(I.book,  'Overall progress', m.pc + '<small>%</small>', lchDone(m) + ' of 13 chapters')}
-      ${statCell(I.chart, 'Assessment average', m.avg + '<small>%</small>', m.avg >= 85 ? 'well above the pass mark' : 'above the pass mark')}
-      ${statCell(I.time,  'Time on the course', lhrs(lmins(m)), Math.round(lmins(m)/Math.max(1,lchDone(m))) + ' min a chapter')}
-      ${statCell(I.renew, 'Chapters retaken', retakes, m.att.toFixed(1) + ' attempts on average')}
+      ${statCell(I.book,  'Overall Progress', m.pc + '<small>%</small>', lchDone(m) + '/13 chapters')}
+      ${statCell(I.chart, 'Assessment Average', m.avg + '<small>%</small>', m.avg >= 85 ? 'Well above pass mark' : 'Above pass mark')}
+      ${statCell(I.time,  'Learning Time', lhrs(lmins(m)), Math.round(lmins(m)/Math.max(1,lchDone(m))) + 'm/chapter')}
+      ${statCell(I.renew, 'Chapter Retakes', retakes, 'chapters')}
     </div>
   </div>
   <div class="sec">
     <div class="sump-b">
-      <div class="sec-h"><h2>Your recommendation</h2></div>
+      <div class="sec-h"><h2 style="font-size:var(--t-sec-size);line-height:var(--t-sec-lh)">Your Evaluation</h2></div>
         ${''/* NO GREEN BANNER (Maryam, 7 Oct 2026: "remove the green banner and
               show a ready to promote chip next to the name just like we have on
               the previous page"). The recommendation is `ldrRecTag(s.rec)` beside
@@ -1011,10 +1013,10 @@ V.leadSum = () => {
               recommendation is not a promotion, so it is the one that can be
               absent on a legitimate record. */''}
         <div class="sump-prose">
-          ${s.why ? `<div class="sump-p"><h3>${s.rec === 'Promote two levels'
+          ${s.why ? `<div class="sump-p"><h3>${s.rec === 'Promote by Two Levels'
             ? 'Why two levels' : 'Why this rather than a promotion'}</h3><p>${s.why}</p></div>` : ''}
-          ${s.growth ? `<div class="sump-p"><h3>Where they grew</h3><p>${s.growth}</p></div>` : ''}
-          ${s.develop ? `<div class="sump-p"><h3>Still to develop</h3><p>${s.develop}</p></div>` : ''}
+          ${s.growth ? `<div class="sump-p"><h3>Where ${s.name.split(' ')[0]} Grew</h3><p>${s.growth}</p></div>` : ''}
+          ${s.develop ? `<div class="sump-p"><h3>Areas to Develop Next</h3><p>${s.develop}</p></div>` : ''}
           ${!s.why && !s.growth && !s.develop
             ? `<p class="t-helper-01">No notes were added to this summary.</p>` : ''}
         </div>
@@ -1125,7 +1127,7 @@ function leadEvalConfirmSheet(){
       </div>
       <div class="sheet-f conf-a">
         <button class="btn btn-s noic" data-epclose="1">Cancel</button>
-        <button class="btn btn-p noic" data-ldrdopub="${id}">Send Recommendation</button>
+        <button class="btn btn-p noic" data-ldrdopub="${id}">Send Evaluation</button>
       </div>
     </div>
   </div>`;

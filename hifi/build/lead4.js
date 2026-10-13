@@ -617,26 +617,25 @@ V.leadProfile = () => `<main class="main"><div class="page">
               'Volunteer cohort leader · ' and make the next word 'Leading' L
               capital"). The unpaid/volunteer fact lives elsewhere; the sub-line
               is the tenure. */}
-        <span class="idmeta">Leading since ${LEADER.since}</span>
+        <span class="idmeta">Leading since ${LEADER.since} · Assesses ${LEADER.range}</span>
         ${''/* THE ASSESS RANGE IS A BORDERLESS LINE, LEFT-ALIGNED WITH THE NAME
               (Maryam, 9 Sep 2026: "remove the border of Assesses E1–E3 and align
               it with other above content"). It was a `.tag sm` chip, indented by
               its own border and padding; a plain `.idmeta` line sits at the same
               left edge as the name and the tenure. */}
-        <span class="idmeta">Assesses ${LEADER.range}</span>
       </div>
-      <div class="idhead-a"><button class="btn btn-g" data-ldrprof="1">Edit details ${I.edit}</button></div>
+      <div class="idhead-a"><button class="btn btn-g" data-ldrprof="1">Edit Profile ${I.edit}</button></div>
     </div>
     <div class="facts pf-facts">
-      ${pfFact(I.star, '--mk-2', 'Candidate rating', '4.9')}
-      ${pfFact(I.group, '--mk-1', 'Cohorts led', '8')}
-      ${pfFact(I.chart, '--mk-3', 'Completion rate', '84%')}
-      ${pfFact(I.growth, '--mk-4', 'Level movement', '+0.8 levels')}
+      ${pfFact(I.starOutline, '--mk-2', 'Candidate Rating', '4.9')}
+      ${pfFact(I.group, '--mk-1', 'Cohorts Led', '8')}
+      ${pfFact(I.chart, '--mk-3', 'Completion Rate', '84%')}
+      ${pfFact(I.growth, '--mk-4', 'Average Level Movement', '+0.8 levels')}
     </div>
   </div>
   <div class="sec">
     <div class="sec-h"><h2>About</h2></div>
-    <p class="t-body pfe-about">${LEADER.bio}</p>
+    ${LEADER.bio.split('\n\n').map(t => `<p class="t-body pfe-about">${t}</p>`).join('')}
   </div>
   ${''/* SPECIALITIES ON THE GENERAL TAB TOO (Maryam, 9 Sep 2026: "the cohort
          leader profile should have specialities as well"). The same `.skl` chip
@@ -685,7 +684,7 @@ V.leadProfile = () => `<main class="main"><div class="page">
   </div>
   <div class="sec sec-noline">
     <div class="sec-h"><h2>About</h2></div>
-    <p class="t-body pfe-about">${LEADER.bio}</p>
+    ${LEADER.bio.split('\n\n').map(t => `<p class="t-body pfe-about">${t}</p>`).join('')}
   </div>
   <div class="sec">
     <div class="sec-h"><h2>Specialities</h2></div>
@@ -695,28 +694,28 @@ V.leadProfile = () => `<main class="main"><div class="page">
   ${S.ldrPfTab === 'notif' ? `
   <div class="sec">
     <div class="sec-h"><h2>Notifications</h2></div>
-    <label class="tg"><div class="tb"><b>A candidate goes quiet</b><span>After four days without a sign-in</span></div><input type="checkbox" checked><span class="sw"></span></label>
-    <label class="tg"><div class="tb"><b>A cohort call is an hour away</b><span>One reminder, on the day</span></div><input type="checkbox" checked><span class="sw"></span></label>
-    <label class="tg"><div class="tb"><b>Posts on a cohort board</b><span>A daily digest rather than each one</span></div><input type="checkbox" checked><span class="sw"></span></label>
-    <label class="tg"><div class="tb"><b>Summary reminders</b><span>A week before a cohort reaches day 90</span></div><input type="checkbox"><span class="sw"></span></label>
+    <label class="tg"><div class="tb"><b>Candidate Inactivity</b><span>Notify me when a candidate hasn’t signed in for four days.</span></div><input type="checkbox" checked><span class="sw"></span></label>
+    <label class="tg"><div class="tb"><b>Upcoming Cohort Call</b><span>Send one reminder an hour before a cohort call.</span></div><input type="checkbox" checked><span class="sw"></span></label>
+    <label class="tg"><div class="tb"><b>Cohort Board Activity</b><span>Send a daily digest of new cohort posts.</span></div><input type="checkbox" checked><span class="sw"></span></label>
+    <label class="tg"><div class="tb"><b>90-Day Summary Reminder</b><span>Remind me one week before a cohort reaches day 90.</span></div><input type="checkbox"><span class="sw"></span></label>
   </div>` : ''}
 
   ${S.ldrPfTab === 'privacy' ? `
   <div class="sec">
-    <div class="sec-h"><h2>Sign in and security</h2></div>
+    <div class="sec-h"><h2>Sign-In &amp; Security</h2></div>
     <div class="tile-stack">
       <div class="cardrow pfe-row pf-sr">
         <span class="pf-sr-ic" style="--mk:var(--mk-1)">${I.email}</span>
         <span class="cardrow-b"><span class="cardrow-t">${LEADER.email}</span>
-          <span class="cardrow-d">The address you sign in with &middot; change it under General Profile</span></span>
+          <span class="cardrow-d">Your email address is used to sign in and cannot be changed.</span></span>
       </div>
       <div class="cardrow pfe-row pf-sr">
         <span class="pf-sr-ic" style="--mk:var(--mk-3)">${I.locked}</span>
         <span class="cardrow-b"><span class="cardrow-t">Password</span>
-          <span class="cardrow-d">Last changed ${PF_PW_SET}</span></span>
+          <span class="cardrow-d">Last changed ${PF_PW_SET}.</span></span>
         ${S.pfPw
           ? `<button class="btn btn-g btn-sm" data-pfpw="0">Cancel ${I.close}</button>`
-          : `<button class="btn btn-g btn-sm" data-pfpw="1">Reset password ${I.renew}</button>`}
+          : `<button class="btn btn-g btn-sm noic" data-pfpw="1">${I.renew} Reset Password</button>`}
       </div>
     </div>
     ${S.pfPw ? `
@@ -731,11 +730,11 @@ V.leadProfile = () => `<main class="main"><div class="page">
     </div>` : ''}
   </div>
   <div class="sec">
-    <div class="sec-h"><h2>Closing your account</h2></div>
+    <div class="sec-h"><h2>Close Your Account</h2></div>
     <div class="close-b">
-      <p class="t-body close-x">Deleting your account removes your profile, your cohort notes and the record of everything you have led. Certificates you have already earned stay valid and stay downloadable.</p>
+      <p class="t-body close-x">Deleting your account permanently removes your profile, cohort notes, and leadership history. Any certificates you’ve earned remain valid and available to download.</p>
       <div class="close-a">
-        <button class="btn btn-t danger" data-del="1">Delete my account ${I.misuse}</button>
+        <button class="btn btn-p danger" data-del="1">Delete Account</button>
       </div>
     </div>
   </div>` : ''}
@@ -765,7 +764,7 @@ function ldrProfileSheet(){
         <div class="f"><label for="ldrPs">Specialism</label>
           <input class="inp" id="ldrPs" value="Operations teams, first-line leadership"></div>
         <div class="f"><label for="ldrPb">Bio shown on your card</label>
-          <textarea class="inp" id="ldrPb" rows="3">Fifteen years running operations teams. I am direct, I move quickly, and I do not pad feedback — if something is not working I will say so in the first ten minutes.</textarea></div>
+          <textarea class="inp" id="ldrPb" rows="8">${LEADER.bio}</textarea></div>
         <div class="f"><label for="ldrPl">Cohort call length</label>
           <select class="inp" id="ldrPl"><option>60 minutes</option><option>45 minutes</option><option>90 minutes</option></select></div>
         <p class="t-helper-01">Your assessing range comes from your certifications and cannot be set here.</p>
