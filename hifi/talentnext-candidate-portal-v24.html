@@ -18698,7 +18698,7 @@ login: () => `${authShell()}
         under the password, a "Remember me" box and one Log In button. `Log In`
         is the supplied casing (kept exactly). The button logs into the
         candidate dashboard (`data-loginas`). */}
-  ${ph('Log In','Enter your account details to successfully signin.')}
+  ${ph('Log In','Enter your credentials to access your account.')}
   <div class="sec sec-rule">
     <div class="f"><label for="lem">Email Address</label>
       <input class="inp fill" id="lem" type="email" placeholder="Enter your email address"></div>
@@ -18736,7 +18736,7 @@ login: () => `${authShell()}
 
 forgot: () => `${authShell('login')}
 <main class="main"><div class="page form-page">
-  ${ph('Reset Password','Enter your email address to receive password reset instructions.')}
+  ${ph('Reset Password','Enter your email address to receive instructions to reset your password.')}
   <div class="sec">
     <div class="f last"><label for="fem">Email address</label>
       <input class="inp fill" id="fem" type="email" value="maryam.naz@tkxel.io"></div>
@@ -18803,13 +18803,13 @@ reset: () => `${authShell('login')}
         CTA and no "Back to log in" closing row. The create screen owns the
         pre-filled/pre-ticked composition; this one is stripped to the two
         fields and the button. */}
-  ${ph('Set New Password','Create a strong password for your account.')}
+  ${ph('Set New Password','Create a new password for your account.')}
   <div class="sec">
     <div class="f-row"><div class="f"><label for="rpw">Password</label>
-      <div class="pw-wrap"><input class="inp fill" id="rpw" type="password" value="\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022">
+      <div class="pw-wrap"><input class="inp fill" id="rpw" type="password" placeholder="Enter new password">
         <button class="pw-eye" data-eye="rpw" aria-label="Show password">${I.view}</button></div></div>
     <div class="f last"><label for="rpw2">Confirm Password</label>
-      <div class="pw-wrap"><input class="inp fill" id="rpw2" type="password" placeholder="Re-enter password">
+      <div class="pw-wrap"><input class="inp fill" id="rpw2" type="password" placeholder="Re-enter new password">
         <button class="pw-eye" data-eye="rpw2" aria-label="Show password">${I.view}</button></div></div></div>
   </div>
   <div class="sec">
@@ -18819,7 +18819,7 @@ reset: () => `${authShell('login')}
 
 create: () => `${authShell()}
 <main class="main"><div class="page form-page authtight">
-  ${ph('Set New Password','Create a strong password for your account.')}
+  ${ph('Set Your Password','Create a password to activate your account.')}
   ${authId('Your Email Address', 'maryam.naz@tkxel.io', 'login')}
   <div class="sec sec-rule">
     <div class="f-row"><div class="f"><label for="pw">Password</label>
@@ -26829,9 +26829,13 @@ result: () => nilPage('wide', `
                 (`nilResultModal`) over the result page rather than a navigation.
                 It supersedes the 16 Sep `data-go="stage:signup/create"` jump. The
                 consultant-form steps (`consult1`, `consult2`) and the "You're in"
-                hand-off (`done`) stay defined and deep-link reachable, so the old
-                path is a one-line revert (`data-go="stage:signup/create"`). */}
-          <button class="nil-step live nil-step-cta" data-nilmodal="1"><span class="nil-step-l">${I.chat}<span>Continue your journey on TALENTnext</span></span>${I.arrowRight}</button>
+                hand-off (`done`) stay defined and deep-link reachable.
+                MODAL HIDDEN AGAIN (Maryam, 13 Oct 2026: "hide this modal for now.
+                on click to the button take me to the account creation
+                prototype"): Continue is back on `data-go="stage:signup/create"`.
+                `nilResultModal` and the `data-nilmodal` handler stay defined, so
+                restoring the modal is putting `data-nilmodal="1"` back here. */}
+          <button class="nil-step live nil-step-cta" data-go="stage:signup/create"><span class="nil-step-l">${I.chat}<span>Continue your journey on TALENTnext</span></span>${I.arrowRight}</button>
         </div>
       </div>
     </div>

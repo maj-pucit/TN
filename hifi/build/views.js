@@ -6416,7 +6416,7 @@ login: () => `${authShell()}
         under the password, a "Remember me" box and one Log In button. `Log In`
         is the supplied casing (kept exactly). The button logs into the
         candidate dashboard (`data-loginas`). */}
-  ${ph('Log In','Enter your account details to successfully signin.')}
+  ${ph('Log In','Enter your credentials to access your account.')}
   <div class="sec sec-rule">
     <div class="f"><label for="lem">Email Address</label>
       <input class="inp fill" id="lem" type="email" placeholder="Enter your email address"></div>
@@ -6454,7 +6454,7 @@ login: () => `${authShell()}
 
 forgot: () => `${authShell('login')}
 <main class="main"><div class="page form-page">
-  ${ph('Reset Password','Enter your email address to receive password reset instructions.')}
+  ${ph('Reset Password','Enter your email address to receive instructions to reset your password.')}
   <div class="sec">
     <div class="f last"><label for="fem">Email address</label>
       <input class="inp fill" id="fem" type="email" value="maryam.naz@tkxel.io"></div>
@@ -6527,13 +6527,13 @@ reset: () => `${authShell('login')}
         CTA and no "Back to log in" closing row. The create screen owns the
         pre-filled/pre-ticked composition; this one is stripped to the two
         fields and the button. */}
-  ${ph('Set New Password','Create a strong password for your account.')}
+  ${ph('Set New Password','Create a new password for your account.')}
   <div class="sec">
     <div class="f-row"><div class="f"><label for="rpw">Password</label>
-      <div class="pw-wrap"><input class="inp fill" id="rpw" type="password" value="\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022">
+      <div class="pw-wrap"><input class="inp fill" id="rpw" type="password" placeholder="Enter new password">
         <button class="pw-eye" data-eye="rpw" aria-label="Show password">${I.view}</button></div></div>
     <div class="f last"><label for="rpw2">Confirm Password</label>
-      <div class="pw-wrap"><input class="inp fill" id="rpw2" type="password" placeholder="Re-enter password">
+      <div class="pw-wrap"><input class="inp fill" id="rpw2" type="password" placeholder="Re-enter new password">
         <button class="pw-eye" data-eye="rpw2" aria-label="Show password">${I.view}</button></div></div></div>
   </div>
   <div class="sec">
@@ -6543,7 +6543,7 @@ reset: () => `${authShell('login')}
 
 create: () => `${authShell()}
 <main class="main"><div class="page form-page authtight">
-  ${ph('Set New Password','Create a strong password for your account.')}
+  ${ph('Set Your Password','Create a password to activate your account.')}
   ${authId('Your Email Address', 'maryam.naz@tkxel.io', 'login')}
   <div class="sec sec-rule">
     <div class="f-row"><div class="f"><label for="pw">Password</label>

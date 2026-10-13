@@ -249,9 +249,13 @@ result: () => nilPage('wide', `
                 (`nilResultModal`) over the result page rather than a navigation.
                 It supersedes the 16 Sep `data-go="stage:signup/create"` jump. The
                 consultant-form steps (`consult1`, `consult2`) and the "You're in"
-                hand-off (`done`) stay defined and deep-link reachable, so the old
-                path is a one-line revert (`data-go="stage:signup/create"`). */}
-          <button class="nil-step live nil-step-cta" data-nilmodal="1"><span class="nil-step-l">${I.chat}<span>Continue your journey on TALENTnext</span></span>${I.arrowRight}</button>
+                hand-off (`done`) stay defined and deep-link reachable.
+                MODAL HIDDEN AGAIN (Maryam, 13 Oct 2026: "hide this modal for now.
+                on click to the button take me to the account creation
+                prototype"): Continue is back on `data-go="stage:signup/create"`.
+                `nilResultModal` and the `data-nilmodal` handler stay defined, so
+                restoring the modal is putting `data-nilmodal="1"` back here. */}
+          <button class="nil-step live nil-step-cta" data-go="stage:signup/create"><span class="nil-step-l">${I.chat}<span>Continue your journey on TALENTnext</span></span>${I.arrowRight}</button>
         </div>
       </div>
     </div>
