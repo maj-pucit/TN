@@ -365,6 +365,11 @@ input:-webkit-autofill:focus{
         beside it — one line, still visually attached. */
 .app[data-shown~="peek"] .cs button{border-right-color:transparent}
 </style>
+<style id="admin-acct-link">
+/* Roles table: the Accounts count links to All Users filtered by that role (Maryam, 13 Oct 2026). */
+.app .tbl .acct-link{background:none; border:0; padding:0; font:inherit; color:var(--link); text-decoration:underline; text-underline-offset:2px; cursor:pointer}
+.app .tbl .acct-link:hover{color:var(--link-hover)}
+</style>
 <style id="admin-attn-grid">
 /* "NEEDS YOUR ATTENTION" AS A FOUR-UP COLUMN GRID (Maryam, 21 Sep 2026: "should
    be horizontal 4 cards with no spacing in between and just border, so it gives
@@ -7215,7 +7220,15 @@ function usersRoles(){
       roles.map(r => ({sv:[r.name], cells:[
         `<div>${esc(r.name)}${r.k === 'admin' ? ' <span class="tag sm rl-default">Default</span>' : ''}</div>`,
         esc(r.desc),
-        String(usersWith(r.k)),
+        /* ACCOUNTS LINKS TO ALL USERS FILTERED BY THE ROLE (story 4.x, Maryam 13 Oct
+           2026). Super Admin stays plain: All Users does not list Super Admins. */
+        (() => {
+          if(r.k === 'admin') return String(usersWith(r.k));
+          /* The count is the same set the link opens (usersBase + roleMatch), so the
+             number and the filtered list always agree. */
+          const n = usersBase().filter(u => roleMatch(u, r.k)).length;
+          return n ? `<button type="button" class="acct-link" data-go="users/users?role=${r.k}" aria-label="Show the ${esc(r.name)} accounts in All Users">${n}</button>` : '0';
+        })(),
         /* Every role except Super Admin is treated as a custom role (Maryam, 25 Sep
            2026): Edit (name + description) and Delete on all but Super Admin. */
         r.k === 'admin' ? '' : rowActs([editBtn('role', r.k), delBtn('role', r.k)])
