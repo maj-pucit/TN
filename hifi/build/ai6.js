@@ -215,7 +215,7 @@ const PAGESUM = {
      is built on it. This is the candidate portal choosing the other shape, not
      the shape being withdrawn. */
   dashboard: {
-    consult: 'Your quiz put you on the Explorer track from a score of 64. Jordan Blake calls on Thursday at 2:00 PM ET for fifteen minutes. Nothing to prepare, and it doesn&rsquo;t set your level.',
+    consult: 'Your quiz put you on the Explorer track from a score of 64. Jordan Blake calls on Thursday at 2:00 PM for fifteen minutes. Nothing to prepare, and it doesn&rsquo;t set your level.',
 
     /* THE ONE ENTRY THAT OPENS ON A GREETING AGAIN, AND THE ONE THAT RUNS LONG.
        578:5966 makes Tal's sentence the whole left column of the band — there is
@@ -323,9 +323,9 @@ const PAGESUM = {
        that reading this table tells you what the page says. Edit the two
        together; a hard-coded fallback that disagrees with the live line is
        worse than no fallback. */
-    booked: 'Welcome back, Maryam! Your <b data-sum="interview">levelling interview with Priya Nair</b> is confirmed for Thursday, August 20 at 6:30 PM ET (45 minutes, video-recorded). My analysis of Priya&rsquo;s historical evaluation patterns shows a heavy emphasis on delegation frameworks. Since your initial quiz score placed you on the <b data-sum="track">Explorer track</b>, spending just <b data-sum="prep">10 minutes practising your delegation talking points</b> before Thursday is your best strategy to secure an optimal levelling outcome.',
+    booked: 'Welcome back, Maryam! Your <b data-sum="interview">interview with Priya Nair</b> is confirmed for Thursday, August 20, at 6:30 PM. The session lasts 45 minutes and will be recorded. Review your interview guide and spend <b data-sum="prep">a few minutes preparing</b> before your call.',
     /* THE RESCHEDULE FORK — `booked`'s entry, copied. See its STAGES row. */
-    resched: 'Welcome back, Maryam! Your <b data-sum="interview">levelling interview with Priya Nair</b> is confirmed for Thursday, August 20 at 6:30 PM ET (45 minutes, video-recorded). My analysis of Priya&rsquo;s historical evaluation patterns shows a heavy emphasis on delegation frameworks. Since your initial quiz score placed you on the <b data-sum="track">Explorer track</b>, spending just <b data-sum="prep">10 minutes practising your delegation talking points</b> before Thursday is your best strategy to secure an optimal levelling outcome.',
+    resched: 'Welcome back, Maryam! Your <b data-sum="interview">interview with Priya Nair</b> is confirmed for Thursday, August 20, at 6:30 PM. The session lasts 45 minutes and will be recorded. Review your interview guide and spend <b data-sum="prep">a few minutes preparing</b> before your call.',
 
     /* THE 24-HOUR WAIT (17.1). No `data-sum` phrases: there is no next action to
        point a popover at, and every clause here is settled. No em dash (Tal
@@ -336,9 +336,9 @@ const PAGESUM = {
        parsed before this file. Neither branch has a `data-sum` phrase: no next action. */
     held: () => (typeof heldOverdue === 'function' && heldOverdue())
       ? 'Your interview result is taking a little longer than usual. We will have it to you shortly.'
-      : 'Your interview with Priya Nair is done. It is being analysed now, and TalentNext sets your level from it within <b>24 hours</b>. There is nothing to do but wait.',
+      : 'Your interview with Priya Nair is complete. TALENTnext is analysing your interview to determine your level. Your report will be ready within <b>24 hours</b>.',
 
-    assessed: 'Welcome Back, Maryam! You are <b data-sum="level">Explorer &ndash; E3</b>, rung 3 of 15, set by TalentNext on 21 August after your interview, with <b data-sum="growth">delegation and hard conversations</b> as your growth areas. <b data-sum="enrol">Enrolling</b> is the only thing left.',
+    assessed: 'Welcome back, Maryam! TALENTnext has assigned you <b data-sum="level">Explorer &ndash; E3</b>, rung 3 of 15, following your interview on August 21. Your key growth areas are <b data-sum="growth">delegation and hard conversations</b>. <b data-sum="enrol">Enrolling in a course</b> is your next step.',
 
     /* ENROLLED, COHORT NOT STARTED (story 15.2). No `data-sum` phrases: the one
        thing to do is a section on the page (meet your cohort), not a popover, and
@@ -398,7 +398,7 @@ const PAGESUM = {
        in them; nothing else in this table quotes Tal, and a summary in
        quotes reads as a transcript of something said elsewhere rather than
        as the page's own voice. */
-    week1: f => `${_greet()}, Maryam! <b>Chapter 1 (&lsquo;${CH[0][0]}&rsquo;)</b> has unlocked today. This week has no graded assessments, so you have a buffer window to explore.<br>Right now, <b>four of the ten in your cohort</b> have already finished it. It takes about ${CH[0][1]} minutes, so starting today puts your <b>${WEEK_TARGET}-minute weekly target</b> within reach without touching next week.`,
+    week1: f => `${_greet()}, Maryam! <b>Chapter 1, ${CH[0][0]},</b> is now available. You&rsquo;ve spent 20 minutes learning this week, and completing this ${CH[0][1]}-minute chapter will help you stay on track.<br><b>Four of your ten cohort members</b> have already completed it. Start today to make progress toward your <b>weekly learning target</b>.`,
 
     /* DAY 34 KEEPS ITS OWN FACTS AND TAKES THE FILE'S SHAPE. There is no
        599:7418 copy for a stalled week, so the two sentences this entry
@@ -440,7 +440,7 @@ const PAGESUM = {
        `V.level`'s "Moving up" accordion verbatim, and this table's second
        content ban is policy. "Decides whether your level moves" is the fact;
        which way it can move is a page away. */
-    day90: f => `${_greet()}, Maryam! <b>All 13 chapters</b> are done in 90 days, ${f.avg}% average, ${_n(f.mins)} minutes total. Your growth areas were <b>chapters 4 and 12</b>, and you passed both.<br>The re-interview is what decides whether your level moves, so I have been over the roster and <b>matched you with ${AGENTS[recKey()].n} below</b>.`,
+    day90: f => `${_greet()}, Maryam! You&rsquo;ve completed <b>all 13 chapters</b>, achieved an ${f.avg}% assessment average, and invested ${_n(f.mins)} minutes in learning. You also completed <b>Chapters 4 and 12</b>, which focused on your growth areas.<br>Your re-interview will determine whether your level changes. I&rsquo;ve <b>matched you with ${AGENTS[recKey()].n}</b> for your next interview. You&rsquo;ll find her details below.`,
 
     /* THE DATE CAME OFF THIS LINE, AND IT IS THE CARD THAT HAS IT NOW. The
        sentence used to close on "E4 opens December 1, and at this level you can
@@ -509,7 +509,7 @@ const PAGESUM = {
      Explorer track, 45-minute interview — so §70.2's tinted ground still lands
      on what you did, where it put you and what decides the rest. */
   level: (() => {
-    const pre = 'Your <b data-sum="quiz">quiz result</b> places you on the <b data-sum="track">Explorer track</b>, with your level to be determined through a <b data-sum="ivwhat">45-minute interview</b>. The ladder shows your current path across Explorer &rarr; Builder &rarr; Trailblazer, with five levels in each track.';
+    const pre = 'Your <b data-sum="quiz">quiz results</b> place you on the <b data-sum="track">Explorer track</b>. Your level will be determined through a <b data-sum="ivwhat">45-minute interview</b> with a talent agent. Your growth path spans three tracks (Explorer, Builder, and Trailblazer) with five levels in each.';
     return {
       consult: pre,
       new: pre,
@@ -536,7 +536,7 @@ const PAGESUM = {
     };
   })(),
 
-  report: 'Priya&rsquo;s write-up of the 20 August interview, confirming Explorer &ndash; E3. Delegation and hard conversations are the growth areas. Both are chapters on your course.',
+  report: 'Priya&rsquo;s evaluation confirms your level as Explorer &ndash; E3, based on your August 20 interview. Your key growth areas are delegation and handling difficult conversations. Both are covered in your recommended course.',
 
   /* THE BREAKDOWN'S READING, AND IT IS TWO FIGURES THE PAGE DRAWS RATHER THAN
      LISTS. The rose is five wedges and five numbers; what a person wants said
@@ -598,7 +598,7 @@ const PAGESUM = {
        ended "scheduled and ready to join", a second pressable phrase, while the
        interview is a FUTURE date: the dashboard summary (`PAGESUM.dashboard
        .booked`), `bkStamp` and the hard-coded picker all say Thursday, 20 August
-       at 6:30 PM ET. "Ready to join" was therefore false on the Interviews page
+       at 6:30 PM. "Ready to join" was therefore false on the Interviews page
        the same way it would be on the dashboard. The gap's ruling is that the
        summary follows the booking's real TIME and only says "ready to join"
        inside the final minute — which this static demo never reaches for the
@@ -614,9 +614,9 @@ const PAGESUM = {
       const c = CALL_ROW.iv();
       const ex = String(c.x || '').split(', assesses ')[0] || 'your';
       const rng = (c.who && c.who.range) || 'E1&ndash;E3';
-      return `Your <b data-sum="interview">45-minute interview with ${c.who.n}</b> is scheduled for Thursday, August 20 at 6:30 PM ET. `
-        + `She&rsquo;ll assess your ${ex} skills across the ${rng} levels, and your final level `
-        + `and report will be based on this conversation.`;
+      return `Your <b data-sum="interview">interview with ${c.who.n}</b> is scheduled for Thursday, August 20, at 6:30 PM. `
+        + `She&rsquo;ll assess your ${ex} skills across levels ${rng}. `
+        + `Your level and report will be based on this interview.`;
     }
     /* THE `pred` BRANCH IS MARYAM'S COPY, 2 Sep 2026, and it deliberately does
        what the `agents` note directly below rules out — it describes the
@@ -767,7 +767,7 @@ const PAGESUM = {
     ? `${certsFor(f).slice(-1)[0].cohort} is closed: ${f.done} chapters at ${f.avg}%, about ${_hrs(f.mins)} hours of coursework. Nothing lands on this record again until you enroll at ${f.level}.`
     : f.done
     ? `${f.done} of 13 chapters at ${f.avg}%, about ${_hrs(f.mins)} hours in. This is the record an agent reads before your re-interview.`
-    : 'Nothing on the record yet. The 90 days only started this week.',
+    : 'Your learning journey has just begun. Your progress will appear here as you complete chapters and activities.',
 
   /* THE PAGE DESCRIPTION HELD THE SAME SENTENCE ("Points, badges and rank
      come from your activity across the course and the community") and is now
@@ -779,9 +779,9 @@ const PAGESUM = {
     const g = GAME[S.stage];
     if(!g) return 'Points start when you enroll: 10 for signing in, 25 a chapter, Bronze at 2,500. None of it affects your level.';
     const toB = 2500 - g.pts;
-    return `${_n(g.pts)} points at ${RANKS[g.rank - 1].n}, ${toB > 0
-      ? `${_n(toB)} short of the Bronze badge at 2,500`
-      : `with Bronze earned and Silver at 5,000`}. Points come from signing in, chapters and cohort posts. None of it touches your level.`;
+    return `You have ${_n(g.pts)} points and a ${RANKS[g.rank - 1].n} rank. ${toB > 0
+      ? `Earn ${_n(toB)} more points to reach Bronze at 2,500.`
+      : `You have earned Bronze; Silver is at 5,000.`} You can earn points by signing in, completing chapters, and participating in the community. Points do not affect your TALENTnext level.`;
   },
 
   /* "Ten of you at E3 with Priya leading, week 5 of 13" was the page
@@ -794,7 +794,7 @@ const PAGESUM = {
     ? 'Cohort 41 has finished all thirteen weeks with Priya leading. The discussion stays open for the ten of you to keep working through what changed.'
     : f.preStart
     ? `Cohort 41 has not started yet${f.startIn>0?`, it begins in ${f.startIn} days`:''}. The ten of you are listed below with Priya leading; the discussion and the weekly calls open on the start day.`
-    : 'Thursday&rsquo;s call is at 6:00 PM ET on hard conversations, and Priya has asked everyone to bring a real one to talk through.',
+    : 'Thursday&rsquo;s call is at 6:00 PM on hard conversations, and Priya has asked everyone to bring a real one to talk through.',
 
   /* PARKED — `.msg-page` is excluded, for the reason written at the pass
      below. Trimmed to match the rule anyway: the policy sentence about what
@@ -861,13 +861,14 @@ const PAGESUM = {
      TWO ACCENT PHRASES, BOTH ALLOWED: the default card, and the refund windows.
      The charge and the E2 purchase are no longer lit because they are not things
      Tal reads — they are rows in the table, with their own receipts. */
-  billing: 'Your saved Visa, Mastercard and Amex cards are on file for future payments, with your default set to <b data-sum="defcard">Visa ending 4242</b>. A course and an interview have <b data-sum="refund">different refund windows</b>, and I can state both. Every charge keeps its own receipt in the table below.',
+  billing: () => { const d = (S.cards||[]).find(c => c.def) || (S.cards||[])[0] || {brand:'Visa', last:'4242'};
+    return `Your saved Visa, Mastercard, and Amex cards are available for future payments, with <b data-sum="defcard">${d.brand} ending ${d.last}</b> set as your default. Your course and interview payments are recorded separately, with receipts available for each transaction.`; },
 
   /* The page description said "Your details, your preferences, and what Tal
      is allowed to do" and this said the same three nouns back. The
      description is gone and this says the one thing worth opening the page
      for, which on an AI-native product is the permissions. */
-  account: 'Everything here saves as you go. The block worth a look is the last one, what I&rsquo;m allowed to remember, and what I can do without asking.',
+  account: 'Your profile, experience, and preferences, all in one place. Review your details, manage your settings, and explore what Tal can remember and do with your permission.',
 
   /* --- Tal's own pages --------------------------------------------------- */
   mem: () => {
@@ -908,10 +909,10 @@ const PAGESUM = {
        call; one and two keep the signature lead, with the possessive agreeing
        (that candidate's / those candidates'). */
     const nx = lcalls()[0];
-    const look = `${_W(att.length)} candidate${att.length === 1 ? '' : 's'} need${att.length === 1 ? 's' : ''} a look, ${_w(bad)} of them seriously`;
+    const look = `${_W(att.length)} candidate${att.length === 1 ? '' : 's'} need${att.length === 1 ? 's' : ''} your review, including ${_w(bad)} who may need urgent attention`;
     if(pend === 0)
       return `Nothing is waiting on your signature. ${look}${nx ? `, and Cohort ${nx.co} meets ${nx.day.toLowerCase()} at ${nx.time}` : ''}.`;
-    return `${_W(pend)} 90-day ${pend === 1 ? 'summary is' : 'summaries are'} waiting on your signature, and nothing reaches ${pend === 1 ? 'that candidate&rsquo;s' : 'those candidates&rsquo;'} next agent until you publish. ${look}.`;
+    return `${_W(pend)} 90-day ${pend === 1 ? 'summary is' : 'summaries are'} awaiting your signature. ${pend === 1 ? 'That candidate cannot' : 'Candidates cannot'} move to their next agent until you publish ${pend === 1 ? 'it' : 'them'}. ${look}.`;
   },
 
   /* THE SEVEN MODULES, AND THE THREE PAGES UNDER THEM.
@@ -1628,10 +1629,10 @@ const SUMDROP = {
     const [hiN, hiV] = _sumTop();
     const low = qzLow(2);
     return {
-      lead: `You scored 64 of 100 on the Next in Leadership quiz on ${qzTaken()}, across five bands.`,
-      label: 'What it measured:',
-      read: `${hiN} came out highest at ${hiV}, and ${low[0][0]} lowest at ${low[0][1]}. A quiz sets the track, not the level. It is the interview that decides which of E1 to E5 you sit on.`,
-      next: 'Open the full breakdown to see all five bands scored, and the two chapters built on the ones you scored lowest.'
+      lead: `You scored 64/100 on the Next in Leadership quiz on ${qzTaken()}, placing you on the Explorer track.`,
+      label: '',
+      read: `Your quiz determines your track: Explorer, Builder, or Trailblazer. Your level (E1&ndash;E5) will be assigned after your 45-minute interview with an agent.`,
+      next: 'Book an interview to discover your level, strengths, and growth areas.'
       /* NO ACTION BUTTON (Maryam, 1 Oct 2026: "remove open quiz button from this
          summary highlight modal"). The popover is a read, not a launcher; the
          quiz breakdown is its own modal off the Quick Action now. `sumDropCard`
@@ -1690,7 +1691,7 @@ const SUMDROP = {
        at `#booked`. Same pattern, so the same correction. */
     lead: `Your interview with ${AGENTS[(S.booking || {}).agent || 'priya'].n} is `
       + (() => { try { return bkLong(); }
-                 catch(e){ return 'booked for Thursday 20 August at 6:30 PM ET'; } })() + '.',
+                 catch(e){ return 'booked for Thursday 20 August at 6:30 PM'; } })() + '.',
     label: 'What happens in it:',
     read: '45 minutes, recorded, and real situations rather than hypotheticals. She confirms which of E1 to E5 you sit on and signs a report you keep.',
     next: 'Nothing has to be prepared. If you want to, ten minutes on delegation is the most useful ten minutes you can spend.',
@@ -1882,7 +1883,7 @@ function sumDropCard(key){
   const d = typeof src === 'function' ? src() : src;
   return `<div class="sd-b">
       <p class="sd-lead">${d.lead}</p>
-      <p class="sd-read"><b>${d.label}</b> ${d.read}</p>
+      <p class="sd-read">${d.label ? `<b>${d.label}</b> ` : ''}${d.read}</p>
     </div>
     <div class="sd-next">
       <p class="sd-nt">Your Next Step</p>

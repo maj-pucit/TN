@@ -83,7 +83,7 @@
 const SUPPORT = {
   email: 'support@talentnext.com',
   phone: '(555) 123-4567',
-  hours: 'Mon&ndash;Fri, 9:00 AM &ndash; 6:00 PM ET',
+  hours: 'Mon&ndash;Fri, 9:00 AM &ndash; 6:00 PM',
   reply: 'One working day'
 };
 
@@ -530,11 +530,11 @@ function wPace(){
    which of several open things matters most, and `cfg()` carries flags, not
    priorities — see the note over `WEEKLY` in data.js for the same argument. */
 const NEXT = {
-  consult:  ['Nothing, and that is the point', 'Your call with Jordan Blake is Thursday, August 13 at 2:00 PM ET. Fifteen minutes, nothing assessed, nothing to prepare. He points you at the agents whose range fits, and you book after that.', 'What happens on the consultant call?', 'interviews'],
+  consult:  ['Nothing, and that is the point', 'Your call with Jordan Blake is Thursday, August 13 at 2:00 PM. Fifteen minutes, nothing assessed, nothing to prepare. He points you at the agents whose range fits, and you book after that.', 'What happens on the consultant call?', 'interviews'],
   new:      ['Book the interview that sets your level', 'Your quiz put you on the Explorer track, and that is a title rather than a level. Forty-five minutes with an agent is what turns it into E1 to E5, and the course you can enroll on follows from it.', 'Book an interview with a top agent', 'agents'],
-  booked:   ['Spend ten minutes preparing', 'Priya Nair, Thursday 20 August, 6:30 PM ET. She opens with a situation from your own answers, so the useful preparation is one story you can actually tell, not revision. I can run it with you now.', 'Run a mock interview with me', 'interviews'],
+  booked:   ['Spend ten minutes preparing', 'Priya Nair, Thursday 20 August, 6:30 PM. She opens with a situation from your own answers, so the useful preparation is one story you can actually tell, not revision. I can run it with you now.', 'Run a mock interview with me', 'interviews'],
   /* THE RESCHEDULE FORK — `booked`'s row, copied. See its STAGES row. */
-  resched:  ['Spend ten minutes preparing', 'Priya Nair, Thursday 20 August, 6:30 PM ET. She opens with a situation from your own answers, so the useful preparation is one story you can actually tell, not revision. I can run it with you now.', 'Run a mock interview with me', 'interviews'],
+  resched:  ['Spend ten minutes preparing', 'Priya Nair, Thursday 20 August, 6:30 PM. She opens with a situation from your own answers, so the useful preparation is one story you can actually tell, not revision. I can run it with you now.', 'Run a mock interview with me', 'interviews'],
   assessed: ['Enroll in the Explorer &ndash; E3 course', 'Your report is signed and E3 is confirmed. The cohort is assigned for you and the 90 days start when it does. The course is $690.', 'What do the 90 days ask of me?', 'enrol'],
   week1:    ['Finish chapter 1', 'Forty-five minutes, and nothing this week is assessed. Four of the ten in Cohort 41 have already done it, so the only thing between you and their pace is the chapter itself.', 'What is next week about?', 'coursework'],
   day34:    ['Finish chapter 4', 'You are 12 minutes into it after four opens, it is 70 minutes long, and it is the growth area Priya named in your report. It is the one place extra time changes your level rather than your average.', 'How do I catch up?', 'chapter:3'],
@@ -766,11 +766,11 @@ function wLeader(){
 function wCallLogistics(){
   return tw(twIc('video') + 'The weekly call',
     `<span class="tw-lines">
-       <span><b>When</b>Thursday, 6:00 PM ET, every week for 13 weeks</span>
+       <span><b>When</b>Thursday, 6:00 PM, every week for 13 weeks</span>
        <span><b>Long</b>60 minutes, video, you and the other nine</span>
        <span><b>Missed</b>tell your leader beforehand and it is fine. It is not recorded, so there is nothing to catch up on afterwards. Ask on the board instead</span>
      </span>
-     <span class="tw-k">Times follow the time zone on your profile, which is Eastern. Reminders go out 24 hours and 1 hour before unless you have turned them off.</span>`,
+     <span class="tw-k">Times follow the time zone on your profile. Reminders go out 24 hours and 1 hour before unless you have turned them off.</span>`,
     `${twBtn('Open Cohort 41','cohort')}<button class="tw-btn ghost" data-go="account">Change your time zone</button>`);
 }
 

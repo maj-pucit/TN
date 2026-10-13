@@ -715,6 +715,11 @@
 .app .lacc-grid{
   display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
   gap:var(--s04)}
+/* A LITTLE AIR UNDER THE DESCRIPTION (Maryam, 13 Oct 2026: "add little gap
+   after the desc"): the cards sat on the heading's own 12px; the heading row
+   gives up that margin and the grid takes --s06 (24) instead. */
+.app .sec-linked > .sec-h{margin-bottom:0}
+.app .sec-linked > .lacc-grid{margin-top:var(--s06)}
 /* AT DESKTOP THE SIX NETWORKS ARE ONE FULL-WIDTH ROW (TikTok added, Maryam 18
    Sep 2026). `auto-fit` alone left a card wrapping once the reading column could
    not fit six at the 150px floor, so above the breakpoint the count is fixed at

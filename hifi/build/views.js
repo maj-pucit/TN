@@ -230,7 +230,7 @@ function sidenav(f){
     <div class="sn-main">${items}</div>
     <div class="sn-foot">
       <button class="sn-item ${active===(isLead()?'leadProfile':'account')?'on':''}" title="Profile" data-go="${isLead()?'leadProfile':'account'}">${I.user}<span>Profile</span></button>
-      <button class="sn-item" title="Log out" data-go="stage:signup/login">${I.logout}<span>Log out</span></button>
+      <button class="sn-item" title="Log out" data-logout="1">${I.logout}<span>Log out</span></button>
     </div>
   </nav>`;
 }
@@ -431,7 +431,7 @@ function acctMenu(){
       <span class="acct-i-mk acct-i-av"><img src="${AV.samuel}" alt=""></span>
       <span class="acct-i-t">Switch to Super Admin</span>
     </button>
-    <button class="acct-i" role="menuitem" data-go="stage:signup/login">
+    <button class="acct-i" role="menuitem" data-logout="1">
       <span class="acct-i-mk">${I.logout}</span>
       <span class="acct-i-t">Sign out</span>
     </button>
@@ -713,7 +713,11 @@ function agentRow(key){
           of the social-proof row. The count stays where it identifies the
           agent; the column keeps the fact it is named after. */}
     <span class="agt-c agt-exp"><span class="agt-v">${a.yrs} yrs</span></span>
-    <span class="agt-c agt-fee">${a.price}</span>
+    ${''/* A FIRST INTERVIEW IS COMPLIMENTARY, SO THE RATE IS STRUCK WITH "FREE"
+          (Maryam, 13 Oct 2026: "cut all the fee in the fee column and add FREE
+          with them"). `ivFeeLabel` is the one struck label every booking surface
+          prints; a re-interview stage still shows the plain charged rate. */}
+    <span class="agt-c agt-fee">${ivFeeLabel(!!cfg(S.stage).reinterview, a.price)}</span>
     <span class="agt-c agt-act">
       ${talStar('What is '+a.n.split(' ')[0]+' like to be interviewed by?')}
       <button class="btn btn-p btn-sm noic" data-go="agent:${key}">Book</button>
@@ -757,7 +761,7 @@ function agentCardOf(a, key){
       <span class="ag-n">${a.n}</span>
       <span class="ag-r">${stars(a.r)}<span class="num">${a.r.toFixed(1)}</span></span>
       <span class="ag-m">${a.range} · ${a.ivs} interviews</span>
-      <span class="ag-foot"><span style="color:var(--text-secondary)">Next: ${a.slot}</span><span class="ag-price">${a.price}</span></span>
+      <span class="ag-foot"><span style="color:var(--text-secondary)">Next: ${a.slot}</span><span class="ag-price">${ivFeeLabel(!!cfg(S.stage).reinterview, a.price)}</span></span>
     </span>
     <svg class="card-go" viewBox="0 0 24 24">${inner('arrowRight')}</svg>
   </div>`;
@@ -1066,7 +1070,7 @@ function scenePick(kind){
         — and the reason it is worth watching is that a third would make the
         sparkle this page's bullet style. Six of them did exactly that, which is
         why the per-card version came off. */}
-  <button class="scene-ask" data-tal-ask="Why were these scenes chosen from my interview?"><i class="aih-mk"></i>Ask Tal why these scenes were chosen from your interview?</button>`;
+  <button class="scene-ask" data-tal-ask="Why were these scenes selected from my interview?"><i class="aih-mk"></i>Ask Tal: Why were these scenes selected from my interview?</button>`;
 }
 
 /* THE SAVE IS THE SECTION HEADING'S CONTROL — Maryam, 1 Sep 2026 ("take the
@@ -1279,7 +1283,7 @@ function wAgent(){
     twBtn('See '+a.n.split(' ')[0]+'&rsquo;s slots','agents'));
 }
 function wCall(){
-  return tw(twIc('video') + 'Thursday 6:00 PM ET · 60 minutes',
+  return tw(twIc('video') + 'Thursday 6:00 PM · 60 minutes',
     `<span class="tw-list">
        <span>Week ${cfg(S.stage).week} is on hard conversations</span>
        <span>Bring the Sam handover from your notes</span>
@@ -2339,8 +2343,8 @@ function progressStrip(f){
   const hrs = Math.floor(f.mins/60)+'h '+(f.mins%60)+'m';
   return `<div class="prog">
     <div class="prog-top">
-      <div><div class="prog-pct">${pct}<small>%</small></div><div class="prog-l">of the course done</div></div>
-      <div class="prog-day"><div class="prog-dn">Day ${f.day}</div><div class="prog-l">of 90</div></div>
+      <div><div class="prog-pct">${pct}<small>%</small></div><div class="prog-l">Course completed</div></div>
+      <div class="prog-day"><div class="prog-dn">Day ${f.day}<small> of 90</small></div><div class="prog-l">Journey progress</div></div>
     </div>
     <div class="prog-seg">${CH.map((c,i)=>
       `<i class="${i<f.done?'done':(i===f.open?'now':'')}" title="Chapter ${i+1}"></i>`).join('')}</div>
@@ -2366,9 +2370,9 @@ function progressStrip(f){
           and the label was a bare text node, which cannot be given a column
           of its own. */}
     <div class="prog-figs">
-      <span><i class="prog-ic">${I.book}</i><span class="prog-fb"><b>${f.done} of 13</b><span class="prog-lab">chapters</span></span></span>
-      <span><i class="prog-ic">${I.checkFilled}</i><span class="prog-fb"><b>${tasks}</b><span class="prog-lab">week ${f.week} tasks</span></span></span>
-      <span><i class="prog-ic">${I.time}</i><span class="prog-fb"><b>${hrs}</b><span class="prog-lab">invested</span></span></span>
+      <span><i class="prog-ic">${I.book}</i><span class="prog-fb"><b>${f.done} of 13</b><span class="prog-lab">Chapters</span></span></span>
+      <span><i class="prog-ic">${I.checkFilled}</i><span class="prog-fb"><b>${tasks}</b><span class="prog-lab">Week ${f.week}</span></span></span>
+      <span><i class="prog-ic">${I.time}</i><span class="prog-fb"><b>${hrs}</b><span class="prog-lab">Learning time</span></span></span>
     </div>
   </div>`;
 }
@@ -2618,7 +2622,7 @@ function pulseCol(mk, ic, label, body, cls){
    figures. The overlap with the band's summary is the chapter name and the
    45 minutes; the band says what has HAPPENED (unlocked today, four of ten
    ahead of you) and this says where you ARE in it. */
-function pulseLede(f, g, p){
+function pulseLede(f, g, p, page){
   if(f.finished){
     const n = g.weeks.length;
     return `All <b>13 chapters</b> are done: ${p.figs[0][0]} across ${n} weeks, ${p.figs[2][0]} of the ${WEEK_TARGET} min weekly target. Booking the re-interview is the only thing left.`;
@@ -2635,10 +2639,8 @@ function pulseLede(f, g, p){
      `did` guard keeps week 1 on the two-figure form, where 0 and 20 are
      genuinely different and the mock prints both. */
   const same = did > 0 && did === wk;
-  return `You have completed <b>${did} of ${mins} minutes</b> for <span class="pulse-hl">${CH[i][0]}</span>, ${
-    same ? `which is all the time you have spent learning this week`
-         : `and have spent <b>${wk} minutes</b> learning overall this week`
-  }. Complete chapter ${i+1} to stay on the pace.`;
+  if(page === 'progress') return `You&rsquo;ve spent <b>${wk} minutes</b> learning this week. Complete Chapter ${i+1}, ${CH[i][0]}, to stay on track with your learning goal.`;
+  return `You&rsquo;ve spent <b>${wk} minutes</b> learning this week, with <b>${mins - did} minutes</b> remaining in Chapter ${i+1}. Complete the chapter to stay on pace.`;
 }
 
 /* THE ENROLLED DASHBOARD IS THE `new` PROTOTYPE'S SHAPE NOW — Maryam, 31 Aug
@@ -2797,7 +2799,7 @@ function pulseCols(f, g){
            mark, the derived sentence, and the way into the open chapter. That
            is exactly `pulse()`'s shape on the dashboards minus the next call,
            so the two are one component again. */}
-    ${aiHead({mark:true, title:'Your learning pulse', desc:pulseLede(f, g, p), act})}
+    ${aiHead({mark:true, title:'Your Learning Pulse', desc:pulseLede(f, g, p, 'progress'), act})}
   </div>`;
 }
 
@@ -2840,7 +2842,7 @@ function pulseCard(f, g){
     : `<button class="btn btn-p btn-sm" data-go="chapter:${f.open}">Open chapter ${f.open+1} ${I.arrowRight}</button>`;
   const c = f.finished ? null : CALL_ROW.cohort();
   return `<div class="sec sec-pulse dark-card">
-    ${aiHead({mark:true, title:'Your learning pulse', desc:pulseLede(f, g, p), act})}
+    ${aiHead({mark:true, title:'Your Learning Pulse', desc:pulseLede(f, g, p), act})}
     ${c ? `<div class="pnc">
       <h3 class="pnc-t">Your Next Call</h3>
       ${''/* THE PORTRAIT IS A SQUARE SIZED BY THE TEXT BESIDE IT (Maryam, 31 Aug
@@ -2901,20 +2903,20 @@ function pulseQA(f, g){
      than the destination: `pulseCol`'s own `.pulse-t` on Course Progress, and
      Tal's summary in the band directly above this row. */
   if(!f.finished) cards.push({
-    ic:I.book, hue:'ic-focus', t:'Current focus',
-    d:`Chapter ${f.open+1}, ${CH[f.open][1]} minutes.`,
+    ic:I.book, hue:'ic-focus', t:'Current Focus',
+    d:`Complete Chapter ${f.open+1} in ${CH[f.open][1]} minutes.`,
     go:`chapter:${f.open}`});
   cards.push({
-    ic:I.time, hue:'ic-pace', t:'Your pace',
-    d:`${p.figs[0][0]} ${p.figs[0][1].toLowerCase()}, ${p.figs[2][0].toLowerCase()} of target.`,
+    ic:I.time, hue:'ic-pace', t:'Your Pace',
+    d:`${p.figs[0][0].replace(' min', ' minutes')} completed ${p.figs[0][1] === 'This week' ? 'this week' : 'in total'}.`,
     go:'transcript'});
   /* `I.trophy`, NOT `I.star`, AND THE FILL AXIS IS THE ARGUMENT (Maryam,
      1 Sep 2026: "change this star icon here to a cup/trophy/badge. that should
      not be a filled icon"). See the twin call site in `pulse()`; the reasoning
      is written there once. */
   cards.push({
-    ic:I.trophy, hue:'ic-stand', t:'Your standing',
-    d:`${g.pts.toLocaleString()} points at ${RANKS[g.rank-1].n}.`,
+    ic:I.trophy, hue:'ic-stand', t:'Your Standing',
+    d:`${g.pts.toLocaleString()} points &middot; ${RANKS[g.rank-1].n} rating.`,
     go:'rewards'});
   return quickActions(cards);
 }
@@ -2967,12 +2969,12 @@ function scoreCard(g){
   const pct = nb ? Math.round((g.pts-prev)/(nb.need-prev)*100) : 100;
   return `<div class="score">
     <div class="score-top">
-      <div class="score-pts"><div class="l">Points</div><div class="n">${g.pts.toLocaleString()}</div></div>
-      <div class="score-rank"><div class="n"><img class="rank-mk" src="${AWARD['rank'+g.rank]}" alt="">${RANKS[g.rank-1].n}</div><div class="l">${g.badges} of 4 badges</div></div>
+      <div class="score-pts"><div class="l">Your Points</div><div class="n">${g.pts.toLocaleString()}</div></div>
+      <div class="score-rank"><div class="n"><img class="rank-mk" src="${AWARD['rank'+g.rank]}" alt="">${RANKS[g.rank-1].n}</div><div class="l">Badges: ${g.badges} of 4 earned</div></div>
     </div>
     ${nb?`<div class="score-next">
       <div class="pb-track"><div class="pb-fill" style="width:${pct}%"></div></div>
-      <div class="score-meta"><span>${(nb.need-g.pts).toLocaleString()} points to ${nb.n}</span><span>${pct}%</span></div>
+      <div class="score-meta"><span>${(nb.need-g.pts).toLocaleString()} points to go</span><span>${pct}% of the way to ${nb.n}</span></div>
     </div>`:''}
   </div>`;
 }
@@ -2997,7 +2999,9 @@ const BDG_ART = ['bronze','silver','gold','involved'];
    style behind it (trap 1). Its job is now `mk`, which is a CUSTOM PROPERTY
    rather than a colour: the stylesheet decides what to do with the hue on each
    of the mark's two tones, and the row only says which hue. */
-function awardRow({name,desc,val,state,when,pct,art,ph,mk}){
+/* MM/DD/YYYY -> "Aug 13, 2026" for the points list (Maryam, 13 Oct 2026). */
+const awDate = w => { const m = /^(\d\d)\/(\d\d)\/(\d{4})$/.exec(w||''); return m ? `${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m[1]-1]} ${+m[2]}, ${m[3]}` : w; };
+function awardRow({name,desc,val,state,when,pct,art,ph,mk,pts,away}){
   const neg = val<0;
   const mark = art
     ? `<span class="aw-art"><img src="${AWARD[art]}" alt="" loading="lazy"></span>`
@@ -3020,8 +3024,8 @@ function awardRow({name,desc,val,state,when,pct,art,ph,mk}){
       <span class="aw-d">${desc}</span>
     </span>
     <span class="aw-r">
-      <span class="aw-v">${neg?'&minus;':'+'}${Math.abs(val)}</span>
-      <span class="aw-s">${state==='got'?'Awarded '+when:(pct!==undefined?pct+'%':'Not yet')}</span>
+      <span class="aw-v">${neg?'&minus;':'+'}${Math.abs(val)}${pts?' points':''}</span>
+      <span class="aw-s">${state==='got'?'Awarded '+(pts?awDate(when):when):(pct!==undefined?pct+'%':(pts?(away||'Not yet earned'):'Not yet'))}</span>
     </span>
   </div>`;
 }
@@ -3065,7 +3069,7 @@ function pointsList(g){
   const got = PTS.map((r,i)=>({r,i})).filter(x=>g.got.includes(x.i));
   const rest = PTS.map((r,i)=>({r,i})).filter(x=>!g.got.includes(x.i));
   return [...got,...rest].map(({r,i})=>awardRow({
-    name:r.n, desc:r.d, val:r.v, ...PTS_MK[i],
+    name:r.n, desc:r.d, val:r.v, ...PTS_MK[i], pts:1, away:r.away,
     state:g.got.includes(i)?'got':'not', when:g.last[i]
   })).join('');
 }
@@ -3476,7 +3480,7 @@ function trackBand(track, codes){
   const T = ['Explorer','Builder','Trailblazer'];
   const ti = Math.max(0, T.indexOf(track));
   const lo = ti * 5;
-  return `<div class="ladder ladder-track" role="img" aria-label="${track} track, levels ${lo+1} to ${lo+5} of 15. Your level is set after your interview.">
+  return `<div class="ladder ladder-track" role="img" aria-label="${track} track, levels ${lo+1} to ${lo+5} of 15. Your level will be assigned after your interview.">
     ${Array.from({length:15},(_,i)=>`<i class="${i>=lo&&i<lo+5?'mine':''}">${codes?`<b>${LVL_CODES[i]}</b>`:''}</i>`).join('')}
   </div>
   <div class="ladder-lab">${T.map(n=>`<span${n===track?' class="on"':''}>${n}</span>`).join('')}</div>`;
@@ -3741,7 +3745,7 @@ const ENROL_OPENS = {
      THE SECOND ELEMENT IS OPTIONAL NOW, which is why the markup tests for it.
      E4 keeps its sub: "Cohort 58 has 7 places left" is a live figure about
      the thing being bought, not a rule about how cohorts work. */
-  E3: ['Cohort starts on 1st Dec, 2026'],
+  E3: ['Cohort starts December 1, 2026'],
   E4: ['E4 opens on December 1', 'Cohort 58 has 7 places left.']
 };
 /* WHAT THE 90 DAYS DO, AND IT IS THE ONE SLOT ON THIS CARD THAT IS NOT A
@@ -3844,10 +3848,8 @@ const COHORT_SIZE = 10;
 const ENROL_COURSE = {
   E3: {
     name: 'Business Fundamentals',
-    desc: 'Build a strong understanding of the key principles that drive '
-        + 'successful businesses. Learn about business strategy, operations, '
-        + 'finance, marketing, and effective decision-making to develop a solid '
-        + 'foundation for your professional journey.',
+    desc: 'Build your business knowledge across strategy, operations, finance, '
+        + 'marketing, and decision-making.',
     /* THE LEADER IS THE RECORD, NOT A COPY OF HER NAME. `COHORT_LEAD` is
        stated once in this file precisely so lead.js can read it back (its own
        note has the temporal-dead-zone argument), and this is a fourth reader
@@ -4115,16 +4117,16 @@ const courseOf = lvl => COURSE_NAME[String(lvl || '').toUpperCase()] || '';
 const enrolFacts = lvl => {
   const c = ENROL_COURSE[lvl];
   return [
-    [I.wallet, 'Course fee', '$690', {acc:1}],
-    [I.book,   'Chapters',   '13, one a week', {}],
+    [I.wallet, 'Course Fee', '$690', {acc:1}],
+    [I.book,   'Chapters',   '13 &middot; One per week', {}],
     /* "339 user reviews" (Maryam, 2 Sep 2026) — the reference's own line was
        "from 339 reviews of courses in this program", which is a PROGRAM's
        aggregate and this card is about one course. It also set to three lines
        in a 169px cell at 1280 against two everywhere else in the row. The
        figure is still `c.reviews`; only the words around it changed. */
-    c ? [I.star,  String(c.rating), `${c.reviews} user reviews`, {star:1}]
+    c ? [I.star,  'Rating', `${c.rating} &middot; ${c.reviews} reviews`, {star:1}]
       : [I.chart, 'Assessments', '13, one per chapter', {}],
-    c ? [I.group, 'Members', `${c.taken} members till now`,
+    c ? [I.group, 'Cohort', `${c.taken} members enrolled`,
          {chip:`${COHORT_SIZE - c.taken} seats left`}]
       : [I.group, `Cohort of ${COHORT_SIZE}`, 'live calls with your leader', {}]
   ];
@@ -4283,12 +4285,12 @@ const allCourses = (f) => {
   <div class="sec">
     <div class="hd-srch">
       <div class="hd-srch-t">
-        <div class="sec-h"><h2>Choose a course</h2></div>
-        <p class="all-desc">Every course in your track. The one recommended for you now is marked.</p>
+        <div class="sec-h"><h2>Explore Courses</h2></div>
+        <p class="all-desc">Browse courses in your track, with your recommended course highlighted.</p>
       </div>
       <div class="srch all-srch">
         <svg class="mag" viewBox="0 0 24 24">${inner('search')}</svg>
-        <input class="inp" placeholder="Search all ${COURSE_LEVELS.length} courses" aria-label="Search courses">
+        <input class="inp" placeholder="Search a course" aria-label="Search courses">
       </div>
     </div>
   </div>
@@ -4301,7 +4303,7 @@ const allCourses = (f) => {
         every topic pill wrapped onto its own line. Out here the table takes the
         full page width the agent list gets, and the topics group the way the
         expertise column does. */}
-  <div class="agt">
+  <div class="agt agt-crs">
     <div class="agt-h" aria-hidden="true">
       <span class="agt-c">Course</span>
       <span class="agt-c">What it covers</span>
@@ -4316,7 +4318,7 @@ const allCourses = (f) => {
 const enrolOffer = (lvl, act) => `<div class="sec eo dark-card">
       ${aiHead({
         mark:false,
-        title:'Your Next Step - Course Enrollment',
+        title:'Your Next Step: Course Enrollment',
         /* THE LEDE IS DROPPED WHERE THE COURSE BLOCK REPLACES IT, AND ONLY
            THERE (Maryam, 2 Sep 2026: "remove the 90 days at your own level,
            then a re-interview that can move you up. line"). That is E3's
@@ -4721,7 +4723,7 @@ function journey(){
          pre-course stages cannot describe one unstarted enrolment two ways */
       {st:'on',   lab:'Enrolled',            ai:'Course Enrollment',
        sec:'Not enrolled yet'},
-      {st:'',     lab:'90-day course',       ai:'90 days Cohort Journey',
+      {st:'',     lab:'90-day course',       ai:'90-Day Cohort Journey',
        sec:AHEAD[1]}
     ];
     default: return LEVELLED;
@@ -4778,7 +4780,7 @@ const wingHead = t => `<div class="stp-top"><h2 class="u-h3">${t}</h2></div>`;
 /* THE STRIP INSIDE THE WING IS `progressStrip` UNTOUCHED. Everything it needs
    to change is a gutter, and a gutter is CSS — see §59.1. */
 const progressWing = f => `<div class="stp stp-open stp-titled wing-prog">
-    ${wingHead('Your 90 days so far')}
+    ${wingHead('Your 90-Day Progress')}
     ${progressStrip(f)}
   </div>`;
 
@@ -4803,7 +4805,7 @@ const progressWing = f => `<div class="stp stp-open stp-titled wing-prog">
    band closes on whichever is taller, so nothing has to be filled to keep the
    two columns level. */
 const ladderWing = f => `<div class="stp stp-open stp-titled wing-lvl">
-    ${wingHead('Where you are on the ladder')}
+    ${wingHead('Where You Are on the Ladder')}
     <div class="prog">
       ${''/* THE TRACK AND THE LEVEL, NOT THE LEVEL ALONE. "E4" is a code, and a
             code is only half the answer to "where am I": the ladder under it has
@@ -4877,7 +4879,7 @@ function wingBlock(){
    cell, and takes the countdown out of `placePlates`'s chip and into words. One
    object doing one job, instead of a loud object permanently turned down.
 
-   WHAT THE ROW DROPS: "Thursday at 6:00 PM ET · 9 others · 60 minutes". That is
+   WHAT THE ROW DROPS: "Thursday at 6:00 PM · 9 others · 60 minutes". That is
    the file's decision and it is a real loss — the row now says WHEN relative
    ("2 days left") and never absolutely. It is said in full on the Cohort page,
    in Interviews, in the notification and in Tal's `cohort` summary, so nothing
@@ -5295,7 +5297,7 @@ const CALL_ROW = {
   /* the weekly cohort call, on the enrolled dashboards */
   cohort: () => {
     const L = COHORT_LEAD, w = WEEK_CALL.when;
-    return {who:L, role:'Cohort leader', when:w,
+    return {who:L, role:'Cohort Leader', when:w,
       label:`Cohort week call${PLATE_SOON.test(w) ? '' : ` &middot; session ${WEEK_CALL.session}`}`,
       x:`${L.expertise}, assesses ${L.range}`,
       kind:'cohort', second:{go:'messages', ic:I.chat, t:'Message ' + L.n.split(' ')[0]}};
@@ -5541,8 +5543,8 @@ const callRow = () => `<div class="sec head-sec head-col sec-call">${crow('cohor
    list `journey()` returned, so a stage that moves the marker moves the pill
    with it and the two cannot disagree. A stage with nothing `on` — every step
    done — reads as the last step rather than as "Step 0". */
-const JRN_AI = ['Nextinleadership Quiz','Interview &amp; Levelling',
-                'Course Enrollment','90 days Cohort Journey'];
+const JRN_AI = ['Next in Leadership Quiz','Interview &amp; Levelling',
+                'Course Enrollment','90-Day Cohort Journey'];
 
 function jrnList(){
   const steps = journey();
@@ -5868,7 +5870,7 @@ function recSkeleton(){
         </div>
       </div>
       <div class="rec-a">
-        <button class="btn btn-p btn-sm noic rec-off" disabled>Book call with ${first} ${I.arrowRight}</button>
+        <button class="btn btn-p btn-sm noic rec-off" disabled><span style="text-transform:none">Book a Call with ${first}</span> ${I.arrowRight}</button>
         <span class="rec-alt rec-finding">Finding another agent</span>
       </div>
     </div>
@@ -5926,7 +5928,7 @@ function talRec(title){
           box rather than as a rule. */}
     <div class="dc-hd">
       <div class="dc-hd-r">
-        <h2 class="dc-t">${title || 'Your Next Step - Interview'}</h2>
+        <h2 class="dc-t">${title || 'Your Next Step: Interview'}</h2>
         ${''/* IT CAME OFF FOR TWENTY MINUTES ON 3 SEP 2026 and is back. While
                "Other Agents" existed below, this was the same words pointing at
                the same view 200px above that section's own `.sec-h-act` — the
@@ -6014,7 +6016,7 @@ function talRec(title){
                 `.rec-ov` keeps its wrapper: one child at the same 16px gap
                 `.rec-b` already has, and the skeleton mirrors it. */}
           <div class="rec-ov">
-            <p class="rec-why">${first}&rsquo;s ${rec.strength} strength perfectly matches your need for ${rec.need}.</p>
+            <p class="rec-why">${first}&rsquo;s expertise in ${rec.strength} aligns well with your ${rec.need} assessment.</p>
           </div>
           ${''/* THE FACT ROW CLOSES THE COLUMN (Maryam, 31 Aug 2026: "take the
                 fee row at the end of the priya content"). It sat between the
@@ -6091,7 +6093,7 @@ function talRec(title){
             then none, which is the "mode nobody asks for" CLAUDE.md warns about.
             Both buttons are unconditional again. */}
       <div class="rec-a">
-        <button class="btn btn-p btn-sm noic" data-go="agent:${recKey()}">Book call with ${first} ${I.arrowRight}</button>
+        <button class="btn btn-p btn-sm noic" data-go="agent:${recKey()}"><span style="text-transform:none">Book a Call with ${first}</span> ${I.arrowRight}</button>
       </div>
     </div>
   </div>`;
@@ -6170,15 +6172,15 @@ const QA_NEW = [
      `--qa-ring` is that sum in the type tokens rather than a number, so the
      mark followed the words with no second edit. */
   {mk:() => pfRing(), t:'Complete Your Profile',
-   d:'Set how you want to be seen.', go:'account', edit:() => pfFirstGap()},
+   d:'Update your profile details.', go:'account', edit:() => pfFirstGap()},
   /* `modal`, NOT `peek` (Maryam, 1 Oct 2026). It used to open the breakdown as a
      right-hand column (`quizPeek`); now it opens a centred dialog showing the
      same read as the Summary-by-Tal quiz highlight (`quizModal`, ai6.js) with a
      Close button. `V.result` is still the full page, reachable from the microsite. */
   {ic:I.trophy,    hue:'ic-quiz', t:'Open Quiz Results',
-   d:'Review your score and quiz performance.', modal:'quiz'},
+   d:'View your quiz score and results.', modal:'quiz'},
   {ic:I.lightning, hue:'ic-prep', t:'Quick-Start Preparation',
-   d:'Ask Tal to prepare you for the interview.', ask:'Prepare me for my level interview'}
+   d:'Prepare for your interview with Tal.', ask:'Prepare me for my level interview'}
 ];
 /* `mk` AND `edit` ARE FUNCTIONS, NOT STRINGS, and the difference is one that
    data.js's own records keep making: `QA_NEW` is evaluated once when this file
@@ -6357,46 +6359,50 @@ const escHtml = s => String(s == null ? '' : s).replace(/[&<>"]/g,
    then deleted, and the agent's level is final. The one control clause 6 names
    is closing your account, which is what Profile actually holds. */
 const LEGAL_VER = 'Version 3.2 &middot; Effective September 15, 2026 &middot; 4 min read';
-const LEGAL_TABS = [['terms','Terms'],['privacy','Privacy'],['data','Data use'],['cookies','Cookies']];
+const LEGAL_TABS = [['terms','Terms of Service'],['privacy','Privacy Notice'],['data','Data Use Notice'],['cookies','Cookie Notice']];
+/* Legal headings take the section-heading size, and every description runs the
+   full width (Maryam, 13 Oct 2026: "use normal heading size on all tabs
+   headings", "all these pointers descriptions on all tabs should have full width"). */
 const legalHead = t => `<div class="ph" style="padding-bottom:var(--s05)">
-    <div class="ph-top"><h1 class="u-h2">${t}</h1></div>
+    <div class="ph-top"><h1 class="u-h2" style="font-size:var(--t-sec-size);line-height:var(--t-sec-lh)">${t}</h1></div>
     <p class="t-helper-01" style="color:var(--text-helper);margin-top:var(--s03)">${LEGAL_VER}</p>
   </div>`;
 const legalAcc = items => `<div class="acc">${items.map(([ttl,body],i)=>
   `<div class="acc-i${i===0?' on':''}"><button class="acc-h"><span class="ttl">${ttl}</span><span class="chev">${I.chevDown}</span></button>
-    <div class="acc-b"><p>${body}</p></div></div>`).join('')}</div>`;
+    <div class="acc-b" style="max-width:none"><p style="max-width:none">${body}</p></div></div>`).join('')}</div>`;
+const legalShort = t => `<div class="sec"><div class="note"><span>${I.info}</span><div class="nb" style="max-width:none"><b>The Short Version</b>${t}</div></div></div>`;
 const LEGAL_BODY = {
-  terms: () => `${legalHead('Terms of service')}
-    <div class="sec"><div class="note"><span>${I.info}</span><div class="nb"><b>The short version</b>TalentNext helps you get levelled, enrol on a course and track your progress. Use it as yourself, keep your sign-in safe, and these terms apply while you do.</div></div></div>
+  terms: () => `${legalHead('Terms of Service')}
+    ${legalShort('TALENTnext helps you determine your level, enroll in courses, and track your progress. Use the platform responsibly and keep your sign-in credentials secure.')}
     ${legalAcc([
-      ['1. Your account','You sign in through our identity provider and the account is yours to use. Keep your credentials safe. The email address you sign up with identifies your account for its whole life and cannot be changed.'],
-      ['2. Using the service','Use TalentNext for your own leadership development. Do not misuse it, reach for another person&rsquo;s records, or disrupt the service for others.'],
-      ['3. Payments','A first interview is complimentary. Later interviews and course enrolments are paid at the price shown before you pay, and your receipts are in Payments.'],
-      ['4. Changes','We may update these terms. When a version changes materially you are asked to accept the new one at your next sign-in.']
+      ['1. Your Account','You sign in through our identity provider and are responsible for keeping your credentials secure. Your sign-in email identifies your account and cannot be changed.'],
+      ['2. Using the Service','Use TALENTnext for your own leadership development. Do not misuse the platform, access another person&rsquo;s records without permission, or disrupt the service.'],
+      ['3. Payments','Your first interview is complimentary. Subsequent interviews and course enrollments are charged at the prices shown before payment. Receipts are available under Payments.'],
+      ['4. Changes to These Terms','We may update these terms. If a change is material, you&rsquo;ll be asked to accept the updated terms at your next sign-in.']
     ])}`,
-  privacy: () => `${legalHead('Privacy notice')}
-    <div class="sec"><div class="note"><span>${I.info}</span><div class="nb"><b>The short version</b>We hold what you give us and what you do on the platform, use it to run your course and your level, and do not sell it.</div></div></div>
+  privacy: () => `${legalHead('Privacy Notice')}
+    ${legalShort('We collect the information you provide and your activity on TALENTnext to deliver our services. We never sell your personal data.')}
     ${legalAcc([
-      ['1. What we hold','Your profile, your quiz result and band scores, your interviews and their reports, your course progress, and your payments. Card numbers are held by our payment processor, not by us.'],
-      ['2. Why we hold it','To level you, recommend a course, run the 90 days and show you your own record. Tal reads your progress to help you with the material.'],
-      ['3. How long','Interview recordings are kept for 24 months, then deleted. Payment records are kept for seven years to meet accounting obligations. The rest is held while your account is open.'],
-      ['4. Your rights','You can read and edit your profile, read your reports and transcripts, and close your account at any time from Privacy Settings.']
+      ['1. What We Collect','Your profile, quiz results and band scores, interview recordings and reports, course progress, and payment records. Card details are handled by our payment processor, not stored by TALENTnext.'],
+      ['2. Why We Collect It','We use your information to assess your level, recommend courses, support your 90-day learning journey, and maintain your progress records. Tal uses your learning progress to help you with course materials.'],
+      ['3. How Long We Keep It','Interview recordings are retained for 24 months before deletion. Payment records are kept for seven years to meet accounting obligations. Other data is retained while your account remains active.'],
+      ['4. Your Rights','You can review and update your profile, access your reports and transcripts, and close your account at any time through Privacy Settings.']
     ])}`,
-  data: () => `${legalHead('Data use notice')}
-    <div class="sec"><div class="note"><span>${I.info}</span><div class="nb"><b>The short version</b>Your interview is recorded so your level can be set from it. TalentNext sets your level after the interview is analysed, and that decision is final.</div></div></div>
+  data: () => `${legalHead('Data Use Notice')}
+    ${legalShort('Your interviews are recorded and analysed to determine your level. TALENTnext assigns your level based on the evaluation, and that decision is final.')}
     ${legalAcc([
-      ['1. What we record','Every interview and re-interview is recorded as video and audio, and transcribed so your level can be set from it. Recordings are stored for 24 months, then deleted. Your weekly cohort calls are not recorded.'],
-      ['2. Who sees your interview','The agent who interviewed you, and the cohort leader who runs your course. Nobody else, unless you share your report yourself.'],
-      ['3. Your level and who sets it','A talent agent interviews you. TalentNext then sets your level from that interview, after analysing it. At the end of each course a re-interview decides whether you move up, hold or drop back. That decision is final.'],
-      ['4. Tal, your assistant','Tal can see your course progress, your chapter notes and your points so that it can help you with the material. Tal cannot see your one-to-one messages, your cohort calls, your payment details, or other candidates&rsquo; data.'],
-      ['5. What we never do','We do not sell your data. We do not share your individual progress with an employer without your written instruction.'],
-      ['6. Your controls','You can close your account at any time from Privacy Settings. Closing it removes your profile, your notes and your interview recordings; certificates you have already earned stay valid.']
+      ['1. What We Record','All interviews and re-interviews are recorded in video and audio and transcribed to support level assessment. Recordings are retained for 24 months before deletion. Weekly cohort calls are not recorded.'],
+      ['2. Who Can Access Your Interview','Your interviewing talent agent and cohort leader can access your interview information. Others cannot access your report unless you choose to share it.'],
+      ['3. How Your Level Is Determined','A talent agent conducts your interview, and TALENTnext assigns your level based on the analysis. After each 90-day course, a re-interview determines whether you advance, maintain your level, or move down one level. This decision is final.'],
+      ['4. Tal, Your Assistant','Tal can access your course progress, chapter notes, and points to help you with learning. Tal cannot access your one-to-one messages, cohort calls, payment details, or other candidates&rsquo; data.'],
+      ['5. How We Protect Your Data','We never sell your personal data or share your individual progress with an employer without your written instruction.'],
+      ['6. Managing Your Data','You can close your account at any time through Privacy Settings. Deletion removes your profile, notes, and interview recordings. Certificates you&rsquo;ve earned remain valid and available to download.']
     ])}`,
-  cookies: () => `${legalHead('Cookie notice')}
-    <div class="sec"><div class="note"><span>${I.info}</span><div class="nb"><b>The short version</b>We use only the cookies the platform needs to sign you in and keep you signed in. No advertising, and no third-party tracking.</div></div></div>
+  cookies: () => `${legalHead('Cookie Notice')}
+    ${legalShort('We use only essential cookies to sign you in and maintain your session. We do not use advertising cookies or third-party trackers.')}
     ${legalAcc([
-      ['1. Strictly necessary','These keep you signed in and remember your session. The platform does not work without them, so they are always on.'],
-      ['2. What we do not use','No advertising cookies, no cross-site trackers, and no selling of any signal to a third party.']
+      ['1. Strictly Necessary Cookies','These cookies keep you signed in and maintain your session. They are essential for the platform to function and cannot be disabled.'],
+      ['2. What We Don&rsquo;t Use','We don&rsquo;t use advertising cookies or cross-site trackers, and we don&rsquo;t sell tracking data to third parties.']
     ])}`
 };
 function legalDoc(){
@@ -6784,7 +6790,7 @@ V.dashboard = (f) => {
           <span class="plate-wb"><b>${CONSULTANT.n}</b><span>Talent consultant &middot; screens Explorer candidates</span></span>
         </div>
         <div class="plate-t">Your consultant call</div>
-        <div class="plate-b">Thursday, August 13 at 2:00 PM ET &middot; 15 minutes, online</div>
+        <div class="plate-b">Thursday, August 13 at 2:00 PM &middot; 15 minutes, online</div>
         ${''/* THE PLATE'S JOIN IS GATED TOO, AND IT IS THE ONE THAT WAS ALREADY
                DEAD. Maryam, 3 Sep 2026 — "in cards where the time left in the
                call is more than a minute, show a grey disabled join call
@@ -6942,7 +6948,7 @@ V.dashboard = (f) => {
           both reads are derived. */}
     <div class="sec sec-call dark-card crow-dark">
       <div class="dc-hd">
-        <div class="dc-hd-r"><h2 class="dc-t">Your Next Step - Interview</h2>
+        <div class="dc-hd-r"><h2 class="dc-t">Your Next Step: Interview</h2>
           <span class="dc-when">${I.time}${S.stage===RESCHED?"In 2 days":callLeft(CALL_ROW.iv().when)}</span></div>
       </div>
       ${crow('iv', {when:false, second:false})}
@@ -6992,8 +6998,8 @@ V.dashboard = (f) => {
           page again, they are a Tal card (`PAGESUM` owns the head, so a `.sec`
           with an `.ai-aura` under the cards), not a numbered list. */}
     ${quickActions([
-      {ic:I.video, hue:'ic-cover', t:'Your session, step by step',
-       d:'How 45 minutes interview will set your level', go:'interviews',
+      {ic:I.video, hue:'ic-cover', t:'Your Session, Step by Step',
+       d:'Understand your interview process.', go:'interviews',
        /* THE CARD IS A ROUTE TO ONE BLOCK, SO IT OPENS IT (Maryam, 2 Sep 2026).
           "How it works" is the four figures and the four numbered steps, and it
           is closed by default because on every other way into that page it is a
@@ -7002,8 +7008,8 @@ V.dashboard = (f) => {
           is the press appearing not to have worked. `disc` is documented over
           `quickActions`. */
        disc:'how'},
-      {ic:I.lightning, hue:'ic-prep', t:'What to bring',
-       d:'Ask Tal what to have ready for the call.',
+      {ic:I.lightning, hue:'ic-prep', t:'What to Bring',
+       d:'Prepare for your interview with Tal.',
        ask:'What should I prepare for my level interview?'}
     ])}`;
   /* AND THE QUIZ BLOCK IS NOT HERE ANY MORE — the long version of why is the
@@ -7022,7 +7028,7 @@ V.dashboard = (f) => {
     <div class="sec">
       <div class="ai-aura tile">
         <div class="ai-head">${talLabel()}<h3>Your next step</h3></div>
-        <div class="ai-body"><p>Your interview with <b>Priya</b> is done. It is being analysed now, and <b>TalentNext sets your level</b> from it within 24 hours. There is nothing to do but wait.</p></div>
+        <div class="ai-body"><p>Your interview with Priya Nair is complete. TALENTnext is analysing your interview to determine your level. Your report will be ready within <b>24 hours</b>.</p></div>
       </div>
     </div>
     ${''/* THE INTERVIEW THAT HAPPENED, IN THE SAME BLACK CARD SLOT `booked` USES
@@ -7051,11 +7057,11 @@ V.dashboard = (f) => {
       ${crow('iv', {when:false, second:false, join:false})}
     </div>
     ${quickActions([
-      {ic:I.lightning, hue:'ic-prep', t:'What happens next',
-       d:'How your report and level are decided.',
+      {ic:I.lightning, hue:'ic-prep', t:'What Happens Next',
+       d:'Learn how your level is determined.',
        ask:'What happens now that my interview is done?'},
-      {ic:I.video, hue:'ic-cover', t:'Your interview',
-       d:'The recording your report is built from.', go:'interviews'}
+      {ic:I.video, hue:'ic-cover', t:'Your Interview',
+       d:'Review your interview recording.', go:'interviews'}
     ])}`;
 
   else if(S.stage==='assessed') body = `
@@ -7175,16 +7181,16 @@ V.dashboard = (f) => {
           and cannot go stale. "on interview" also keeps the card free of the
           date disagreement the note above records. */}
     ${quickActions([
-      {ic:I.book, hue:'ic-cover', t:'What the 90 days cover',
-       d:`${CH.length} chapters, weekly live cohort calls`, go:'enrol'},
+      {ic:I.book, hue:'ic-cover', t:'What the 90 Days Cover',
+       d:`Explore chapters and weekly live cohort calls.`, go:'enrol'},
       /* "Signed" CAME OFF (Maryam, 1 Sep 2026, on the `promoted` twin). The
          word was carrying nothing the card needed: a write-up BY the agent is
          the signed document by definition — there is no unsigned one in the
          product — and the two lines it set at the card's width were a wrap
          bought with a redundant adjective. Mirrored here per §82's pairing
          rule, which is why the promoted note does not repeat the argument. */
-      {ic:I.document, hue:'ic-found', t:'What the interview found',
-       d:'Write-up by the agent on interview', go:'report'}
+      {ic:I.document, hue:'ic-found', t:'What the Interview Found',
+       d:'Review your agent&rsquo;s interview evaluation.', go:'report'}
     ])}`;
 
   else if(f.complete) body = `
@@ -7520,7 +7526,7 @@ V.dashboard = (f) => {
           Action cards pointing at the pages that hold them. The columns
           themselves are not lost: `pulseCols` draws them in full on Course
           Progress. The thirteen-week chart is already there. */}
-    ${dueRe ? talRec('Your Next Step - Re-interview') : ''}
+    ${dueRe ? talRec('Your Next Step: Re-interview') : ''}
     ${''/* NO PULSE CARD ON DAY 90 (Maryam, 31 Aug 2026: "Remove the 'Your
           learning pulse' black card"). Two black cards on one page is trap 12's
           rule about `.plate` and `.cert` in a different register — and the
@@ -7595,7 +7601,7 @@ const lvlWing = f => {
      it straight back in. §97 §2 is the drawing and §63 §30 the four inks. */
   return `<div class="sec dark-card">
     <div class="stp stp-open stp-titled wing-lvl">
-      ${wingHead('Where you are on the ladder')}
+      ${wingHead(confirmed ? 'Your Level' : 'Where You Are on the Ladder')}
       <div class="prog">
         <div class="prog-top">
           <div><div class="prog-pct">${confirmed?lvlName(f.level):f.track}</div>
@@ -7608,8 +7614,8 @@ const lvlWing = f => {
                   separator; here it is one line under a headline, which is
                   prose, and ai6's note on `_slot` makes the same call. */}
             <div class="prog-l">${confirmed
-              ?(f.complete?'Promoted 21 November, set by TalentNext':'Confirmed 21 August, set by TalentNext')
-              :(S.stage==='held'?'Your report is on its way':'Your level is set after your interview')}</div></div>
+              ?(f.complete?'Promoted November 21 &middot; Assigned by TALENTnext':'Confirmed August 21 &middot; Assigned by TALENTnext')
+              :(S.stage==='held'?'Your report is on its way':'Your level will be assigned after your interview.')}</div></div>
           ${''/* THE RIGHT-HAND FIGURE IS THE POSITION, AND BEFORE THE INTERVIEW
                 THE POSITION IS A RANGE. "4 of 15" is the reference's figure and
                 it needs a level; with none set, the honest answer is the five
@@ -7618,8 +7624,8 @@ const lvlWing = f => {
                 Explorer is somewhere in E1 to E5 whatever the interview says —
                 which is the distinction §29.4 makes about the band itself. */}
           <div class="prog-day">
-            <div class="prog-dn">${confirmed?rungOf(f.level):'1&ndash;5'}<small> of 15</small></div>
-            <div class="prog-l">${confirmed?'on the ladder':'in this track'}</div></div>
+            <div class="prog-dn">${confirmed?`<small>Level </small>${rungOf(f.level)}`:'1&ndash;5'}<small> of 15${confirmed?'':' levels'}</small></div>
+            ${confirmed?'':'<div class="prog-l">Levels in this track</div>'}</div>
         </div>
         ${confirmed?ladder(f.level, true):trackBand(f.track, true)}
       </div>
@@ -7677,7 +7683,7 @@ V.level = (f) => {
         the running-cohort surfaces. Gated on `!f.preStart` on top of the level
         test, so the confirmed-and-running stages are unchanged. */}
   ${f.level && !f.preStart ? `<div class="sec sec-rank">
-    <div class="sec-h"><h2>Ranking</h2><span class="t-desc">Candidates at your level across TALENTnext, from any cohort.</span></div>
+    <div class="sec-h"><h2>Ranking</h2><span class="t-desc">Candidates at your level across TALENTnext, regardless of cohort.</span></div>
     ${boardList()}
   </div>` : ''}
   ${''/* THE SIGNED REPORT BLOCK LEFT THIS PAGE (Maryam, 1 Sep 2026: "instead of
@@ -7780,14 +7786,14 @@ V.level = (f) => {
        page, so the tone change is what separates it rather than one more
        hairline. -->
   <div class="sec flat tint">
-    <div class="sec-h"><h2>How the ladder works</h2></div>
-    <div class="acc">
-      <div class="acc-i"><button class="acc-h"><span class="ttl">The three tracks</span><span class="chev">${I.chevDown}</span></button>
-        <div class="acc-b"><p>Explorer (E1&ndash;E5), Builder (B1&ndash;B5), Trailblazer (T1&ndash;T5). Fifteen levels in one line. You do not jump tracks, you move up one level at a time.</p></div></div>
-      <div class="acc-i"><button class="acc-h"><span class="ttl">Moving up</span><span class="chev">${I.chevDown}</span></button>
-        <div class="acc-b"><p>Every course is 90 days. Once the 90 days are up you re-interview, and you move up a level, hold where you are, or drop back one.</p></div></div>
-      <div class="acc-i"><button class="acc-h"><span class="ttl">Who decides</span><span class="chev">${I.chevDown}</span></button>
-        <div class="acc-b"><p>A talent agent interviews you. TalentNext then sets your level from that interview, after analysing it. At the end of a course, a re-interview decides whether you move up, hold or drop back.</p></div></div>
+    <div class="sec-h"><h2>How the Ladder Works</h2></div>
+    <div class="acc acc-full">
+      <div class="acc-i"><button class="acc-h"><span class="ttl">The Three Tracks</span><span class="chev">${I.chevDown}</span></button>
+        <div class="acc-b"><p>Explorer (E1&ndash;E5), Builder (B1&ndash;B5), and Trailblazer (T1&ndash;T5) form a 15-level progression. Advance one level at a time.</p></div></div>
+      <div class="acc-i"><button class="acc-h"><span class="ttl">Moving Up</span><span class="chev">${I.chevDown}</span></button>
+        <div class="acc-b"><p>Each course runs for 90 days. At the end, a re-interview determines whether you advance, maintain your level, or move down one level.</p></div></div>
+      <div class="acc-i"><button class="acc-h"><span class="ttl">Who Determines Your Level</span><span class="chev">${I.chevDown}</span></button>
+        <div class="acc-b"><p>A talent agent conducts your interview, and TALENTnext assigns your level based on the evaluation. After each 90-day course, a re-interview determines your next level.</p></div></div>
     </div>
   </div>
 </div></main>`;
@@ -8223,8 +8229,8 @@ V.report = (f) => `<main class="main"><div class="page">
     ${sceneRow(k)}
   </div>`
     : `<div class="sec">
-    <div class="sec-h"><div class="scene-hb"><h2>Choose your scenes</h2>
-    <p class="scene-lede">Six moments were cut from your interview. Keep the three you would be happy for someone to watch.</p>
+    <div class="sec-h"><div class="scene-hb"><h2>Choose Your Scenes</h2>
+    <p class="scene-lede">Six moments were selected from your interview. Choose three you&rsquo;re comfortable sharing.</p>
     </div>${sceneSave(k)}</div>
     ${scenePick(k)}
   </div>`;
@@ -8293,7 +8299,7 @@ V.report = (f) => `<main class="main"><div class="page">
         a section that failed to load rather than one that has nothing to say.
         The whole block is conditional on the one control it can still hold. */}
   ${f.enrolled||f.complete?'':`<div class="sec"><div class="btn-set">
-    <button class="btn btn-p" data-go="enrol">Enroll on Explorer Track &ndash; E3 ${I.arrowRight}</button>
+    <button class="btn btn-p" data-go="enrol"><span style="text-transform:none">Enroll in Course</span> ${I.arrowRight}</button>
   </div></div>`}
 </div></main>`;
 
@@ -8336,23 +8342,23 @@ V.report = (f) => `<main class="main"><div class="page">
    (`discOpen`/`foundHead`), so opening it on either page is the same state. */
 function howItWorks(){
   return `<div class="sec found${discOpen('how')?' on':''}">
-    ${foundHead('How it works','how')}
+    ${foundHead('How It Works','how')}
     <div class="found-b">
     <div class="facts">
-      <div><span class="l">Length</span><span class="v">45 minutes</span></div>
-      <div><span class="l">Format</span><span class="v">Video, recorded</span></div>
-      <div><span class="l">Your report</span><span class="v">Within 24 hours</span></div>
-      <div><span class="l">Fee</span><span class="v">First one free</span></div>
+      <div><span class="l">Duration</span><span class="v">45 minutes</span></div>
+      <div><span class="l">Format</span><span class="v">Recorded video call</span></div>
+      <div><span class="l">Your Report</span><span class="v">Within 24 hours</span></div>
+      <div><span class="l">Fee</span><span class="v">First interview free</span></div>
     </div>
     <ol class="steps">
-      <li><span class="s-n">1</span><span class="s-b"><b>You choose the agent</b>
-        Every agent who assesses your track is listed with their next free slot. You pick who you talk to.</span></li>
-      <li><span class="s-n">2</span><span class="s-b"><b>You have the conversation</b>
-        Forty-five minutes by video. Your agent walks you through real situations from your own answers and asks what you did and why. There is nothing to revise and no way to fail it.</span></li>
-      <li><span class="s-n">3</span><span class="s-b"><b>Your level is set</b>
-        Within 24 hours your interview is analysed and TalentNext sets your level: your strengths, your growth areas, and the level you have been confirmed at.</span></li>
-      <li><span class="s-n">4</span><span class="s-b"><b>The report is yours</b>
-        It stays in your account and you decide who ever sees it. Your level opens the course built for that level.</span></li>
+      <li><span class="s-n">1</span><span class="s-b"><b>Choose Your Agent</b>
+        Browse available agents and choose your preferred interview slot.</span></li>
+      <li><span class="s-n">2</span><span class="s-b"><b>Complete Your Interview</b>
+        Join a 45-minute video call to discuss real-life situations based on your answers. No preparation or passing score required.</span></li>
+      <li><span class="s-n">3</span><span class="s-b"><b>Get Your Level</b>
+        Within 24 hours, your interview is evaluated to determine your level, strengths, and growth areas.</span></li>
+      <li><span class="s-n">4</span><span class="s-b"><b>Access Your Report</b>
+        Your report stays in your account, and you control who can access it. Your confirmed level determines which course you can enroll in.</span></li>
     </ol>
     </div>
   </div>`;
@@ -8576,18 +8582,19 @@ V.interviews = (f) => {
         the reason modal and, confirmed, returns to the marketplace. Both sit on
         the white page under the black card, not inside it: `.danger` ink is a
         light red that does not read on the dark ground. */}
-  <div class="sec iv-manage">
-    ${ivTopicBlock()}
-    <button class="btn btn-t danger noic" data-ivcancel="1">${I.close}Cancel interview</button>
-  </div>`:''}
+  ${''/* NO CANCEL CONTROL (Maryam, 13 Oct 2026: "remove cancel interview option.
+        reschedule is enough"). Reschedule on the black card is the one way to
+        change the booking; `ivCancelModal` and its handlers stay defined,
+        reached by nothing. The section draws only when there is a topic. */}
+  ${ivTopicBlock() ? `<div class="sec iv-manage">${ivTopicBlock()}</div>` : ''}`:''}
   ${''/* THE 24-HOUR WAIT (17.1). No agent card, no Join, no cancel — the call
         happened. The report is on its way and there is nothing to do; the topic
         the candidate raised is echoed for reference. */}
   ${held?`
   <div class="sec">
     <div class="tile">
-      <h3 class="t-h3">Interview held</h3>
-      <p class="t-body-01" style="color:var(--text-secondary);margin-top:var(--s02)">Your interview is being analysed and your level will be set by TalentNext within 24 hours. You will be notified then. There is nothing to do.</p>
+      <h3 class="t-h3">Interview Held</h3>
+      <p class="t-body-01" style="color:var(--text-secondary);margin-top:var(--s02)">Your interview is being analysed. TALENTnext will assign your level and notify you when your report is ready, within 24 hours.</p>
     </div>
     ${ivTopicBlock()}
   </div>`:''}
@@ -8703,12 +8710,12 @@ const allAgents = () => `
               the task on both call sites: on `V.agents` the page title says the
               same thing one size up, and on `V.interviews` this is the block a
               candidate with no interview booked scrolls to. */''}
-        <div class="sec-h"><h2>Choose an agent for your interview</h2></div>
-        <p class="all-desc">Select an agent from whom you want to be interviewed.</p>
+        <div class="sec-h"><h2>Choose Your Interview Agent</h2></div>
+        <p class="all-desc">Select an agent to conduct your interview.</p>
       </div>
       <div class="srch all-srch">
         <svg class="mag" viewBox="0 0 24 24">${inner('search')}</svg>
-        <input class="inp" placeholder="Search all 24 agents" aria-label="Search agents">
+        <input class="inp" placeholder="Search agents" aria-label="Search agents">
       </div>
     </div>
   </div>
@@ -9259,11 +9266,11 @@ V.checkout = (f) => {
       ${charged
         ? `<div class="sec-h"><h2>Pay with</h2>${addCardAct}</div>
       ${cardPicker()}`
-        : `<div class="tile"><p class="t-body-01">Your first interview with ${first} is <b>complimentary</b>, so <b>$0</b> is charged today. Add a payment method to continue; it is saved securely for your next booking.</p></div>
-      <div class="sec-h"><h2>Payment method</h2>${addCardAct}</div>
+        : `<div class="tile"><p class="t-body-01">Your first interview with ${first} is <b>complimentary</b>. Add a payment method to continue. Your card will be saved securely for future bookings, with no charge today.</p></div>
+      <div class="sec-h"><h2>Payment Method</h2>${addCardAct}</div>
       ${S.pmAdded
         ? cardPicker()
-        : `<div class="empty pm-empty">${I.creditCard}<h3>No payment method added yet</h3><p>Add a card to continue. Your first interview is complimentary, so nothing is charged today.</p></div>`}`}
+        : `<div class="empty pm-empty">${I.creditCard}<h3>No payment method added yet.</h3><p>Add a card to proceed. Your first interview is free, so you won&rsquo;t be charged today.</p></div>`}`}
       ${(charged || S.pmAdded)
         ? `<div class="bkpay-go"><button class="btn btn-p" data-payok="1">${charged?'Pay '+a.price:'Continue to Pay'} ${I.arrowRight}</button></div>`
         : ''}
@@ -9352,7 +9359,7 @@ V.booking = (f) => {
         rest. */}
   ${ph('Booking Details', null, null, 'interviews')}
   <div class="sec" style="padding-top:var(--s06)">
-    <div class="note succ"><span>${I.checkFilled}</span><div class="nb"><b>Interview booked</b>Thursday, August 20 at 6:30 PM ET with ${a.n}. A calendar invite and joining link are in your email.</div></div>
+    <div class="note succ"><span>${I.checkFilled}</span><div class="nb"><b>Interview booked</b>Thursday, August 20 at 6:30 PM with ${a.n}. A calendar invite and joining link are in your email.</div></div>
   </div>
   ${''/* THE RECEIPT IS THE TWO COMPONENTS THIS PRODUCT ALREADY HAS (Maryam,
         31 Aug 2026). It was a `.tile` holding a 40px `row-lead` and three `.kv`
@@ -9399,7 +9406,7 @@ V.booking = (f) => {
       </div>
     </div>
     <div class="facts eo-facts mt6">
-      ${[[I.calendar,'When',  'Thu, Aug 20 &middot; 6:30 PM ET'],
+      ${[[I.calendar,'When',  'Thu, Aug 20 &middot; 6:30 PM'],
          [I.time,    'Length','45 minutes, recorded'],
          [I.wallet,  'Paid',  `${a.price} &middot; Visa ending 4242`]
         ].map(([ic,lab,val])=>`<div>
@@ -10235,10 +10242,10 @@ V.payment = (f) => {
    ========================================================================== */
 const enrolSheet = () => {
   return `<div class="modal on" data-close="enrolok">
-    <div class="sheet conf conf-ok" role="dialog" aria-modal="true" aria-label="Successfully enrolled">
+    <div class="sheet conf conf-ok" role="dialog" aria-modal="true" aria-label="Enrollment Confirmed">
       <div class="sheet-b conf-b">
         <span class="conf-mk">${I.checkFilled}</span>
-        <h2 class="conf-t">Successfully enrolled</h2>
+        <h2 class="conf-t">Enrollment Confirmed</h2>
         ${''/* THE FEE IS ITS OWN ROW, like the pay-success dialog (Maryam, 20 Sep
               2026): a "Course Fee" label over the amount, the shared
               `.bkc-fee`/`.bkc-fl`/`.bkc-fv` treatment centred in `.pay-fee`. The
@@ -10247,7 +10254,7 @@ const enrolSheet = () => {
               (8 Oct 2026). */}
         <div class="bkc-fee pay-fee" style="align-items:center"><span class="bkc-fl">Course Fee</span>
           <span class="bkc-fv">$690</span></div>
-        <p class="conf-x">Your payment was successful, and your enrollment is confirmed. You&rsquo;re all set to begin your TalentNext journey.</p>
+        <p class="conf-x">Your payment was successful, and your enrollment is confirmed. You&rsquo;re ready to begin your learning journey on TALENTnext.</p>
       </div>
       <div class="sheet-f conf-a">
         <button class="btn btn-s noic" data-enrolok="0">Close</button>
@@ -10262,6 +10269,25 @@ const enrolSheet = () => {
    `enrolSheet`'s exact `.conf conf-ok` shell, one success mark, "Interview
    booked", and one control that dismisses it onto the dashboard behind. `S.ivBooked`
    gates it; the backdrop and the button both clear the flag. */
+/* THE LOG-OUT CONFIRMATION (Maryam, 13 Oct 2026: "on clicking the logout
+   button on candidate portal, there is no confirmation modal"). Every way out —
+   the rail foot, the account menu's Sign out, the profile's Log out — carries
+   `data-logout` and opens this `.conf` dialog; only its Log out button carries
+   the old `stage:signup/login` route. Copy matches the agent portal's. */
+const logoutModal = () => `<div class="modal on" data-close="logout">
+    <div class="sheet conf" role="dialog" aria-modal="true" aria-label="Log out">
+      <div class="sheet-b conf-b">
+        <span class="conf-mk">${I.logout}</span>
+        <h2 class="conf-t">Are you sure you want to log out?</h2>
+        <p class="conf-x">You&rsquo;ll need to sign in again to access your account.</p>
+      </div>
+      <div class="sheet-f conf-a">
+        <button class="btn btn-s noic" data-logout="0">Cancel</button>
+        <button class="btn btn-p noic" data-logoutgo="1">Log out</button>
+      </div>
+    </div>
+  </div>`;
+
 const ivBookedModal = () => {
   const k = (S.booking && S.booking.agent) || (S.bk && S.bk.agent) || S.agent || 'priya';
   const a = AGENTS[k] || AGENTS.priya;
@@ -10326,11 +10352,11 @@ const levelModal = () => {
    `S.beganSeen` gates it so it shows once per session; the button and the
    backdrop both set it. */
 const beganModal = () => `<div class="modal on" data-close="began">
-    <div class="sheet conf" role="dialog" aria-modal="true" aria-label="Your learning journey has begun">
+    <div class="sheet conf" role="dialog" aria-modal="true" aria-label="Your 90-Day Journey Has Begun">
       <div class="sheet-b conf-b">
         <span class="conf-mk">${I.book}</span>
-        <h2 class="conf-t">Your learning journey has begun</h2>
-        <p class="conf-x">Your 90-day cohort is now active. Start exploring Business Fundamentals and continue your learning journey.</p>
+        <h2 class="conf-t">Your 90-Day Journey Has Begun</h2>
+        <p class="conf-x">Your cohort is now active. Start learning with Business Fundamentals and make the most of your 90-day journey.</p>
       </div>
       <div class="sheet-f conf-a">
         <button class="btn btn-p noic" data-beganclose="1">Continue Learning</button>
@@ -10459,7 +10485,7 @@ V.welcome = () => `<main class="main"><div class="page">
     <div class="tile-stack">
       ${[['Nothing, until 1 December','Chapter 1, '+CH[0][0]+', unlocks that morning &middot; '+CH[0][1]+' min',I.book],
          ['Priya introduces the cohort on the board','Before the first call, so you know the ten of you by name',I.group],
-         ['Your first live call is that Thursday','6:00 PM ET &middot; 60 minutes &middot; the invite is already in your email',I.calendar]
+         ['Your first live call is that Thursday','6:00 PM &middot; 60 minutes &middot; the invite is already in your email',I.calendar]
         ].map(([t,d,ic],i) => `<div class="cardrow"><span class="cardrow-n">${i+1}</span>
         <span class="cardrow-b"><span class="cardrow-t">${t}</span><span class="cardrow-d">${d}</span></span>
         <span class="cardrow-ic">${ic}</span></div>`).join('')}
@@ -10515,8 +10541,13 @@ const lsvtFrame = () => `<main class="main lsvt-blank"><div class="page"><div cl
    `.ai-aura`, so `placePageSummary` leaves it alone (no PAGESUM entry needed). */
 const courseworkPreview = (f) => `<main class="main"><div class="page">
   ${crumb(['Dashboard','dashboard'],'Coursework')}
-  <div class="sec">
-    <div class="sec-h"><h2>${COHORT_COURSE}</h2></div>
+  ${''/* THE COVER LEADS THE COURSE NAME, AND THE NOTE SITS UNDER BOTH (Maryam,
+        13 Oct 2026: "add course image on its left / the info row should be
+        below the image and course name, not next to them"). The name was a
+        `.sec-h`, which §10.15 turned into a 184px label column with the note
+        beside it; `.cw-id` is a plain row, so nothing goes side by side. */}
+  <div class="sec cw-pre">
+    <div class="cw-id"><img class="cw-cover" src="${courseArt(f.level || 'E3')}" alt=""><h2 class="t-h3">${COHORT_COURSE}</h2></div>
     <div class="note"><span>${I.info}</span><div class="nb">Your cohort has not started yet. This is the full outline of what you&rsquo;ll cover; the chapters open in LightSpeed VT when the cohort begins${f.startIn>0?`, in ${f.startIn} days`:' today'}.</div></div>
   </div>
   ${outlineSec(f.level || 'E3')}
@@ -10643,7 +10674,7 @@ V.rewards = (f) => {
      "gate nothing writes" tell. It was READ, NOT TYPED — `certsFor(f).length`,
      the same list the rows are drawn from — and that is the shape to restore it
      in if the count ever comes back. The other three tabs keep the row. */
-  const counts = {points:`${g.got.length} of ${PTS.length} earned`, badges:`${g.badges} of ${BDG.length} earned`, rank:`Currently ${RANKS[g.rank-1].n}`};
+  const counts = {points:`${g.got.length} of ${PTS.length} activities earned`, badges:`${g.badges} of ${BDG.length} earned`, rank:`Currently ${RANKS[g.rank-1].n}`};
   return `<main class="main"><div class="page">
   ${crumb(['Dashboard','dashboard'],'Achievements')}
   ${''/* NO DESCRIPTION HERE EITHER. "Points, badges and rank come from your
@@ -10730,8 +10761,12 @@ V.rewards = (f) => {
           list of one, which is the count restating the thing it counts. Both
           halves go together: "Updated today" alone would be a right-aligned
           timestamp with nothing on its line. */}
-    <div class="sec-h" style="margin-bottom:var(--s04)"><span class="t-helper-01">${counts[tab]}</span>
-      <span class="t-helper-01" style="margin-left:auto">Updated today</span></div>
+    ${''/* PADDING-RIGHT 0 (Maryam, 13 Oct 2026: "Last updated: Today should be
+          right aligned with the content"): `.sec-h` reserves 24px on its right
+          for a heading action, which left the timestamp 24px short of the
+          points column below. This row carries no action, so it gives it up. */}
+    <div class="sec-h" style="margin-bottom:var(--s04);padding-right:0"><span class="t-helper-01">${counts[tab]}</span>
+      <span class="t-helper-01" style="margin-left:auto">Last updated: Today</span></div>
     ${''/* THE WRAPPER KEEPS `.aw-list` AND TAKES A MODIFIER — it is not a new
           class, and that is the whole of trap 13 answered here. Six layers
           reach this element through `:has(> .aw-list)` (§12's ground and its
@@ -10745,7 +10780,7 @@ V.rewards = (f) => {
     <div class="aw-list${tab==='points'?'':' aw-grid'}">
       ${tab==='points'?pointsList(g):tab==='badges'?badgeList(g):rankList(g)}
     </div>
-    ${tab==='points'?`<p class="t-helper-01 mt5">Points update within a few minutes of the activity.</p>`:''}
+    ${tab==='points'?`<p class="t-helper-01 mt5">Points typically update within a few minutes of completing an activity.</p>`:''}
     ${tab==='rank'?`<p class="t-helper-01 mt5">Rank reflects your activity. It is separate from your level.</p>`:''}
   </div>`}
 </div></main>`;
@@ -11453,7 +11488,7 @@ V.transcript = (f) => {
   ${f.complete ? '' : `<div class="sec tint">
     <div class="sec-h"><h2>Your progress by chapter</h2></div>
     <div class="tile-stack">${(S.chAll?CH:CH.slice(0,5)).map((_,i)=>chRow(i,f)).join('')}</div>
-    <div class="mt4"><button class="btn btn-g" data-chall="1">${S.chAll?`Show the first five ${I.chevUp}`:`Show all 13 ${I.chevDown}`}</button></div>
+    <div class="mt4"><button class="btn btn-g ch-all" data-chall="1">${S.chAll?`Show the first five ${I.chevUp}`:`Show all 13 ${I.chevDown}`}</button></div>
   </div>`}
   ${''/* THE COURSE RATING IS THE LAST THING ON THE PAGE (Maryam, 14 Sep 2026).
         Day90 only (`f.finished`); moved here from the pulse's old slot near the
@@ -11973,15 +12008,15 @@ V.billing = (f) => {
              the one thing a payment row's first two cells are about. Card and
              Amount already named themselves and are unchanged. */}
       <div class="payrow payhead">
-        <span>Paid for</span><span>Paid on</span><span>Card</span>
-        <span class="num">Amount</span><span></span>
+        <span>Paid For</span><span>Paid On</span><span>Card</span>
+        <span class="num">Amount</span><span>Receipt</span>
       </div>
       ${rows.map(([n,d,amt,br,last],i)=>`<div class="payrow">
         <span class="pay-n">${n}</span>
         <span class="pay-d">${d}</span>
         <span class="pay-c">${br?bmk(br)+`<span class="n">&bull;&bull;&bull;&bull; ${last}</span>`:''}</span>
         <span class="pay-a num">${amt}</span>
-        <span class="pay-r"><button class="lnk" data-receipt="${i}">Receipt</button></span>
+        <span class="pay-r"><button class="lnk" data-receipt="${i}">View Receipt</button></span>
       </div>`).join('')}
     </div>
   </div>
@@ -12021,7 +12056,7 @@ V.billing = (f) => {
           is near", and there is no ceiling left to count against. The other
           three notes stand: the control is still text with a leading plus
           rather than a black button, for the reasons written there. */}
-    <div class="sec-h"><h2>Your Cards</h2><button class="btn btn-t btn-sm noic ic-l sec-h-act" data-addcard="1">${I.add}Add a card</button></div>
+    <div class="sec-h"><h2>Your Cards</h2><button class="btn btn-t btn-sm noic ic-l sec-h-act" data-addcard="1">${I.add}<span style="text-transform:none">Add a Card</span></button></div>
     ${''/* THE DEFAULT IS A RADIO ON THE LEFT, NOT A "Make default" LINK ON THE
           RIGHT (Maryam, 2 Sep 2026: "instead of the make default text, add a
           radio button on the left side of each card row, the one with default
@@ -12235,7 +12270,7 @@ function payWithIdx(){
   const d = S.cards.findIndex(c => c.def);
   return d < 0 ? 0 : d;
 }
-const addCardAct = `<button class="btn btn-t btn-sm noic ic-l sec-h-act" data-addcard="1">${I.add}Add a card</button>`;
+const addCardAct = `<button class="btn btn-t btn-sm noic ic-l sec-h-act" data-addcard="1">${I.add}<span style="text-transform:none">Add a Card</span></button>`;
 function cardPicker(){
   const sel = payWithIdx();
   return `<div class="tile-stack">
@@ -12543,7 +12578,7 @@ const PF = {
     email:'maryam.naz@tkxel.io',
     phone:'0305-4672294',
     tz:'Pakistan Standard Time (PKT)',
-    about:'Senior UX/UI Designer with hands-on experience delivering user-centered designs across SaaS platforms, dashboards, mobile applications and web experiences. Strong background in building design systems, crafting user journeys, and partnering with cross-functional teams to turn ideas into polished digital products.'
+    about:'Senior UX/UI Designer with experience delivering user-centered designs across SaaS platforms, dashboards, mobile apps, and web experiences. Skilled in design systems, user journeys, and collaborating with cross-functional teams to turn ideas into polished digital products.'
   },
   /* TWO ROLES, AND THEY ARE THE COURSE'S OWN PERSON RATHER THAN THE
      REFERENCE'S — Maryam, 4 Sep 2026: "add only two jobs here", "the job
@@ -12970,7 +13005,6 @@ const pfFormGeneral = () => {
           still floats to the far right of the label-column-free profile page
           (§111 "this page has no label column"). The READ view keeps its
           heading; only this form drops it. */}
-    <div class="sec-h">${pfActs('general')}</div>
     ${''/* THE PHOTO CARRIES ITS OWN EDIT CONTROL NOW — Maryam, 7 Sep 2026: "the
           change photo should not come on the right, an edit icon could appear on
           the image bottom right in edit view". The right-hand "Change photo"
@@ -12996,6 +13030,12 @@ const pfFormGeneral = () => {
               stay on the record, flagged. */}
         <span class="idmeta">${g.nickname}</span>
       </div>
+      ${''/* THE SAVE / DISCARD PAIR RIDES THE PHOTO ROW (Maryam, 13 Oct 2026: "why
+            the profile part is not top aligned with the save changes button").
+            It used to sit in an otherwise empty `.sec-h` ABOVE the photo, so the
+            photo started a full row lower than the buttons. As the row's last
+            child it shares the photo's top edge (§111 `.idhead > .pfe-acts`). */}
+      ${pfActs('general')}
     </div>
     ${''/* FOUR FIELDS, THREE ACROSS — Maryam, 7 Sep 2026: "Name, Nickname (which
           is kind of a user name), Email address (which will not be editable),
@@ -13684,7 +13724,7 @@ function scvScroll(btn){
 const pfScenes = () => {
   const a = AGENTS[(S.booking && S.booking.agent) || S.agent || recKey()] || AGENTS.priya;
   const scenes = SCENES.level.map(([t, , at]) => ({img:a.img, i:a.i, name:a.n, at, title:t}));
-  const foot = `<button class="scene-ask" data-tal-ask="Why were these scenes chosen from my interview?"><i class="aih-mk"></i>Ask Tal why these scenes were chosen from your interview?</button>`;
+  const foot = `<button class="scene-ask" data-tal-ask="Why were these scenes selected from my interview?"><i class="aih-mk"></i>Ask Tal: Why were these scenes selected from my interview?</button>`;
   return scenesCarousel('Interview scenes', scenes, {foot, shareFor: i => shareControl('scv:' + i)});
 };
 
@@ -13789,7 +13829,7 @@ const pfSecView = {
       </div>
     </div>
     <div class="sec">
-      <div class="sec-h"><h2>About</h2></div>
+      <div class="sec-h"><h2>About Me</h2></div>
       <p class="t-body pfe-about">${g.about}</p>
     </div>`;
     /* INTERVIEW SCENES IS NOT APPENDED HERE ANY MORE — it moved to `pfPanel`,
@@ -13926,10 +13966,10 @@ S.pfPw = false;
    NO STRENGTH METER AND NO RULES LIST. Both are claims the prototype cannot
    keep — nothing here validates anything — and a meter that never moves is
    §60's dead control wearing a progress bar. */
-const PF_PW_SET = '14 August 2026';
+const PF_PW_SET = 'August 14, 2026';
 const pfSecurity = () => `
   <div class="sec">
-    <div class="sec-h"><h2>Sign in and security</h2></div>
+    <div class="sec-h"><h2>Sign-In &amp; Security</h2></div>
     <div class="tile-stack">
       ${''/* NO CHIP AND NO RULE BETWEEN THE ROWS (Maryam, 4 Sep 2026: "remove
             the dividers between these two rows", "instead of these blocked icon
@@ -13942,8 +13982,9 @@ const pfSecurity = () => `
             lock, so they cannot swap if a third row is added. */}
       <div class="cardrow pfe-row pf-sr">
         <span class="pf-sr-ic" style="--mk:var(--mk-1)">${I.email}</span>
-        <span class="cardrow-b"><span class="cardrow-t">${PF.general.email}</span>
-          <span class="cardrow-d">The address you sign in with &middot; change it under My Profile</span></span>
+        <span class="cardrow-b"><span class="cardrow-t">Email Address</span>
+          <span class="cardrow-d">${PF.general.email}</span>
+          <span class="cardrow-d">Your sign-in email. Manage your account details under My Profile.</span></span>
       </div>
       <div class="cardrow pfe-row pf-sr">
         <span class="pf-sr-ic" style="--mk:var(--mk-3)">${I.locked}</span>
@@ -14001,12 +14042,12 @@ const pfPrivacy = () => `
         THE SWITCH COMPONENT SURVIVES with Notifications as its writer, so
         `.pf-tgs`, `.tg`, `.tg-mk` and §105.4's rules all keep a caller. */}
   <div class="sec">
-    <div class="sec-h"><h2>Closing your account</h2></div>
+    <div class="sec-h"><h2>Closing Your Account</h2></div>
     <!-- THE ACTION SITS ON THE LINE IT IS EXPLAINED BY. What deleting does on
          the left, the control that does it held at the right end — the same
          shape §29.10 gives the identity row and §15 gives the plate. -->
     <div class="close-b">
-      <p class="t-body-01 close-x">Deleting your account removes your profile, your notes and your interview recordings. Certificates you have already earned stay valid and stay downloadable.</p>
+      <p class="t-body-01 close-x">Deleting your account removes your profile, notes, and interview recordings. Any certificates you&rsquo;ve earned remain valid and available to download.</p>
       <div class="close-a">
         <button class="btn btn-t danger" data-del="1">Delete my account ${I.misuse}</button>
       </div>
@@ -14019,7 +14060,7 @@ const pfPrivacy = () => `
         §10.15's label column (§111.11), so this `.sec-h` sits above its content
         like the two sections over it rather than in a 184px gutter. */}
   <div class="sec sec-legal">
-    <div class="sec-h"><h2>Legal &amp; data use</h2></div>
+    <div class="sec-h"><h2>Legal &amp; Data Use</h2></div>
     ${legalDoc()}
   </div>`;
 
@@ -14038,13 +14079,13 @@ const pfPrivacy = () => `
    applies: there is no pair to space. */
 const pfNotif = () => `
   <div class="sec">
-    <div class="sec-h"><h2>Email notifications</h2></div>
+    <div class="sec-h"><h2>Email Notifications</h2></div>
     ${''/* EACH TOGGLE STATES ITS OWN TIMING (22.4). These govern EMAIL; the bell
           is not a setting and always arrives. */}
     <div class="pf-tgs">
-      <label class="tg"><span class="tg-mk" style="--mk:var(--mk-1)">${I.calendar}</span><div class="tb"><b>Weekly call reminders</b><span>24 hours and 1 hour before a cohort call</span></div><input type="checkbox" checked><span class="sw"></span></label>
-      <label class="tg"><span class="tg-mk" style="--mk:var(--support-attention)">${I.hourglass}</span><div class="tb"><b>Task deadlines</b><span>The morning a task is due</span></div><input type="checkbox" checked><span class="sw"></span></label>
-      <label class="tg"><span class="tg-mk" style="--mk:var(--mk-3)">${I.email}</span><div class="tb"><b>Product and course emails</b><span>Occasional, never more than monthly</span></div><input type="checkbox"><span class="sw"></span></label>
+      <label class="tg"><span class="tg-mk" style="--mk:var(--mk-1)">${I.calendar}</span><div class="tb"><b>Weekly Call Reminders</b><span>Get reminders 24 hours and 1 hour before a cohort call.</span></div><input type="checkbox" checked><span class="sw"></span></label>
+      <label class="tg"><span class="tg-mk" style="--mk:var(--support-attention)">${I.hourglass}</span><div class="tb"><b>Task Deadlines</b><span>Receive a reminder on the morning a task is due.</span></div><input type="checkbox" checked><span class="sw"></span></label>
+      <label class="tg"><span class="tg-mk" style="--mk:var(--mk-3)">${I.email}</span><div class="tb"><b>Product and Course Updates</b><span>Receive occasional product and course emails, no more than once a month.</span></div><input type="checkbox"><span class="sw"></span></label>
     </div>
   </div>
   ${''/* ALWAYS ON — the service messages a candidate cannot switch off (22.4).
@@ -14054,13 +14095,13 @@ const pfNotif = () => `
         §29/§70 ink the marks. In the bell these always arrive whatever the
         toggles above say. */}
   <div class="sec">
-    <div class="sec-h"><h2>Always on</h2></div>
-    <p class="t-desc" style="margin-bottom:var(--s04)">These tell you your money moved, your level changed or your booking changed. They cannot be switched off, and they always arrive in your notifications.</p>
+    <div class="sec-h"><h2>Always On</h2></div>
+    <p class="t-desc" style="margin-bottom:var(--s04)">Essential updates on payments, levels, bookings, and cohorts. These notifications cannot be turned off.</p>
     <div class="tile-stack">
-      <div class="cardrow pf-sr"><span class="pf-sr-ic">${I.wallet}</span><span class="cardrow-b"><span class="cardrow-t">Payments</span><span class="cardrow-d">A payment taken, failed or refunded</span></span></div>
-      <div class="cardrow pf-sr"><span class="pf-sr-ic">${I.document}</span><span class="cardrow-b"><span class="cardrow-t">Your level</span><span class="cardrow-d">Your report is ready, or your level is set or changed</span></span></div>
-      <div class="cardrow pf-sr"><span class="pf-sr-ic">${I.calendar}</span><span class="cardrow-b"><span class="cardrow-t">Your booking</span><span class="cardrow-d">An interview confirmed, moved or cancelled</span></span></div>
-      <div class="cardrow pf-sr"><span class="pf-sr-ic">${I.group}</span><span class="cardrow-b"><span class="cardrow-t">Your cohort</span><span class="cardrow-d">Your cohort is cancelled, or your place in it changes</span></span></div>
+      <div class="cardrow pf-sr"><span class="pf-sr-ic">${I.wallet}</span><span class="cardrow-b"><span class="cardrow-t">Payments</span><span class="cardrow-d">A payment is processed, fails, or is refunded.</span></span></div>
+      <div class="cardrow pf-sr"><span class="pf-sr-ic">${I.document}</span><span class="cardrow-b"><span class="cardrow-t">Your Level</span><span class="cardrow-d">Your report is ready, or your level is assigned or updated.</span></span></div>
+      <div class="cardrow pf-sr"><span class="pf-sr-ic">${I.calendar}</span><span class="cardrow-b"><span class="cardrow-t">Your Booking</span><span class="cardrow-d">An interview is confirmed, rescheduled, or cancelled.</span></span></div>
+      <div class="cardrow pf-sr"><span class="pf-sr-ic">${I.group}</span><span class="cardrow-b"><span class="cardrow-t">Your Cohort</span><span class="cardrow-d">Your cohort is cancelled, or your enrollment status changes.</span></span></div>
     </div>
   </div>`;
 
@@ -14141,7 +14182,7 @@ function shareControl(id){
 
 function pfLinkedView(){
   return `<div class="sec sec-linked" data-pfsec="linked">
-    <div class="sec-h"><h2>Linked accounts</h2><span class="t-desc">Link a social network to show it on your TALENTnext profile. Tap a card to connect or disconnect.</span></div>
+    <div class="sec-h"><h2>Linked accounts</h2><span class="t-desc">Connect your social accounts to display them on your TALENTnext profile. Select an account to connect or disconnect it.</span></div>
     <div class="lacc-grid">
       ${SOCIAL.map(s => {
         const on = !!S.linked[s.k];
@@ -14378,7 +14419,7 @@ V.account = (f) => `<main class="main"><div class="page">
        heading, and this one introduces itself with a button. It is named so
        §14 can list it and §20 can keep the full gap either side of it. -->
   ${S.pfTab === 'me' ? `<div class="sec sec-out">
-    <button class="btn btn-g" data-go="stage:signup/login">Log out ${I.logout}</button>
+    <button class="btn btn-g" data-logout="1">Log out ${I.logout}</button>
   </div>` : ''}
 </div></main>
 ${''/* THE CONFIRMATION IS A CENTRED DIALOG — §105.6, Maryam's anatomy diagram,
@@ -14664,6 +14705,12 @@ function go(target, fresh){
      the calendar directly — reschedule, and "Continue" after payment — without
      re-charging. The DS agent-card builder still emits `agent:${key}` unchanged;
      this branch is what gives it the payment-first meaning here. */
+  /* A COMPLIMENTARY FIRST INTERVIEW SKIPS THE PAYMENT STEP (Maryam, 13 Oct 2026:
+     "on clicking to booking hide the payment page in this first interview flow
+     and take the user to the slot picking page"). Nothing is charged, so Book
+     goes straight to the calendar (`cal:`); only a charged re-interview still
+     opens on `V.checkout`. This supersedes the 19 Sep "card captured at $0". */
+  if(target.startsWith('agent:') && !ivCharged(!!cfg(S.stage).reinterview)){ S.paySuccess=false; return go('cal:' + target.slice(6)); }
   if(target.startsWith('agent:')){ S.agent = target.slice(6); S.paySuccess=false; S.payWith=null; S.addCard=false; S.pmAdded=false;
     S.hist.push(S.view); histWrite('pushState',{v:'checkout'},''); S.view='checkout'; S.nav=false; render(); return; }
   if(target.startsWith('cal:')){ S.agent = target.slice(4); S.hist.push(S.view); histWrite('pushState',{v:'agent'},''); S.view='agent'; S.nav=false; render(); return; }
@@ -15561,23 +15608,24 @@ function signedSummary(withNote, re, footAction){
              which interview it was. They were one stacked pair under a 36px
              face, which made the date look like a subtitle on Priya's name; they
              are two separate facts and the reference splits them. */}
+      <div class="sec-h"><h2>Interview Details</h2></div>
       <div class="signed-h">
         <span class="av-ph" style="width:44px;height:44px;font-size:13px"><i>PN</i><img src="${AV.priya}" alt=""></span>
-        <span class="signed-b"><span class="sig-hl">Interviewed by</span><b>Priya Nair</b></span>
+        <span class="signed-b"><span class="sig-hl">Interviewed By</span><b>Priya Nair &middot; Talent Agent</b></span>
         <span class="signed-when">
           <i class="sig-ic sig-ic-sm" style="--mk:var(--mk-3)">${I.calendar}</i>
-          <span class="signed-b"><span class="sig-hl">${re?'Re-interview':'Level interview'}</span><b>${re?'21 November 2026':'20 August 2026'}</b></span>
+          <span class="signed-b"><span class="sig-hl">${re?'Re-interview Date':'Interview Date'}</span><b>${re?'November 21, 2026':'August 20, 2026'}</b></span>
         </span>
       </div>
       <div class="sig-pair">
         ${SIG_CARD(2, I.star, 'Strengths', 'Strong', re
           ?'You argue your own decisions from evidence now, and you no longer play them down as you give them. Three examples out of the 90 days, each with a name and a date on it.'
-          :'You reason from consequence to people, not policy. Three examples, each with a date and a name attached.')}
-        ${SIG_CARD(3, I.growth, 'Growth areas', 'Focus', re
+          :'You consider both outcomes and people when making decisions, supported by specific examples from your interview.')}
+        ${SIG_CARD(3, I.growth, 'Growth Areas', 'Focus', re
           ?'Delegation still, and coaching rather than fixing. Chapters 3 and 9 on the E4 course are built on exactly this.'
-          :'Delegation, and coaching rather than fixing. Chapters 4 and 12 are built on exactly this.')}
+          :'Delegation and coaching instead of taking over. Chapters 4 and 12 address these skills.')}
       </div>
-      ${withNote ? SIG_CARD(1, I.chat, 'Priya&rsquo;s note', '', re
+      ${withNote ? SIG_CARD(1, I.chat, 'Priya&rsquo;s Note', '', re
         ?'&ldquo;She came back with the reorganization finished and could tell me which parts of it she would do differently. That is an E4.&rdquo;'
         :'&ldquo;She talks cautiously, but she has already run a reorganization and can explain every call she made in it. That is an E3, not an E2.&rdquo;') : ''}
       ${''/* THE FOOT ACTION IS TEXT AND AN ARROW (Maryam, 31 Aug 2026). It was
@@ -15940,6 +15988,7 @@ function render(){
             `S.ivBooked` is set by the booking action, which lands on `booked`,
             so it shows once on that dashboard and is cleared on dismiss. */
          + (S.ivBooked && (S.stage==='booked' || S.stage===RESCHED) ? ivBookedModal() : '')
+         + (S.logoutAsk ? logoutModal() : '')
          /* THE LEVEL-REACHED DIALOG — gated on the MOMENT like `ivBookedModal`:
             the `assessed` dashboard, shown once (`!S.levelSeen`) the first time
             the reader lands there, dismissed by either action or the backdrop. */
@@ -16255,6 +16304,10 @@ device.addEventListener('click', e => {
   const pgo = t.closest('[data-paygo]');
   if(pgo){ S.paySuccess = false; go('cal:' + pgo.dataset.paygo); return; }
   if(t.closest('[data-close="paysuccess"]') && !t.closest('.sheet')){ S.paySuccess = false; render(); return; }
+  const lo = t.closest('[data-logout]');
+  if(lo){ S.logoutAsk = lo.dataset.logout === '1'; S.acct = false; S.nav = false; render(); return; }
+  if(t.closest('[data-logoutgo]')){ S.logoutAsk = false; go('stage:signup/login'); return; }
+  if(t.closest('[data-close="logout"]') && !t.closest('.sheet')){ S.logoutAsk = false; render(); return; }
   const ivbk = t.closest('[data-ivbooked]');
   if(ivbk){ S.ivBooked = ivbk.dataset.ivbooked === '1'; render(); return; }
   if(t.closest('[data-close="ivbooked"]') && !t.closest('.sheet')){ S.ivBooked=false; render(); return; }

@@ -2641,6 +2641,14 @@
 .app .bkc-fv .fee-was{
   color:var(--text-secondary);font-weight:var(--t-w-book);
   text-decoration:line-through}
+/* The same struck-fee pair in the agent list's Rate column and the agent card
+   foot (Maryam, 13 Oct 2026): the price muted and lined through, "Free" in the
+   accent as ink at the strong weight. */
+.app .agt-fee .fee-was,.app .ag-price .fee-was{
+  color:var(--text-secondary);font-weight:var(--t-w-book);
+  text-decoration:line-through}
+.app .agt-fee .fee-free,.app .ag-price .fee-free{
+  color:var(--accent-text);font-weight:var(--t-w-strong)}
 
 /* ==========================================================================
    17. THE CALL ROW ON A BLACK CARD — §77's `.crow-dark`

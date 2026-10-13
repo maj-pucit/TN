@@ -1514,7 +1514,7 @@ function dsAgentCard(a, key){
       <span class="ag-n">${a.n}</span>
       <span class="ag-r">${dsStars(a.r)}<span class="num">${a.r.toFixed(1)}</span></span>
       <span class="ag-m">${a.range} · ${a.ivs} interviews</span>
-      <span class="ag-foot"><span style="color:var(--text-secondary)">Next: ${a.slot}</span><span class="ag-price">${a.price}</span></span>
+      <span class="ag-foot"><span style="color:var(--text-secondary)">Next: ${a.slot}</span><span class="ag-price">${ivFeeLabel(!!cfg(S.stage).reinterview, a.price)}</span></span>
     </span>
     <svg class="card-go" viewBox="0 0 24 24">${inner('arrowRight')}</svg>
   </div>`;

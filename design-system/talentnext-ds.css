@@ -14,7 +14,7 @@
 
        cd design-system && python3 build-ds.py
 
-   Rules kept: 6430.  Rules dropped as product-specific: 225.
+   Rules kept: 6446.  Rules dropped as product-specific: 225.
    Fonts are embedded, so this one file is the whole dependency.
    Hover state layers are disarmed, as in the portal.
    ========================================================================== */
@@ -4260,6 +4260,7 @@ button{font-family:var(--font-sans)}
 }
 @container app (min-width:900px){
   .app .paytbl{display:grid; grid-template-columns:minmax(0,2fr) minmax(0,1fr) minmax(0,1fr) minmax(80px,auto) minmax(168px,auto); column-gap:0}
+  .app .paytbl:has(.lnk[data-receipt]){grid-template-columns:repeat(5,minmax(0,1fr))}
   .app .paytbl > .payrow{display:contents}
   .app .paytbl > .payrow > *{padding:var(--s05) var(--s06) var(--s05) 0; border-bottom:1px solid var(--rule); align-self:center}
   .app .paytbl > .payrow:last-child > *{border-bottom:0}
@@ -7567,6 +7568,10 @@ button.btn-p:active,
 .app .bkc-fl{font-size:var(--t-eyebrow-size); line-height:var(--t-eyebrow-lh); font-weight:var(--t-w-book); letter-spacing:var(--t-eyebrow-ls); text-transform:none; color:var(--text-secondary)}
 .app .bkc-fv{font-size:var(--t-h3-size); line-height:var(--t-h3-lh); font-weight:var(--t-w-strong); letter-spacing:var(--t-h3-ls); text-transform:none; color:var(--accent-text); font-variant-numeric:tabular-nums}
 .app .bkc-fv .fee-was{color:var(--text-secondary); font-weight:var(--t-w-book); text-decoration:line-through}
+.app .agt-fee .fee-was,
+.app .ag-price .fee-was{color:var(--text-secondary); font-weight:var(--t-w-book); text-decoration:line-through}
+.app .agt-fee .fee-free,
+.app .ag-price .fee-free{color:var(--accent-text); font-weight:var(--t-w-strong)}
 .app .crow-dark .crow-role,
 .app .crow-dark .crow-x{color:var(--on-dark-2)}
 .app .crow-dark .crow-n{color:var(--on-dark)}
@@ -9070,6 +9075,8 @@ button.btn-p:active,
 .app .page .lead-b{margin:var(--s06) var(--pad-x); padding:var(--s07)}
 .app .sec-linked > .sec-h{flex-direction:column; align-items:flex-start; gap:var(--sec-desc-gap)}
 .app .lacc-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:var(--s04)}
+.app .sec-linked > .sec-h{margin-bottom:0}
+.app .sec-linked > .lacc-grid{margin-top:var(--s06)}
 @container app (min-width:900px){
   .app .lacc-grid{grid-template-columns:repeat(6,1fr)}
 }
@@ -9422,6 +9429,8 @@ button.btn-p:active,
 .app .ol .ol-cert{padding-top:var(--s05); padding-bottom:var(--s05)}
 .app .ol .ol-cert-art{--crt-art-w:44px; --crt-art-h:48px; flex:none}
 .app .ol .acc-b{max-width:none}
+.app .acc-full .acc-b,
+.app .acc-full .acc-b > p{max-width:none}
 .app .ol .acc-b > .skl-h:first-child{margin-top:0}
 .app .ol .acc-b .lrn{margin-top:var(--sec-h-gap)}
 .app .ol .acc-b .skl{margin-top:var(--sec-h-gap)}
@@ -9429,6 +9438,11 @@ button.btn-p:active,
   .app .sec:has(> .ol){display:block}
   .app .sec:has(> .ol) > .sec-h{border-right:0; min-height:0; margin-bottom:var(--sec-h-gap)}
 }
+.app .cw-id{display:flex; align-items:center; gap:var(--s05)}
+.app .cw-id > .cw-cover{flex:none; width:96px; height:64px; object-fit:cover; border:1px solid var(--rule)}
+.app .cw-id > h2{margin:0}
+.app .cw-pre > .note{margin-top:var(--s06)}
+.app .btn.ch-all{padding-left:0}
 
 /* ---- 111-pfedit.css ---- */
 .app .ring.qa-ring{--qa-ring:calc(var(--t-h4-lh) + var(--s02) + var(--t-compact-lh)); flex:none; width:var(--qa-ring); height:var(--qa-ring); align-self:center; margin-top:0}
@@ -9467,6 +9481,7 @@ button.btn-p:active,
 .app .pfe-g + .pfe-foot-in{margin-top:var(--s05)}
 .app .tile-stack + .pfe-g{margin-top:var(--s06)}
 .app .pfe-acts{display:flex; align-items:center; gap:var(--s04); align-self:center; margin-left:auto}
+.app .idhead > .pfe-acts{align-self:flex-start}
 .app .btn.pfe-discard{border-color:transparent; padding-left:var(--s03)}
 .app .pfe-row-x{display:block; margin-top:var(--s02)}
 .app .sec > .pfe-about{margin:0; max-width:none}
@@ -9593,6 +9608,12 @@ button.btn-p:active,
 .app .agt-act .tal-star .sk-mark{background-color:transparent; background-image:var(--ai-grad); background-size:100% 100%; background-position:center; background-repeat:no-repeat; -webkit-mask:var(--ai-star) center/contain no-repeat; mask:var(--ai-star) center/contain no-repeat}
 .app .agt-act .tal-star .sk-mark{width:12px; height:12px}
 .app .agt-act .tal-star .lbl{background-image:var(--ai-grad); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent}
+@container app (min-width:900px){
+  .app .agt.agt-crs{grid-template-columns:auto minmax(0,auto) auto auto auto var(--agt-act-w)}
+  .app .agt-crs .agt-next{grid-column:4; grid-row:auto}
+  .app .agt-crs .agt-fee{grid-column:5; grid-row:auto}
+  .app .agt-crs .agt-act{grid-column:6; grid-row:auto}
+}
 
 /* ---- 115-talchat.css ---- */
 .app .ask-page .tal-hero .tal-mk.lg{width:132px; height:132px; margin-bottom:var(--s06)}

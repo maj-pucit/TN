@@ -402,7 +402,7 @@ const NOTIF = {
      candidate to do at this stage, which is the stage's whole character, so
      the bell reports facts rather than tasks. */
   consult:[
-    {ic:'calendar',   t:'Your consultant call is booked', b:'Jordan Blake, Thursday, August 13 at 2:00 PM ET. A calendar invite is on its way.', w:'1h ago',    go:'dashboard', unread:1, kind:'cond'},
+    {ic:'calendar',   t:'Your consultant call is booked', b:'Jordan Blake, Thursday, August 13 at 2:00 PM. A calendar invite is on its way.', w:'1h ago',    go:'dashboard', unread:1, kind:'cond'},
     {ic:'trophy',     t:'Your quiz result carried over',  b:'You are on the Explorer track. Your level comes later, from an agent interview.',   w:'3h ago',    go:'level',     unread:1},
     {ic:'checkOutline' ,t:'Account created',                b:'Welcome to TalentNext, Maryam.',                                                    w:'Yesterday', go:'account',   unread:0}
   ],
@@ -412,13 +412,13 @@ const NOTIF = {
     {ic:'checkOutline' ,t:'Account created',            b:'Welcome to TalentNext, Maryam.',                               w:'Yesterday', go:'account', unread:1}
   ],
   booked:[
-    {ic:'calendar', t:'Interview confirmed',          b:'Priya Nair, Thursday, August 20 at 6:30 PM ET.',                 w:'1h ago', go:'interviews', unread:1, kind:'cond'},
+    {ic:'calendar', t:'Interview confirmed',          b:'Priya Nair, Thursday, August 20 at 6:30 PM.',                 w:'1h ago', go:'interviews', unread:1, kind:'cond'},
     {ic:'email',    t:'Calendar invite sent',         b:'Check maryam.naz@tkxel.io for the joining link.',               w:'1h ago', go:'interviews', unread:1},
     {ic:'creditCard',t:'Card saved',                  b:'Your first interview is complimentary, so nothing was charged.', w:'Yesterday', go:'billing',  unread:0}
   ],
   /* THE RESCHEDULE FORK — `booked`'s three, copied. See the row in STAGES. */
   resched:[
-    {ic:'calendar', t:'Interview confirmed',          b:'Priya Nair, Thursday, August 20 at 6:30 PM ET.',                 w:'1h ago', go:'interviews', unread:1, kind:'cond'},
+    {ic:'calendar', t:'Interview confirmed',          b:'Priya Nair, Thursday, August 20 at 6:30 PM.',                 w:'1h ago', go:'interviews', unread:1, kind:'cond'},
     {ic:'email',    t:'Calendar invite sent',         b:'Check maryam.naz@tkxel.io for the joining link.',               w:'1h ago', go:'interviews', unread:1},
     {ic:'creditCard',t:'Card saved',                  b:'Your first interview is complimentary, so nothing was charged.', w:'Yesterday', go:'billing',  unread:0}
   ],
@@ -443,12 +443,12 @@ const NOTIF = {
   ],
   week1:[
     {ic:'book',     t:'Chapter 1 is unlocked',        b:'Why We Exist. 45 minutes, opens in LightSpeed VT.',            w:'Today', go:'coursework',  unread:1},
-    {ic:'group',    t:'First cohort call on Thursday',b:'6:00 PM ET with Priya Nair and 9 others.',                      w:'Today', go:'cohort',      unread:1, kind:'cond'},
+    {ic:'group',    t:'First cohort call on Thursday',b:'6:00 PM with Priya Nair and 9 others.',                      w:'Today', go:'cohort',      unread:1, kind:'cond'},
     {ic:'trophy',   t:'250 points awarded',           b:'1-Star rank. You are a member of Cohort 41.',                  w:'Yesterday', go:'rewards', unread:1}
   ],
   day34:[
     {ic:'warning',  t:'Week 4 reflection is overdue', b:'It was due Monday. Priya can see it on her roster.',           w:'2h ago', go:'coursework',  unread:1},
-    {ic:'group',    t:'Weekly call in 2 days',        b:'Thursday 6:00 PM ET. Week 5 covers hard conversations.',        w:'Today', go:'cohort',      unread:1, kind:'cond'},
+    {ic:'group',    t:'Weekly call in 2 days',        b:'Thursday 6:00 PM. Week 5 covers hard conversations.',        w:'Today', go:'cohort',      unread:1, kind:'cond'},
     {ic:'trophy',   t:'25 points awarded',            b:'Chapter completion. You are 1,405 points from Bronze.',        w:'Today', go:'rewards',     unread:1},
     {ic:'chat',     t:'Priya replied',                b:'“Bring the vendor review example on Thursday.”',               w:'Yesterday', go:'messages', unread:0},
     {ic:'book',     t:'Chapter 5 opens Monday',       b:'Hard Conversations. 55 minutes.',                              w:'3 days ago', go:'coursework', unread:0}
@@ -478,7 +478,7 @@ const NOTIF = {
   /* THE RED ACCENT DEMO — day 34's five, copied. See `RED_DEMO` in this file. */
   reddemo:[
     {ic:'warning',  t:'Week 4 reflection is overdue', b:'It was due Monday. Priya can see it on her roster.',           w:'2h ago', go:'coursework',  unread:1},
-    {ic:'group',    t:'Weekly call in 2 days',        b:'Thursday 6:00 PM ET. Week 5 covers hard conversations.',        w:'Today', go:'cohort',      unread:1, kind:'cond'},
+    {ic:'group',    t:'Weekly call in 2 days',        b:'Thursday 6:00 PM. Week 5 covers hard conversations.',        w:'Today', go:'cohort',      unread:1, kind:'cond'},
     {ic:'trophy',   t:'25 points awarded',            b:'Chapter completion. You are 1,405 points from Bronze.',        w:'Today', go:'rewards',     unread:1},
     {ic:'chat',     t:'Priya replied',                b:'“Bring the vendor review example on Thursday.”',               w:'Yesterday', go:'messages', unread:0},
     {ic:'book',     t:'Chapter 5 opens Monday',       b:'Hard Conversations. 55 minutes.',                              w:'3 days ago', go:'coursework', unread:0}
@@ -715,7 +715,7 @@ const TALCTX = {
   transcript:['How do I compare with my cohort?','What is in the 90-day summary?','Which chapter dragged my average down?'],
   cohort:['What should I say on the call?','Am I behind the others?','Who leads this cohort?'],
   billing:['What have I paid so far?','Can I get a receipt?'],
-  account:['What can you see about me?','How do I turn you off?'],
+  account:['What can you tell me about my profile?','Why were these scenes selected from my interview?','How do I turn you off?'],
   messages:['Help me word a reply'],
   rewards:['How do I earn more points?','What is the Bronze badge?','Does rank affect my level?'],
   /* THREE SUB-PAGES THAT HAD NO ENTRY, added when §21's docked field started
@@ -763,14 +763,14 @@ const TAL_ROUTES = [
 /* "Sign in 100 times" (+250) is removed (Maryam, 8 Oct 2026). `GAME.got` /
    `last`, `PTS_MK` and Cohort Champion's indexes were shifted down one with it. */
 const PTS = [
-  {n:'Daily sign in',           d:'Sign in daily and earn 10 points every time',                   v:10},
-  {n:'Chapter completion',      d:'Complete any chapter and earn 25 points, up to 10 a day',       v:25},
-  {n:'Course completion',       d:'Complete any course and earn 250 points',                       v:250},
-  {n:'Start a new conversation',d:'Post a new conversation in the community',                      v:10},
-  {n:'Join the conversation',   d:'Reply to a post in the community',                              v:10},
-  {n:'Get a reaction',          d:'Someone replies or reacts to your post',                        v:20},
-  {n:'7 days away',             d:'No sign in for 7 days takes 50 points off your total',          v:-50},
-  {n:'30 days away',            d:'No sign in for 30 days takes 250 points off your total',        v:-250}
+  {n:'Daily Sign-In',           d:'Sign in daily to earn 10 points.',                              v:10},
+  {n:'Chapter Completion',      d:'Earn 25 points for each chapter you complete, up to 10 chapters per day.', v:25},
+  {n:'Course Completion',       d:'Complete a course to earn 250 points.',                         v:250},
+  {n:'Start a Conversation',    d:'Start a new community discussion to earn points.',              v:10},
+  {n:'Join the Conversation',   d:'Reply to a community post to earn points.',                     v:10},
+  {n:'Get a Reaction',          d:'Earn points when someone replies to or reacts to your post.',   v:20},
+  {n:'7-Day Sign-In Streak',    d:'Miss 7 consecutive days of sign-ins and lose 50 points.',       v:-50, away:'7 days away'},
+  {n:'30-Day Sign-In Streak',   d:'Miss 30 consecutive days of sign-ins and lose 250 points.',     v:-250, away:'30 days away'}
 ];
 
 const BDG = [

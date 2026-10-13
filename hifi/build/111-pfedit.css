@@ -423,6 +423,9 @@
 .app .pfe-acts{
   display:flex;align-items:center;gap:var(--s04);
   align-self:center;margin-left:auto}
+/* In the General edit form the pair is the photo row's last child, top-aligned
+   with the photo rather than centred on it (Maryam, 13 Oct 2026). */
+.app .idhead > .pfe-acts{align-self:flex-start}
 /* `.app .btn.pfe-discard` AND NOT `.app .pfe-discard`, WHICH IS §63 §7b's TRAP
    ONE MORE TIME AND WHICH SHIPPED WRONG FOR A BUILD. §16.673 is
    `.app .btn.danger` — THREE classes, (0,3,0) — so a (0,2,0) restatement here

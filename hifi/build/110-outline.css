@@ -198,6 +198,10 @@
    `.app .ol .acc-b > p{max-width:var(--measure)}` — rather than on the panel.
    -------------------------------------------------------------------------- */
 .app .ol .acc-b{max-width:none}
+/* `.acc-full` opts an accordion's open text out of §05.7's 68ch measure so
+   it runs the row's whole width (Maryam, 13 Oct 2026, My Level's "How the
+   Ladder Works": "give full width to collapsed rows desc"). */
+.app .acc-full .acc-b,.app .acc-full .acc-b > p{max-width:none}
 
 /* ------------------------------------------------------------------ 110.3 ---
    THE PANEL'S FIRST SUBHEAD PAYS NO TOP MARGIN
@@ -274,3 +278,18 @@
   .app .sec:has(> .ol) > .sec-h{
     border-right:0;min-height:0;margin-bottom:var(--sec-h-gap)}
 }
+
+/* THE COURSEWORK PRE-START HEAD (Maryam, 13 Oct 2026): the course cover on
+   the left of the course name, the "not started yet" note on its own line
+   below the pair. The cover is the 3:2 thumbnail family `.crs-thumb` uses,
+   scaled up, with the framed-image `--rule` edge. */
+.app .cw-id{display:flex;align-items:center;gap:var(--s05)}
+.app .cw-id > .cw-cover{flex:none;width:96px;height:64px;object-fit:cover;border:1px solid var(--rule)}
+.app .cw-id > h2{margin:0}
+.app .cw-pre > .note{margin-top:var(--s06)}
+
+/* "SHOW ALL 13" SITS ON THE CONTENT EDGE (Maryam, 13 Oct 2026: "should be
+   left aligned with the other content"). A ghost button has no visible box, so
+   its 16px left padding only pushed the label in from the chapter titles above;
+   the padding comes off the left so the word starts where they do. */
+.app .btn.ch-all{padding-left:0}

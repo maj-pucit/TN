@@ -700,7 +700,7 @@ function ldrLevelFdd(c){
   const opts = ['All levels'].concat(levelsPresent(c));
   const open = S.ldrLvlOpen;
   return `<div class="fdd${open ? ' on' : ''}">
-    <button class="fdd-t" data-ldrlvltoggle="1" aria-haspopup="listbox" aria-expanded="${open ? 'true' : 'false'}">Level: ${cur === 'All levels' ? 'All' : cur}<svg class="fdd-cx" viewBox="0 0 24 24" aria-hidden="true">${inner('chevDown')}</svg></button>
+    <button class="fdd-t" data-ldrlvltoggle="1" aria-haspopup="listbox" aria-expanded="${open ? 'true' : 'false'}">Level &middot; ${cur === 'All levels' ? 'All' : cur}<svg class="fdd-cx" viewBox="0 0 24 24" aria-hidden="true">${inner('chevDown')}</svg></button>
     <div class="fdd-menu" role="listbox">${opts.map(o =>
       `<button class="fdd-opt${o === cur ? ' on' : ''}" role="option" aria-selected="${o === cur ? 'true' : 'false'}" data-ldrlvlset="${o}">${o}</button>`).join('')}</div>
   </div>`;
@@ -713,7 +713,7 @@ function ldrRosterTools(c){
   return `<div class="lst-tools">
     <div class="srch${q ? ' srch-has' : ''}">
       <svg class="mag" viewBox="0 0 24 24">${inner('search')}</svg>
-      <input class="inp" id="ldrRosterInp" value="${q.replace(/"/g,'&quot;')}" placeholder="Search by handle or name" aria-label="Search by handle or name" autocomplete="off" oninput="ldrRosterSearch(this)">
+      <input class="inp" id="ldrRosterInp" value="${q.replace(/"/g,'&quot;')}" placeholder="Search by name or handle" aria-label="Search by name or handle" autocomplete="off" oninput="ldrRosterSearch(this)">
       ${q ? `<button type="button" class="srch-x" data-ldrsrchclear="1" aria-label="Clear search">${I.close}</button>` : ''}
     </div>
     <div class="lst-filters">${ldrLevelFdd(c)}</div>
@@ -829,11 +829,11 @@ function leadRosterTable(c){
       ${ldrSortTh('name','Candidate')}
       ${ldrSortTh('level','Level')}
       ${ldrSortTh('ch','Chapters',' num')}
-      ${ldrSortTh('assess','Assessment',' num')}
-      ${ldrSortTh('att','Attempts',' num')}
-      ${ldrSortTh('time','Time on course',' num')}
+      ${ldrSortTh('assess','Assessment Avg.',' num')}
+      ${ldrSortTh('att','Retakes',' num')}
+      ${ldrSortTh('time','Time Invested',' num')}
       ${ldrSortTh('atd','Attendance',' num')}
-      ${ldrSortTh('last','Last active')}
+      ${ldrSortTh('last','Last Active')}
       <th class="lead-roster-act">Actions</th>
     </tr>
     ${rows.length ? rows.map(m=>{
@@ -903,12 +903,12 @@ function leadCounters(c){
   const below = c.members.filter(m => m.avg>0 && m.avg<75).length;
   const never = c.members.filter(m => m.last==='Never').length;
   return `<div class="sec">
-    <div class="sec-h"><h2>Cohort at a glance</h2></div>
+    <div class="sec-h"><h2>Cohort Overview</h2></div>
     <div class="facts pf-facts lead-counts">
       ${pfFact(I.group,  '--mk-3', 'Candidates', String(c.members.length))}
-      ${pfFact(I.growth, '--mk-4', 'Average progress', lavg(c,'pc') + '%')}
-      ${pfFact(I.chart,  '--mk-1', 'Below pass mark', String(below))}
-      ${pfFact(I.misuse, '--mk-2', 'Never signed in', String(never))}
+      ${pfFact(I.growth, '--mk-4', 'Average Progress', lavg(c,'pc') + '%')}
+      ${pfFact(I.chart,  '--mk-1', 'Below Pass Mark', String(below))}
+      ${pfFact(I.misuse, '--mk-2', 'Never Signed In', String(never))}
     </div>
   </div>`;
 }
@@ -921,14 +921,14 @@ const leadRecsWritten = c => LEAD_SUMMARIES.filter(s => s.cohort === c.id && s.s
 function leadPastSection(){
   if(!LEAD_PAST.length) return '';
   return `<div class="sec" id="lead-past">
-    <div class="sec-h"><h2>Past cohorts</h2></div>
+    <div class="sec-h"><h2>Past Cohorts</h2></div>
     <div class="tile-stack">
       ${LEAD_PAST.map(c=>{
         const cancelled = c.status === 'cancelled';
         return `<button class="cardrow lead-past-row clk" data-go="leadCohort" data-ldrco="${c.id}">
           <span class="cardrow-b">
-            <span class="cardrow-t">${lname(c)}${cancelled?' <span class="tag sm">Cancelled</span>':''}</span>
-            <span class="cardrow-s">${lcourse(c)} &middot; ${c.start} &ndash; ${c.end} &middot; ${c.members.length} candidates &middot; ${leadRecsWritten(c)} recommendations written</span>
+            <span class="cardrow-t">${lname(c)} &mdash; ${lcourse(c)}${cancelled?' <span class="tag sm">Cancelled</span>':''}</span>
+            <span class="cardrow-s">${c.start} &ndash; ${c.end} &middot; ${c.members.length} candidates &middot; ${leadRecsWritten(c)} recommendations written</span>
           </span>
           ${''/* a real, SIZED trailing arrow so the row reads as clickable (Maryam
                 30 Sep 2026). It was `.cardrow-go` — a class with no CSS, so the
@@ -1002,7 +1002,7 @@ V.leadDash = () => {
   <div class="sec lead-callsec"><div class="lcal-row">${lcalls().map((k, i) => lcalCard(k, i === 0)).join('')}</div></div>
   ${leadCounters(c)}
   <div class="sec" id="lead-roster">
-    <div class="sec-h"><h2>Candidates</h2></div>
+    <div class="sec-h"><h2>Candidate Progress</h2></div>
     ${''/* THE ADMIN LIST-TABLE CHROME (Maryam, 30 Sep 2026: "follow the search
           field, filter ui, and the table header divider ui ... from super admin
           table"). `.lst-tools` + `.srch` + `.fdd` are the design system's own

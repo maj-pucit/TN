@@ -542,3 +542,17 @@
   background-image:var(--ai-grad);
   -webkit-background-clip:text;background-clip:text;
   -webkit-text-fill-color:transparent}
+
+/* ------------------------------------------------------------------ 114.10 ---
+   THE COURSE LIST HAS SIX COLUMNS, THE AGENT LIST FIVE (Maryam, 13 Oct 2026:
+   "fee should be in fee column, its broken"). The agent table dropped
+   `.agt-next`, so the shared grid is five tracks; the course rows still carry
+   Length AND Cadence, so their sixth cell wrapped Fee and the button onto a
+   second line. `.agt-crs` restores a sixth track for the course table only. */
+@container app (min-width:900px){
+  .app .agt.agt-crs{
+    grid-template-columns:auto minmax(0,auto) auto auto auto var(--agt-act-w)}
+  .app .agt-crs .agt-next{grid-column:4;grid-row:auto}
+  .app .agt-crs .agt-fee{grid-column:5;grid-row:auto}
+  .app .agt-crs .agt-act{grid-column:6;grid-row:auto}
+}

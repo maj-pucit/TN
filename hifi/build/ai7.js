@@ -69,7 +69,7 @@ const BK_SLOTS = ['9:00 AM','11:30 AM','2:00 PM','4:30 PM','6:30 PM','8:00 PM'];
 const BK_OFF = [0,5];                    /* taken — `V.agent` disables the same two */
 const BK_MONTH = ['August','Aug'];
 const BK_SHORTLIST = ['priya','owen','lena'];
-const BK_DAY0 = 1, BK_SLOT0 = 4;         /* Thursday 20 August, 6:30 PM ET */
+const BK_DAY0 = 1, BK_SLOT0 = 4;         /* Thursday 20 August, 6:30 PM */
 
 /* `S.bk` is the flow in progress and is null until Tal is asked to book.
    `S.booking` is the RESULT and outlives the conversation — `talReset` clears
@@ -88,9 +88,9 @@ function bkStart(){
 const bkRec = () => S.booking || S.bk || {day:BK_DAY0, slot:BK_SLOT0};
 const bkAgent = () => AGENTS[(bkRec().agent) || S.agent || 'priya'];
 const bkLong = (r) => { r = r || bkRec(); const d = BK_DAYS[r.day] || BK_DAYS[BK_DAY0];
-  return `${d[1]}, ${BK_MONTH[0]} ${d[2]} at ${BK_SLOTS[r.slot] || BK_SLOTS[BK_SLOT0]} ET`; };
+  return `${d[1]}, ${BK_MONTH[0]} ${d[2]} at ${BK_SLOTS[r.slot] || BK_SLOTS[BK_SLOT0]}`; };
 const bkShort = (r) => { r = r || bkRec(); const d = BK_DAYS[r.day] || BK_DAYS[BK_DAY0];
-  return `${d[0]}, ${BK_MONTH[1]} ${d[2]} · ${BK_SLOTS[r.slot] || BK_SLOTS[BK_SLOT0]} ET`; };
+  return `${d[0]}, ${BK_MONTH[1]} ${d[2]} · ${BK_SLOTS[r.slot] || BK_SLOTS[BK_SLOT0]}`; };
 const bkDate = (r) => { r = r || bkRec(); const d = BK_DAYS[r.day] || BK_DAYS[BK_DAY0];
   return `${d[0]}, ${BK_MONTH[1]} ${d[2]}`; };
 /* the weekday alone, spelt in full — for prose that has to name the day
@@ -209,7 +209,7 @@ function bkProfile(key){
     <div class="bk-a">
       ${done
         ? `<span class="bk-flag">${I.checkFilled}Booked for ${bkDate()}</span>`
-        : `<button class="btn btn-p btn-sm" data-bkbook="${key}">Book call with ${a.n.split(' ')[0]} ${I.arrowRight}</button>`}
+        : `<button class="btn btn-p btn-sm" data-bkbook="${key}"><span style="text-transform:none">Book a Call with ${a.n.split(' ')[0]}</span> ${I.arrowRight}</button>`}
     </div>
   </div>`;
 }
@@ -223,7 +223,7 @@ function bkSched(){
   const a = AGENTS[S.bk.agent] || bkAgent();
   const locked = !!S.booking;
   return `<div class="bk bk-sched">
-    <div class="bk-h">Pick a day<span class="bk-h-x">Times in ET</span></div>
+    <div class="bk-h">Pick a day</div>
     <div class="daystrip">
       ${BK_DAYS.map(([d,,n],i) =>
         `<button class="day ${i===S.bk.day?'on':''}" data-bkday="${i}"${locked?' disabled':''}>
@@ -619,13 +619,9 @@ PAGESUM.dashboard.booked = () => {
      sentence sits ~300px from that step; "quiz" and "delegation frameworks"
      are common nouns and the house rule is sentence case in the markup
      (§63's note on capitals). The words are otherwise verbatim. */
-  return `Welcome back, Maryam! Your <b data-sum="interview">levelling interview with ${a.n}</b> `
-    + `is confirmed for ${bkLong()} (45 minutes, video-recorded). My analysis of `
-    + `${a.n.split(' ')[0]}&rsquo;s historical evaluation patterns shows a heavy emphasis on `
-    + `delegation frameworks. Since your initial quiz score placed you on the `
-    + `<b data-sum="track">Explorer track</b>, spending just `
-    + `<b data-sum="prep">10 minutes practising your delegation talking points</b> before `
-    + `${bkWeekday()} is your best strategy to secure an optimal levelling outcome.`;
+  return `Welcome back, Maryam! Your <b data-sum="interview">interview with ${a.n}</b> `
+    + `is confirmed for ${bkLong().replace(' at ', ', at ')}. The session lasts 45 minutes and will be recorded. `
+    + `Review your interview guide and spend <b data-sum="prep">a few minutes preparing</b> before your call.`;
 };
 /* THE RESCHEDULE FORK READS THE SAME LIVE SENTENCE. An ALIAS here, where every
    other record `resched` owns is a copy — and the difference is what the two

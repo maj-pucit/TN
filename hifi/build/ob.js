@@ -843,8 +843,8 @@ const OB_CHAT = [
      and the note above is explicit that supplied copy is not silently
      normalised (that is how a demo comes to disagree with its brief). */
   'Welcome to TALENTnext, Maryam!',
-  'I&rsquo;m Tal, and I&rsquo;ll be your companion throughout your TalentNext journey.',
-  'Before we dive into the experience, let&rsquo;s start with a few quick questions about you. Nothing too complicated, just a chance for us to get to know you better.'
+  'I&rsquo;m Tal, your guide throughout your TALENTnext journey.',
+  'Before we get started, I have a few quick questions to learn more about you and personalize your experience.'
 ];
 
 /* THE FOURTH PARAGRAPH BECAME THE CONTROL — 3 Sep 2026, and the two halves of
@@ -1322,7 +1322,7 @@ const obChatScreen = () => `
             instruction puts it and is also §29.10's rule — the control is on
             the thing it acts on. The dock's middle slot holds the disabled
             field in this mode, not this. */}
-      <div class="ob-chat-act"><span class="ob-go" data-obstart="1" role="button" tabindex="0">Let&rsquo;s Get Started!</span></div>
+      <div class="ob-chat-act"><span class="ob-go" data-obstart="1" role="button" tabindex="0">Let&rsquo;s Get Started</span></div>
     </div>
   </div>`;
 
@@ -1790,7 +1790,7 @@ function obScreen(){
        opens the conversation (`live`), which is exactly the ask. Voice keeps its
        dock (the orb's own control lives there). */
     const mid = chat ? obCompose()
-      : `<span class="ob-go" data-obstart="1" role="button" tabindex="0">Let&rsquo;s Get Started!</span>`;
+      : `<span class="ob-go" data-obstart="1" role="button" tabindex="0">Let&rsquo;s Get Started</span>`;
     const welcome = chat && !live;
     return `<div class="ob-open${chat ? ' ob-open-chat' : ''}${live ? ' ob-open-live' : ''}">${
       obHead()}${

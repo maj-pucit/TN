@@ -427,6 +427,11 @@
     display:grid;
     grid-template-columns:minmax(0,2fr) minmax(0,1fr) minmax(0,1fr) minmax(80px,auto) minmax(168px,auto);
     column-gap:0}
+  /* THE CANDIDATE LEDGER SPLITS THE WIDTH INTO FIVE EQUAL COLUMNS (Maryam,
+     13 Oct 2026: "the table columns of previous transactions should have equal
+     column spacing"). Keyed on the receipt link, which only the candidate's
+     Payments table carries, so the agent ledger keeps its wide state column. */
+  .app .paytbl:has(.lnk[data-receipt]){grid-template-columns:repeat(5,minmax(0,1fr))}
   .app .paytbl > .payrow{display:contents}
   /* the rule between rows is carried by the cells, since the row is gone */
   /* no column gap: the rule between rows has to be continuous, and a gap

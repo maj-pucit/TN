@@ -478,7 +478,7 @@ function placeDark(){
    plate a later page adds without that page having to know the order.
    ========================================================================== */
 /* THE DETAIL LINE IS A LIST, AND EACH ITEM WEARS ITS OWN MARK.
-   `.plate-b` is written as one `&middot;` run — "Thursday at 6:00 PM ET · 9
+   `.plate-b` is written as one `&middot;` run — "Thursday at 6:00 PM · 9
    others · 60 minutes" — which is three different facts (a date, a headcount, a
    duration) told as one sentence. It held together while the card ran the width
    of the page; in §56's column the run wraps to two and three lines and the
