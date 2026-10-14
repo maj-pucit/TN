@@ -2780,7 +2780,7 @@ const QUIZ=[
 const SVC_HEALTH=[
  {name:'Web app & portals', detail:'candidate · agent · employer · admin', state:'live', uptime:'99.98%', latency:'182ms'},
  {name:'API gateway', detail:'REST · GraphQL', state:'live', uptime:'99.99%', latency:'46ms'},
- {name:'Payments (Stripe)', detail:'charges · escrow · payouts', state:'live', uptime:'100%', latency:'—'},
+ {name:'Payments (Stripe)', detail:'charges · held funds · payouts', state:'live', uptime:'100%', latency:'—'},
  {name:'Learning platform', detail:'courses · assessments', state:'live', uptime:'99.95%', latency:'210ms'},
  {name:'Video & recording', detail:'1:1 interviews · SCENES', state:'degraded', uptime:'99.42%', latency:'—'},
  {name:'AI assessment', detail:'quiz scoring · levelling', state:'live', uptime:'99.90%', latency:'1.2s'},
@@ -2804,7 +2804,7 @@ const AUTH_CFG=[
  ['Password policy','12+ chars · breach-checked']
 ];
 const INTEGRATIONS=[
- {id:'stripe', name:'Stripe', cat:'Payments', detail:'Charges, escrow holds and agent payouts', state:'live', env:'Live mode', sync:'Real-time', account:'acct_1TN…9c', owner:'Finance', webhooks:6, events:'2,481', keyAge:'Rotated 20 Jul'},
+ {id:'stripe', name:'Stripe', cat:'Payments', detail:'Charges, held funds and agent payouts', state:'live', env:'Live mode', sync:'Real-time', account:'acct_1TN…9c', owner:'Finance', webhooks:6, events:'2,481', keyAge:'Rotated 20 Jul'},
  {id:'stripe_ip', name:'In-progress payments', cat:'Payments', detail:'Held-then-settled flow for interviews', state:'live', env:'Live mode', sync:'Real-time', account:'via Stripe', owner:'Finance', webhooks:3, events:'640', keyAge:'—'},
  {id:'learn', name:'Learning platform', cat:'Learning', detail:'Course delivery, assessments and progress', state:'live', env:'Production', sync:'Every 5 min', account:'tnx-prod', owner:'Product', webhooks:4, events:'1,120', keyAge:'Rotated 02 Aug'},
  {id:'video', name:'Video & recording', cat:'Media', detail:'1:1 interviews, transcripts and SCENES', state:'degraded', env:'Production', sync:'Real-time', account:'tnx-media', owner:'Product', webhooks:5, events:'318', keyAge:'Rotated 11 Jul'},
@@ -5225,7 +5225,7 @@ function homeOverview(){
     ${chartHead('Money at a glance', {go: 'finance/transactions', label: 'View finance'})}
     ${stats([
       ['money', 'Gross taken', money(gross), 'this window'],
-      ['bank', 'Held in escrow', money(inprog), 'not yet settled'],
+      ['bank', 'Funds held', money(inprog), 'not yet settled'],
       ['agents', 'Released to agents', money(releasedToAgents), 'paid out'],
       ['wallet', 'Moved to TalentNext', money(movedToTN), 'platform take']
     ], 'dash-stats')}
@@ -5283,9 +5283,9 @@ function homeOverview(){
         const cx = 135.64, cy = 136.316, ARC = 14, TRK = 8.519;   /* coloured arc a little thinner (was 17.038) but still clearly thicker than the grey track 8.519 (Maryam 30 Sep 2026) */
         /* outer → inner; red/black/grey, the platform's categorical set. */
         const rings = [
-          {l: 'In escrow', v: escrowN, r: 129.583, c: 'var(--accent)'},
+          {l: 'Funds held', v: escrowN, r: 129.583, c: 'var(--accent)'},
           {l: 'Paid', v: paidN, r: 97.048, c: 'var(--text-primary)'},
-          {l: 'Returned', v: returnedN, r: 63.765, c: '#6B6B6B'}
+          {l: 'Refunded', v: returnedN, r: 63.765, c: '#6B6B6B'}
         ];
         const arcs = rings.map(g => {
           const C = 2 * Math.PI * g.r;
@@ -6903,7 +6903,7 @@ function extClearing(u){
    re-renders — does not wipe it; a `clearNoteFor` guard resets it per account, the
    `S.qEdit`-style "load once per id" pattern. */
 const heldEscrow = u => u.roles.includes('agent') ? PAYOUTS.filter(p => p.agent === u.name && p.status === 'held') : [];
-const clearingBlocked = u => heldEscrow(u).length ? 'Release every payment still in escrow before continuing' : null;
+const clearingBlocked = u => heldEscrow(u).length ? 'Clear all payments still held before deactivating this agent.' : null;
 /* the pool of leaders who can take over a cohort — any other active leader. */
 const leaderReplOpts = u => USERS.filter(x => x.roles.includes('leader') && x.name !== u.name && x.status !== 'inactive' && x.status !== 'deleting' && x.status !== 'deleted').map(x => [x.name, x.name, agentFace(x.name)]);
 /* snapshot the modal's chosen replacements into `S.clearRepl` so a re-render
@@ -6919,7 +6919,7 @@ function clearingUI(u, id){
   const held = heldEscrow(u), led = leaderCohorts(u.name);
   if(!held.length && !led.length) return note;
   const rows = [];
-  held.forEach(p => rows.push(`<div class="clr-item">${cardRow('wallet', `Escrow ${esc(p.ref)}`, `${money(p.net)} held for ${esc(p.period)}`,
+  held.forEach(p => rows.push(`<div class="clr-item">${cardRow('wallet', `Held payment ${esc(p.ref)}`, `${money(p.net)} held for ${esc(p.period)}`,
     `<button class="btn acc-link btn-sm noic" data-act="clearpayout:${u.id}:${p.id}">Release ${I.arrowRight}</button>`)}</div>`));
   /* A LEADER'S LIVE COHORTS carry a replacement-leader picker BELOW the cohort row,
      FULL WIDTH — a sibling of the cardrow, not a child of its text column (Maryam,
@@ -6967,7 +6967,7 @@ ACTIONS.submitdeactext = key => {
   if(!(S.clearNote || '').trim()){ toast('Enter a note explaining this deactivation', 'warn'); return 'keep'; }
   /* the actionable, blocking clearing gate (3.4): escrow released and every live
      cohort assigned a replacement leader before the account can be deactivated. */
-  if(heldEscrow(u).length){ toast('Release every payment still in escrow before continuing', 'warn'); return 'keep'; }
+  if(heldEscrow(u).length){ toast('Clear all payments still held before deactivating this agent.', 'warn'); return 'keep'; }
   const repl = clearingRepl(u); if(repl === null){ toast('Choose a replacement leader for every live cohort', 'warn'); return 'keep'; }
   S._pending = {note:S.clearNote, repl};
   const cl = extClearing(u);
@@ -7037,7 +7037,7 @@ ACTIONS.submitdelext = key => {
   const u = USER_BY_ID[key.split(':')[1]]; if(!u) return;
   stashClearRepl();   /* keep any replacement picks across a validation re-render */
   if(!(S.clearNote || '').trim()){ toast('Enter a note explaining this deletion', 'warn'); return 'keep'; }
-  if(heldEscrow(u).length){ toast('Release every payment still in escrow before continuing', 'warn'); return 'keep'; }
+  if(heldEscrow(u).length){ toast('Clear all payments still held before deactivating this agent.', 'warn'); return 'keep'; }
   const repl = clearingRepl(u); if(repl === null){ toast('Choose a replacement leader for every live cohort', 'warn'); return 'keep'; }
   S._pending = {note:S.clearNote, repl};
   askConfirm({mk:'warning', danger:true, stepup:true, title:`Delete ${u.name} permanently?`, body:'This erases their personal data across the platform and cannot be undone.', ok:'Delete', act:'dodelext:' + u.id});
@@ -9210,9 +9210,9 @@ function agentEarningsPanel(a){
   const paidTotal = paid.reduce((n, p) => n + (p.net || 0), 0);
   const dest = a.payoutMethod || (PAYOUTS.find(p => p.agent === a.name && p.method && p.method !== '—') || {}).method;
   return `<section class="sec">
-    ${aiHead('Earnings', 'Escrow, payouts to date, and the destination they settle to.')}
+    ${aiHead('Earnings', 'Funds held, payouts to date, and the destination they settle to.')}
     ${stats([
-      ['wallet', 'In escrow', money(inEscrow), 'awaiting release'],
+      ['wallet', 'Funds held', money(inEscrow), 'awaiting release'],
       ['bank', 'Paid to date', money(paidTotal), 'net, released'],
       ['route', 'Next payout', held.length ? money(held[0].net) : '—', held.length ? esc(held[0].when) : 'nothing pending'],
       [dest ? 'check' : 'warning', 'Payout destination', dest ? 'On file' : 'Not on file', dest ? esc(dest) : 'cannot be paid']
@@ -10963,7 +10963,7 @@ const bkApprovalDue = b => bkStage(b) !== 'await' ? '—'
   : b.apprOverdue ? overdueSpan('Approval', b.apprOverdueDays) : 'Within 24h';
 /* Escrow reads In escrow / Paid / Returned on the register (8.1, story 9.3),
    mapped from the internal held / released / refunded. */
-const BK_ESCROW = {held:['pending', 'In escrow'], released:['paid', 'Paid'], refunded:['', 'Returned']};
+const BK_ESCROW = {held:['pending', 'Funds held'], released:['paid', 'Paid'], refunded:['', 'Refunded']};
 const bkEscrowTag = e => { const m = BK_ESCROW[e]; return m ? tag(m[0], m[1]) : '—'; };
 const escrowTag = e => e === 'held' ? '<span class="tag sm green">Held</span>' : e === 'released' ? '<span class="tag sm">Released</span>' : e === 'refunded' ? '<span class="tag sm">Refunded</span>' : '<span class="tag sm">n/a</span>';
 /* Fee facts (8.1): the total booking value, the candidate-paid amount and the
@@ -11100,7 +11100,7 @@ function marketBookings(){
     ${filterStrip('bkstage', 'all', stageTabs)}
     ${lstTools('Search by candidate or agent', `${typeFilter} ${dateFilter}`)}
     ${rows.length ? table(
-      [{label:'Candidate'}, {label:'Agent'}, {label:'Type'}, {label:'Scheduled'}, {label:'Stage'}, {label:'Fee', num:true}, {label:'Escrow'}, {label:'Report due'}, {label:'Approval due'}, ACT_COL],
+      [{label:'Candidate'}, {label:'Agent'}, {label:'Type'}, {label:'Scheduled'}, {label:'Stage'}, {label:'Fee', num:true}, {label:'Payout state'}, {label:'Report due'}, {label:'Approval due'}, ACT_COL],
       rows.map(b => ({id:b.id, go:'market/booking/' + b.id, cells:[
         personCell(b.cand, candEmail(b.cand)), personCell(b.agent, ''),
         esc(agIvIsRe(b.kind) ? 'Re-interview' : 'First interview'),
@@ -11620,7 +11620,7 @@ function marketBooking(){
       ['Total booking value', b.fee ? money(b.fee) : 'Free'],
       ['Candidate paid', money(bkPaid(b))],
       ['Funding source', bkFunding(b)],
-      ['Escrow', bkEscrowTag(b.escrow)]
+      ['Payout state', bkEscrowTag(b.escrow)]
     ])}
     ${b.fee ? kv([
       ['Transaction', txn ? esc(txn.ref) : 'No linked transaction'],
@@ -11655,7 +11655,7 @@ SHEETS.resolve = id => {
         ['Resolution', 'Issue rebooking credit']
       ])}
       ${fieldHtml({k:'reason', l:'Reason', t:'textarea', req:1, ph:'Required — written to the audit log; never shown to the candidate or agent'})}
-      <p class="t-desc">A rebooking credit worth the booking's full funded value, on the same funding source, valid ${REBOOK_WINDOW} days. The payment stays in escrow while the credit is live; the original agent is not paid.</p>`};
+      <p class="t-desc">A rebooking credit worth the booking's full funded value, on the same funding source, valid ${REBOOK_WINDOW} days. The payment stays held while the credit is live; the original agent is not paid.</p>`};
 };
 ACTIONS.doresolve = key => {
   const b = BOOKINGS.find(x => x.id === key.split(':')[1]); const v = readForm(); if(!b) return;
@@ -12723,7 +12723,7 @@ KINDS.refund = {
 };
 
 /* ─── EPIC 9.3 PAYOUT HELPERS ──────────────────────────────────────────────── */
-const PO_STATE_META = {escrow:['warn', 'In escrow'], paid:['green', 'Paid'], returned:['', 'Returned']};
+const PO_STATE_META = {escrow:['warn', 'Funds held'], paid:['green', 'Paid'], returned:['', 'Refunded']};
 const poStateTag = p => { const m = PO_STATE_META[p.state] || ['', cap(p.state)]; return `<span class="statw${m[0] ? ' ' + m[0] : ''}">${esc(m[1])}</span>`; };
 /* Releases: the date the payout is due (or went out). BLANK = report outstanding =
    blocked. The row MARKINGS ("Last run failed", "No payout destination") are not
@@ -12762,13 +12762,13 @@ function financePayouts(){
   const eligibleAll = PAYOUTS.filter(poEligible);
   return `
   <section class="sec">
-    ${searchHead('Payouts', `An agent’s share per interview, out of escrow ${SETTINGS.payoutDelay} working days after the report on the weekly ${SETTINGS.payoutRunDay} run.`,
+    ${searchHead('Payouts', `An agent’s share per interview. Held funds become payable ${SETTINGS.payoutDelay} working days after the agent files their report, and go out on the weekly ${SETTINGS.payoutRunDay} run.`,
       `${finExportBtn('Payouts')} ${eligibleAll.length ? `<button class="btn btn-g btn-sm noic" data-act="askrunweekly">${I.renew} Run Weekly Run</button>` : ''}`, 'Search by agent or candidate')}
     ${filterStrip('pstate', 'all', [
       ['all', 'All', PAYOUTS.length],
-      ['escrow', 'In escrow', PAYOUTS.filter(p => p.state === 'escrow').length],
+      ['escrow', 'Funds held', PAYOUTS.filter(p => p.state === 'escrow').length],
       ['paid', 'Paid', PAYOUTS.filter(p => p.state === 'paid').length],
-      ['returned', 'Returned', PAYOUTS.filter(p => p.state === 'returned').length]
+      ['returned', 'Refunded', PAYOUTS.filter(p => p.state === 'returned').length]
     ])}
     ${lstTools('Search by agent name, email or candidate',
       filterDd('pfund', 'all', [['all', 'All'], ['candidate', 'Candidate'], ['platform', 'Platform']], 'Funded by')
@@ -13089,7 +13089,7 @@ function financeFeeSettings(){
 SHEETS.commission = id => { const a = USER_BY_ID[id] || {}; const has = a.commission != null; return {
   title:`${has ? 'Change' : 'Set'} commission — ${a.name || 'agent'}`,
   body:`${kv([['Agent', esc(a.name || '—')], ['Current commission', has ? a.commission + '%' : 'Not set', 'n']])}
-    <p class="t-desc" style="margin:var(--s04) 0">The platform’s share of this agent’s fee, set for this agent only. It applies to interviews booked from now on; money already in escrow keeps the rate it was booked at.</p>
+    <p class="t-desc" style="margin:var(--s04) 0">The platform’s share of this agent’s fee, set for this agent only. This applies to interviews booked from now on. Money already held keeps the commission that applied when the interview was booked.</p>
     ${fieldHtml({k:'pct', l:'Commission (%)', t:'number', req:1, def: has ? a.commission : '', ph:'0 to 100'})}
     ${fieldHtml({k:'reason', l:'Reason', t:'textarea', req:1, ph:'Recorded on the audit log and the fee-settings history (1–500 characters).'})}`,
   ok:'Continue', act:'submitcommission:' + id}; };
@@ -13932,7 +13932,7 @@ function systemIntegrations(){
 }
 ACTIONS.askrotate = key => { const g = INTG_BY_ID[key.split(':')[1]]; if(!g) return; askConfirm({mk:'warning', title:`Rotate the ${g.name} key?`, body:'A new key is issued and the old one is revoked after a 10-minute overlap. Webhooks re-sign automatically.', ok:'Rotate Key', act:'dorotate:' + g.id}); };
 ACTIONS.dorotate = key => { const g = INTG_BY_ID[key.split(':')[1]]; if(g){ g.keyAge = 'key rotated just now'; audit('Rotated API key', g.name, 'System & Audit', 'high'); toast(`${g.name} key rotated`); } S.confirm = null; };
-ACTIONS.askdisconnect = key => { const g = INTG_BY_ID[key.split(':')[1]]; if(!g) return; askConfirm({mk:'warning', title:`Disconnect ${g.name}?`, body:`${g.detail} stops working across the platform until it is reconnected. ${g.cat === 'Payments' ? 'No charge, escrow hold or payout can run while it is off.' : ''}`, ok:'Disconnect', danger:true, act:'dodisconnect:' + g.id}); };
+ACTIONS.askdisconnect = key => { const g = INTG_BY_ID[key.split(':')[1]]; if(!g) return; askConfirm({mk:'warning', title:`Disconnect ${g.name}?`, body:`${g.detail} stops working across the platform until it is reconnected. ${g.cat === 'Payments' ? 'No charge, held funds or payout can move while it is off.' : ''}`, ok:'Disconnect', danger:true, act:'dodisconnect:' + g.id}); };
 ACTIONS.dodisconnect = key => { const g = INTG_BY_ID[key.split(':')[1]]; if(g){ g.prev = g.state; g.state = 'off'; audit('Disconnected integration', g.name, 'System & Audit', 'high'); toast(`${g.name} disconnected`); } S.confirm = null; };
 ACTIONS.reconnect = key => { const g = INTG_BY_ID[key.split(':')[1]]; if(g){ g.state = g.prev || 'live'; audit('Reconnected integration', g.name, 'System & Audit', 'high'); toast(`${g.name} reconnected`); } };
 SHEETS.connect = () => ({title:'Connect a service',
@@ -14570,12 +14570,12 @@ function numGroup(g){
 const PAYOUT_DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 function moneyGroup(){
   return `<section class="sec" data-setgroup="money">
-    ${aiHead('Money', 'Escrow release timing and the weekly payout run. These carry the Change fee permission — a reason and a re-authentication step. A change applies to reports filed after it; escrow already releasable is unaffected.',
+    ${aiHead('Money', 'When held funds are released and the weekly payout run. These carry the Change fee permission — a reason and a re-authentication step. A change applies to reports filed after it; held funds already releasable are unaffected.',
       setEditActs('money'))}
     ${S.setEdit !== 'money' ? `<div class="kv-ends mt4">${kv([
       ['Payout release delay', `${SETTINGS.payoutDelay} working days`],
       ['Payout run day', `${esc(SETTINGS.payoutRunDay)}, 12:00 AM`]])}</div>` : `<div class="mt4">
-      ${setNum({k:'payoutDelay', l:'Payout release delay', unit:'working days', min:0, max:30, hint:'How long after a report is filed before escrow becomes releasable. Counted against the working-days calendar below.'})}
+      ${setNum({k:'payoutDelay', l:'Payout release delay', unit:'working days', min:0, max:30, hint:'How long after a report is filed before held funds become releasable. Counted against the working-days calendar below.'})}
       ${formDd({k:'payoutRunDay', l:'Payout run day', opts:PAYOUT_DAYS.map(d => [d, d])}, SETTINGS.payoutRunDay)}
       <p class="t-desc mt5">The payout run executes at 12:00 AM on this day, in your time zone.</p>
     </div>`}

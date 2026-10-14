@@ -638,7 +638,7 @@ const STAGES = [
      `live:` PAGESUM/copy stay in place (unused, flagged) in case it returns —
      removing them would be a second, larger edit for a stage that is only being
      taken off the menu. */
-  ['working',  'A working week',        'Stage 4. Two interviews ahead, one recording to confirm, and $204 held for you in escrow. This is the portal as an agent actually uses it.'],
+  ['working',  'A working week',        'Stage 4. Two interviews ahead, one recording to confirm, and $204 held for you. This is the portal as an agent actually uses it.'],
   ['reviewed', 'After a review',        'Stage 4, step 13. The quarterly review widened the range Owen may assess to E1 – B2, and his follow-up score came up over the quarter.']
 ];
 
@@ -1122,7 +1122,7 @@ const iv = id => IVS.find(x => x.id === id) || IVS.find(x => x.st === 'next');
    `pause` marks a hold, `close` a return; both `quiet` because neither asks
    anything of the agent. */
 const PAYMENTS = [
-  {n:'Rafael Ortiz', d:'19 Aug', s:'In escrow',       ic:'locked',      st:'quiet'},
+  {n:'Rafael Ortiz', d:'19 Aug', s:'Funds held',      ic:'locked',      st:'quiet'},
   {n:'Sofia Marek',  d:'18 Aug', s:'Recording to confirm', ic:'edit',   st:'warn'},
   {n:'Tom Whelan',   d:'17 Aug', s:'Releases 20 Aug', ic:'time',        st:'quiet'},
   {n:'Leah Carr',    d:'15 Aug', s:'On hold',         ic:'pause',       st:'warn'},
@@ -1658,7 +1658,7 @@ const PAGESUM = {
     setup:   'Approved on 12 June, and the agent role sits on the account you already had. Your public profile, your fee and payouts are all still open.',
     training:'Three of four lessons done, and calibration is Thursday 20 June with Derek Hale. Certification is the last thing before you can be booked.',
     live:    'Listed since Monday and nothing booked yet. Six slots are open over the next fortnight, and Friday at 5:00 PM is the first.',
-    working: 'Sofia Marek’s recording needs your confirmation to release payment. Your next interview with Rafael Ortiz is Thursday at 3:00 PM. You have $204 awaiting release in escrow.',
+    working: 'Sofia Marek’s recording needs your confirmation to release payment. Your next interview with Rafael Ortiz is Thursday at 3:00 PM. You have $204 held for you.',
     reviewed:'Nadia widened your range on 1 October, so you can assess E1 to B2 now. Two bookings arrived in the week since.'
   },
 
@@ -1720,8 +1720,8 @@ const PAGESUM = {
 
   earnings: {
     setup:   'Nothing can be booked until a payout destination exists. It’s a Stripe handoff. TalentNext never sees an account number, and it takes a minute.',
-    live:    'Nothing earned yet. Your $85 splits to $68 once you confirm the recording, and it sits in escrow for three working days first.',
-    _:       '$612 earned this month across nine interviews, and $204 is still held for you in escrow. Tom’s $68 releases Thursday, three days after you confirmed his recording.'
+    live:    'Nothing earned yet. Your $85 splits to $68 once you confirm the recording, and it is held for three working days first.',
+    _:       '$612 earned this month across nine interviews, and $204 is still held for you. Tom’s $68 releases Thursday, three days after you confirmed his recording.'
   },
 
   standing: {
@@ -1764,7 +1764,7 @@ const TALQ = {
      'Your Agent Score is 4.5 stars, your interview score at 4.5 and your candidate rating at 4.6. Follow-up and depth are the reviewer’s per-interview marks, set each quarter. Nadia reads the next quarter on 1 October.',
      [['Agent Score', '4.5&#9733;'], ['Interview score', '4.5 / 5'], ['Candidate rating', '4.6 / 5']],
      ['Open Standing', 'standing']],
-    ['When does the escrow release?',
+    ['When are my held funds released?',
      'Three working days after you confirm the recording. Tom’s $68 releases Thursday; Sofia’s starts counting the moment you confirm hers.',
      [['Rafael Ortiz', '$68 &middot; held to the interview'], ['Sofia Marek', '$68 &middot; recording to confirm'],
       ['Tom Whelan', '$68 &middot; releases Thursday']],
@@ -1772,7 +1772,7 @@ const TALQ = {
   ],
   profile: [
     ['Can I change my fee?',
-     'Yes, and it applies to new bookings only. Anything already in escrow settles at the rate it was booked at, including Thursday’s.'],
+     'Yes, and it applies to new bookings only. Everything already held keeps the fee it was booked at, including Thursday’s.'],
     ['What does pausing do?',
      'It takes you out of browse. Interviews already booked still stand, and your public profile comes back exactly as it was. Nothing is re-approved.'],
     /* NO TIER IN THE ANSWER. This read "The range comes off your agent level,
@@ -3325,7 +3325,7 @@ const moneyCol = v => {
         <div class="prog-figs">
           <span><i class="prog-ic">${I.video}</i><span class="prog-fb"><b>${v.month}</b> Interviews</span></span>
           <span><i class="prog-ic">${I.wallet}</i><span class="prog-fb"><b>${money(v.share)}</b> Interview Fee</span></span>
-          <span><i class="prog-ic">${I.creditCard}</i><span class="prog-fb"><b>${money(held(v))}</b> In Escrow</span></span>
+          <span><i class="prog-ic">${I.creditCard}</i><span class="prog-fb"><b>${money(held(v))}</b> Gross Held</span></span>
         </div>
       </div>
     </div>
@@ -3707,7 +3707,7 @@ const diary = (v, not) => IVS.filter(x => ivSt(x) === 'next' && x.id !== not)
     t: x.n,
     d: `${kindLabel(x.kind)} &middot; 45 minutes &middot; Recorded` + (x.summary
         ? `</span><span class="cardrow-d">Review the candidate’s 90-day summary before the call.`
-        : ` &middot; ${money(v.fee)} in escrow`)
+        : ` &middot; ${money(v.fee)} already paid and held`)
   })).sort((a, b) => a.ord - b.ord);
 
 const money = n => '$' + n.toLocaleString('en-US');
@@ -4149,7 +4149,7 @@ V.dashboard = v => {
       urgent: true,
       av: next.i, photo: AV.lena, name: next.n,
       role: `${next.kind.replace(/\b\w/g, c => c.toUpperCase())} &middot; ${next.band.replace(', predicted by the quiz', ' track predicted by quiz')}`,
-      detail: `45 minutes &middot; Recorded &middot; ${money(v.fee)} in escrow`,
+      detail: `45 minutes &middot; Recorded &middot; ${money(v.fee)} already paid and held`,
       actions: `<button class="btn btn-p btn-sm noic">Join Call ${I.video}</button>`
     })) + `
     ${/* THE FOUR FIGURE CELLS AND THEIR RULE ARE GONE (Maryam, 2 Sep 2026:
@@ -4414,7 +4414,7 @@ V.interviews = v => {
       role: `${kindLabel(soon.kind)} &middot; ${soon.band.replace(', predicted by the quiz', ' track predicted by quiz')}`,
       detail: `45 minutes &middot; Recorded` + (soon.summary
           ? ' &middot; Review the candidate’s 90-day summary before the call.'
-          : ` &middot; ${money(v.fee)} in escrow`),
+          : ` &middot; ${money(v.fee)} already paid and held`),
       actions: `<button class="btn btn-p btn-sm noic">Join Call ${I.video}</button>`
     }) : ''}
   <section class="sec">
@@ -5124,7 +5124,7 @@ const calPop = (s, v) => {
     <div class="cal-row"><span class="l">Status</span>
       <span class="v">Open &mdash; nobody has taken it</span></div>
     <div class="cal-row"><span class="l">If it is booked</span>
-      <span class="v">${money(v.fee)} into escrow</span></div>
+      <span class="v">${money(v.fee)} held</span></div>
     <div class="cal-row"><span class="l">Taking it back</span>
       <span class="v">Any time before it is booked</span></div>
     <div class="cal-pop-a">
@@ -5354,7 +5354,7 @@ V.earnings = v => {
     <div class="sec-h"><h2>This month</h2></div>
     ${stats([
       ['wallet',     'Earned',     money(v.earned),  'released to your account'],
-      ['creditCard', 'Held for you', money(v.escrow), `of ${money(held(v))} in escrow`],
+      ['creditCard', 'Held for you', money(v.escrow), `of ${money(held(v))} gross held`],
       ['video',      'Interviews', String(v.month),  `${v.ivs} in total`],
       ['receipt',    'Each',       money(v.share),   `80% of ${money(v.fee)}`]])}
   </section>` : ''}
@@ -5923,7 +5923,7 @@ V.profile = v => head({title: 'Profile'}) + `
       <span>Get notified after a call when a recommendation is ready to submit.</span></div>
       <input type="checkbox" data-pfn="report"${S.pfNotif.report ? ' checked' : ''}><span class="sw"></span></label>
     <label class="tg"><div class="tb"><b>Payout Updates</b>
-      <span>Get notified when escrow is released and payouts arrive.</span></div>
+      <span>Get notified when held funds are released and payouts arrive.</span></div>
       <input type="checkbox" data-pfn="payout"${S.pfNotif.payout ? ' checked' : ''}><span class="sw"></span></label>
     <label class="tg"><div class="tb"><b>Product Updates</b>
       <span>Receive portal updates no more than once a month.</span></div>
@@ -6564,7 +6564,7 @@ const CONFIRMS = {
      already in escrow settles at the rate it was booked at. The OK button carries
      `data-feedone` (not the generic close) so it clears both the confirm and the
      edit form; Cancel closes the prompt and keeps the edit. */
-  feechange: ['Change your fee?', 'Interviews already in escrow keep the rate they were booked at. Your new fee applies only to bookings made after this.', 'Change fee', null, 'warning']
+  feechange: ['Change your fee?', 'Interviews already booked keep the old fee.', 'Change fee', null, 'warning']
 };
 /* THE CONFIRM DIALOG IS THE DESIGN SYSTEM'S `.conf`, NOT A PLAIN `.sheet`
    (Maryam, 7 Sep 2026: "the ui of logout modal should be more like the inspo" —
@@ -6810,7 +6810,7 @@ const SHEETS = {
     <label class="f"><span class="lbl">What a candidate pays</span>
       <input class="inp" value="$85"></label>
     <div class="kv"><span class="k">You would be paid</span><span class="v">$68</span></div>
-    <p class="help">A new fee applies to new bookings. Anything in escrow settles at the rate it was booked at.</p>`],
+    <p class="help">A new fee applies to new bookings. Everything already held keeps the fee it was booked at.</p>`],
   /* ADD A SLOT — a day and a time range, all three OUR dropdown (§123), no
      native `<select>`. The day is a WEEKDAY only ("Monday", not "Monday 31
      August") — Maryam, 6 Sep 2026 — and the time is two side-by-side fields,
