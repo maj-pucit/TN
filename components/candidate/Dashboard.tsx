@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Stats, Stat } from "../ui/Figures";
 import { Page, PageHeader, Section, SectionHeader, Text, HeadBand } from "../primitives";
 import { DarkCard, DarkCardActions, DarkHeadCard } from "../ui/DarkCard";
-import { LSVT_URL } from "@/data/progress";
+import { LSVT_URL, progressView } from "@/data/progress";
 import { QuickActions } from "../ui/QuickActions";
 import { ProgressWing } from "../ui/ProgressWing";
 import { Button } from "../ui/Button";
@@ -20,7 +20,7 @@ import { BookedDialog, bookHref } from "./Interviews";
 /* ============================================================
    CANDIDATE DASHBOARD — Phase 1's dashboard, stage by stage, minus the
    Tal summary band (G3). Order on every stage: greeting → journey (or
-   90-day progress once enrolled) → the one black card → Quick Actions.
+   course progress once enrolled) → the one black card → Quick Actions.
    ============================================================ */
 export function CandidateDashboard() {
   const { stage } = useDemo();
@@ -35,7 +35,7 @@ export function CandidateDashboard() {
             the progress row, so they take the section gap (Maryam 16 Oct 2026). */}
         {v.progress && (
           <Section kind="block" bare>
-            <Stats cols={3}>{PROGRESS_INSIGHTS.map((f) => <Stat key={f.v} icon={f.icon} label={f.v} desc={f.l} />)}</Stats>
+            <Stats cols={3}>{insights(stage).map((f) => <Stat key={f.v} icon={f.icon} label={f.v} desc={f.l} />)}</Stats>
           </Section>
         )}
       </HeadBand>
@@ -82,17 +82,25 @@ function Journey({ step, of }: { step: number; of: number }) {
   );
 }
 
-const PROGRESS_INSIGHTS: { icon: "time" | "restart" | "calendar"; v: string; l: string }[] = [
-  { icon: "time", v: "Learning Time", l: "14h 31m - 73 minutes per chapter" },
-  { icon: "restart", v: "Chapter Retakes", l: "2 - 1 attempt per chapter on average" },
-  { icon: "calendar", v: "Session Attendance", l: "13 of 13 sessions attended" },
-];
+/* The three insights under the bar. Learning Time and Chapter Retakes are Maryam's supplied
+   copy (authored placeholder, Phase 1 §74). The third was Session Attendance, which counted
+   cohort calls: Phase 0 has no cohorts, so it is the stage's Assessment Average, read off
+   the Course Progress data so the two pages agree (Maryam 16 Oct 2026). */
+const insights = (stage: string): { icon: "time" | "restart" | "chart"; v: string; l: string }[] => {
+  const pv = progressView(stage), n = pv.scores.length;
+  return [
+    { icon: "time", v: "Learning Time", l: "14h 31m - 73 minutes per chapter" },
+    { icon: "restart", v: "Chapter Retakes", l: "2 - 1 attempt per chapter on average" },
+    { icon: "chart", v: "Assessment Average", l: pv.avg ? `${pv.avg}% - across ${n} assessed chapter${n === 1 ? "" : "s"}` : "No chapters assessed yet" },
+  ];
+};
 
 function ProgressBlock({ p }: { p: Progress }) {
   return (
-    <ProgressWing full title="Your 90-Day Progress"
+    /* Self-paced (Maryam 16 Oct 2026): no days, no weeks; the course is its chapters. */
+    <ProgressWing full title="Your Course Progress"
       big={<>{p.pct}<small>%</small></>} bigLabel="Course completed"
-      right={<>Day {p.day}<small> of 90</small></>} rightLabel="Journey progress"
+      right={<>{p.seg}<small> of 13 chapters</small></>} rightLabel="Chapters done"
       segs={Array.from({ length: 13 }, (_, i) => (i < p.seg ? "done" : ""))}
       /* The three insights under the bar (Maryam 16 Oct 2026, supplied copy, kept as written), as
          three JOINT stat blocks (the hairline grid): each a black title over its figure line; attempts are whole numbers, never a decimal. Authored placeholder (Phase 1 §74), the same on every
@@ -117,7 +125,7 @@ function StageCard({ card, stage }: { card: Card; stage: string }) {
                 <Text role="compact" as="p" className={s.meta}>
                   {card.charged
                     ? <span><Icon name="wallet" />${A.price} Interview Fee</span>
-                    : <span><Icon name="wallet" /><s className={s.was}>${A.price}</s> <span className={s.free}>Free</span></span>}
+                    : <span><Icon name="wallet" /><span className={s.free}>Free</span></span>}
                   <span><Icon name="video" />{A.call}</span>
                   {card.charged && <span><Icon name="calendar" />Next slot: {A.nextSlot}</span>}
                 </Text>

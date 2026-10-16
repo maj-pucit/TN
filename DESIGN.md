@@ -177,7 +177,7 @@ Maryam, 16 Oct 2026. One token, `--sec-gap`, sets all of it.
   the stepper are ONE section, with no divider between them. The band closes with its own
   full-width bottom stroke (like Phase 1's band under "Summary by Tal"), and the page wash moves
   off the page into the band. The greeting's own divider is off inside it. The dashboards that show
-  the 90-day progress use the same band: greeting + "Your 90-Day Progress" (full width, no 784 cap),
+  the course progress use the same band: greeting + "Your Course Progress" (full width, no 784 cap),
   then, still inside the band, the three insights (Learning Time / Chapter Retakes / Session
   Attendance) as their own block section of three joint stat cells, one section gap below the bar.
 - **A divider is an entity of its own.** It takes the full section gap on each side: 28 above the
@@ -228,7 +228,7 @@ across about 40 layers.
 | `Disclosure`, `HowItWorks` | `ui/Disclosure.tsx` | The `.found` chevron heading that opens in place; the facts + numbered steps body. |
 | `CardPicker`, `PayModal` | `ui/CardPicker.tsx` | Pay from a saved card (radio rows, Default pill). Stripe's "Add Payment Method" is **embedded as a picture** with Phase 1's exact hotspots. |
 | `Ladder` | `ui/Ladder.tsx` | The 15-rung level ladder on a black card. Passed rungs accent, current rung deep accent, rungs ahead faint. |
-| `FreeFee` | `ui/Fee.tsx` | A complimentary fee: the price struck, then "Free". |
+| `FreeFee` | `ui/Fee.tsx` | A complimentary fee: the word "Free" alone, in `--accent-text`, never the struck price (Maryam 16 Oct 2026). |
 | `Accordion` | `ui/Accordion.tsx` | Rows between hairlines that open in place, one at a time; an optional caption sub-line (the course outline's "Chapter N · X min"). |
 | `Modal` | `ui/Modal.tsx` | A plain sheet (no disc): content, then a footer of actions. Through `Overlay`. |
 | `PerfChart` | `ui/PerfChart.tsx` | Assessment score by chapter against a dashed average line. Lowest point red with a halo; an "Average score" callout beside the latest point that flips left near the edge; key insight + "View Scores" sheet. |
@@ -287,7 +287,8 @@ and a 4px icon-side padding Phase 1 gives some black-card buttons.
 - **Every photograph of a person is a disc.** Artwork (covers, badges) stays square.
 - **No toasts, and exports make no browser download** (Maryam 16 Oct 2026). An action's outcome shows on the page itself.
 - **Modal footer buttons fill the width, split equally** (`.sheetF` and `.confA`, Maryam 16 Oct 2026): Cancel and the primary each take half.
-- **Dates are `MM-DD-YYYY`.** The course is "90 days".
+- **Dates are `MM-DD-YYYY`.**
+- **Courses are self-paced** (Maryam 16 Oct 2026): no "90 days", no weeks, no weekly cadence anywhere. Every chapter is open from the start (no padlock, no "Opens <date>"); progress is chapters done ("Your Course Progress", "N of 13 chapters"); the fourth journey step is "Course Journey" ("13 chapters, at your own pace"); a course is defined by its chapter count (no Length in the admin catalogue); the third dashboard insight is Assessment Average (Session Attendance counted cohort calls). Demo stage names: Course started / Course in progress / Course completed (keys `week1` / `day34` / `day90` unchanged).
 - **No scrollbars** (the platform is scrollbar-less), except deliberate carousels.
 
 ## 7. The guard: why drift cannot ship

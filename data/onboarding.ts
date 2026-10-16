@@ -21,7 +21,7 @@ export const OB_WELCOME = {
 };
 
 /* CUT (G8): "Locks in your cohort and your price" → "Locks in your price";
-   "90-Day Cohort Journey" → "90-Day Journey". */
+   "90-Day Cohort Journey" → "Course Journey" (self-paced, Maryam 16 Oct 2026). */
 export const OB_DONE = {
   title: "You’re all set",
   lede: "That is everything I needed. Here is where you are, and what comes next.",
@@ -29,6 +29,6 @@ export const OB_DONE = {
     ["Next in Leadership Quiz", "You have taken it. Explorer track.", "done"],
     ["Interview & Levelling", "You are here. 45 minutes with a talent agent, and it is what sets your level.", "on"],
     ["Course Enrollment", "Locks in your price.", ""],
-    ["90-Day Journey", "13 chapters, one a week.", ""],
+    ["Course Journey", "13 chapters, at your own pace.", ""],
   ] as [string, string, string][],
 };

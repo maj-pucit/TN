@@ -86,7 +86,7 @@ Day 90, course finished → Promoted.
 ### 3.2 Dashboard
 - The greeting heading, then the content for the candidate's stage, as in Phase 1:
   - **Just joined:** "Tal recommends" black card (agent recommendation; first interview shown as
-    "~~$95~~ Free"), quick actions (including Open Quiz Results → quiz results modal).
+    "Free"; no struck price since 16 Oct 2026), quick actions (including Open Quiz Results → quiz results modal).
   - **Interview booked / reschedule:** the scheduled interview card; Join (disabled until 1 minute
     before the start); "Interview booked" confirmation. On the reschedule stage the card reads
     "In 2 days" with a Reschedule button.
@@ -94,11 +94,11 @@ Day 90, course finished → Promoted.
   - **Levelled:**
     - The level reveal modal on first landing.
     - The recommended-course black card with "View Course" and "View other courses".
-  - **Enrolled (Week 1 / Day 34 / Day 90):** the 90-day progress and quick actions.
+  - **Enrolled (Course started / in progress / completed):** the course progress and quick actions.
   - **Promoted:** the next-level offer.
 - **Removed:** the cohort pre-start block, the points pulse, the certificate banner, any cohort copy.
 - **Layout on every stage:** greeting, then "Your journey so far" (before enrolling) or "Your
-  90-Day Progress" (once enrolled), then one black card, then Quick Actions.
+  Course Progress" (once enrolled), then one black card, then Quick Actions.
 - **Detail cuts that follow from G2 / G8 / G9:**
   - Quick actions that opened the Tal chat are removed: "Quick-Start Preparation", "What to
     Bring", "What Happens Next".
@@ -107,7 +107,7 @@ Day 90, course finished → Promoted.
   - The Learning Pulse card keeps its sentence but drops "Open chapter N" and the "Your Next
     Call · Cohort Leader" row.
   - The course offer drops "Cohort starts …", "Cohort Leader: …" and the Cohort seats cell.
-  - The journey's fourth step reads "90-Day Journey" (was "90-Day Cohort Journey").
+  - The journey's fourth step reads "Course Journey" (was "90-Day Cohort Journey"); the course is self-paced, with no 90 days and no weeks (16 Oct 2026).
 
 ### 3.3 My Level
 - Kept:
@@ -265,7 +265,7 @@ interview dates sit on Phase 1's fixed "today", Wednesday 19 August 2026, 2:20 P
 - The greeting heading, **Your earnings** ($612 earned this month, $204 awaiting release, the
   segmented bar, 9 interviews · $68 fee · $255 gross held), the upcoming interview card with
   **Join Call** (gated), and quick actions (Recordings to Confirm, Upcoming Interviews).
-- "Your earnings" is the same component as the candidate's "Your 90-Day Progress".
+- "Your earnings" is the same component as the candidate's "Your Course Progress".
 
 ### 4.2 Interviews
 - **Tabs:** Upcoming · Pending Recommendations · Past Interviews.

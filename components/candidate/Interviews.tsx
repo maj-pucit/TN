@@ -110,7 +110,7 @@ function AgentsTable() {
             {a.tags.length > 2 && <Text role="label" as="span" className={s.tag}>+{a.tags.length - 2}</Text>}
           </div>
           <div><Text role="caption" as="span" className={s.cellL}>Experience</Text><Text role="compact" as="span">{a.yrs} yrs</Text></div>
-          <div><Text role="caption" as="span" className={s.cellL}>Rate</Text><Text role="h4" as="span">{charged ? `$${a.price}` : <FreeFee price={a.price} />}</Text></div>
+          <div><Text role="caption" as="span" className={s.cellL}>Rate</Text><Text role="h4" as="span">{charged ? `$${a.price}` : <FreeFee />}</Text></div>
           <div className={s.act}><Button kind="primary" size="sm" href={bookHref(stage, a.key)}>Book</Button></div>
         </div>
       ))}
@@ -156,7 +156,7 @@ function AgentHead({ a, charged }: { a: Agent; charged: boolean }) {
         <Text role="compact" as="span" className={s.meta}>
           {charged
             ? <span><Icon name="wallet" />${a.price} Interview Fee</span>
-            : <span><FreeFee price={a.price} quiet /></span>}
+            : <span><FreeFee quiet /></span>}
           <span><Icon name="video" />45 mins call</span>
         </Text>
       </div>
@@ -241,7 +241,7 @@ export function BookedDialog() {
   const close = () => setUi({ ivBooked: undefined });
   return (
     <Dialog icon="checkFilled" title="Interview Booked!" onClose={close}
-      desc={<>You have booked an interview with {a.name} in {b.charged ? `$${a.price}` : <FreeFee price={a.price} />}. Join the interview on your selected slot and get to know of your level.</>}
+      desc={<>{b.charged ? <>You have booked an interview with {a.name} for ${a.price}.</> : <>You have booked a <FreeFee /> interview with {a.name}.</>} Join the interview on your selected slot and get to know of your level.</>}
       actions={<Button kind="primary" onClick={close}>View My Dashboard</Button>} />
   );
 }

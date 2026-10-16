@@ -1941,7 +1941,6 @@
    "lsvt": "Leadership Foundations (LSVT)",
    "desc": "Builds the everyday operating habits a first leadership role asks for: taking work end to end, handing it over cleanly, and saying the hard thing early. For people stepping up in the job they are already in.",
    "price": 100,
-   "days": 90,
    "status": "live"
   },
   {
@@ -1958,7 +1957,6 @@
    "lsvt": "Team Dynamics (LSVT)",
    "desc": "Develops the craft of holding a team steady through conflict, coaching rather than fixing, and running a weekly rhythm people leave knowing what to do. For those already leading who want the team to carry more.",
    "price": 180,
-   "days": 90,
    "status": "live"
   },
   {
@@ -1975,7 +1973,6 @@
    "lsvt": "Strategic Thinking (LSVT)",
    "desc": "Turns a leader outward: setting direction under incomplete information, telling a decision you can reverse from one you cannot, and carrying a team through a change nobody chose. For people building toward ownership.",
    "price": 260,
-   "days": 90,
    "status": "draft"
   },
   {
@@ -1994,7 +1991,6 @@
    "lsvt": "Communication & Influence (LSVT)",
    "desc": "Sharpens how a message lands: opening a hard conversation without an ambush, giving feedback that changes what happens next, and reading what a room is not saying. Useful at every level and every intent.",
    "price": 120,
-   "days": 90,
    "status": "live"
   },
   {
@@ -2011,7 +2007,6 @@
    "lsvt": "Coaching for Performance (LSVT)",
    "desc": "The skill of moving work through people who do not report to you: building trust at speed, managing up, and making small commitments in public and keeping them. For those leading across a business, not just down a line.",
    "price": 200,
-   "days": 90,
    "status": "live"
   },
   {
@@ -2027,7 +2022,6 @@
    "lsvt": "Communication & Influence (LSVT)",
    "desc": "The groundwork of being understood at work: saying what you mean in one sentence other people repeat, listening for what matters, and giving your manager the version of a problem they can act on. The entry course.",
    "price": 90,
-   "days": 90,
    "status": "live"
   },
   {
@@ -2045,7 +2039,6 @@
    "lsvt": "Team Dynamics (LSVT)",
    "desc": "Everything a group needs from the person in front of it: delegation without drop-off, repair after a working relationship breaks, and holding the line while two people are still angry. For established team leads.",
    "price": 210,
-   "days": 90,
    "status": "live"
   },
   {
@@ -2061,7 +2054,6 @@
    "lsvt": "Change Leadership (LSVT)",
    "desc": "How to keep the work going while the ground moves: saying what you know and what you do not, taking the heat out of a disagreement without avoiding it, and leading people through a change they did not choose. The senior Builder course.",
    "price": 280,
-   "days": 90,
    "status": "draft"
   }
  ],
@@ -2315,7 +2307,7 @@
    "party": "Candidate",
    "email": "maryam.naz@gmail.com",
    "kind": "Course — Foundations of Leadership",
-   "desc": "Foundations of Leadership · 90-day cycle",
+   "desc": "Foundations of Leadership",
    "amt": 100,
    "dir": "in",
    "method": "Visa •4242",
@@ -2395,7 +2387,7 @@
    "party": "Candidate",
    "email": "ava.thompson@gmail.com",
    "kind": "Course — Foundations of Leadership",
-   "desc": "Foundations of Leadership · 90-day cycle",
+   "desc": "Foundations of Leadership",
    "amt": 100,
    "dir": "in",
    "method": "Mastercard •5100",
@@ -2691,7 +2683,7 @@
    "party": "Candidate",
    "email": "liam.chen@gmail.com",
    "kind": "Course — Foundations of Leadership",
-   "desc": "Foundations of Leadership · 90-day cycle",
+   "desc": "Foundations of Leadership",
    "amt": 100,
    "dir": "in",
    "method": "Visa •8823",
@@ -3075,7 +3067,7 @@
    "t": "Course fee",
    "v": "$100",
    "unit": "per cycle",
-   "note": "Foundations of Leadership, upfront for the 90-day cycle",
+   "note": "Foundations of Leadership, paid upfront",
    "state": "set",
    "effective": "2026-06-01",
    "by": "Umair"

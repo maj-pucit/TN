@@ -6,7 +6,7 @@ import type { IconName } from "@/lib/icons";
 
 /* <ProgressWing> — Phase 1's `.prog` head-band figure: a big number left, a
    second figure right (link blue), a segmented bar, and a row of small
-   figures. The candidate's "Your 90-Day Progress" and the agent's "Your
+   figures. The candidate’s "Your Course Progress" and the agent's "Your
    earnings" are this one component. A segment is done (accent), now (a
    light accent) or empty. */
 export function ProgressWing({ title, big, bigLabel, right, rightLabel, segs, figs, full, below }: {

@@ -23,10 +23,11 @@ export const AGENT_PRIYA = {
 };
 
 
-/* The journey list. CUT (G8): step four read "90-Day Cohort Journey". */
-export const JOURNEY = ["Next in Leadership Quiz", "Interview & Levelling", "Course Enrollment", "90-Day Journey"];
+/* The journey list. CUT (G8): step four read "90-Day Cohort Journey"; the course is self-paced,
+   so it is the "Course Journey" (Maryam 16 Oct 2026). */
+export const JOURNEY = ["Next in Leadership Quiz", "Interview & Levelling", "Course Enrollment", "Course Journey"];
 
-export type Progress = { pct: number; day: number; seg: number; chapters: string; tasks: string; week: string; time: string };
+export type Progress = { pct: number; seg: number; chapters: string; tasks: string; time: string };
 
 export type Card =
   | { kind: "rec"; title: string; charged?: boolean }
@@ -81,13 +82,13 @@ export const STAGE: Record<string, StageView> = {
     journeyStep: 2,
     card: { kind: "enrol", level: "E3" },
     qa: [
-      { icon: "book", title: "What the 90 Days Cover", desc: "Explore the chapters of your course.", href: "/candidate/enrollment/" },
+      { icon: "book", title: "What the Course Covers", desc: "Explore the chapters of your course.", href: "/candidate/enrollment/" },
       { icon: "document", title: "What the Interview Found", desc: "Review your agent’s interview evaluation.", href: "/candidate/interviews/report/level/" },
     ],
   },
   week1: {
-    desc: "Explorer Track – E3 · week 1 of 13",
-    progress: { pct: 0, day: 4, seg: 0, chapters: "0 of 13", tasks: "0 of 3", week: "Week 1", time: "0h 0m" },
+    desc: "Explorer Track – E3 · 0 of 13 chapters",
+    progress: { pct: 0, seg: 0, chapters: "0 of 13", tasks: "0 of 3", time: "0h 0m" },
     card: { kind: "pulse", spent: 20, left: 45, ch: 1 },
     qa: [
       { icon: "flag", title: "Current Focus", desc: "Complete Chapter 1 in 45 minutes.", href: "/candidate/progress/" },
@@ -95,8 +96,8 @@ export const STAGE: Record<string, StageView> = {
     ],
   },
   day34: {
-    desc: "Explorer Track – E3 · week 5 of 13",
-    progress: { pct: 38, day: 34, seg: 5, chapters: "5 of 13", tasks: "1 of 3", week: "Week 5", time: "4h 20m" },
+    desc: "Explorer Track – E3 · 5 of 13 chapters",
+    progress: { pct: 38, seg: 5, chapters: "5 of 13", tasks: "1 of 3", time: "4h 20m" },
     card: { kind: "pulse", spent: 12, left: 58, ch: 4 },
     qa: [
       { icon: "flag", title: "Current Focus", desc: "Complete Chapter 4 in 70 minutes.", href: "/candidate/progress/" },
@@ -104,8 +105,8 @@ export const STAGE: Record<string, StageView> = {
     ],
   },
   day90: {
-    desc: "Explorer Track – E3 · ninety days complete",
-    progress: { pct: 100, day: 90, seg: 13, chapters: "13 of 13", tasks: "3 of 3", week: "Week 13", time: "11h 40m" },
+    desc: "Explorer Track – E3 · course complete",
+    progress: { pct: 100, seg: 13, chapters: "13 of 13", tasks: "3 of 3", time: "11h 40m" },
     card: { kind: "rec", title: "Your Next Step: Re-interview", charged: true },
     qa: [{ icon: "time", title: "Your Pace", desc: "746 minutes completed in total.", href: "/candidate/progress/" }],
   },
@@ -113,9 +114,9 @@ export const STAGE: Record<string, StageView> = {
     desc: "Explorer Track – E4 · level 4 of 15",
     journeyStep: 1,
     journeyOf: 3,
-    card: { kind: "enrol", level: "E4", opens: "E4 opens on December 1" },
+    card: { kind: "enrol", level: "E4" },
     qa: [
-      { icon: "book", title: "What the 90 days cover", desc: "13 chapters at E4", href: "/candidate/enrollment/" },
+      { icon: "book", title: "What the course covers", desc: "13 chapters at E4", href: "/candidate/enrollment/" },
       { icon: "document", title: "What the re-interview found", desc: "Write-up by the agent on re-interview", href: "/candidate/interviews/report/re/" },
     ],
   },

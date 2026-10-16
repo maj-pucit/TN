@@ -20,8 +20,8 @@ export const levelCard = (stage: string): LevelCard => {
 
 export const LADDER_HOW: [string, string][] = [
   ["The Three Tracks", "Explorer (E1–E5), Builder (B1–B5), and Trailblazer (T1–T5) form a 15-level progression. Advance one level at a time."],
-  ["Moving Up", "Each course runs for 90 days. At the end, a re-interview determines whether you advance, maintain your level, or move down one level."],
-  ["Who Determines Your Level", "A talent agent conducts your interview, and TALENTnext assigns your level based on the evaluation. After each 90-day course, a re-interview determines your next level."],
+  ["Moving Up", "When you finish a course, a re-interview determines whether you advance, maintain your level, or move down one level."],
+  ["Who Determines Your Level", "A talent agent conducts your interview, and TALENTnext assigns your level based on the evaluation. After each course, a re-interview determines your next level."],
 ];
 
 /* The quiz read (Phase 1 SUMDROP.quiz, drawn by quizModal). */
@@ -34,13 +34,13 @@ export const QUIZ = {
 /* ---- Courses ---- */
 export type Course = {
   key: "E1" | "E2" | "E3" | "E4"; name: string; desc: string; rating: number; reviews: number;
-  topics: string[]; fee: number; chapters: string; cadence: string;
+  topics: string[]; fee: number; chapters: string;
 };
 export const COURSE_LIST: Course[] = [
-  { key: "E1", name: "Business Essentials", desc: "The everyday foundations of working in a business — how teams organise, how work moves through them, and the basic tools that keep it running. The first step before the deeper courses.", rating: 4.6, reviews: 210, topics: ["Communication", "Teamwork", "Time management"], fee: 690, chapters: "13 chapters", cadence: "One a week" },
-  { key: "E2", name: "Business and Productivity Tools", desc: "The software and working habits that make a modern team fast: documents, spreadsheets, planning and communication tools, and how to use them well together rather than one at a time.", rating: 4.4, reviews: 176, topics: ["Tools", "Productivity", "Collaboration"], fee: 690, chapters: "13 chapters", cadence: "One a week" },
-  { key: "E3", name: "Business Fundamentals", desc: "Build your business knowledge across strategy, operations, finance, marketing, and decision-making.", rating: 4.5, reviews: 339, topics: ["Strategy", "Operations", "Finance"], fee: 690, chapters: "13 chapters", cadence: "One a week" },
-  { key: "E4", name: "Business Leadership", desc: "Build the capabilities that define effective leadership. Learn to delegate with trust, navigate difficult conversations, coach and develop others, and lead through change — turning strong fundamentals into the judgment and presence that leading people demands.", rating: 4.7, reviews: 128, topics: ["Leadership", "Decisions", "Ownership"], fee: 690, chapters: "13 chapters", cadence: "One a week" },
+  { key: "E1", name: "Business Essentials", desc: "The everyday foundations of working in a business — how teams organise, how work moves through them, and the basic tools that keep it running. The first step before the deeper courses.", rating: 4.6, reviews: 210, topics: ["Communication", "Teamwork", "Time management"], fee: 690, chapters: "13 chapters" },
+  { key: "E2", name: "Business and Productivity Tools", desc: "The software and working habits that make a modern team fast: documents, spreadsheets, planning and communication tools, and how to use them well together rather than one at a time.", rating: 4.4, reviews: 176, topics: ["Tools", "Productivity", "Collaboration"], fee: 690, chapters: "13 chapters" },
+  { key: "E3", name: "Business Fundamentals", desc: "Build your business knowledge across strategy, operations, finance, marketing, and decision-making.", rating: 4.5, reviews: 339, topics: ["Strategy", "Operations", "Finance"], fee: 690, chapters: "13 chapters" },
+  { key: "E4", name: "Business Leadership", desc: "Build the capabilities that define effective leadership. Learn to delegate with trust, navigate difficult conversations, coach and develop others, and lead through change — turning strong fundamentals into the judgment and presence that leading people demands.", rating: 4.7, reviews: 128, topics: ["Leadership", "Decisions", "Ownership"], fee: 690, chapters: "13 chapters" },
 ];
 export const courseByKey = (k: string) => COURSE_LIST.find((c) => c.key === k) ?? COURSE_LIST[2];
 /* The recommended course is the one at the candidate's level. */

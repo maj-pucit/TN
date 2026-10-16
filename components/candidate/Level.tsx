@@ -93,7 +93,7 @@ export function CoursesPage() {
                 <Text role="caption" as="span">{c.reviews} reviews</Text>
               </div>
               <div className={`${t.tags} ${t.tagsC}`}>{c.topics.slice(0, 2).map((x) => <Text key={x} role="label" as="span" className={t.tag}>{x}</Text>)}{c.topics.length > 2 && <Text role="label" as="span" className={t.tag}>+{c.topics.length - 2}</Text>}</div>
-              <div className={e.len}><Text role="caption" as="span" className={t.cellL}>Length</Text><Text role="compact" as="span">{c.chapters}</Text><Text role="caption" as="span" ink="secondary">{c.cadence}</Text></div>
+              <div className={e.len}><Text role="caption" as="span" className={t.cellL}>Length</Text><Text role="compact" as="span">{c.chapters}</Text></div>
               <div><Text role="caption" as="span" className={t.cellL}>Fee</Text><Text role="compact" as="span" strong>${c.fee}</Text></div>
               <div className={t.act}><Button kind="primary" size="sm" href={`/candidate/enrollment/course/${c.key}/`}>View Course</Button></div>
             </div>
@@ -112,7 +112,7 @@ export function CoursePage({ k }: { k: string }) {
   const c = courseByKey(k);
   return (
     <Page>
-      <PageHeader title={c.name} back="/candidate/enrollment/" desc="What the course covers, chapter by chapter, over 90 days." />
+      <PageHeader title={c.name} back="/candidate/enrollment/" desc="What the course covers, chapter by chapter, at your own pace." />
       <CourseOffer course={c} recommended={c.key === recommendedKey(stage)}
         slot={<Button kind="accent" go href={`/candidate/enrollment/pay/${c.key}/`}>Continue to payment</Button>} />
       <Section>
@@ -143,7 +143,7 @@ export function CoursePayPage({ k }: { k: string }) {
   const pay = () => { setUi({ enrolled: c.key }); setStage("week1"); router.push("/candidate/"); };
   return (
     <Page>
-      <PageHeader title="Payment" back={`/candidate/enrollment/course/${c.key}/`} desc="Choose a saved card to pay for the course and start your 90 days." />
+      <PageHeader title="Payment" back={`/candidate/enrollment/course/${c.key}/`} desc="Choose a saved card to pay for the course and start it." />
       <CourseOffer course={c} recommended={c.key === recommendedKey(stage)} />
       <Section kind="block">
         <div className={s.col}>

@@ -10,7 +10,7 @@ import { Button } from "../ui/Button";
 import { Icon } from "../Icon";
 import { CourseOffer } from "./CourseOffer";
 import { useDemo } from "@/lib/demo";
-import { CHAPTERS, COURSE_AVG, GROWTH, LSVT_URL, OPEN_DATES, PAST_RECORD, progressView, type ProgressView } from "@/data/progress";
+import { CHAPTERS, COURSE_AVG, GROWTH, LSVT_URL, PAST_RECORD, progressView, type ProgressView } from "@/data/progress";
 import { courseByKey } from "@/data/level";
 import s from "./progress.module.css";
 
@@ -30,7 +30,7 @@ export function ProgressPage() {
       <PageHeader title="Course Progress" desc="Explorer Track – E3 · Business Fundamentals" />
       {v.offer ? (
         <>
-          <CourseOffer course={courseByKey("E4")} recommended opens="E4 opens on December 1"
+          <CourseOffer course={courseByKey("E4")} recommended
             slot={<Button kind="onDark" go href="/candidate/enrollment/">View Other Courses</Button>}
             cta={<Button kind="accent" go href="/candidate/enrollment/course/E4/">View Course</Button>} />
           <Section>
@@ -87,8 +87,8 @@ function Body({ v }: { v: ProgressView }) {
 
 /* Progress by chapter (Phase 1 chRow): name (+ the green tick when done), the
    meta line under it, and the trailing control — "Restart" on a finished
-   chapter, "Resume" on the open one, the padlock on one whose week is ahead,
-   an empty ring otherwise. No hairlines between rows. */
+   chapter, "Resume" on the open one, an empty ring otherwise. Every chapter is
+   open: the course is self-paced (Maryam 16 Oct 2026). No hairlines between rows. */
 function Chapters({ v }: { v: ProgressView }) {
   const [all, setAll] = useState(false);
   const rows = all ? CHAPTERS : CHAPTERS.slice(0, 5);
@@ -99,8 +99,7 @@ function Chapters({ v }: { v: ProgressView }) {
         {rows.map((c, i) => {
           const st = v.state(i);
           const score = v.scores[i];
-          const meta = st === "locked" ? `Opens ${OPEN_DATES[i]}`
-            : st === "open" ? `Started · ${c.min} min`
+          const meta = st === "open" ? `Started · ${c.min} min`
             : st === "todo" ? `Not started · ${c.min} min`
             : `${c.min} min${score !== undefined ? ` · ${score}% assessment` : ""}`;
           return (
@@ -118,7 +117,7 @@ function Chapters({ v }: { v: ProgressView }) {
               {st === "done" || st === "open" ? (
                 <a className={`${s.act} t-label`} href={LSVT_URL} target="_blank" rel="noopener noreferrer">{st === "done" ? "Restart" : "Resume"}</a>
               ) : (
-                <span className={s.ic}><Icon name={st === "locked" ? "locked" : "circle"} /></span>
+                <span className={s.ic}><Icon name="circle" /></span>
               )}
             </div>
           );

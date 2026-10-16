@@ -71,14 +71,14 @@ export const LEGAL: { key: string; title: string; short?: string; sections: [str
   ] },
   { key: "privacy", title: "Privacy Notice", sections: [
     ["1. What We Collect", "Your profile, quiz results and band scores, interview recordings and reports, course progress, and payment records. Card details are handled by our payment processor, not stored by TALENTnext."],
-    ["2. Why We Collect It", "We use your information to assess your level, recommend courses, support your 90-day learning journey, and maintain your progress records."],
+    ["2. Why We Collect It", "We use your information to assess your level, recommend courses, support your learning journey, and maintain your progress records."],
     ["3. How Long We Keep It", "Interview recordings are retained for 24 months before deletion. Payment records are kept for seven years to meet accounting obligations. Other data is retained while your account remains active."],
     ["4. Your Rights", "You can review and update your profile, access your reports and transcripts, and close your account at any time through Privacy Settings."],
   ] },
   { key: "data", title: "Data Use Notice", short: "Your interviews are recorded and analysed to determine your level. TALENTnext assigns your level based on the evaluation, and that decision is final.", sections: [
     ["1. What We Record", "All interviews and re-interviews are recorded in video and audio and transcribed to support level assessment. Recordings are retained for 24 months before deletion."],
     ["2. Who Can Access Your Interview", "Your interviewing talent agent can access your interview information. Others cannot access your report unless you choose to share it."],
-    ["3. How Your Level Is Determined", "A talent agent conducts your interview, and TALENTnext assigns your level based on the analysis. After each 90-day course, a re-interview determines whether you advance, maintain your level, or move down one level. This decision is final."],
+    ["3. How Your Level Is Determined", "A talent agent conducts your interview, and TALENTnext assigns your level based on the analysis. After each course, a re-interview determines whether you advance, maintain your level, or move down one level. This decision is final."],
     ["4. How We Protect Your Data", "We never sell your personal data or share your individual progress with an employer without your written instruction."],
     ["5. Managing Your Data", "You can close your account at any time through Privacy Settings. Deletion removes your profile, notes, and interview recordings."],
   ] },

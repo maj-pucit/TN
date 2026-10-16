@@ -40,9 +40,10 @@ export const STAGES: { key: string; title: string }[] = [
   { key: "resched", title: "Interview reschedule" },
   { key: "held", title: "Interview held, report pending" },
   { key: "assessed", title: "Levelled, not enrolled" },
-  { key: "week1", title: "Week 1" },
-  { key: "day34", title: "Day 34" },
-  { key: "day90", title: "Day 90, course finished" },
+  /* Self-paced course (Maryam 16 Oct 2026): the keys stay as URL values, the names say where the course is. */
+  { key: "week1", title: "Course started" },
+  { key: "day34", title: "Course in progress" },
+  { key: "day90", title: "Course completed" },
   { key: "promoted", title: "Promoted to E4" },
 ];
 export const DEFAULT_STAGE = "day34";

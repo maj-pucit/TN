@@ -8,13 +8,13 @@ import { CHAPTERS } from "./level";
 
 export const COURSE_AVG = 79; // Phase 1 COHORT_AVG, now named for the course
 export const GROWTH = [3, 4, 11]; // 0-based chapter indices marked "Your growth area" (Phase 1 GROWTH)
-/* The day each chapter opens (Phase 1 OPEN_DATES); a chapter whose week is
-   still ahead reads "Opens <date>" with the padlock. */
-export const OPEN_DATES = ["", "", "", "", "", "Mon, Aug 18", "Mon, Aug 25", "Mon, Sep 1", "Mon, Sep 8", "Mon, Sep 15", "Mon, Sep 22", "Mon, Sep 29", "Mon, Oct 6"];
+/* Self-paced (Maryam 16 Oct 2026): every chapter is open from the start. Phase 1
+   locked a chapter until its week came round (OPEN_DATES, "Opens <date>", the
+   padlock); without cohorts nothing paces the course, so that is gone. */
 /* The learning itself happens in LightSpeedVT (Coursework is not a Phase 0
    module), so "Open Chapter N", "Restart" and "Resume" open it in a new tab. */
 export const LSVT_URL = "https://www.lightspeedvt.com/";
-export type ChState = "done" | "open" | "todo" | "locked";
+export type ChState = "done" | "open" | "todo";
 
 /* Assessment scores by chapter, for the stages that have them. */
 const SCORES_ALL = [75, 80, 78, 50, 92, 90, 83, 88, 91, 85, 87, 84, 94];
@@ -40,7 +40,7 @@ export const PROGRESS: Record<string, ProgressView> = {
     ],
     scores: [],
     pulse: { lead: "You’ve spent ", bold: "20 minutes", rest: " learning this week. Complete Chapter 1, Why We Exist, to stay on track with your learning goal.", ch: 1 },
-    state: (i) => (i === 0 ? "open" : OPEN_DATES[i] && 1 < i ? "locked" : "todo"),
+    state: (i) => (i === 0 ? "open" : "todo"),
   },
   day34: {
     figures: [
@@ -53,7 +53,7 @@ export const PROGRESS: Record<string, ProgressView> = {
     avg: 75,
     insight: "Five chapters are assessed so far. Chapter 4, Delegation Without Drop-Off, is your lowest at 50%.",
     pulse: { lead: "You’ve spent ", bold: "12 minutes", rest: " learning this week. Complete Chapter 4, Delegation Without Drop-Off, to stay on track with your learning goal.", ch: 4 },
-    state: (i) => (i < 5 ? "done" : OPEN_DATES[i] && 5 < i ? "locked" : "todo"),
+    state: (i) => (i < 5 ? "done" : "todo"),
   },
   day90: {
     figures: [

@@ -1,7 +1,8 @@
 import s from "./ui.module.css";
 
-/* A complimentary fee: the price struck, "Free" beside it (Phase 1 ivFeeLabel).
-   `quiet` keeps "Free" in the line's own grey (the booking page's agent head). */
-export const FreeFee = ({ price, quiet }: { price: number; quiet?: boolean }) => (
-  <><s className={s.was}>${price}</s> <span className={quiet ? undefined : s.free}>Free</span></>
+/* A complimentary fee: the word "Free" alone, never the struck price beside it
+   (Maryam 16 Oct 2026; Phase 1 ivFeeLabel struck the price). `quiet` keeps it in
+   the line's own grey (the booking page's agent head). */
+export const FreeFee = ({ quiet }: { quiet?: boolean }) => (
+  <span className={quiet ? undefined : s.free}>Free</span>
 );

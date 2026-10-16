@@ -33,7 +33,7 @@ export function CourseOffer({ course, recommended, slot, cta, opens }: {
       </div>
       <div className={`${s.eoFacts} ${cta ? s.eoHasCta : ""}`}>
         <EoFact icon="wallet" l="Course Fee" v={<span className={s.acc}>${course.fee}</span>} />
-        <EoFact icon="book" l="Chapters" v="13 · One per week" />
+        <EoFact icon="book" l="Chapters" v="13" />
         <EoFact icon="starOutline" star l="Rating" v={`${course.rating} · ${course.reviews} reviews`} />
         {cta && <div className={s.cta}>{cta}</div>}
       </div>

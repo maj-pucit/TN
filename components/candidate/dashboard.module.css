@@ -1,5 +1,5 @@
 /* ============================================================
-   CANDIDATE DASHBOARD PIECES — the journey list, the 90-day progress,
+   CANDIDATE DASHBOARD PIECES — the journey list, the course progress,
    and the bodies of the four black cards (recommendation, call,
    enrolment offer, learning pulse). Measured off Phase 1, 15 Oct 2026.
    ============================================================ */
@@ -65,7 +65,6 @@
 .meta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s02) var(--rec-meta-gap); color: var(--on-dark-2); }
 .meta > span { display: flex; align-items: center; gap: var(--rec-meta-ic-gap); }
 .meta svg { width: var(--s05); height: var(--s05); }
-.was { text-decoration: line-through; }
 .free { color: inherit; }
 
 /* ---- Enrolment offer (Phase 1 .eo, measured) ---- */

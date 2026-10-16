@@ -71,7 +71,6 @@ export function AdminCatalogue() {
             { key: "l", label: "Levels", cell: (x) => (x.levels || []).join(", ") },
             { key: "i", label: "Intent", cell: (x) => intentName(x.intent) },
             { key: "s", label: "Status", cell: (x) => <Status tone={STATUS[x.status][0]}>{STATUS[x.status][1]}</Status> },
-            { key: "d", label: "Length", cell: (x) => `${x.days || 90} days` },
             { key: "c", label: "Chapters", right: true, cell: (x) => String(x.chapters) },
             { key: "p", label: "Price", right: true, cell: (x) => money(x.price) },
           ]} />
@@ -120,7 +119,6 @@ export function AdminCourse({ id }: { id: string }) {
           <Fact icon="flag" label="Track" value={x.track} />
           <Fact icon="growth" label="Levels" value={(x.levels || []).join(", ")} />
           <Fact icon="idea" label="Intent" value={intentName(x.intent)} />
-          <Fact icon="time" label="Length" value={`${x.days || 90} days`} />
           <Fact icon="book" label="Chapters" value={String(x.chapters)} />
           <Fact icon="launch" label="Learning platform" value={x.lsvt || "—"} />
           <Fact icon="wallet" label="Price" value={money(x.price)} />
@@ -184,7 +182,7 @@ function CourseForm({ id, close }: { id?: string; close: () => void }) {
     commit(() => {
       const rec = { name: f.name.trim(), desc: f.desc.trim(), track: f.track, levels: f.levels, intent: f.intent, chapters: ch, lsvt: f.lsvt, status: f.status };
       if (x) Object.assign(x, rec);
-      else COURSES.unshift({ id: `co${Date.now()}`, ...rec, price: Number(f.price), days: 90 });
+      else COURSES.unshift({ id: `co${Date.now()}`, ...rec, price: Number(f.price) });
     }, x ? `${f.name.trim()} updated` : `${f.name.trim()} added`);
     close();
   };
@@ -208,8 +206,7 @@ function CourseForm({ id, close }: { id?: string; close: () => void }) {
         <Field label="Intent" required>
           <Dropdown variant="form" placeholder="Choose an intent" value={f.intent || undefined} onChange={(v) => set("intent", v)} options={INTENTS.map(([value, label]) => ({ value, label }))} />
         </Field>
-        <Field label="Length"><Input value="90 days" readOnly /></Field>
-        <Field label="Chapter count" required help={ch >= 1 && ch <= 90 ? `90 days over ${ch} chapters, about ${(90 / ch).toFixed(1)} days per chapter.` : "Between 1 and 90."}>
+        <Field label="Chapter count" required help={ch >= 1 && ch <= 90 ? "Candidates take the chapters at their own pace." : "Between 1 and 90."}>
           <Input inputMode="numeric" value={f.chapters} onChange={(e) => set("chapters", e.target.value.replace(/\D/g, ""))} placeholder="e.g. 12" />
         </Field>
         <Field label="LightSpeedVT Courses" required>
