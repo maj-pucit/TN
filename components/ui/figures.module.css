@@ -1,0 +1,71 @@
+/* ============================================================
+   FIGURES — the four-cell figure grid (.stats) and the facts band
+   (.facts / .pf-facts). Measured off Phase 1 (Course Progress,
+   candidate profile), 15 Oct 2026.
+   NO WHITE FILL (Maryam 16 Oct 2026): the cells are transparent so the page
+   gradient shows through, and the hairlines are real borders: the grid
+   draws the top and left edges, each cell its right and bottom.
+   ============================================================ */
+.grid {
+  display: grid;
+  gap: 0;
+  border-top: var(--hairline) solid var(--rule);
+  border-left: var(--hairline) solid var(--rule);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.grid > * { border-right: var(--hairline) solid var(--rule); border-bottom: var(--hairline) solid var(--rule); }
+@container app (min-width: 900px) {
+  .grid.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+.grid.three { grid-template-columns: minmax(0, 1fr); }
+/* The grid paints its lines as gaps, so an unfilled last row would show the
+   grey ground. The last cell stretches to close its row instead. */
+.grid:not(.three) > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+@container app (min-width: 900px) {
+  .grid.four > :last-child:nth-child(odd) { grid-column: auto; }
+  .grid.four > :last-child:nth-child(4n + 3) { grid-column: span 2; }
+  .grid.four > :last-child:nth-child(4n + 2) { grid-column: span 3; }
+  .grid.four > :last-child:nth-child(4n + 1) { grid-column: 1 / -1; }
+}
+@container page (min-width: 600px) {
+  .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* ---- One figure: mark | title + description | value (right, centred) ---- */
+.stat {
+  display: grid;
+  grid-template-columns: var(--icon-rail) minmax(0, 1fr) auto;
+  grid-template-areas: "ic l n" "ic d n";
+  grid-template-rows: auto 1fr;
+  column-gap: var(--s04);
+  row-gap: var(--s01);
+  padding: var(--s05);
+  background: transparent;
+  min-width: 0;
+}
+/* A cell with no figure drops the empty value column (and its gap), so the words take the room. */
+.stat:not(:has(> .n)) { grid-template-columns: var(--icon-rail) minmax(0, 1fr); grid-template-areas: "ic l" "ic d"; }
+.ic { grid-area: ic; display: grid; place-items: center; width: var(--icon-rail); height: var(--icon-rail); color: var(--icon-primary); }
+.ic svg { width: var(--icon-page); height: var(--icon-page); }
+.l { grid-area: l; }
+.d { grid-area: d; }
+.n { grid-area: n; align-self: center; text-align: right; margin-right: var(--s03); white-space: nowrap; }
+.n small { font-size: var(--t-label-size); line-height: var(--t-label-size); letter-spacing: normal; font-weight: var(--t-w-book); color: var(--text-secondary); }
+/* On a phone the value drops under the words instead of squeezing them. */
+@container page (max-width: 599.98px) {
+  .stat { grid-template-columns: var(--icon-rail) minmax(0, 1fr); grid-template-areas: "ic l" "ic n" "ic d"; }
+  .n { text-align: left; align-self: start; }
+}
+
+/* ---- One fact (Phase 1 .pf-facts cell, measured): the mark INLINE with a
+   12.5 Medium grey label, then the value 8 below at 14 Medium black. ---- */
+.fact {
+  display: flex;
+  flex-direction: column;
+  padding: var(--s05);
+  background: transparent;
+  min-width: 0;
+}
+.factL { display: flex; align-items: center; gap: var(--s03); font-size: var(--t-label-size); line-height: var(--t-label-lh); letter-spacing: var(--t-label-ls); font-weight: var(--t-w-strong); color: var(--text-secondary); }
+.factL svg { width: var(--icon-page); height: var(--icon-page); flex: none; color: var(--icon-primary); }
+.factV { margin-top: var(--s03); font-size: var(--t-h4-size); line-height: var(--t-h4-lh); letter-spacing: var(--t-h4-ls); font-weight: var(--t-w-strong); color: var(--text-primary); overflow-wrap: anywhere; }

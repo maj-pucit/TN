@@ -1,0 +1,11 @@
+/* Earnings + Standing pieces (Phase 1 V.earnings / V.standing). */
+.dest { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s04) var(--s05); }
+.destIc { display: grid; place-items: center; color: var(--icon-primary); flex: none; }
+.destIc svg { width: var(--icon-row); height: var(--icon-row); }
+.destB { display: flex; flex-direction: column; gap: var(--s01); flex: 1 1 auto; min-width: 0; }
+.destT { display: inline-flex; align-items: center; gap: var(--s02); }
+.tick { width: var(--s05); height: var(--s05); color: var(--support-success); }
+.score { display: inline-flex; align-items: center; gap: var(--s01); }
+.star { width: var(--s05); height: var(--s05); color: var(--star); }
+.who { display: inline-flex; align-items: center; gap: var(--s03); }
+.who img { width: var(--avatar-row); height: var(--avatar-row); border-radius: var(--radius-pill); object-fit: cover; }

@@ -1,0 +1,22 @@
+/* Progress by chapter (Phase 1 chRow, §10/§03): rows at --pad-x with no
+   hairlines; the tick inline after a finished name; "Restart"/"Resume" an
+   underlined label at the right; the open row carries a 2px accent bar; a
+   locked row is dimmed with the padlock. */
+.list { margin: 0 calc(var(--pad-x) * -1); }
+.ch { position: relative; display: flex; align-items: center; gap: var(--s05); min-height: calc(var(--s10) + var(--s03)); padding: var(--s05) var(--pad-x); }
+.b { display: flex; flex-direction: column; gap: var(--s01); min-width: 0; flex: 1 1 auto; }
+.n { display: flex; align-items: center; gap: var(--s03); }
+.tick { display: grid; flex: none; color: var(--support-success); }
+.tick svg { width: var(--s05); height: var(--s05); }
+.meta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s02) var(--s03); }
+.growth { display: inline-flex; align-items: center; gap: var(--s03); color: var(--text-primary); }
+.sk { width: var(--s03); height: var(--s03); border-radius: var(--radius-cbx); background: var(--accent); flex: none; }
+.act { flex: none; color: var(--text-primary); text-decoration: underline; text-underline-offset: var(--s01); font-weight: var(--t-w-semibold); }
+.act:hover { color: var(--accent-text); }
+.ic { flex: none; display: grid; width: var(--s06); height: var(--s06); color: var(--gray-20); }
+.ic svg { width: 100%; height: 100%; }
+.open::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: var(--rail-bar-w); background: var(--accent); }
+.locked { opacity: .55; }
+.locked .ic { color: var(--text-secondary); }
+.more { margin-top: var(--s04); }
+.more > button { padding-left: 0; }

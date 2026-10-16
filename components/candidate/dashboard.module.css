@@ -1,0 +1,94 @@
+/* ============================================================
+   CANDIDATE DASHBOARD PIECES — the journey list, the 90-day progress,
+   and the bodies of the four black cards (recommendation, call,
+   enrolment offer, learning pulse). Measured off Phase 1, 15 Oct 2026.
+   ============================================================ */
+
+/* ---- Journey ---- */
+/* The journey block takes 8 more above and below on top of the section gap (Maryam 16 Oct 2026): 28 + 8 = 36 each side. */
+.jrn { display: flex; flex-direction: column; gap: var(--s05); padding: var(--s03) 0; }
+/* The step chip sits 8 after the heading, on a light accent ground with no stroke (Maryam 16 Oct 2026). */
+.jrnH { display: flex; align-items: center; gap: var(--s03); }
+.pill {
+  display: inline-flex; align-items: center;
+  padding: var(--s01) var(--s04);
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--accent) 8%, var(--layer-01)); /* lighter than --accent-tint (Maryam 16 Oct 2026) */
+  color: var(--accent-text);
+}
+/* The stepper (Maryam 16 Oct 2026, off a reference: its FORM, our icons and type).
+   Each step: our state mark with a line running on to the next step, then the step's name
+   (h4) over its state word (label): Completed green, In Progress orange, Upcoming grey.
+   A line takes the state of the step it leads into. Four columns from a 600px page column;
+   narrower, it stacks, the mark on the left with the line dropping down to the next. */
+.steps { display: flex; flex-direction: column; }
+.step { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: var(--s04); color: var(--text-secondary); }
+.stepTop { display: flex; flex-direction: column; align-items: center; }
+.stepMk { flex: none; display: grid; place-items: center; width: var(--jrn-mark); height: var(--jrn-mark); color: var(--text-secondary); }
+.stepMk svg { width: 100%; height: 100%; }
+.stepLine { flex: 1 1 auto; min-height: var(--s05); width: var(--hairline); margin: var(--s02) 0; background: var(--rule); }
+.stepLine.toOn { background: var(--state-on); }
+.stepLine.toDone { background: var(--state-done); }
+.stepTx { display: flex; flex-direction: column; gap: var(--s01); padding-top: var(--s01); color: var(--text-primary); }
+.step:not(:last-child) .stepTx { padding-bottom: var(--s05); }
+.stepSt { color: var(--text-secondary); font-weight: var(--t-w-book); }
+.step.done .stepMk, .step.done .stepSt { color: var(--state-done); }
+.step.on .stepMk, .step.on .stepSt { color: var(--state-on); }
+@container page (min-width: 600px) {
+  .steps { flex-direction: row; }
+  .step { flex: 1 1 0; display: flex; flex-direction: column; gap: var(--s04); }
+  .step:last-child { flex: 0 1 auto; }
+  .stepTop { flex-direction: row; }
+  /* The line stops 24 short of the next mark, not flush against it (Maryam 16 Oct 2026: 32, then 8 longer). */
+  .stepLine { min-height: 0; height: var(--hairline); width: auto; margin: 0 var(--s06) 0 var(--s04); }
+  .step:not(:last-child) .stepTx { padding-bottom: 0; padding-right: var(--s05); }
+  .stepTx { padding-top: 0; }
+}
+/* Once the column is wide (desktop), the row stops short of its right edge: shorter joining
+   lines, so the last step does not reach the end of the container (Maryam 16 Oct 2026).
+   Narrower, the row needs the whole column to keep every label on one line. */
+@container page (min-width: 780px) { .steps { max-width: var(--jrn-max); } }
+
+
+/* ---- A face on the black card ---- */
+.face { border-radius: var(--radius-pill); object-fit: cover; flex: none; }
+.verified { color: var(--state-done); width: var(--icon-rail); height: var(--icon-rail); flex: none; }
+.nameRow { display: flex; align-items: center; gap: var(--s03); }
+
+/* ---- Recommendation row ---- */
+.rec { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--s06); }
+.recL { display: grid; grid-template-columns: var(--avatar-rec) minmax(0, 1fr); gap: var(--s05); align-items: center; min-width: 0; flex: 1 1 calc(var(--s12) * 4); }
+.recL .face { width: var(--avatar-rec); height: var(--avatar-rec); }
+.recB { display: flex; flex-direction: column; gap: var(--s03); min-width: 0; }
+.rating { display: flex; align-items: center; gap: var(--s02); color: var(--on-dark-2); }
+.rating svg { width: var(--s05); height: var(--s05); color: var(--star); }
+.meta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s02) var(--rec-meta-gap); color: var(--on-dark-2); }
+.meta > span { display: flex; align-items: center; gap: var(--rec-meta-ic-gap); }
+.meta svg { width: var(--s05); height: var(--s05); }
+.was { text-decoration: line-through; }
+.free { color: inherit; }
+
+/* ---- Enrolment offer (Phase 1 .eo, measured) ---- */
+.eoHd { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s04) var(--s05); }
+.eoHdB { display: flex; flex-direction: column; gap: var(--s03); flex: 1 1 auto; min-width: 0; }
+.eoHdA { margin-left: auto; display: flex; align-items: center; gap: var(--s03); }
+/* Phase 1 .dc-act on the course card: 40 tall, 12 in from the left, 4px to an 18px mark. */
+.eoHdA > a, .eoHdA > button { height: var(--s08); padding-left: var(--s04); gap: var(--s02); }
+.eoHdA svg { width: var(--icon-page); height: var(--icon-page); }
+.eoWhen { display: inline-flex; align-items: center; gap: var(--s03); }
+.eoWhen svg { width: var(--s05); height: var(--s05); color: var(--on-dark); }
+.eoWhenT { font-weight: var(--t-w-book); color: var(--on-dark-2); }
+.course { display: flex; flex-direction: column; gap: var(--s04); }
+.eoName { font-size: var(--t-h1-lg-size); line-height: var(--t-h1-lg-lh); letter-spacing: var(--t-h1-lg-ls); font-weight: var(--t-w-strong); color: var(--on-dark); }
+.eoDesc { margin-top: calc(var(--s02) * -1); }
+.eoFacts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s06) var(--s05); padding-top: var(--s06); border-top: var(--hairline) solid var(--on-dark-rule); }
+@container app (min-width: 900px) { .eoFacts:not(.eoHasCta) { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@container app (min-width: 1300px) { .eoFacts.eoHasCta { grid-template-columns: repeat(3, minmax(0, 1fr)) auto; align-items: center; } }
+.eoF { display: flex; align-items: flex-start; gap: var(--s04); }
+.eoF > svg { width: var(--s06); height: var(--s06); color: var(--on-dark-2); flex: none; }
+.eoF > svg.eoStar { color: var(--star); }
+.eoFB { display: flex; flex-direction: column; gap: var(--s02); }
+.eoV { font-size: var(--t-compact-size); line-height: var(--t-compact-lh); letter-spacing: var(--t-compact-ls); color: var(--on-dark-2); }
+.acc { color: var(--accent-on-dark); font-weight: var(--t-w-strong); }
+.cta { grid-column: 1 / -1; justify-self: end; align-self: end; }
+@container app (min-width: 1300px) { .eoHasCta .cta { grid-column: auto; } }

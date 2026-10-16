@@ -1,0 +1,129 @@
+/* ============================================================
+   THE LAYOUT PRIMITIVES — the only place page rhythm is stated.
+   Pages compose these and never set margin, padding, gap or type.
+   Every value is a token (styles/tokens.css → DESIGN.md §2/§3).
+   ============================================================ */
+
+/* ---- <Page>: the column, its gutter, and the page wash ---- */
+.page {
+  position: relative;
+  isolation: isolate;
+  min-height: 100%;
+  background: var(--background);
+  padding-bottom: var(--page-pad-bottom);
+}
+/* The Phase 1 "Summary by Tal" ground, now the page's own: the same
+   gradient across the top of every page, behind everything. */
+.page::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: var(--page-wash-h);
+  background-image: var(--page-wash);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ---- <PageHeader> ---- */
+.ph {
+  display: flex;
+  align-items: center;
+  gap: var(--s05);
+  padding: var(--ph-pad-top) var(--pad-x) var(--ph-pad-bottom);
+  position: relative;
+}
+/* THE PAGE HEADING CLOSES WITH A DIVIDER (Maryam 16 Oct 2026: "a divider after every page
+   heading"). A divider is an entity of its own: the section gap above it and below it. */
+.ph::after {
+  content: "";
+  position: absolute;
+  left: var(--pad-x); right: var(--pad-x); bottom: 0;
+  height: var(--hairline);
+  background: var(--rule);
+}
+.ph + .sec { padding-top: var(--sec-gap); }
+
+/* ---- <HeadBand> ---- the greeting + the stepper as one section. */
+.band { position: relative; border-bottom: var(--hairline) solid var(--rule); background-image: var(--band-wash); }
+.page:has(> .band)::before { content: none; }
+.band > .ph { padding-bottom: 0; }
+.band > .ph::after { content: none; }
+.band > .sec:last-child { padding-bottom: var(--sec-gap); }
+.band + .sec { padding-top: var(--sec-gap); }
+.band + :not(.sec) { margin-top: var(--sec-gap); }
+.ph + :not(.sec) { margin-top: var(--sec-gap); }
+/* A heading straight above a tab strip draws no divider: the strip's own hairline is the
+   boundary, and the two sit one plain section gap apart (Maryam 16 Oct 2026). */
+.ph:has(+ .sec.tabs) { padding-bottom: var(--sec-pad-y); }
+.ph:has(+ .sec.tabs)::after { content: none; }
+.ph + .sec.tabs { padding-top: var(--sec-pad-y); }
+.phText { display: flex; flex-direction: column; gap: var(--sec-desc-gap); min-width: 0; flex: 1 1 auto; }
+.phActs { display: flex; align-items: center; gap: var(--s04); flex: none; margin-left: auto; }
+.phBack {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: var(--s08); height: var(--s08); margin-left: calc(var(--s04) * -1);
+  color: var(--text-primary);
+}
+.phBack svg { width: var(--icon-row); height: var(--icon-row); }
+
+/* ---- <Section> ----
+   14 top + 14 bottom = 28 between any two sections (--sec-gap).
+   A DIVIDER IS DRAWN ONLY BETWEEN TWO TEXT SECTIONS (Maryam 16 Oct 2026): never above or
+   below a block (cards, figures, a table, a black card, a tab strip), never after the last
+   section, never after a `noline` one. And a divider is an entity of its own, so it takes
+   the full section gap on each side: 28 above the line, 28 below. */
+.sec {
+  position: relative;
+  padding: var(--sec-pad-y) var(--pad-x);
+}
+.sec::after {
+  content: none;
+  position: absolute;
+  left: var(--pad-x);
+  right: var(--pad-x);
+  bottom: 0;
+  height: var(--hairline);
+  background: var(--rule);
+}
+.sec.tabs { padding-top: var(--sec-pad-y); padding-bottom: var(--sec-pad-y); }
+.sec:not(.block):not(.tabs):not(.noline):has(+ .sec:not(.block):not(.tabs)) {
+  padding-bottom: var(--sec-gap);
+}
+.sec:not(.block):not(.tabs):not(.noline):has(+ .sec:not(.block):not(.tabs))::after { content: ""; }
+.sec:not(.block):not(.tabs):not(.noline) + .sec:not(.block):not(.tabs) { padding-top: var(--sec-gap); }
+/* Two bare block rows in a row (no heading of their own) sit 20 apart. */
+.sec.block.bare + .sec.block.bare { padding-top: calc(var(--sec-block-gap) - var(--sec-pad-y)); }
+.sec.tint { background: var(--surface-2); }
+
+/* ---- <SectionHeader> ---- */
+/* The row wraps: the words keep at least 192px, so an action too wide to sit
+   beside them (a chart legend on a phone) drops below instead of squeezing the
+   description to a word a line. A short action still sits on the right. */
+.sh {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s04) var(--s05);
+  margin-bottom: var(--sec-h-gap);
+}
+.shText { display: flex; flex-direction: column; gap: var(--sec-desc-gap); min-width: 0; flex: 1 1 calc(var(--s12) * 2); }
+.shActs { display: flex; align-items: center; gap: var(--s04); flex: none; margin-left: auto; }
+/* Super Admin heading actions are all 40 tall, an accent link included (Phase 1 §120). */
+:global([data-portal="admin"]) .shActs > * { height: var(--s08); }
+/* The candidate's heading actions sit at 36 (Phase 1 .sec-h-act). */
+:global([data-portal="candidate"]) .shActs > * { height: var(--filter-h); }
+
+/* ---- <Stack> / <Grid> ---- */
+.stack { display: flex; flex-direction: column; }
+.row { display: flex; flex-direction: row; align-items: center; flex-wrap: wrap; }
+.g1 { gap: var(--s02); } .g2 { gap: var(--s03); } .g3 { gap: var(--s04); }
+.g4 { gap: var(--s05); } .g5 { gap: var(--s06); } .g6 { gap: var(--s07); }
+
+.grid { display: grid; gap: var(--s05); grid-template-columns: minmax(0, 1fr); }
+@container page (min-width: 600px) {
+  .grid.c2, .grid.c3, .grid.c4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@container app (min-width: 900px) {
+  .grid.c3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .grid.c4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}

@@ -1,0 +1,927 @@
+/* ============================================================
+   THE TAL ORB + THE TN LOADER — ARTWORK, ported byte-for-byte from Phase 1
+   (hifi/build 132-orb.css, 135-tblob.css, and 107-onboard.css's tn-loader),
+   15 Oct 2026. Global class names (.borb, .tn-loader) because the markup is
+   Phase 1's own recipe (components/ui/TalOrb.tsx). Its colours and timings
+   are the artwork, not page design, so stylelint skips this file
+   (DESIGN.md §8). Do not edit by hand: re-copy from Phase 1.
+   ============================================================ */
+
+/* ============================================================================
+   132-orb.css — brand orb, self-contained
+   ----------------------------------------------------------------------------
+   Root:        <div class="borb" data-state="idle">
+   Size:        driven entirely by --borb-size (default 288px)
+   States:      idle | listening | thinking | thinking2 | thinking3
+                speaking | loading | error
+   Behaviour:   pure CSS except the speaking state, which needs orb.js
+   No external requests. No element/global selectors. No reset.
+   Every length is a calc() off --borb-size, so the component scales cleanly
+   from a 24px avatar to a 600px hero without a duplicate keyframe set.
+   ========================================================================== */
+
+.borb {
+  /* ---- size: the only dimension you set ---- */
+  --borb-size: 288px;
+
+  /* ---- palette: SHADES OF --accent, not a red-to-orange ramp ----
+     Every stop is the brand red at a different depth. t1 is --accent-2
+     #d63932 and t2 is --accent #f9423a itself, both real tokens; t3 and
+     t4 lighten from there. The ramp holds hue 2.5deg to 12deg — it was
+     2.5 to 35 while t3/t4 borrowed the ask-bar comet's #ff6e24 orange,
+     which lit the orb's top half orange rather than accent.
+
+     TWO FAILURE MODES SIT ON EITHER SIDE OF THIS RAMP and both have been
+     walked into here, so the constraint is worth stating rather than
+     re-deriving. Push the light end's HUE up and the orb goes orange.
+     Lighten it by mixing toward white instead and it goes PINK — a red's
+     G and B converge as it approaches white, and a pale desaturated red
+     IS pink. So t3/t4 lighten while HOLDING saturation (65% and 51%, not
+     the 20-30% a white mix would give) and take a small warm push so G
+     stays clear of B. Saturation is what keeps a light stop reading as
+     the accent; G-above-B is what keeps it off magenta. Check both
+     before changing a stop — the swatch alone will not tell you, because
+     the tints only pool and blur into their true cast on the orb. */
+  --borb-accent: 249, 66, 58;
+  --borb-t1: 214, 57, 50;
+  --borb-t2: 249, 66, 58;
+  --borb-t3: 253, 108, 88;
+  --borb-t4: 255, 150, 124;
+
+  /* ---- mix controls ---- */
+  /* TINT DEPTH HAS A CEILING AT 1/0.92 = 1.08, AND GOING PAST IT COSTS
+     DETAIL RATHER THAN BUYING COLOUR. Each cloud ramps from
+     rgba(t, 0.92 * int) to rgba(t, 0); CSS clamps alpha at 1, so any peak
+     above 1 paints a FLAT OPAQUE disc in the middle of that pool. At 1.86
+     the inner 42% of every cloud was flat, four of them overlapped into a
+     solid red ball, and a pool with no gradation cannot show that it is
+     moving — which is how the background motion disappeared as a
+     side-effect of a colour setting. Depth comes from the PALETTE (these
+     stops are the accent's own shades, far stronger than the pale peach
+     they replaced), from the four pools overlapping, and from --borb-core.
+     Not from clipping. Keep 0.92 * int under 1. */
+  --borb-int: 0.52;          /* tint depth — the pools are the MOTION now;
+                                the core carries the colour, so these only
+                                need to stir it. Ceiling is still 1.08. */
+  --borb-core: 1;            /* density of the middle */
+  --borb-rim: 0;             /* white wrapped round the edge — see the sheen */
+  --borb-travel: 1;          /* how far the idle pools wander, x their radius */
+  --borb-glass: 0.24;        /* specular sheen   */
+  --borb-shadow: 0.44;       /* cast shadow      */
+  --borb-falloff: 58%;       /* tint reach — tight, so a pool reads as a
+                                travelling pool and not as a flood */
+  --borb-blur: calc(var(--borb-size) * 0.10417);
+
+  /* ---- easing ---- */
+  --borb-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --borb-snap: cubic-bezier(0.22, 1, 0.30, 1);
+
+  /* ---- per-blob vectors, used by the background keyframes ---- */
+  --borb-dx: 0px;
+  --borb-dy: 0px;
+  --borb-r: 0px;
+  --borb-a: 0deg;
+
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--borb-size);
+  height: var(--borb-size);
+  container-type: inline-size;
+  container-name: borb;
+  isolation: isolate;
+}
+
+/* ---------------------------------------------------------------- shadow -- */
+/* a spherical cast shadow: the orb's own shape, dropped and tinted           */
+
+.borb::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: calc(var(--borb-size) * 0.81944);
+  height: calc(var(--borb-size) * 0.81944);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) translateY(calc(var(--borb-size) * 0.1875)) scaleY(0.92);
+  background: radial-gradient(circle at 50% 50%,
+    rgba(var(--borb-accent), calc(0.42 * var(--borb-shadow))) 0%,
+    rgba(var(--borb-accent), calc(0.30 * var(--borb-shadow))) 42%,
+    rgba(250, 138, 104, calc(0.14 * var(--borb-shadow))) 68%,
+    rgba(252, 196, 172, 0) 88%);
+  filter: blur(calc(var(--borb-size) * 0.09028));
+  animation: borb-sphere-shadow 7.5s var(--borb-ease) infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes borb-sphere-shadow {
+  0%, 100% { transform: translate(-50%, -50%) translateY(calc(var(--borb-size) * 0.1875)) scaleY(0.92) scale(1);    opacity: 0.95; }
+  50%      { transform: translate(-50%, -50%) translateY(calc(var(--borb-size) * 0.2014)) scaleY(0.88) scale(1.06); opacity: 0.78; }
+}
+
+/* ----------------------------------------------------------------- sheen -- */
+/* glass surface: a bottom wash where light pools, plus two specular fields   */
+
+.borb::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: calc(var(--borb-size) * 0.80556);
+  height: calc(var(--borb-size) * 0.80556);
+  border-radius: 50%;
+  background:
+    /* THE RIM — light wrapping the edge of a sphere, and the reason it is on
+       THIS layer rather than on the field's own background is that it has to
+       paint above the tints. The field's background sits under the clouds and
+       under the core, so a white edge drawn there is simply covered up; an
+       inset box-shadow is no better, since that also paints below children.
+       The sheen is the first layer in the stack that is over them (z3), and a
+       rim IS a property of the glass, so it belongs here anyway.
+
+       AT --borb-rim: 0 EVERY STOP RESOLVES TO rgba(255,255,255,0), so this
+       layer is fully transparent and the big orb renders exactly as it did —
+       the dial is off unless a size asks for it. It is the small sizes that
+       need it: the core has to run close to their edge to stay visible at
+       18px, which fills the disc flat to its border, and white infused round
+       that border is what puts the curve back. Raise it for the hero too if
+       more depth is wanted there; it is one number. */
+    radial-gradient(circle at 50% 50%,
+      rgba(255, 255, 255, 0) 44%,
+      rgba(255, 255, 255, calc(0.34 * var(--borb-rim))) 68%,
+      rgba(255, 255, 255, calc(0.72 * var(--borb-rim))) 86%,
+      rgba(255, 255, 255, calc(0.94 * var(--borb-rim))) 100%),
+    radial-gradient(ellipse 78% 42% at 50% 99%,
+      rgba(255, 255, 255, 0.92) 0%,
+      rgba(255, 255, 255, 0.48) 38%,
+      rgba(255, 255, 255, 0.12) 62%,
+      rgba(255, 255, 255, 0) 80%),
+    radial-gradient(circle at 36% 26%, rgba(255, 255, 255, calc(0.62 * var(--borb-glass))) 0%, rgba(255, 255, 255, 0) 58%),
+    radial-gradient(circle at 66% 74%, rgba(255, 255, 255, calc(0.26 * var(--borb-glass))) 0%, rgba(255, 255, 255, 0) 52%);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* ------------------------------------------------------------------- orb -- */
+
+.borb__field {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--borb-size) * 0.80556);
+  height: calc(var(--borb-size) * 0.80556);
+  border-radius: 50%;
+  overflow: hidden;
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, 0.52) 0%, rgba(255, 255, 255, 0.10) 54%, rgba(255, 255, 255, 0.40) 100%),
+    radial-gradient(circle at 44% 38%, #FFFFFF 0%, #FFFAF9 55%, #FEF4F2 82%, #FDEDEA 100%);
+  box-shadow:
+    inset 0 calc(var(--borb-size) * -0.08333) calc(var(--borb-size) * 0.11806) calc(var(--borb-size) * -0.04861) rgba(255, 255, 255, 0.92),
+    inset 0 calc(var(--borb-size) * -0.02083) calc(var(--borb-size) * 0.04861) calc(var(--borb-size) * -0.02778) rgba(255, 255, 255, 0.75),
+    inset 0 calc(var(--borb-size) * 0.02778) calc(var(--borb-size) * 0.06944) calc(var(--borb-size) * -0.04167) rgba(255, 255, 255, 0.90),
+    inset 0 0 0 calc(var(--borb-size) * 0.00347) rgba(255, 255, 255, 0.75),
+    0 calc(var(--borb-size) * 0.03472) calc(var(--borb-size) * 0.07639) calc(var(--borb-size) * -0.04167) rgba(198, 112, 88, 0.28),
+    0 calc(var(--borb-size) * 0.10417) calc(var(--borb-size) * 0.19444) calc(var(--borb-size) * -0.10417) rgba(198, 112, 88, 0.42);
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 90%, rgba(0, 0, 0, 0.96) 95%, rgba(0, 0, 0, 0.55) 98%, transparent 100%);
+          mask-image: radial-gradient(circle at 50% 50%, #000 90%, rgba(0, 0, 0, 0.96) 95%, rgba(0, 0, 0, 0.55) 98%, transparent 100%);
+  z-index: 2;
+}
+
+/* THE DENSE CORE — third attempt, and the first two failed alike.
+   It was a WHITE centre, on the stated argument that the tints should read
+   as pools around it. That argument is what made the orb look flat: the
+   white sits at z1, ABOVE the four tint clouds, so the middle of the sphere
+   was the one place the colour could not reach. A glass sphere is densest
+   where you look through the most of it, which is dead centre, and it is
+   BRIGHTEST where the light strikes it, which is off-centre — so the middle
+   carries colour now and the highlights stay above it.
+
+   NOTHING ABOUT THE GLASS ITSELF MOVED. The specular fields at 36%/26% and
+   66%/74%, the bottom wash where light pools, the field's inset whites and
+   the cast shadow are all untouched, and all of them paint at z2/z3 — over
+   this. That is the whole trick: a dense core UNDER an unchanged glass
+   shell reads as thickness, where a white core over the tints read as a
+   pale disc. The mark gains legible contrast from it for free.
+
+   AND IT SITS UNDER THE CLOUDS TOO (z0, against their z1), which is the
+   correction that matters. Painted OVER them at 0.94 alpha it was simply
+   a red lid where the white one had been — the same flat disc and the
+   same hidden motion, in a different hue. Underneath, the moving pools
+   read across it and it does only the job it is for: making the middle
+   denser than the rim. So it is softer and smaller than a covering layer
+   had to be. */
+.borb__field::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 88%;
+  height: 88%;
+  border-radius: 50%;
+  /* The ramp is read off the approved reference: a coral middle at roughly
+     rgb(226,116,111) easing to near-white well before the rim, so the orb is
+     a soft blush with a dense centre rather than a red disc with a pale edge.
+     It runs DOWN the palette as it travels out — t1 for the depth at dead
+     centre, t2 through the body, t3/t4 for the last light — which is why the
+     middle reads dense without any stop being heavy. */
+  background: radial-gradient(circle at 50% 50%,
+    rgba(var(--borb-t1), calc(0.70 * var(--borb-core))) 0%,
+    rgba(var(--borb-t2), calc(0.66 * var(--borb-core))) 18%,
+    rgba(var(--borb-t3), calc(0.42 * var(--borb-core))) 42%,
+    rgba(var(--borb-t4), calc(0.20 * var(--borb-core))) 68%,
+    rgba(var(--borb-t4), calc(0.07 * var(--borb-core))) 88%,
+    rgba(var(--borb-t4), 0) 100%);
+  filter: blur(calc(var(--borb-blur) * 0.62));
+  animation: borb-core 13s var(--borb-ease) infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes borb-core {
+  0%, 100% { transform: translate(0, 0) scale(1);       opacity: 0.88; }
+  33%      { transform: translate(4%, -3%) scale(1.12); opacity: 1; }
+  66%      { transform: translate(-3%, 4%) scale(0.94); opacity: 0.82; }
+}
+
+/* grain — keeps a large soft gradient from banding. Inlined, no file request. */
+.borb__field::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
+  background-size: calc(var(--borb-size) * 0.55556) calc(var(--borb-size) * 0.55556);
+  mix-blend-mode: overlay;
+  opacity: 0.30;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ----------------------------------------------------------------- tints -- */
+
+.borb__cloud {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(var(--borb-blur));
+  pointer-events: none;
+  /* ABOVE the core (z0), below the grain (z2). The core is the still,
+     dense middle; these are what moves, so these go on top of it —
+     whatever sits over the clouds hides the motion, which is the mistake
+     the white centre made and then the red one made again. */
+  z-index: 1;
+}
+
+.borb__cloud--1 {
+  width: calc(var(--borb-size) * 0.47917);
+  height: calc(var(--borb-size) * 0.47917);
+  background: radial-gradient(circle, rgba(var(--borb-t1), calc(0.92 * var(--borb-int))) 0%, rgba(var(--borb-t1), 0) var(--borb-falloff));
+  --borb-dx: calc(var(--borb-size) * -0.09028);
+  --borb-dy: calc(var(--borb-size) * -0.0625);
+  --borb-r: calc(var(--borb-size) * 0.10417);
+  --borb-a: 0deg;
+}
+.borb__cloud--2 {
+  width: calc(var(--borb-size) * 0.52778);
+  height: calc(var(--borb-size) * 0.52778);
+  background: radial-gradient(circle, rgba(var(--borb-t2), calc(0.86 * var(--borb-int))) 0%, rgba(var(--borb-t2), 0) var(--borb-falloff));
+  --borb-dx: calc(var(--borb-size) * 0.07639);
+  --borb-dy: calc(var(--borb-size) * -0.08333);
+  --borb-r: calc(var(--borb-size) * 0.125);
+  --borb-a: 95deg;
+}
+.borb__cloud--3 {
+  width: calc(var(--borb-size) * 0.4375);
+  height: calc(var(--borb-size) * 0.4375);
+  background: radial-gradient(circle, rgba(var(--borb-t3), calc(0.88 * var(--borb-int))) 0%, rgba(var(--borb-t3), 0) var(--borb-falloff));
+  --borb-dx: calc(var(--borb-size) * -0.06944);
+  --borb-dy: calc(var(--borb-size) * 0.08333);
+  --borb-r: calc(var(--borb-size) * 0.09375);
+  --borb-a: 190deg;
+}
+.borb__cloud--4 {
+  width: calc(var(--borb-size) * 0.48611);
+  height: calc(var(--borb-size) * 0.48611);
+  background: radial-gradient(circle, rgba(var(--borb-t4), calc(0.82 * var(--borb-int))) 0%, rgba(var(--borb-t4), 0) var(--borb-falloff));
+  --borb-dx: calc(var(--borb-size) * 0.08681);
+  --borb-dy: calc(var(--borb-size) * 0.06597);
+  --borb-r: calc(var(--borb-size) * 0.11458);
+  --borb-a: 285deg;
+}
+
+/* ------------------------------------------------------------------ mark -- */
+
+.borb__mark {
+  position: relative;
+  width: calc(var(--borb-size) * 0.29167);
+  height: calc(var(--borb-size) * 0.29167);
+  z-index: 4;
+  filter:
+    drop-shadow(0 calc(var(--borb-size) * 0.00694) calc(var(--borb-size) * 0.01736) rgba(186, 96, 74, 0.26))
+    drop-shadow(0 0 calc(var(--borb-size) * 0.00347) rgba(186, 96, 74, 0.18));
+}
+
+.borb__blade {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 50%;
+  transition:
+    clip-path 0.34s var(--borb-snap),
+    opacity 0.2s var(--borb-snap);
+  background:
+    radial-gradient(circle at 50% 50%,
+      rgba(255, 255, 255, 0.80) 0%,
+      rgba(255, 255, 255, 0.86) 34%,
+      rgba(255, 255, 255, 0.93) 62%,
+      rgba(255, 255, 255, 0.99) 84%,
+      rgba(255, 255, 255, 1) 100%),
+    linear-gradient(150deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 58%);
+  box-shadow: inset 0 0 0 calc(var(--borb-size) * 0.00174) rgba(255, 255, 255, 1);
+}
+
+.borb__blade--a { clip-path: polygon(29.56% 22.88%, 18.77% 23.14%, 42.67% 49.87%, 2.57% 95.12%, 13.37% 95.12%, 53.21% 49.87%); }
+.borb__blade--b { clip-path: polygon(62.21% 35.22%, 51.67% 35.48%, 64.52% 49.87%, 24.68% 95.12%, 35.22% 95.12%, 75.06% 50.13%); }
+.borb__blade--c { clip-path: polygon(46.79% 4.37%, 86.38% 49.87%, 64.78% 74.55%, 75.58% 74.55%, 96.92% 49.61%, 57.07% 4.37%); }
+
+/* generated thread geometry for the speaking state (written by orb.js) */
+.borb__waves {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  opacity: 0;
+  pointer-events: none;
+}
+.borb__waves > path {
+  fill: rgba(255, 255, 255, 0.94);
+  stroke: none;
+}
+
+/* --------------------------------------------------------------- ripples -- */
+
+.borb__ripple {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: calc(var(--borb-size) * 0.80556);
+  height: calc(var(--borb-size) * 0.80556);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(circle at 50% 50%,
+    rgba(var(--borb-accent), 0) 66%,
+    rgba(var(--borb-accent), 0.04) 70%,
+    rgba(var(--borb-accent), 0.30) 74.5%,
+    rgba(var(--borb-accent), 0.34) 76%,
+    rgba(var(--borb-accent), 0.14) 79%,
+    rgba(var(--borb-accent), 0.05) 84%,
+    rgba(var(--borb-accent), 0) 90%);
+  filter: blur(calc(var(--borb-size) * 0.00208));
+}
+
+/* ============================================================================
+   BACKGROUND MOTION — one behaviour per state, not one speed per state
+   ========================================================================== */
+
+/* Idle used to be a two-stop oscillation: out to the vector, back along the
+   SAME line, at 0.55 of it. Two clouds on near-parallel vectors therefore
+   slid together and the orb read as breathing, not as moving. The tide now
+   swaps dx into dy between waypoints, so each cloud walks a lopsided circuit
+   instead of a line, and the four periods stay coprime-ish so the pattern
+   does not resolve. Amplitude is up (to ±1.3 of the vector from 0.55) and the
+   periods are down about a third; it is still the slowest state by a wide
+   margin, which is what keeps it idle rather than listening. */
+/* IDLE ORBITS — IT USED TO OSCILLATE, AND THAT IS WHY IT LOOKED ASLEEP.
+   `borb-tide` ran each pool out along a vector and back down the same line.
+   An out-and-back has to REVERSE, so with an eased timing function the pool
+   decelerated to a standstill at every waypoint — five dead stops a cycle,
+   per cloud. Motion that keeps stopping reads as a still image that twitches,
+   which is the opposite of alive, and no amount of amplitude or speed fixes
+   it because the stops are in the shape of the path.
+
+   So idle travels a CLOSED LOOP instead: a full 360deg, one direction, never
+   reversing and never arriving. `--borb-a` and `--borb-r` — the start angle
+   and orbit radius already carried per cloud for the loading state — are the
+   geometry, and the four start angles (0/95/190/285deg) keep the pools spread
+   round the dial rather than clumped.
+
+   IT IS NOT A CIRCLE, and that is the difference between soulful and
+   mechanical: the radius breathes 0.70 to 1.52 across seven waypoints, so the
+   path is a lobed, wandering loop. Scale and opacity run on the same
+   waypoints at different amounts, and the four periods stay mutually prime-ish
+   so the pattern does not resolve inside a minute. `loading` is the same
+   geometry drawn as a true circle at a constant radius — which is exactly why
+   that one reads as a machine and this one does not.
+
+   100% MUST BE 0% PLUS 360deg or the loop visibly jumps: rotate(a + 360deg)
+   is the same position as rotate(a), so radius and scale must also return to
+   1.00 there. */
+@keyframes borb-drift {
+  0%   { transform: rotate(var(--borb-a))               translateX(calc(var(--borb-r) * var(--borb-travel) * 1.00)) scale(1.00); opacity: 1; }
+  14%  { transform: rotate(calc(var(--borb-a) +  51deg)) translateX(calc(var(--borb-r) * var(--borb-travel) * 1.46)) scale(1.12); opacity: 0.92; }
+  29%  { transform: rotate(calc(var(--borb-a) + 103deg)) translateX(calc(var(--borb-r) * var(--borb-travel) * 0.70)) scale(0.90); opacity: 1; }
+  43%  { transform: rotate(calc(var(--borb-a) + 154deg)) translateX(calc(var(--borb-r) * var(--borb-travel) * 1.34)) scale(1.16); opacity: 0.94; }
+  57%  { transform: rotate(calc(var(--borb-a) + 206deg)) translateX(calc(var(--borb-r) * var(--borb-travel) * 0.82)) scale(0.94); opacity: 1; }
+  71%  { transform: rotate(calc(var(--borb-a) + 257deg)) translateX(calc(var(--borb-r) * var(--borb-travel) * 1.52)) scale(1.09); opacity: 0.90; }
+  86%  { transform: rotate(calc(var(--borb-a) + 309deg)) translateX(calc(var(--borb-r) * var(--borb-travel) * 0.76)) scale(0.88); opacity: 1; }
+  100% { transform: rotate(calc(var(--borb-a) + 360deg)) translateX(calc(var(--borb-r) * var(--borb-travel) * 1.00)) scale(1.00); opacity: 1; }
+}
+
+/* the core, idle only. It drifts LESS than the tints around it and swings
+   more in scale and opacity, because it is the thing the eye settles on —
+   a focal point that wanders reads as a wobble, one that breathes reads as
+   depth. The clouds do the travelling; this does the density. */
+@keyframes borb-core-idle {
+  0%, 100% { transform: translate(0, 0) scale(1);          opacity: 0.90; }
+  18%      { transform: translate(5%, -4%) scale(1.15);     opacity: 1; }
+  36%      { transform: translate(3%, 5%) scale(0.94);      opacity: 0.82; }
+  54%      { transform: translate(-5%, 3%) scale(1.12);     opacity: 0.98; }
+  72%      { transform: translate(-4%, -5%) scale(0.87);    opacity: 0.78; }
+  88%      { transform: translate(2%, -2%) scale(1.07);     opacity: 0.96; }
+}
+@keyframes borb-gather {
+  0%, 100% { transform: translate(calc(var(--borb-dx) * 1.08), calc(var(--borb-dy) * 1.08)) scale(1.02); }
+  55%      { transform: translate(calc(var(--borb-dx) * 0.22), calc(var(--borb-dy) * 0.22)) scale(0.90); }
+}
+@keyframes borb-arc {
+  0%   { transform: translate(var(--borb-dx), var(--borb-dy)) scale(1); }
+  9%   { transform: translate(calc(var(--borb-dy) * 0.9), calc(var(--borb-dx) * 0.7)) scale(1.14); }
+  21%  { transform: translate(calc(var(--borb-dx) * -0.5), calc(var(--borb-dy) * 1.1)) scale(0.92); }
+  34%  { transform: translate(calc(var(--borb-dy) * -1.0), calc(var(--borb-dx) * -0.6)) scale(1.10); }
+  48%  { transform: translate(calc(var(--borb-dx) * 1.2), calc(var(--borb-dy) * -0.4)) scale(0.96); }
+  61%  { transform: translate(calc(var(--borb-dy) * 0.6), calc(var(--borb-dx) * 1.1)) scale(1.16); }
+  76%  { transform: translate(calc(var(--borb-dx) * -1.1), calc(var(--borb-dy) * 0.3)) scale(0.94); }
+  89%  { transform: translate(calc(var(--borb-dy) * -0.7), calc(var(--borb-dx) * -1.0)) scale(1.08); }
+  100% { transform: translate(var(--borb-dx), var(--borb-dy)) scale(1); }
+}
+@keyframes borb-current {
+  0%, 62%, 100% { filter: none; }
+  68%           { filter: brightness(1.05) saturate(1.12); }
+  74%           { filter: none; }
+  80%           { filter: brightness(1.08) saturate(1.18); }
+  86%           { filter: none; }
+}
+@keyframes borb-radiate {
+  0%, 100% { transform: translate(calc(var(--borb-dx) * 0.35), calc(var(--borb-dy) * 0.35)) scale(0.88); }
+  50%      { transform: translate(calc(var(--borb-dx) * 1.5), calc(var(--borb-dy) * 1.5)) scale(1.2); }
+}
+@keyframes borb-revolve {
+  from { transform: rotate(var(--borb-a)) translateX(var(--borb-r)) scale(1); }
+  50%  { transform: rotate(calc(var(--borb-a) + 180deg)) translateX(var(--borb-r)) scale(1.08); }
+  to   { transform: rotate(calc(var(--borb-a) + 360deg)) translateX(var(--borb-r)) scale(1); }
+}
+@keyframes borb-scan {
+  0%, 100% { transform: translate(calc(var(--borb-dx) * 1.1), var(--borb-dy)) scale(1); }
+  50%      { transform: translate(calc(var(--borb-dx) * -1.1), var(--borb-dy)) scale(1.06); }
+}
+@keyframes borb-falter {
+  0%, 44%, 100% { transform: translate(var(--borb-dx), var(--borb-dy)) scale(1); }
+  50%           { transform: translate(calc(var(--borb-dx) + var(--borb-size) * 0.0243), calc(var(--borb-dy) - var(--borb-size) * 0.0208)) scale(1.04); }
+  56%           { transform: translate(calc(var(--borb-dx) - var(--borb-size) * 0.0208), calc(var(--borb-dy) + var(--borb-size) * 0.0174)) scale(0.97); }
+  62%           { transform: translate(calc(var(--borb-dx) + var(--borb-size) * 0.0139), var(--borb-dy)) scale(1.02); }
+  68%           { transform: translate(var(--borb-dx), var(--borb-dy)) scale(1); }
+}
+
+/* ============================================================================
+   MARK MOTION
+   ========================================================================== */
+
+@keyframes borb-bar-wave {
+  0%, 100% { transform: scaleY(0.55); }
+  50%      { transform: scaleY(1.35); }
+}
+
+@keyframes borb-load-step {
+  0%, 60%, 100% { opacity: 0.22; transform: translateX(0); }
+  25%           { opacity: 1;    transform: translateX(calc(var(--borb-size) * 0.01736)); }
+}
+
+@keyframes borb-relay {
+  0%   { clip-path: polygon(29.56% 22.88%, 18.77% 23.14%, 42.67% 49.87%, 2.57% 95.12%, 13.37% 95.12%, 53.21% 49.87%); opacity: 1; }
+  33%  { clip-path: polygon(62.21% 35.22%, 51.67% 35.48%, 64.52% 49.87%, 24.68% 95.12%, 35.22% 95.12%, 75.06% 50.13%); opacity: 1; }
+  66%  { clip-path: polygon(57.07% 4.37%, 46.79% 4.37%, 86.38% 49.87%, 64.78% 74.55%, 75.58% 74.55%, 96.92% 49.61%); opacity: 1; }
+  88%  { clip-path: polygon(57.07% 4.37%, 46.79% 4.37%, 86.38% 49.87%, 64.78% 74.55%, 75.58% 74.55%, 96.92% 49.61%); opacity: 0; }
+  89%  { clip-path: polygon(29.56% 22.88%, 18.77% 23.14%, 42.67% 49.87%, 2.57% 95.12%, 13.37% 95.12%, 53.21% 49.87%); opacity: 0; }
+  100% { clip-path: polygon(29.56% 22.88%, 18.77% 23.14%, 42.67% 49.87%, 2.57% 95.12%, 13.37% 95.12%, 53.21% 49.87%); opacity: 1; }
+}
+
+@keyframes borb-shuffle {
+  0%   { clip-path: polygon(29.56% 22.88%, 18.77% 23.14%, 42.67% 49.87%, 2.57% 95.12%, 13.37% 95.12%, 53.21% 49.87%); transform: translate(0, 0) scale(1); opacity: 1; }
+  33%  { clip-path: polygon(62.21% 35.22%, 51.67% 35.48%, 64.52% 49.87%, 24.68% 95.12%, 35.22% 95.12%, 75.06% 50.13%); transform: translate(0, 0) scale(1); opacity: 1; }
+  66%  { clip-path: polygon(57.07% 4.37%, 46.79% 4.37%, 86.38% 49.87%, 64.78% 74.55%, 75.58% 74.55%, 96.92% 49.61%); transform: translate(0, 0) scale(1); opacity: 1; }
+  75%  { clip-path: polygon(57.07% 4.37%, 46.79% 4.37%, 86.38% 49.87%, 64.78% 74.55%, 75.58% 74.55%, 96.92% 49.61%); transform: translate(calc(var(--borb-size) * 0.00694), calc(var(--borb-size) * -0.02083)) scale(0.97); opacity: 0.55; }
+  83%  { transform: translate(0, calc(var(--borb-size) * -0.02778)) scale(0.96); opacity: 0.45; }
+  91%  { clip-path: polygon(29.56% 22.88%, 18.77% 23.14%, 42.67% 49.87%, 2.57% 95.12%, 13.37% 95.12%, 53.21% 49.87%); transform: translate(calc(var(--borb-size) * -0.00694), calc(var(--borb-size) * -0.01736)) scale(0.97); opacity: 0.6; }
+  100% { clip-path: polygon(29.56% 22.88%, 18.77% 23.14%, 42.67% 49.87%, 2.57% 95.12%, 13.37% 95.12%, 53.21% 49.87%); transform: translate(0, 0) scale(1); opacity: 1; }
+}
+
+@keyframes borb-piano {
+  0%, 100% { opacity: 1;    transform: translate(0, 0) scale(1); }
+  16%      { opacity: 0.62; transform: translate(calc(var(--borb-size) * 0.01215), calc(var(--borb-size) * 0.00903)) scale(0.965); }
+  34%      { opacity: 0.86; transform: translate(calc(var(--borb-size) * 0.00417), calc(var(--borb-size) * -0.00278)) scale(1.015); }
+  52%      { opacity: 1;    transform: translate(0, 0) scale(1); }
+}
+
+@keyframes borb-excl-pulse {
+  0%, 100% { opacity: 1;    transform: scale(1); }
+  50%      { opacity: 0.90; transform: scale(0.98); }
+}
+
+@keyframes borb-ripple-out {
+  0%   { transform: scale(0.94); opacity: 0; }
+  18%  { opacity: 0.85; }
+  100% { transform: scale(1.62); opacity: 0; }
+}
+
+/* ============================================================================
+   STATES
+   ========================================================================== */
+
+/* ---- idle (also the fallback when data-state is absent or unknown) ------- */
+
+.borb .borb__cloud,
+.borb[data-state="idle"] .borb__cloud {
+  animation-name: borb-drift;
+  /* NOT linear, and not var(--borb-ease) either. Linear round a lobed loop is
+     a machine; a full ease stops at every waypoint, which is the fault this
+     replaced. This is a shallow symmetric curve — it breathes between lobes
+     without ever reaching zero speed. */
+  animation-timing-function: cubic-bezier(0.42, 0.06, 0.58, 0.94);
+  animation-iteration-count: infinite;
+}
+.borb .borb__cloud--1, .borb[data-state="idle"] .borb__cloud--1 { animation-duration: 7.5s; }
+.borb .borb__cloud--2, .borb[data-state="idle"] .borb__cloud--2 { animation-duration: 9.5s; }
+.borb .borb__cloud--3, .borb[data-state="idle"] .borb__cloud--3 { animation-duration: 11.5s; }
+.borb .borb__cloud--4, .borb[data-state="idle"] .borb__cloud--4 { animation-duration: 8.5s; }
+.borb .borb__field::after,
+.borb[data-state="idle"] .borb__field::after {
+  animation-name: borb-core-idle;
+  /* deliberately prime against all four cloud periods, so the core's breath
+     and the pools' loops never line up and the orb never repeats visibly */
+  animation-duration: 6.5s;
+}
+
+/* ---- listening: electric darts, plus a current flicker ------------------ */
+
+.borb[data-state="listening"] .borb__cloud {
+  animation-name: borb-arc;
+  animation-timing-function: linear;
+}
+.borb[data-state="listening"] .borb__cloud--1 { animation-duration: 2.3s; }
+.borb[data-state="listening"] .borb__cloud--2 { animation-duration: 2.9s; }
+.borb[data-state="listening"] .borb__cloud--3 { animation-duration: 2.6s; }
+.borb[data-state="listening"] .borb__cloud--4 { animation-duration: 3.1s; }
+.borb[data-state="listening"] .borb__field {
+  animation: borb-current 1.7s steps(1, end) infinite;
+}
+.borb[data-state="listening"] .borb__blade--a {
+  clip-path: polygon(23.5% 28%, 28% 28%, 32.5% 28%, 32.5% 72%, 28% 72%, 23.5% 72%);
+  animation: borb-bar-wave 1s var(--borb-ease) infinite;
+}
+.borb[data-state="listening"] .borb__blade--b {
+  clip-path: polygon(45.5% 28%, 50% 28%, 54.5% 28%, 54.5% 72%, 50% 72%, 45.5% 72%);
+  animation: borb-bar-wave 1s var(--borb-ease) infinite;
+  animation-delay: 0.12s;
+}
+.borb[data-state="listening"] .borb__blade--c {
+  clip-path: polygon(67.5% 28%, 72% 28%, 76.5% 28%, 76.5% 72%, 72% 72%, 67.5% 72%);
+  animation: borb-bar-wave 1s var(--borb-ease) infinite;
+  animation-delay: 0.24s;
+}
+
+/* ---- thinking: the colour draws inward; light steps through the mark ---- */
+
+.borb[data-state="thinking"] .borb__cloud {
+  animation-name: borb-gather;
+  animation-timing-function: cubic-bezier(0.45, 0, 0.35, 1);
+}
+.borb[data-state="thinking"] .borb__cloud--1 { animation-duration: 6s; }
+.borb[data-state="thinking"] .borb__cloud--2 { animation-duration: 6.8s; }
+.borb[data-state="thinking"] .borb__cloud--3 { animation-duration: 7.6s; }
+.borb[data-state="thinking"] .borb__cloud--4 { animation-duration: 6.4s; }
+.borb[data-state="thinking"] .borb__blade--a { animation: borb-load-step 1.5s var(--borb-ease) infinite; }
+.borb[data-state="thinking"] .borb__blade--b { animation: borb-load-step 1.5s var(--borb-ease) infinite; animation-delay: 0.2s; }
+.borb[data-state="thinking"] .borb__blade--c { animation: borb-load-step 1.5s var(--borb-ease) infinite; animation-delay: 0.4s; }
+.borb[data-state="thinking"]::after { animation-duration: 7.2s; }
+
+/* ---- thinking2: the shuffle — front chevron arcs back over the others --- */
+
+.borb[data-state="thinking2"] .borb__cloud {
+  animation-name: borb-scan;
+  animation-timing-function: cubic-bezier(0.45, 0, 0.25, 1);
+}
+.borb[data-state="thinking2"] .borb__cloud--1 { animation-duration: 5.8s; }
+.borb[data-state="thinking2"] .borb__cloud--2 { animation-duration: 6.4s; }
+.borb[data-state="thinking2"] .borb__cloud--3 { animation-duration: 7s; }
+.borb[data-state="thinking2"] .borb__cloud--4 { animation-duration: 6.1s; }
+.borb[data-state="thinking2"] .borb__blade--a { animation: borb-shuffle 2.85s var(--borb-ease) infinite; animation-delay: 0s; }
+.borb[data-state="thinking2"] .borb__blade--b { animation: borb-shuffle 2.85s var(--borb-ease) infinite; animation-delay: -0.95s; }
+.borb[data-state="thinking2"] .borb__blade--c { animation: borb-shuffle 2.85s var(--borb-ease) infinite; animation-delay: -1.9s; }
+.borb[data-state="thinking2"]::after { animation-duration: 6.2s; }
+
+/* ---- thinking3: the piano roll — one chevron struck at a time ----------- */
+
+.borb[data-state="thinking3"] .borb__cloud {
+  animation-name: borb-scan;
+  animation-timing-function: cubic-bezier(0.37, 0, 0.28, 1);
+}
+.borb[data-state="thinking3"] .borb__cloud--1 { animation-duration: 5.2s; }
+.borb[data-state="thinking3"] .borb__cloud--2 { animation-duration: 6s; }
+.borb[data-state="thinking3"] .borb__cloud--3 { animation-duration: 6.6s; }
+.borb[data-state="thinking3"] .borb__cloud--4 { animation-duration: 5.6s; }
+.borb[data-state="thinking3"] .borb__blade--a { animation: borb-piano 0.95s cubic-bezier(0.37, 0, 0.28, 1) infinite; animation-delay: 0s; }
+.borb[data-state="thinking3"] .borb__blade--b { animation: borb-piano 0.95s cubic-bezier(0.37, 0, 0.28, 1) infinite; animation-delay: -0.6333s; }
+.borb[data-state="thinking3"] .borb__blade--c { animation: borb-piano 0.95s cubic-bezier(0.37, 0, 0.28, 1) infinite; animation-delay: -0.3167s; }
+.borb[data-state="thinking3"]::after { animation-duration: 5.2s; }
+
+/* ---- speaking: outward ripples; the mark is driven by orb.js ------------ */
+
+.borb[data-state="speaking"] .borb__cloud {
+  animation-name: borb-radiate;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+.borb[data-state="speaking"] .borb__cloud--1 { animation-duration: 2.2s; }
+.borb[data-state="speaking"] .borb__cloud--2 { animation-duration: 2.6s; }
+.borb[data-state="speaking"] .borb__cloud--3 { animation-duration: 3s; }
+.borb[data-state="speaking"] .borb__cloud--4 { animation-duration: 2.4s; }
+.borb[data-state="speaking"] .borb__blade { animation: none; }
+.borb[data-state="speaking"] .borb__ripple { animation: borb-ripple-out 3.4s var(--borb-ease) infinite; }
+.borb[data-state="speaking"] .borb__ripple--2 { animation-delay: -1.7s; }
+.borb[data-state="speaking"]::after { animation-duration: 2.6s; }
+
+/* ---- loading: a steady mechanical orbit, and the relay on the mark ------ */
+
+.borb[data-state="loading"] .borb__cloud {
+  animation-name: borb-revolve;
+  animation-timing-function: linear;
+}
+.borb[data-state="loading"] .borb__cloud--1 { animation-duration: 7s; }
+.borb[data-state="loading"] .borb__cloud--2 { animation-duration: 8.4s; }
+.borb[data-state="loading"] .borb__cloud--3 { animation-duration: 6.2s; }
+.borb[data-state="loading"] .borb__cloud--4 { animation-duration: 9s; }
+.borb[data-state="loading"] .borb__blade--a { animation: borb-relay 2.4s var(--borb-ease) infinite; animation-delay: 0s; }
+.borb[data-state="loading"] .borb__blade--b { animation: borb-relay 2.4s var(--borb-ease) infinite; animation-delay: -0.8s; }
+.borb[data-state="loading"] .borb__blade--c { animation: borb-relay 2.4s var(--borb-ease) infinite; animation-delay: -1.6s; }
+.borb[data-state="loading"]::after { animation-duration: 5.4s; }
+
+/* ---- error: the mark collapses into an exclamation ---------------------- */
+
+.borb[data-state="error"] .borb__cloud {
+  animation-name: borb-falter;
+  animation-timing-function: var(--borb-ease);
+  animation-duration: 2.4s;
+}
+.borb[data-state="error"] .borb__blade--a {
+  clip-path: polygon(43.5% 17%, 50% 17%, 56.5% 17%, 54.5% 63%, 50% 63%, 45.5% 63%);
+  opacity: 0;
+  animation: none;
+}
+.borb[data-state="error"] .borb__blade--b {
+  clip-path: polygon(43.5% 17%, 50% 17%, 56.5% 17%, 54.5% 63%, 50% 63%, 45.5% 63%);
+  opacity: 1;
+  animation: none;
+}
+.borb[data-state="error"] .borb__blade--c {
+  clip-path: polygon(46.3% 73.5%, 50% 72.4%, 53.7% 73.5%, 53.7% 85.6%, 50% 86.7%, 46.3% 85.6%);
+  opacity: 1;
+  animation: none;
+}
+.borb[data-state="error"] .borb__mark { animation: borb-excl-pulse 1.9s var(--borb-ease) infinite; }
+.borb[data-state="error"]::after { animation-duration: 2.2s; }
+
+/* ============================================================================
+   CONTAINER QUERIES — the component adapts to its own box, not the viewport
+   ========================================================================== */
+
+/* WHY A SMALL ORB WENT PALE, AND WHY THE ANSWER IS THE TINTS AND NOT THE GLASS.
+   Every length in this layer is a calc() off --borb-size, so the tints scale
+   perfectly — but the white layers over them do not: the sheen's bottom wash
+   (.borb::before, 0.92 white), the field's inset white box-shadows and the
+   bright centre are all FIXED ALPHAS. At 288px they sit over a wide field of
+   colour and read as glass; at 18px on a thread label they cover most of the
+   disc and the orb reads as a white pill. The fix is to give the small sizes
+   MORE COLOUR UNDER the same glass rather than less glass on top of it — the
+   sheen, the shadow and the softness are untouched at every size.
+   --borb-int is set on .borb__cloud (not .borb): an element cannot be styled
+   by its own container query, and the clouds are where the property is read.
+
+   AND THE ANSWER IS NOT SIMPLY "MORE INTENSITY", which is where the first
+   pass at this went wrong. These tiers ran --borb-int to 2.6 and 3.4, well
+   past the 1.08 ceiling, so two thirds of every pool went flat opaque: the
+   small orb became a solid disc that was certainly visible and had no
+   motion and no glass left in it. A 15px orb has ~1.5px of cloud travel to
+   show, so it needs its gradation MORE than the hero does, not less. The
+   tiers below stay under the ceiling and buy visibility from the core and
+   the body fill instead — both of which deepen without costing detail. */
+
+/* below ~140px the grain and the cast shadow stop reading and only add noise */
+@container borb (max-width: 140px) {
+  .borb__field::before { opacity: 0.16; }
+  .borb::after { opacity: 0.55; }
+  .borb__ripple { filter: none; }
+  .borb__cloud { --borb-int: 0.62; --borb-falloff: 66%; }
+  .borb__field::after { width: 76%; height: 76%; --borb-core: 1.24; }
+  .borb::before { --borb-rim: 0.5; }
+  /* A SMALL ORB IS PROPORTIONALLY AS LIVELY AS THE HERO AND STILL LOOKS
+     STILL, because --borb-r is a fraction of --borb-size: scale the orb down
+     and the travel scales with it, so a 28px mark moves about a pixel and a
+     half. Proportion is the wrong measure for something this size — what
+     reads is absolute displacement against the orb's own edge. So the small
+     tiers widen the loop and shorten the period; the hero keeps 1.0, where
+     the same widening would look restless. */
+  .borb .borb__cloud, .borb[data-state="idle"] .borb__cloud { --borb-travel: 1.3; }
+  .borb .borb__cloud--1, .borb[data-state="idle"] .borb__cloud--1 { animation-duration: 6.2s; }
+  .borb .borb__cloud--2, .borb[data-state="idle"] .borb__cloud--2 { animation-duration: 7.8s; }
+  .borb .borb__cloud--3, .borb[data-state="idle"] .borb__cloud--3 { animation-duration: 9.4s; }
+  .borb .borb__cloud--4, .borb[data-state="idle"] .borb__cloud--4 { animation-duration: 7s; }
+  .borb .borb__field::after, .borb[data-state="idle"] .borb__field::after { animation-duration: 5.4s; }
+}
+
+/* very small: drop the decorative layers entirely and keep the mark legible */
+@container borb (max-width: 72px) {
+  .borb__field::before { display: none; }
+  .borb::after { display: none; }
+  /* the tints are all that is left carrying the brand at 15-40px, so they
+     take the whole disc: a full-strength pool reaching the rim, and the
+     bright centre reduced to a highlight rather than a lid over them */
+  .borb__cloud { --borb-int: 0.72; --borb-falloff: 70%; }
+  .borb__field::after {
+    width: 66%; height: 66%;
+    --borb-core: 1.55;
+    filter: blur(calc(var(--borb-blur) * 0.5));
+  }
+  .borb::before { --borb-rim: 0.86; }
+  /* wider still at 15-40px. The pools now swing past the field's edge and are
+     clipped by its overflow — which is wanted, not tolerated: colour running
+     off the rim and back is what makes a mark this small look like it holds
+     something moving rather than like a coloured dot. */
+  .borb .borb__cloud, .borb[data-state="idle"] .borb__cloud { --borb-travel: 1.55; }
+  .borb .borb__cloud--1, .borb[data-state="idle"] .borb__cloud--1 { animation-duration: 5.4s; }
+  .borb .borb__cloud--2, .borb[data-state="idle"] .borb__cloud--2 { animation-duration: 6.8s; }
+  .borb .borb__cloud--3, .borb[data-state="idle"] .borb__cloud--3 { animation-duration: 8.2s; }
+  .borb .borb__cloud--4, .borb[data-state="idle"] .borb__cloud--4 { animation-duration: 6.1s; }
+  .borb .borb__field::after, .borb[data-state="idle"] .borb__field::after { animation-duration: 4.6s; }
+  .borb__field {
+    background:
+      linear-gradient(150deg, rgba(255, 255, 255, 0.52) 0%, rgba(255, 255, 255, 0.10) 54%, rgba(255, 255, 255, 0.40) 100%),
+      radial-gradient(circle at 44% 38%, #FFFDFC 0%, #FEF6F4 48%, #FDECE8 80%, #FBE0DB 100%);
+  }
+}
+
+/* large: the grain tile would otherwise stretch and soften into a smear */
+@container borb (min-width: 420px) {
+  .borb__field::before {
+    background-size: calc(var(--borb-size) * 0.28) calc(var(--borb-size) * 0.28);
+    opacity: 0.24;
+  }
+}
+
+/* ============================================================================
+   REDUCED MOTION
+   Deliberately a media query — prefers-reduced-motion is a user setting, not a
+   size condition, so @container does not apply.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .borb .borb__cloud,
+  .borb .borb__blade,
+  .borb .borb__mark,
+  .borb .borb__field,
+  .borb .borb__field::after,
+  .borb .borb__ripple,
+  .borb::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .borb .borb__ripple { opacity: 0 !important; }
+}
+
+
+/* ============================================================================
+   135. THE CHROME MARK IS THE FLAT BLOB (Maryam, 21 Sep 2026)
+
+   "use this blob in all the short blobs places like the ones attached" —
+   supplied as `tal-blob.html`, with the Summary-by-Tal band mark, the Ask-Tal
+   dock mark and the chat-header mark as the three examples. All three, and
+   every other small Tal mark in the chrome, are the §132 orb sitting in `idle`.
+   She wants the small ones to be the clean, still blob from that file instead:
+   a flat 145deg rose body with three crisp white chevrons, no glass, no
+   moving pools, no cast shadow.
+
+   WHY THIS IS A CSS LAYER AND NOT A NEW MARKUP. §132/§133 already draw the
+   exact geometry — the three blade clip-paths here are byte-for-byte the ones
+   in `tal-blob.html`, because both came from the same brand mark — and §133
+   already lands the orb's box on the diameter §27.1 asked for at every slot.
+   The only thing that separates a chrome orb from a live one is the
+   `data-borb-live` attribute `borbMark` stamps: the chat hero and the
+   streaming reply's byline carry it, everything else does not (orb-wire.js's
+   note is the full argument). So `:not([data-borb-live])` is the whole of the
+   selector — it is precisely the set of marks she pointed at — and no call
+   site, no JS and no box sizing has to change. Flatten the idle chrome; the
+   live orb still thinks, listens and speaks as the animated component.
+
+   WHAT THAT MEANS PER SLOT. The head band's "Summary by Tal" (ai6.js, no
+   `live`), the ask bar / field / dock (ai4.js `.askline-mark`), the chat
+   header and panel header, the composer, the standalone mark and every
+   SETTLED thread byline are chrome, so they flatten. The chat hero and the
+   onboarding orbs pass `live` and are untouched; a byline flattens the moment
+   its reply stops streaming, which is the same live/idle seam §133 drew.
+
+   THE HUE IS THE SUPPLIED FILE'S, and that is a stated exception to §132's
+   "the orb is shades of --accent" note. `tal-blob.html` is built from
+   #ff6e60, a warmer coral than the accent #f9423a; §132's warning that a
+   warmer hue turns the ANIMATED orb orange still stands and the animated orb
+   keeps its accent ramp. This is the flat chrome mark, one gradient with a
+   clean diagonal fall to near-white, and it is the mark Maryam supplied —
+   newest instruction wins. It reads a token so the hex sits in one place.
+
+   CROSSES TO THE DS: every rule is under `.borb`, which the design system
+   ships, so the agent portal's borb marks flatten with the candidate portal's.
+   The admin portal emits no borb (its Tal summary is hidden) and is untouched.
+   Reversible in one step: drop this file and its two LAYERS entries and the
+   chrome marks are the animated orb again.
+   ========================================================================== */
+
+.borb{ --tblob-rose:#ff6e60; }
+
+/* THE BODY — the flat 145deg ramp from tal-blob.html, painted on the disc the
+   orb already lands on the slot (§133 sizes .borb__field to exactly the slot).
+   Its glass box-shadow and the soft-edge mask come off; the round clip stays. */
+.borb:not([data-borb-live]) .borb__field{
+  background:linear-gradient(145deg,
+    var(--tblob-rose) 0%,
+    color-mix(in srgb, var(--tblob-rose) 78%, #fff) 26%,
+    color-mix(in srgb, var(--tblob-rose) 52%, #fff) 52%,
+    color-mix(in srgb, var(--tblob-rose) 32%, #fff) 74%,
+    color-mix(in srgb, var(--tblob-rose) 20%, #fff) 100%);
+  box-shadow:none;
+  -webkit-mask-image:none;
+          mask-image:none;
+}
+
+/* EVERY MOVING / GLASS LAYER OFF. The sheen (.borb::before) and the cast
+   shadow (.borb::after); the field's grain (::before) and dense core (::after);
+   the four tint clouds and the two speaking-state ripples. Pseudo-elements
+   need `content:none`; real children need `display:none`. */
+.borb:not([data-borb-live])::before,
+.borb:not([data-borb-live])::after,
+.borb:not([data-borb-live]) .borb__field::before,
+.borb:not([data-borb-live]) .borb__field::after{
+  content:none;
+}
+.borb:not([data-borb-live]) .borb__cloud,
+.borb:not([data-borb-live]) .borb__ripple,
+.borb:not([data-borb-live]) .borb__waves{
+  display:none;
+}
+
+/* THE MARK — tal-blob.html draws the chevrons at half the disc; §132 draws
+   them at 0.362 of it. 0.80556 (the disc as a fraction of --borb-size) x 0.5
+   lands the same half-disc mark. Flat white blades, no gloss, no drop-shadow,
+   no motion. */
+.borb:not([data-borb-live]) .borb__mark{
+  width:calc(var(--borb-size) * 0.40278);
+  height:calc(var(--borb-size) * 0.40278);
+  filter:none;
+}
+.borb:not([data-borb-live]) .borb__blade{
+  background:#fff;
+  box-shadow:none;
+  animation:none;
+  transition:none;
+}
+
+
+/* ---- the TN loader (Phase 1 107-onboard.css, .app scope dropped) ---- */
+.tn-loader{
+  --tn-loader-size:90px;
+  --tn-loader-duration:2.4s;
+  --tn-loader-ease:cubic-bezier(0.4,0,0.2,1);
+  position:relative;display:inline-flex;
+  width:var(--tn-loader-size);height:var(--tn-loader-size);aspect-ratio:1/1}
+.tn-loader__blade{
+  position:absolute;inset:0;width:100%;height:100%;
+  background-color:var(--icon-primary);
+  transform-origin:50% 50%;will-change:clip-path,opacity;
+  animation:tn-relay var(--tn-loader-duration) var(--tn-loader-ease) infinite}
+.tn-loader__blade--a{animation-delay:0s}
+.tn-loader__blade--b{animation-delay:calc(var(--tn-loader-duration) * -0.333333)}
+.tn-loader__blade--c{animation-delay:calc(var(--tn-loader-duration) * -0.666667)}
+@keyframes tn-relay{
+  0%   {clip-path:polygon(29.56% 22.88%, 18.77% 23.14%, 42.67% 49.87%, 2.57% 95.12%, 13.37% 95.12%, 53.21% 49.87%);opacity:1}
+  33%  {clip-path:polygon(62.21% 35.22%, 51.67% 35.48%, 64.52% 49.87%, 24.68% 95.12%, 35.22% 95.12%, 75.06% 50.13%);opacity:1}
+  66%  {clip-path:polygon(57.07% 4.37%, 46.79% 4.37%, 86.38% 49.87%, 64.78% 74.55%, 75.58% 74.55%, 96.92% 49.61%);opacity:1}
+  88%  {clip-path:polygon(57.07% 4.37%, 46.79% 4.37%, 86.38% 49.87%, 64.78% 74.55%, 75.58% 74.55%, 96.92% 49.61%);opacity:0}
+  89%  {clip-path:polygon(29.56% 22.88%, 18.77% 23.14%, 42.67% 49.87%, 2.57% 95.12%, 13.37% 95.12%, 53.21% 49.87%);opacity:0}
+  100% {clip-path:polygon(29.56% 22.88%, 18.77% 23.14%, 42.67% 49.87%, 2.57% 95.12%, 13.37% 95.12%, 53.21% 49.87%);opacity:1}}
+
+
+/* ---- Phase 0 slot (the §133 joint): the box is the slot, the body lands on
+   it, the glow bleeds outside. ---- */
+.borb.tal-orb { width: var(--orb-slot); height: var(--orb-slot); flex: none; }

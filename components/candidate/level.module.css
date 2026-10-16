@@ -1,0 +1,18 @@
+/* The level card body (shared by My Level and the interview report), the
+   quiz read, the course outline body, and the enrollment column. */
+.top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--s04) var(--s06); }
+.l { display: flex; flex-direction: column; gap: var(--s02); }
+.r { display: flex; flex-direction: column; gap: var(--s02); text-align: right; }
+.n small { font-size: var(--t-label-size); line-height: var(--t-label-size); letter-spacing: var(--t-eyebrow-ls); font-weight: var(--t-w-book); color: var(--on-dark-2); }
+
+.quiz { display: flex; flex-direction: column; gap: var(--s04); }
+.next { display: flex; flex-direction: column; gap: var(--s02); padding-top: var(--s04); border-top: var(--hairline) solid var(--rule); }
+
+.learn { display: flex; flex-direction: column; gap: var(--s03); margin: var(--s03) 0 var(--s05); }
+.learn li { display: flex; align-items: flex-start; gap: var(--s03); }
+.learn svg { width: var(--s05); height: var(--s05); color: var(--state-done); margin-top: var(--s01); flex: none; }
+.skills { display: flex; flex-wrap: wrap; gap: var(--s02); margin-top: var(--s03); }
+.chip { display: inline-flex; align-items: center; height: var(--s06); padding: 0 var(--s04); border-radius: var(--radius-pill); border: var(--hairline) solid var(--rule); color: var(--text-secondary); }
+
+.col { display: flex; flex-direction: column; gap: var(--s07); max-width: var(--bk-col); }
+.go { display: flex; }

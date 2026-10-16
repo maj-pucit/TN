@@ -1,0 +1,67 @@
+/* ============================================================
+   ROLES & PERMISSIONS + BULK IMPORT — Phase 1 usersRoles / usersImport.
+   ============================================================ */
+.role { display: inline-flex; align-items: center; gap: var(--s03); }
+.default { color: var(--accent-text); padding: var(--chip-py) var(--chip-px); border: var(--hairline) solid var(--rule); border-radius: var(--radius-pill); }
+.desc { display: block; white-space: normal; max-width: var(--rec-card-w); }
+.acct { color: var(--link); text-decoration: underline; }
+
+/* The divider between the two sections is its own element with air above
+   and below on top of the sections' padding (Maryam 12 Oct 2026). */
+.div { height: var(--hairline); background: var(--rule); margin: var(--s07) var(--pad-x); }
+
+/* One collapsed row per role. */
+.acc { border-top: var(--hairline) solid var(--rule); }
+.item { border-bottom: var(--hairline) solid var(--rule); }
+.head { display: flex; align-items: center; gap: var(--s04); padding: var(--s05) 0; }
+.t { flex: 1; display: flex; flex-direction: column; gap: var(--s01); text-align: left; min-width: 0; }
+.a { display: inline-flex; gap: var(--s03); }
+.chev { width: var(--s07); height: var(--s07); display: grid; place-items: center; color: var(--text-secondary); }
+.chev svg { width: var(--icon-rail); height: var(--icon-rail); transition: transform var(--mo-quick); }
+.flip svg { transform: rotate(180deg); }
+.lbl { display: block; margin-bottom: var(--label-gap); }
+
+/* The permissions grid: a bordered card, header row on the panel grey,
+   light lines between rows, the four action columns centred. */
+.wrap { overflow-x: auto; border: var(--hairline) solid var(--rule); margin-bottom: var(--s05); }
+.grid { width: 100%; border-collapse: collapse; }
+.grid th, .grid td { padding: var(--s03) var(--s05); text-align: center; white-space: nowrap; }
+.grid th { background: var(--surface-2); color: var(--text-primary); border-bottom: var(--hairline) solid var(--rule); }
+.grid th:first-child, .grid td:first-child { text-align: left; white-space: normal; color: var(--text-primary); }
+.grid tr + tr td { border-top: var(--hairline) solid var(--rule); }
+.grid svg { width: var(--icon-page); height: var(--icon-page); display: inline-block; vertical-align: middle; }
+.yes { color: var(--accent); }
+.no { color: var(--text-helper); }
+.tog { display: inline-grid; place-items: center; color: var(--gray-20); }
+.tog.on { color: var(--accent); }
+
+/* ---- Bulk import ---- */
+.steps { display: flex; align-items: center; gap: var(--s04); padding: 0 var(--pad-x) var(--s05); flex-wrap: wrap; }
+.step { display: inline-flex; align-items: center; gap: var(--s03); }
+.stepLine { width: var(--s08); height: var(--hairline); background: var(--rule); margin-right: var(--s02); }
+.disc { width: var(--s07); height: var(--s07); border-radius: var(--radius-pill); display: grid; place-items: center; border: var(--hairline) solid var(--rule); color: var(--text-secondary); }
+.disc.now { background: var(--text-primary); border-color: var(--text-primary); color: var(--on-dark); }
+.disc.done { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.up { display: flex; flex-direction: column; gap: var(--s05); }
+.drop { display: flex; flex-direction: column; align-items: center; gap: var(--s03); padding: var(--s08) var(--s06); border: var(--hairline) dashed var(--border-subtle-02); text-align: center; cursor: pointer; }
+.drop:hover { border-color: var(--text-primary); }
+.dropIc { color: var(--text-secondary); }
+.dropIc svg { width: var(--s07); height: var(--s07); }
+.row { display: flex; gap: var(--s04); flex-wrap: wrap; justify-content: center; }
+.rule { height: var(--hairline); background: var(--rule); }
+.end { display: flex; justify-content: flex-end; }
+.between { display: flex; justify-content: space-between; gap: var(--s04); margin-top: var(--s06); }
+.imp { width: 100%; border-collapse: collapse; }
+.imp th { text-align: left; padding: var(--s04) var(--s04) var(--s04) 0; border-bottom: var(--hairline) solid var(--rule); color: var(--text-primary); white-space: nowrap; }
+.imp td { padding: var(--s03) var(--s04) var(--s03) 0; vertical-align: middle; }
+.cell { width: 100%; min-width: var(--s12); height: var(--ctrl-h-sm); padding: 0; border: 0; border-bottom: var(--hairline) solid var(--border-subtle-02); background: transparent; font: inherit; color: var(--text-primary); }
+.cell:focus { outline: none; border-bottom-color: var(--accent); }
+.ok { color: var(--support-success-ink); white-space: nowrap; }
+.warnT { color: var(--support-attention); white-space: nowrap; }
+.err { color: var(--support-error); white-space: nowrap; }
+.doneB { display: flex; flex-direction: column; align-items: center; gap: var(--s04); padding: var(--s09) 0; text-align: center; }
+.doneMk { width: var(--s10); height: var(--s10); border-radius: var(--radius-pill); display: grid; place-items: center; background: var(--support-success); color: var(--on-accent); }
+.doneMk svg { width: var(--s07); height: var(--s07); }
+
+/* The last row draws no line of its own: the section's divider or air closes the list, so two lines never stack. */
+.item:last-child { border-bottom: 0; }

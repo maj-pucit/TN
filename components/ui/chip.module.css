@@ -1,0 +1,5 @@
+/* Phase 1 .skl / .skl-c, measured 15 Oct 2026. */
+.skl { display: flex; flex-wrap: wrap; gap: var(--s04); }
+.c { display: inline-flex; align-items: center; gap: var(--s02); padding: var(--s03) var(--s05); border-radius: var(--radius-pill); background: var(--layer-02); color: var(--text-primary); font-size: var(--t-compact-size); line-height: var(--t-compact-lh); letter-spacing: var(--t-compact-ls); font-weight: var(--t-w-book); }
+.c button { display: inline-grid; place-items: center; color: var(--text-secondary); }
+.c button svg { width: var(--s04); height: var(--s04); }

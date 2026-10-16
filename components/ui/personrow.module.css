@@ -1,0 +1,16 @@
+/* Phase 1 .bk-row (12px) / .gcard (24px): rows at --pad-x, no hairlines. */
+.list { display: flex; flex-direction: column; margin: 0 calc(var(--pad-x) * -1); }
+.row { display: flex; align-items: center; gap: var(--s05); min-height: var(--s09); padding: var(--s04) var(--pad-x); text-align: left; color: var(--text-primary); }
+.roomy { padding-top: var(--s06); padding-bottom: var(--s06); }
+a.row:hover { background: var(--overlay-hover); }
+.day { display: flex; flex-direction: column; gap: var(--hairline); flex: none; width: var(--day-col); padding: var(--s02) var(--s05) var(--s02) 0; border-right: var(--hairline) solid var(--rule); }
+.d { color: var(--text-secondary); font-weight: var(--t-w-strong); }
+.face { width: var(--avatar-list); height: var(--avatar-list); border-radius: var(--radius-pill); object-fit: cover; flex: none; }
+.b { display: flex; flex-direction: column; gap: var(--s01); min-width: 0; flex: 1 1 auto; }
+.go { width: var(--icon-rail); height: var(--icon-rail); flex: none; color: var(--text-secondary); }
+a.row:hover .go { color: var(--accent); }
+.act { flex: none; margin-left: auto; }
+@container page (max-width: 599.98px) {
+  .row { flex-wrap: wrap; }
+  .act { flex-basis: 100%; }
+}

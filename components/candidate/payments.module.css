@@ -1,0 +1,10 @@
+/* The card cell: the brand mark, then the last four. (The table is ui/Ledger.) */
+.c { display: inline-flex; align-items: center; gap: var(--s03); }
+.bmk { display: inline-flex; width: var(--s09); flex: none; }
+.bmk svg { width: 100%; height: auto; }
+.lnk { color: var(--link); text-decoration: underline; }
+.lnk:hover { color: var(--link-hover); }
+.del { display: inline-flex; align-items: center; gap: var(--s03); padding: var(--s02) 0; color: var(--danger-ink); }
+.del svg { width: var(--icon-page); height: var(--icon-page); }
+.rec { display: flex; flex-direction: column; gap: var(--s04); }
+.kv { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--s03) var(--s05); padding-top: var(--s04); border-top: var(--hairline) solid var(--rule); }

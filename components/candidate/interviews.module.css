@@ -1,0 +1,148 @@
+/* ============================================================
+   CANDIDATE INTERVIEWS — agents table, past list, booking column,
+   checkout, report (level, scenes, interview details). Measured off
+   Phase 1 as it renders, 15 Oct 2026.
+   ============================================================ */
+
+/* ---- Agents table (.agt): a header row, then one row per agent. Desktop
+   is a five-column grid; below 900 each row stacks into a card. ---- */
+.agt { display: flex; flex-direction: column; }
+.agtH, .agtR {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.6fr) minmax(0, .6fr) minmax(0, .7fr) var(--act-col);
+  column-gap: var(--s06);
+  align-items: center;
+}
+.agtH { padding-bottom: var(--s03); border-bottom: var(--hairline) solid var(--rule); }
+.agtR { padding: var(--s03) 0 var(--s05); border-bottom: var(--hairline) solid var(--rule); row-gap: var(--s04); }
+.who { display: flex; align-items: center; gap: var(--s04); min-width: 0; }
+.who img { width: var(--avatar-agt-tbl); height: var(--avatar-agt-tbl); border-radius: var(--radius-pill); object-fit: cover; flex: none; }
+.wb { display: flex; flex-direction: column; gap: var(--s01); min-width: 0; }
+.nm { display: flex; align-items: center; flex-wrap: wrap; gap: var(--s03); }
+.recTag { padding: 0 var(--s03); font-weight: var(--t-w-strong); letter-spacing: var(--t-eyebrow-ls); border-radius: var(--radius-pill); background: var(--accent-tint); color: var(--accent-text); }
+.rate { display: flex; align-items: center; gap: var(--s02); }
+.stars { display: flex; gap: var(--s01); color: var(--star); }
+.stars svg { width: var(--s04); height: var(--s04); }
+.tags { display: flex; flex-wrap: wrap; gap: var(--s02); }
+.tag { display: inline-flex; align-items: center; padding: 0 var(--s04); height: var(--s06); border: var(--hairline) solid var(--rule); border-radius: var(--radius-pill); background: transparent; color: var(--text-secondary); white-space: nowrap; }
+.act { display: flex; justify-content: flex-end; }
+.cellL { display: none; }
+/* DESKTOP: laid out like the admin table (Maryam 16 Oct 2026, "follow admin side tables").
+   The rows are a subgrid of one shared grid, so a column is as wide as its widest cell and
+   the spare width is shared out (what table-layout:auto does); the action column hugs its
+   button. Header 13.5 Medium black over the one rule, no lines between rows, the first row
+   24 off the header, cells centred. It is a table only once the PAGE column can hold every
+   column on one line (820px, desktop at 1280); narrower, the rows are the stacked cards. */
+@container page (min-width: 820px) {
+  .agt { display: grid; grid-template-columns: var(--agt-cols); column-gap: var(--s06); }
+  .agtH, .agtR { grid-column: 1 / -1; grid-template-columns: subgrid; column-gap: inherit; }
+  .agtH { padding: var(--s04) 0; }
+  .agtR { padding: var(--s04) 0; border-bottom: 0; }
+  .agtH + .agtR { padding-top: var(--s06); }
+  .tags { flex-wrap: nowrap; }
+  .nm > :first-child { white-space: nowrap; }
+}
+.agt { --agt-cols: minmax(min-content, auto) minmax(max-content, auto) minmax(max-content, auto) minmax(max-content, auto) max-content; }
+@container page (max-width: 819.98px) {
+  .agtH { display: none; }
+  .agtR { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); padding: var(--s05) 0; }
+  .who, .tagsC { grid-column: 1 / -1; }
+  .act { grid-column: 1 / -1; justify-content: stretch; }
+  .act > * { width: 100%; }
+  .cellL { display: block; }
+}
+
+/* ---- Held tile, past interviews ---- */
+.tile { display: flex; flex-direction: column; gap: var(--s03); padding: var(--s05); border: var(--hairline) solid var(--rule); background: transparent; }
+.ivlist { border-top: var(--hairline) solid var(--rule); }
+.ivrow { display: flex; align-items: center; gap: var(--s04); width: 100%; padding: var(--s05) 0; border-bottom: var(--hairline) solid var(--rule); text-align: left; }
+.ivrow img { width: var(--avatar-agent); height: var(--avatar-agent); border-radius: var(--radius-pill); object-fit: cover; flex: none; }
+.ivrow > svg { width: var(--icon-rail); height: var(--icon-rail); margin-left: auto; color: var(--text-secondary); flex: none; }
+.ivrow:hover > svg { color: var(--accent); }
+/* Phase 1 .ivrow: name 600/-0.1, outcome 600 green, date eyebrow grey, 3px apart. */
+.ivB { display: flex; flex-direction: column; min-width: 0; }
+.ivN { font-weight: var(--t-w-semibold); letter-spacing: var(--scene-t-ls); }
+.ivOut { margin-top: var(--s01); font-weight: var(--t-w-semibold); color: var(--support-success-ink); }
+.ivEb { margin-top: var(--s01); font-weight: var(--t-w-strong); color: var(--text-secondary); }
+
+/* ---- Booking column: the agent head, then a centred 830 column ---- */
+.bkp { display: flex; align-items: center; gap: var(--s05); }
+.bkp img { width: var(--avatar-card); height: var(--avatar-card); border-radius: var(--radius-pill); object-fit: cover; flex: none; }
+.bkpB { display: flex; flex-direction: column; gap: var(--s03); min-width: 0; }
+.nameRow { display: flex; align-items: center; gap: var(--s03); }
+.verified { width: var(--icon-rail); height: var(--icon-rail); color: var(--state-done); }
+.rating { display: flex; align-items: center; gap: var(--s02); color: var(--text-primary); }
+.rating svg { width: var(--s05); height: var(--s05); color: var(--star); }
+.meta { display: flex; flex-wrap: wrap; gap: var(--s02) var(--s06); color: var(--text-secondary); }
+.meta > span { display: inline-flex; align-items: center; gap: var(--s02); }
+.meta svg { width: var(--s05); height: var(--s05); }
+.col { max-width: var(--bk-col); margin: 0 auto; display: flex; flex-direction: column; gap: var(--s07); }
+.shot { width: 100%; height: auto; border: var(--hairline) solid var(--rule); }
+.go { display: flex; }
+
+/* ---- Scenes ---- */
+.pick { display: grid; gap: var(--s04); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@container page (min-width: 600px) { .pick { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@container app (min-width: 900px) { .pick { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+.kept { display: grid; gap: var(--s04); grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@container page (min-width: 600px) { .kept { gap: var(--s05); } }
+.cell { position: relative; display: flex; flex-direction: column; min-width: 0; }
+.scene { display: flex; flex-direction: column; gap: var(--s03); text-align: left; min-width: 0; }
+.still { position: relative; display: block; width: 100%; aspect-ratio: 16 / 9; background: var(--surface-dark) var(--still) center / cover no-repeat; overflow: hidden; }
+.play { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: var(--scene-play); height: var(--scene-play); border-radius: var(--radius-pill); background: var(--scrim-media); display: grid; place-items: center; color: var(--on-dark); }
+.play svg { width: var(--s04); height: var(--s04); }
+.len { position: absolute; right: var(--s02); bottom: var(--s02); padding: var(--hairline) var(--s02); background: var(--scrim-media-2); color: var(--on-dark); font-size: var(--t-caption-size); line-height: var(--t-caption-lh); letter-spacing: var(--t-rung-ls); font-weight: var(--t-w-strong); }
+/* The profile scenes carousel (Phase 1 .scv-at) sets its time at book weight, plain tracking. */
+.lenScv { font-weight: var(--t-w-book); letter-spacing: var(--t-caption-ls); }
+/* Phase 1 .scene-t: 12.5 SemiBold, -.1 tracking. */
+.sceneT { font-size: var(--t-label-size); line-height: var(--t-label-lh); letter-spacing: var(--scene-t-ls); font-weight: var(--t-w-semibold); color: var(--text-primary); text-align: left; }
+.box { position: absolute; left: var(--s02); top: var(--s02); width: var(--s05); height: var(--s05); border: var(--hairline) solid var(--border-strong-01); background: var(--layer-01); display: grid; place-items: center; color: var(--on-accent); }
+.box svg { width: var(--s04); height: var(--s04); }
+.scene.sel .box { background: var(--accent); border-color: var(--accent); }
+.scene.sel .still { outline: var(--tab-mark) solid var(--accent); outline-offset: calc(var(--tab-mark) * -1); }
+
+/* Share: a round disc at the still's top-right, opening the platform menu. */
+.share { position: absolute; right: var(--s02); top: var(--s02); }
+.shareT { width: var(--s07); height: var(--s07); border-radius: var(--radius-pill); background: var(--scrim-media); color: var(--on-dark); display: grid; place-items: center; }
+.shareT svg { width: var(--s05); height: var(--s05); }
+.shareM { position: absolute; right: 0; top: calc(100% + var(--s02)); min-width: calc(var(--s12) * 2 + var(--s06)); background: var(--layer-01); border: var(--hairline) solid var(--rule); box-shadow: var(--shadow-menu); padding: var(--s02) 0; z-index: 30; display: flex; flex-direction: column; }
+.shareI { padding: var(--s03) var(--s05); text-align: left; white-space: nowrap; }
+.shareI:hover { background: var(--overlay-hover); }
+
+/* ---- Interview details (.signed) ---- */
+.sigH { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s05) var(--s06); }
+.sigWho { display: flex; align-items: center; gap: var(--s05); }
+.sigWho img { width: var(--avatar-sig); height: var(--avatar-sig); border-radius: var(--radius-pill); object-fit: cover; }
+.sigB { display: flex; flex-direction: column; gap: var(--s01); }
+.sigWhen { display: flex; align-items: center; gap: var(--s04); padding-left: var(--s06); border-left: var(--hairline) solid var(--rule); }
+.sigWhen > svg { width: var(--icon-page); height: var(--icon-page); color: var(--mk-3); }
+.pair { display: grid; gap: var(--s05); grid-template-columns: minmax(0, 1fr); margin-top: var(--s06); }
+@container page (min-width: 600px) { .pair { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.sigC { display: flex; align-items: flex-start; gap: var(--s05); padding: var(--s05); }
+.sigC > svg { width: var(--icon-page); height: var(--icon-page); flex: none; }
+.green { background: color-mix(in srgb, var(--mk-2) 5%, var(--layer-01)); }
+.green > svg { color: var(--mk-2); }
+.violet { background: color-mix(in srgb, var(--mk-3) 5%, var(--layer-01)); }
+.violet > svg { color: var(--mk-3); }
+.note { margin-top: var(--s05); }
+.sigCB { display: flex; flex-direction: column; gap: var(--s03); }
+.sigTop { display: flex; align-items: center; gap: var(--s03); }
+/* Candidate (Phase 1 hifi .sig-c): the title and its tag carry the card's hue. */
+.sigTag { padding: 0 var(--s03); border-radius: var(--radius-pill); font-size: var(--t-label-size); line-height: var(--t-label-lh); font-weight: var(--t-w-strong); }
+.green .sigT, .green .sigTag { color: var(--sig-green); }
+.violet .sigT, .violet .sigTag { color: var(--sig-violet); }
+.blue { background: color-mix(in srgb, var(--sig-blue) 5%, var(--layer-01)); }
+.blue > svg, .blue .sigT { color: var(--sig-blue); }
+/* Talent Agent + Super Admin (Phase 1 DS .sig-c): a grey panel in a hairline,
+   the mark and title black, the tag an accent pill with white words. */
+:global([data-portal="admin"]) .sigC, :global([data-portal="agent"]) .sigC { background: var(--surface-2); border: var(--hairline) solid var(--rule); }
+:global([data-portal="admin"]) .sigC > svg, :global([data-portal="agent"]) .sigC > svg,
+:global([data-portal="admin"]) .sigT, :global([data-portal="agent"]) .sigT { color: var(--text-primary); }
+:global([data-portal="admin"]) .sigTag, :global([data-portal="agent"]) .sigTag { background: var(--accent); color: var(--on-accent); }
+
+/* The card's words: black on the candidate report, the description grey on the admin/agent panel (Phase 1). */
+.sigX { color: var(--text-primary); }
+:global([data-portal="admin"]) .sigX, :global([data-portal="agent"]) .sigX { color: var(--text-secondary); }
+
+/* The last row draws no line of its own: the section's divider or air closes the list, so two lines never stack. */
+.ivrow:last-child { border-bottom: 0; }

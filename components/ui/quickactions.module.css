@@ -1,0 +1,28 @@
+/* Quick actions (Phase 1 §70/§98.3): a row of cards, 2 up (3 up from 900
+   when there are three), capped at 784. Card: --surface-2 ground, rule edge,
+   18px ink mark, h4 title over a static grey descriptor, arrow right. The
+   mark turns accent on hover and nothing else moves. */
+.qa { display: grid; gap: var(--s04); grid-template-columns: minmax(0, 1fr); max-width: var(--qa-max); }
+@container page (min-width: 600px) { .qa { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@container app (min-width: 900px) { .qa.three { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.c {
+  display: flex; align-items: flex-start; gap: var(--s04);
+  min-height: var(--qa-min-h);
+  padding: var(--s05) var(--s06) var(--s05) var(--qa-pl);
+  background: var(--surface-2);
+  border: var(--hairline) solid var(--rule);
+  text-align: left;
+}
+.ic { width: var(--icon-page); height: var(--icon-page); margin-top: var(--s01); color: var(--icon-primary); flex: none; }
+.ic svg { width: 100%; height: 100%; }
+.c:hover .ic { color: var(--accent); }
+.b { display: flex; flex-direction: column; gap: var(--s02); flex: 1 1 auto; min-width: 0; }
+.go { width: var(--s05); height: var(--s05); align-self: center; flex: none; color: var(--icon-primary); }
+.go svg { width: 100%; height: 100%; }
+
+/* The profile-completion ring in place of a mark. */
+.ring { position: relative; width: var(--s08); height: var(--s08); flex: none; }
+.ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.ringTrack { stroke: var(--rule); }
+.ringArc { stroke: var(--accent); }
+.ringN { position: absolute; inset: 0; display: grid; place-items: center; }

@@ -1,0 +1,36 @@
+/* ============================================================
+   TABS — the .cs strip (Phase 1 §15/§16/§120). A --surface-2 band
+   with a hairline above and below, bleeding to the page edges. The
+   selected tab is white with a 2px accent underline; counts ride the
+   tab in the caption role. One gap standard: 32 above and below.
+   ============================================================ */
+.cs {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  margin: 0 calc(var(--pad-x) * -1);
+  background: var(--surface-2);
+  border-top: var(--hairline) solid var(--rule);
+  border-bottom: var(--hairline) solid var(--rule);
+}
+.cs::-webkit-scrollbar { display: none; }
+.tab {
+  flex: none;
+  display: inline-flex; align-items: center; gap: var(--s03);
+  height: var(--tab-h);
+  padding: 0 var(--s06);
+  border-right: var(--hairline) solid var(--rule);
+  color: var(--text-secondary);
+  /* Phase 1 .cs button: 13.5 Medium on an 18px line, .05 tracking */
+  font-size: var(--t-compact-size); line-height: var(--btn-lh); letter-spacing: var(--btn-ls); font-weight: var(--t-w-strong);
+  white-space: nowrap;
+}
+.tab:hover { color: var(--text-primary); }
+.tab.on {
+  background: var(--layer-01);
+  color: var(--text-primary);
+  box-shadow: inset 0 calc(var(--tab-mark) * -1) 0 var(--accent);
+}
+.tab .n { color: var(--text-helper); letter-spacing: inherit; }
+/* Phase 1 .lf-n on the selected tab reads black, not the accent. */
+.tab.on .n { color: var(--text-primary); }

@@ -1,0 +1,94 @@
+/* ============================================================
+   CANDIDATE PROFILE — identity head, CV sections, scenes row, linked
+   accounts, courses accordion, privacy/legal. Phase 1 §105/§111.
+   ============================================================ */
+
+/* ---- Identity head (.idhead): 72px photo disc with a pencil badge ---- */
+.idhead { display: flex; align-items: center; gap: var(--s05); flex-wrap: wrap; }
+.photo { position: relative; flex: none; }
+.photo img { width: var(--avatar-id); height: var(--avatar-id); border-radius: var(--radius-pill); object-fit: cover; display: block; }
+/* `.fit`: the photo is as tall as the name + email beside it (Maryam 16 Oct 2026,
+   Super Admin My Profile), not the 72px identity disc. */
+.idhead.fit .photo img { width: var(--avatar-id-fit); height: var(--avatar-id-fit); }
+.pencil { position: absolute; right: calc(var(--s01) * -1); bottom: calc(var(--s01) * -1); width: var(--s07); height: var(--s07); border-radius: var(--radius-pill); background: var(--link); color: var(--on-accent); border: var(--tab-mark) solid var(--background); display: grid; place-items: center; }
+.pencil:hover { background: var(--link-hover); }
+.pencil svg { width: var(--s05); height: var(--s05); }
+.idB { display: flex; flex-direction: column; gap: var(--s02); flex: 1 1 auto; min-width: 0; }
+.idAct { display: flex; gap: var(--s04); margin-left: auto; }
+
+/* ---- CV rows (experience, education, licences) ---- */
+.cv { display: flex; flex-direction: column; }
+.cvRow { display: flex; align-items: flex-start; gap: var(--s04); padding: var(--s04) 0; border-bottom: var(--hairline) solid var(--rule); }
+.cvRow:last-child { border-bottom: 0; }
+.cvArt { width: var(--s09); height: var(--s09); flex: none; border: var(--hairline) solid var(--rule); background: transparent var(--art, none) center / contain no-repeat; display: grid; place-items: center; color: var(--icon-primary); }
+.cvArt svg { width: var(--icon-row); height: var(--icon-row); }
+.cvB { display: flex; flex-direction: column; gap: var(--s01); min-width: 0; }
+
+.chips { display: flex; flex-wrap: wrap; gap: var(--s03); }
+.chip { display: inline-flex; align-items: center; gap: var(--s02); height: var(--s07); padding: 0 var(--s04); border-radius: var(--radius-pill); border: var(--hairline) solid var(--rule); color: var(--text-primary); }
+.chipX { display: grid; place-items: center; color: var(--text-secondary); }
+.chipX svg { width: var(--s04); height: var(--s04); }
+.chipAdd { color: var(--accent-text); border-style: dashed; }
+
+/* ---- An in-place edit form's block (one per entry) ---- */
+.entry { padding: var(--s05); border: var(--hairline) solid var(--rule); }
+.entry + .entry { margin-top: var(--s05); }
+.entryH { display: flex; justify-content: flex-end; margin-bottom: var(--s04); }
+.g3 { display: grid; gap: var(--field-gap); grid-template-columns: minmax(0, 1fr); }
+@container page (min-width: 700px) { .g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+/* ---- Interview scenes row (.scv) ---- */
+.scvRow { display: grid; grid-auto-flow: column; grid-auto-columns: var(--scv-w); gap: var(--s05); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: var(--s02); }
+.scvArt { position: relative; display: block; }
+.scvStill.scvStill { aspect-ratio: 3 / 4; }
+.scv { scroll-snap-align: start; }
+/* The carousel arrows (Phase 1 .scv-ch): 32 squares on a hairline, an 18px chevron. */
+.scvCh { width: var(--s07); height: var(--s07); display: grid; place-items: center; border: var(--hairline) solid var(--rule); background: transparent; color: var(--text-primary); }
+.scvCh svg { width: var(--icon-page); height: var(--icon-page); }
+.scvCh:hover { background: var(--overlay-hover); }
+.scvRow::-webkit-scrollbar { display: none; }
+.scv { display: flex; flex-direction: column; gap: var(--s03); min-width: 0; }
+.att { display: flex; align-items: center; gap: var(--s03); }
+.att img { width: var(--s06); height: var(--s06); border-radius: var(--radius-pill); object-fit: cover; }
+
+/* ---- Linked accounts (.lacc) ---- */
+.lacc { display: grid; gap: var(--s04); grid-template-columns: minmax(0, 1fr); }
+@container page (min-width: 600px) { .lacc { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@container app (min-width: 900px) { .lacc { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.la { display: flex; align-items: center; gap: var(--s04); padding: var(--s05); border: var(--hairline) solid var(--rule); background: transparent; text-align: left; }
+.laMk { width: var(--s08); height: var(--s08); flex: none; color: var(--brand); display: grid; place-items: center; }
+.laMk svg { width: var(--s07); height: var(--s07); }
+.laB { display: flex; flex-direction: column; gap: var(--s01); flex: 1 1 auto; min-width: 0; }
+.linked { color: var(--support-success-ink); }
+
+/* ---- My Courses rows ---- */
+.thumb { width: calc(var(--s09) + var(--s03)); aspect-ratio: 9 / 5; object-fit: contain; background: var(--surface-2); flex: none; }
+.crsH { display: flex; align-items: center; gap: var(--s04); }
+
+/* ---- Privacy ---- */
+.srow { display: flex; align-items: center; justify-content: space-between; gap: var(--s05); padding: var(--s05) 0; border-bottom: var(--hairline) solid var(--rule); flex-wrap: wrap; }
+.srowB { display: flex; flex-direction: column; gap: var(--s01); min-width: 0; }
+.pwForm { padding: var(--s05) 0; border-bottom: var(--hairline) solid var(--rule); }
+.legalBody { display: flex; flex-direction: column; gap: var(--s05); margin-top: var(--s06); }
+.short { padding: var(--s05); background: var(--surface-2); border: var(--hairline) solid var(--rule); display: flex; flex-direction: column; gap: var(--s02); }
+
+/* ---- Photo picker ---- */
+.pick { min-height: calc(var(--s12) * 3); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--s06); }
+.big { width: var(--avatar-pick); height: var(--avatar-pick); border-radius: var(--radius-pill); object-fit: cover; }
+.bigEmpty { width: var(--avatar-pick); height: var(--avatar-pick); border-radius: var(--radius-pill); background: var(--surface-2); display: grid; place-items: center; color: var(--text-secondary); }
+.bigEmpty svg { width: var(--s08); height: var(--s08); }
+.avs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--s04); }
+.av { border-radius: var(--radius-pill); padding: var(--s01); border: var(--tab-mark) solid transparent; }
+.av img { width: 100%; aspect-ratio: 1; border-radius: var(--radius-pill); object-fit: cover; }
+.av.on { border-color: var(--accent); }
+.upload { position: absolute; width: var(--hairline); height: var(--hairline); opacity: 0; }
+
+/* The last row draws no line of its own: the section's divider or air closes the list, so two lines never stack. */
+.cvRow:last-child { border-bottom: 0; }
+.srow:last-child, .pwForm:last-child { border-bottom: 0; }
+.srowIc { justify-content: flex-start; gap: var(--s05); padding: var(--s04) 0; border-bottom: 0; flex-wrap: nowrap; }
+.srowIc > svg { width: var(--icon-page); height: var(--icon-page); flex: none; color: var(--icon-primary); }
+.srowIc > :last-child:not(.srowB) { margin-left: auto; }
+.closeB { display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--s05) var(--s06); }
+.closeX { flex: 1 1 calc(var(--s12) * 4); max-width: var(--qa-max); }
+.closeB > :last-child { margin-left: auto; }

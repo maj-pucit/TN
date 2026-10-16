@@ -1,0 +1,25 @@
+/* ============================================================
+   FINANCE — Phase 1 Epic 9 (methodMark, poReleasesCell, the discount code
+   cell, the reviewed / ingestion notes).
+   ============================================================ */
+/* The method cell is the brand mark alone; each logo at its Phase 1 height. */
+.mk { display: inline-flex; align-items: center; }
+.mk img { width: auto; display: block; }
+.mkVisa { height: var(--pay-mk-visa); }
+.mkMc { height: var(--pay-mk-mc); }
+.mkStripe { height: var(--pay-mk-stripe); }
+
+.strong { color: var(--text-primary); font-weight: var(--t-w-strong); }
+.err { color: var(--support-error); }
+.warn { color: var(--support-attention); }
+.link { color: var(--link); text-decoration: underline; }
+/* A reference that opens its transaction reads as the platform link (Phase 1 .lnk). */
+.ref { color: var(--link); text-decoration: underline; }
+.code { display: inline-flex; align-items: center; gap: var(--s03); }
+.auto { padding: var(--chip-py) var(--chip-px); border: var(--hairline) solid var(--rule); border-radius: var(--radius-pill); }
+.clamp { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; white-space: normal; max-width: var(--rec-card-w); }
+
+/* A note band: a mark, a heading and its line. */
+.note { display: flex; align-items: flex-start; gap: var(--s04); padding: var(--s05); border: var(--hairline) solid var(--rule); background: var(--surface-2); }
+.note > svg { width: var(--icon-page); height: var(--icon-page); flex: none; color: var(--icon-primary); }
+.note > span { display: flex; flex-direction: column; gap: var(--s01); }

@@ -1,0 +1,76 @@
+/* ============================================================
+   BASE — fonts, reset, the type roles as classes.
+   Values come from tokens.css. No raw values here either.
+   ============================================================ */
+
+@font-face { font-family: 'Plus Jakarta Sans'; font-weight: 400; font-display: swap; src: url('/fonts/plus-jakarta-sans-400.woff2') format('woff2'); }
+@font-face { font-family: 'Plus Jakarta Sans'; font-weight: 500; font-display: swap; src: url('/fonts/plus-jakarta-sans-500.woff2') format('woff2'); }
+@font-face { font-family: 'Plus Jakarta Sans'; font-weight: 600; font-display: swap; src: url('/fonts/plus-jakarta-sans-600.woff2') format('woff2'); }
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--surface-2);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-lh);
+  letter-spacing: var(--t-body-ls);
+  font-weight: var(--t-w-book);
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6, p, ul, ol, figure { margin: 0; padding: 0; font: inherit; }
+ul, ol { list-style: none; }
+button { font: inherit; letter-spacing: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+/* Form controls reset letter-spacing in the browser; inherit the body's .1 like Phase 1. */
+input, textarea, select { font: inherit; letter-spacing: inherit; }
+a { color: inherit; text-decoration: none; }
+svg { display: block; flex: none; }
+img { display: block; max-width: 100%; }
+
+/* ---- The type roles. <Text role="…"> renders these; nothing else sets type. ---- */
+.t-display { font-size: var(--t-display-size); line-height: var(--t-display-lh); letter-spacing: var(--t-display-ls); font-weight: var(--t-w-strong); }
+.t-page    { font-size: var(--t-page-size); line-height: var(--t-page-lh); letter-spacing: var(--t-page-ls); font-weight: var(--t-w-strong); }
+.t-h1      { font-size: var(--t-h1-size); line-height: var(--t-h1-lh); letter-spacing: var(--t-h1-ls); font-weight: var(--t-w-strong); }
+.t-h2      { font-size: var(--t-h2-size); line-height: var(--t-h2-lh); letter-spacing: var(--t-h2-ls); font-weight: var(--t-w-strong); }
+.t-h3      { font-size: var(--t-h3-size); line-height: var(--t-h3-lh); letter-spacing: var(--t-h3-ls); font-weight: var(--t-w-strong); }
+.t-h4      { font-size: var(--t-h4-size); line-height: var(--t-h4-lh); letter-spacing: var(--t-h4-ls); font-weight: var(--t-w-strong); }
+.t-sec     { font-size: var(--t-sec-size); line-height: var(--t-sec-lh); letter-spacing: var(--t-sec-ls); font-weight: var(--t-w-strong); }
+.t-sec-lg  { font-size: var(--t-sec-lg-size); line-height: var(--t-sec-lg-lh); letter-spacing: var(--t-sec-lg-ls); font-weight: var(--t-w-strong); }
+.t-body    { font-size: var(--t-body-size); line-height: var(--t-body-lh); letter-spacing: var(--t-body-ls); font-weight: var(--t-w-book); }
+.t-compact { font-size: var(--t-compact-size); line-height: var(--t-compact-lh); letter-spacing: var(--t-compact-ls); font-weight: var(--t-w-book); }
+.t-desc    { font-size: var(--t-desc-size); line-height: var(--t-desc-lh); letter-spacing: var(--t-desc-ls); font-weight: var(--t-w-book); color: var(--text-secondary); }
+.t-label   { font-size: var(--t-label-size); line-height: var(--t-label-lh); letter-spacing: var(--t-label-ls); font-weight: var(--t-w-strong); }
+.t-eyebrow { font-size: var(--t-eyebrow-size); line-height: var(--t-eyebrow-lh); letter-spacing: var(--t-eyebrow-ls); font-weight: var(--t-w-strong); color: var(--text-secondary); }
+.t-caption { font-size: var(--t-caption-size); line-height: var(--t-caption-lh); letter-spacing: var(--t-caption-ls); font-weight: var(--t-w-book); color: var(--text-helper); }
+
+.w-strong { font-weight: var(--t-w-strong); }
+.ink-primary { color: var(--text-primary); }
+.ink-secondary { color: var(--text-secondary); }
+.ink-accent { color: var(--accent-text); }
+.ink-helper { color: var(--text-helper); }
+
+/* A dark ground flips every ink by token: two inks, not three. */
+.on-dark { color: var(--on-dark); }
+.on-dark .t-desc, .on-dark .t-eyebrow, .on-dark .t-caption, .on-dark .ink-secondary { color: var(--on-dark-2); }
+
+/* No scrollbars: the platform is scrollbar-less (Phase 1 §136). */
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; transition-duration: 1ms !important; }
+}
+
+/* ---- The Super Admin (Phase 1 tn-admin-portal's own layer): a page or
+   section description reads on a 22px line; heading actions are 40 tall at
+   13px, a quiet one with no side padding. ---- */
+[data-portal="admin"] .ph-desc, [data-portal="admin"] .sh-desc,
+[data-portal="agent"] .ph-desc, [data-portal="agent"] .sh-desc { line-height: var(--t-body-lh); }
+[data-portal="candidate"] .ph-desc { line-height: var(--t-compact-lh); }

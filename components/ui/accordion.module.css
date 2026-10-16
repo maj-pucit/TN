@@ -1,0 +1,18 @@
+/* The accordion (.acc): rows between hairlines, a title and a chevron;
+   one row open at a time. `sub` is the course outline's meta line. */
+.acc { border-top: var(--hairline) solid var(--rule); }
+.acc.noTop { border-top: 0; }
+.i { border-bottom: var(--hairline) solid var(--rule); }
+/* Phase 1 .acc-h: 12px top and bottom, an accent 22px chevron. */
+.h { display: flex; align-items: center; gap: var(--s04); width: 100%; min-height: var(--acc-h); padding: var(--s04) 0; text-align: left; font-weight: var(--t-w-strong); letter-spacing: var(--btn-ls); }
+/* A row with a meta line (the course outline) is 16 deep (Phase 1 .ol-row). */
+.h:has(.hB > :nth-child(2)) { padding: var(--s05) 0; }
+.hB:has(> :nth-child(2)) { gap: var(--s02); }
+.hB { display: flex; flex-direction: column; gap: var(--s01); flex: 1 1 auto; min-width: 0; }
+.chev { width: var(--icon-row); height: var(--icon-row); color: var(--accent); flex: none; transition: transform var(--mo-quick) var(--mo-standard); }
+.i.on .chev { transform: rotate(180deg); }
+.b { padding: 0 0 var(--s05); max-width: var(--qa-max); }
+.b.full { max-width: none; }
+
+/* The last row draws no line of its own: the section's divider or air closes the list, so two lines never stack. */
+.i:last-child { border-bottom: 0; }

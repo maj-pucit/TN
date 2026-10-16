@@ -1,0 +1,428 @@
+/* ============================================================
+   TOKENS — THE ONLY FILE IN PHASE 0 THAT HOLDS A RAW VALUE.
+
+   Every colour, type role, space step, radius, shadow and size the
+   three portals use is declared here and nowhere else. Components
+   read `var(--…)`; pages read components. The lint guard
+   (`.stylelintrc.json`, `scripts/guard.mjs`) refuses a hex, an rgb()
+   or a px spacing/type value anywhere outside this file.
+
+   Values are copied from Phase 1's design system as it renders today
+   (outputs/design-system/talentnext-ds.css, resolved :root cascade,
+   15 Oct 2026). A universal design ask = change the token here.
+   ============================================================ */
+
+:root {
+  /* ---- Brand + accent ---------------------------------------- */
+  --accent: #f9423a;          /* the brand red: fills, marks, selected rail row */
+  --accent-2: #d63932;        /* one step deeper: dark-card haze, hot strokes */
+  --accent-text: #c2332d;     /* the accent as INK (AA on white). Words use this, not --accent */
+  --accent-hover: #9a2924;
+  --accent-tint: #ffd6d5;
+  --accent-on-dark: #dd7a7a;  /* accent as ink on the black card */
+  --on-accent: #ffffff;
+  --brand-primary: #000000;   /* the black primary button */
+  --brand-primary-hover: #262625;
+  --brand-primary-active: #393938;
+  --on-brand: #ffffff;
+
+  /* ---- Grounds ---------------------------------------------- */
+  --background: #ffffff;
+  --layer-01: #ffffff;        /* cards, panels: always white */
+  --layer-02: #f7f7f7;        /* quiet grey chip ground, secondary button */
+  --layer-accent-01: #dcdad3;
+  --surface-2: #fcfcfc;       /* tinted panel / page margin: one grey */
+  --surface-3: #fcfcfc;
+  --surface-dark: #111111;    /* the black card */
+  --surface-dark-2: #262625;
+
+  /* ---- Ink ---------------------------------------------------- */
+  --text-primary: #111111;
+  --text-secondary: #828282;  /* EVERY description, supporting line, eyebrow */
+  --text-helper: #666563;     /* floor tier ONLY: timestamps, legal, axes, captions */
+  --text-placeholder: #a9a8a5;
+  --text-disabled: #a9a8a5;
+  --on-dark: #ffffff;
+  --on-dark-2: #c7c6c3;       /* secondary AND helper on a dark card */
+  --icon-primary: #111111;    /* a decorative mark is ink */
+  --link: #0371a4;
+  --link-hover: #025c86;
+
+  /* ---- Lines ---------------------------------------------------- */
+  --rule: #efefef;            /* THE hairline: every stroke, border, divider */
+  --border-subtle-02: #c7c6c3;/* control edge: a field must stay findable */
+  --border-strong-01: #8e8d8a;
+  --focus: #ff3733;           /* field focus line */
+
+  /* ---- Greys ---------------------------------------------------- */
+  --gray-10: #f5f4f0;
+  --gray-20: #e1e0dc;
+  --gray-30: #c7c6c3;
+  --gray-40: #a9a8a5;
+  --gray-50: #8e8d8a;
+  --gray-60: #706f6d;
+  --gray-70: #525250;
+  --gray-100: #111111;
+
+  /* ---- State (a SET: does not follow the accent) ---------------- */
+  --support-success: #24a148;
+  --support-success-ink: #1a7f37;
+  --support-success-bg: #d7f0dd;
+  --support-attention: #96540a;
+  --support-warning-bg: #fcf4d6;
+  --support-error: #da1e28;
+  --support-error-bg: #ffd7d9;
+  --in-progress: #b34d00;
+  --star: #ffcb05;
+  --state-done: #00a43c;       /* the done / verified green (journey, verified tick) */
+  --state-on: #f47113;         /* the current journey step */
+  --mk-2: #1c7a5e;             /* report "Strengths" category hue (Phase 1 --mk-2) */
+  --mk-3: #7c4bb0;             /* report "Growth / note" category hue (Phase 1 --mk-3) */
+  --scrim-media: rgba(0, 0, 0, .44);  /* play disc / share disc over a video still */
+  --scrim-media-2: rgba(0, 0, 0, .62);
+
+  /* ---- Overlays ------------------------------------------------- */
+  --overlay: rgba(17, 17, 17, .55);
+  --overlay-hover: rgba(17, 17, 17, .04);
+  --overlay-selected: rgba(17, 17, 17, .08);
+  --on-dark-rule: rgba(255, 255, 255, .16);
+  --on-dark-track: rgba(255, 255, 255, .24);
+  --shadow-menu: 0 8px 24px rgba(17, 17, 17, .12);
+  --shadow-modal: 0 24px 64px rgba(17, 17, 17, .18);
+
+  /* ---- Data viz (never the brand red) ---------------------------- */
+  --dv-1: #cfded4;
+  --dv-2: #8fbca6;
+  --dv-3: #3d8a6e;
+  --dv-4: #1e5546;
+  --dv-hi: #c2703d;
+  --dv-gold: #a8791b;
+  --dv-mid: #6b6b6b;
+  --chart-line: #1a7f37;       /* the performance line (Phase 1 perf-line) */
+  --chart-lo: #c21520;         /* the lowest point on it */
+  --danger-ink: #c21520;       /* a destructive text action: Remove, Sign Out (Phase 1 .danger ink) */
+  --chart-h: 180px;          /* the grey series in admin charts (was a literal in Phase 1) */
+
+  /* ---- The page wash ---------------------------------------------
+     Phase 1's "Summary by Tal" band ground (--ai-wash, Figma 871:6425).
+     Phase 0 has no summary band, so the SAME gradient is painted by
+     <Page> across the top of every page, all three portals. */
+  /* Hidden on every portal (Maryam 16 Oct 2026). The gradient is kept below; swap it back in to restore. */
+  --page-wash: none;
+  --page-wash-on: linear-gradient(183.76deg, rgba(189, 42, 42, .05) 11.02%, rgba(255, 255, 255, .05) 52.27%);
+  /* The dashboard top band (candidate + agent) keeps the gradient (Maryam 16 Oct 2026). */
+  --band-wash: var(--page-wash-on);
+  --page-wash-h: 360px;
+
+  /* ---- Space ------------------------------------------------------ */
+  --s01: 2px;
+  --s02: 4px;
+  --s03: 8px;
+  --s04: 12px;
+  --s05: 16px;
+  --s06: 24px;
+  --s07: 32px;
+  --s08: 40px;
+  --s09: 48px;
+  --s10: 64px;
+  --s11: 80px;
+  --s12: 96px;
+
+  /* ---- Rhythm (read ONLY by the primitives) --------------------- */
+  --pad-x: 24px;              /* THE page side gutter: 24 below 1200, 32 at >=1200 */
+  --sec-gap: 28px;            /* THE section gap: 28 between any two sections, and 28 each side of a divider (Maryam 16 Oct 2026: 40, then 28) */
+  --sec-pad-y: calc(var(--sec-gap) / 2); /* section top/bottom: 14 + 14 = 28 */
+  --sec-block-gap: 20px;      /* two bare block rows in a row (no heading) */
+  --sec-h-gap: var(--s05);    /* heading -> its content (16, Maryam 16 Oct 2026) */
+  --sec-desc-gap: var(--s03); /* heading -> its own description */
+  --ph-pad-top: var(--s07);   /* page header top */
+  --ph-pad-bottom: var(--sec-gap); /* page heading -> its divider */
+  --page-pad-bottom: var(--s12);
+  --content-max: 1040px;
+
+  /* ---- Shape --------------------------------------------------------- */
+  --radius: 0px;              /* radius 0, platform-wide */
+  --radius-pill: 999px;       /* discs, pills, the round chips (stated exceptions) */
+  --radius-card-tal: 16px;    /* Tal reply stat card */
+  --radius-cbx: 4px;          /* auth consent boxes */
+  --hairline: 1px;
+
+  /* ---- Shell ---------------------------------------------------------- */
+  --bar-h: 68px;
+  --rail-w-nav: 72px;
+  --drawer-w: 260px;
+  --drawer-w-admin: 310px;
+  --rail-item-h: 48px;
+  --rail-bar-w: 2px;          /* the selected module's accent bar, full row height (Phase 1 §14) */
+  --nav-mark: 21px;           /* the TN mark in the shut rail's bar cell */
+  --nav-close-w: 56px;        /* the open drawer's close X cell */
+  --nav-logo-h: 26px;         /* the TALENTnext wordmark in the open drawer's bar cell */
+  --content-gutter: clamp(24px, 12cqw, 200px); /* desktop content margin from rail + wall (Phase 1 §14.3b) */
+  --icon-rail: 20px;
+  --icon-page: 18px;
+  --icon-sm: 16px;            /* a call-row action's mark (Phase 1 .crow-a) */
+  --icon-row: 22px;
+  --avatar-bar: 32px;
+  --bell: 44px;
+  /* Onboarding (Phase 1 §107, measured at 1024): the side rails 100 in, the
+     wordmark 124 wide, the question column 720, the welcome column 460,
+     the welcome orb 144 and the question orb 52, buttons 48 tall. */
+  --ob-rail-x: 100px;
+  --ob-logo-w: 124px;
+  --ob-wrap: 720px;
+  --ob-col: 460px;
+  --ob-orb: 144px;
+  --ob-orb-sm: 52px;
+  --ob-btn-h: 48px;
+  --t-lede-size: 16px; --t-lede-lh: 26px;
+  /* the h1 role at desktop, used at every width by the course name on the black card */
+  --t-h1-lg-size: 28px; --t-h1-lg-lh: 34px; --t-h1-lg-ls: -.7px;
+  --rec-meta-gap: 20px;    /* Phase 1 .rec-f */
+  --ltr-py: 7px; --ltr-px: 14px;  /* Phase 1 .ltr-chip */
+  --cal-dw-ls: .8px;              /* Phase 1 .calw-dw */
+  --scene-t-ls: -.1px;            /* Phase 1 .scene-t */
+  --acc-h: 56px;                  /* Phase 1 .acc-h */
+  --qa-pl: 20px;                  /* Phase 1 .qa-c left inset */
+  --t-gfilt-size: 12px; --gfilt-px: 9px;  /* Phase 1 .gfilt period buttons */
+  /* the candidate report's three evaluation cards (Phase 1 hifi .sig-c titles) */
+  --sig-green: #1c7a5e; --sig-violet: #7c4bb0; --sig-blue: #0f6ba8;
+  --rec-meta-ic-gap: 6px;
+  --ob-radio-w: 1.5px;
+  /* the h1 role below 900 (24/30), kept for the survey question at every width */
+  --t-h1-base-size: 24px; --t-h1-base-lh: 30px; --t-h1-base-ls: -.5px;          /* Phase 1 .shell-act */
+  --badge-h: 15px;       /* Phase 1 .shell-badge */
+  --badge-top: 6.5px;
+  --badge-left: 22.5px;
+
+  /* ---- Components (measured off Phase 1 as it renders, 15 Oct 2026) ---- */
+  --ctrl-h: 40px;             /* button, input, form dropdown */
+  --ctrl-h-sm: 32px;
+  --filter-h: 36px;           /* toolbar filter dropdown / date filter */
+  --tab-h: 48px;              /* tab strip row */
+  --tab-mark: 2px;            /* the selected tab's accent underline */
+  --pg-btn: 28px;             /* pagination page button */
+  --slider-w: 532px;          /* the right slider (in-flow form panel) */
+  --sheet-h-h: 68px;          /* slider / sheet header row */
+  --field-gap: var(--s07);    /* field to field in a form */
+  --label-gap: var(--s03);    /* field label to its control */
+  --avatar-row: 28px;         /* a face in a table cell */
+  --avatar-list: 36px;        /* a face in a list row (Phase 1 .mem-av) */
+  --day-col: 104px;           /* a list row's day/time block (Phase 1 .bk-day) */
+  --label-col: 184px;         /* a key/value label column (Phase 1 §10.5) */
+  --avatar-card: 78px;        /* a face on the black call card */
+  --avatar-rec: 100px;        /* the recommended agent's face */
+  --scv-w: 240px;             /* a profile scene card (Phase 1 .scv) */
+  --dock-gap: 20px;           /* a floating action bar's gap off the bottom (Maryam 16 Oct 2026) */
+  --jrn-mark: 24px;           /* a journey stepper's state mark */
+  --jrn-max: 78%;             /* the stepper row's share of the column */
+  --qa-max: 784px;            /* the quick-action row's max width */
+  --qa-min-h: 74px;
+  --prog-seg-h: 2px;
+  --rung-h: 28px;             /* a level ladder rung */
+  --scene-play: 32px;
+  --avatar-agent: 48px;       /* a face in a past-interview row */
+  --avatar-agt-tbl: 40px;     /* a face in the agents table (Maryam 16 Oct 2026: a little smaller) */
+  --avatar-sig: 44px;
+  --avatar-id: 72px;          /* the profile identity photo */
+  /* The photo as tall as the name (h3, 23) + 4 + the email (desc, 13.5 at the face's
+     own leading = 17): 44. Re-derive if either role changes (Maryam 16 Oct 2026). */
+  --avatar-id-fit: 44px;
+  --avatar-pick: 160px;       /* the photo picker's preview */
+  --modal-w: 440px;           /* a centred dialog */
+  --pay-w: 460px;             /* the Stripe picture */
+  --bk-col: 830px;            /* the booking column (calendar / checkout) */
+  --act-col: 128px;           /* a list row's action column (header and rows align) */
+  --dark-haze:
+    radial-gradient(56% 128% at 66% -8%, rgba(249, 66, 58, .19) 0%, transparent 64%),
+    radial-gradient(56% 128% at 96% -8%, rgba(214, 57, 50, .19) 0%, transparent 64%);
+
+  /* ---- Auth scene (Phase 1 §17 / §57 / §132) ---- */
+  --auth-card-w: 588px;
+  --auth-logo-w: 150px;
+  --auth-lede-w: 320px;
+  --auth-chip: rgba(0, 0, 0, .03);      /* the email banner ground */
+  --auth-shade: linear-gradient(0deg, rgba(0, 0, 0, .78) 0%, rgba(0, 0, 0, .45) 28%, transparent 55%);
+  --auth-shade-top: linear-gradient(180deg, rgba(0, 0, 0, .35) 0%, transparent 22%);
+  --auth-bar-w: 32px;
+  --auth-bar-h: 5px;
+  --auth-bar-track: rgba(255, 255, 255, .2);
+
+  /* ---- Talent Agent pieces (Phase 1 tn-agent-portal.html, measured 15 Oct 2026) ---- */
+  --ai-hl-bg: rgba(255, 55, 51, .05);   /* a highlighted phrase in Tal's read */
+  --accent-wash: rgba(249, 66, 58, .08); /* a selected chip's ground (TALENT letters) */
+  --chip-py: 7px;
+  --chip-px: 14px;
+  --rec-card-w: 480px;        /* the interview recording card */
+  --rec-thumb-w: 64px;
+  --rec-thumb-h: 44px;
+  --course-cover-w: 96px;  /* the course detail head cover, Phase 1 .crs-idphoto */
+  --course-cover-h: 64px;
+  --pay-mk-visa: 16px;     /* Phase 1 METHOD_IMG heights: Visa 16, Mastercard 30, Stripe 15 */
+  --pay-mk-mc: 30px;
+  --pay-mk-stripe: 15px;
+  /* Chart text inside an SVG viewBox: user units that scale with the chart,
+     not page type (Phase 1 admin dashboard lineChart / barChart / rings). */
+  --svg-axis-size: 6px;
+  --svg-axis-ls: .4px;
+  --svg-ring-label: 14px;
+  --svg-ring-value: 26px;
+  --ladder-h: 28px;           /* a rung of the 15-rung picker */
+  --tx-time-w: 72px;          /* the transcript's timestamp column */
+  --t-micro-size: 10px;       /* the ladder's rung codes on a phone only (Phase 1 .iv-ladder b) */
+
+  /* ---- The agent calendar (Phase 1 §41/§42) ---- */
+  --cal-iv: #cce7cb;          /* a first interview's block */
+  --cal-reiv: #e0c0ff;        /* a re-interview's block */
+  --cal-open: #e9dedc;        /* an open slot */
+  --radius-ev: 8px;           /* the time-grid block (stated radius exception, §115) */
+  --radius-slot: 6px;         /* the month row */
+  --shadow-pop: 0 12px 32px rgba(0, 0, 0, .12), 0 2px 6px rgba(0, 0, 0, .06);
+  --rule-strong-w: 2px;       /* the now-line */
+  --cal-min-w: 640px;         /* the week grid scrolls sideways below this */
+  --cal-axis-w: 56px;
+  --cal-hour: 88px;
+  --cal-today-d: 26px;
+  --cal-today-m: 22px;
+  --cal-who: 18px;
+  --cal-day-h: 112px;
+  --cal-day-h-m: 88px;
+  --cal-pop-w: 264px;
+
+  /* ---- Super Admin dashboard (Phase 1 homeOverview, measured 15 Oct 2026) ---- */
+  --chart-grey: #6b6b6b;      /* the third series / the "Deactivated" + "Refunded" mark (Phase 1 literal) */
+  --chart-track: #e5e5ef;     /* the rings' light track */
+  --chart-up: #04ce00;        /* the earnings sparklines (Maryam's supplied artwork) */
+  --chip-up-bg: color-mix(in srgb, var(--support-success) 14%, white);  /* the green "↗ 12%" chip */
+  --legend-dot: 9px;
+  --radius-dot: 3px;
+  --t-fig-ls: -.5px;          /* Phase 1 .pstat-n / .lc-n tracking */
+  --t-fig-size: 28px;         /* a dashboard headline figure ($274, 362) */
+  --t-fig-sm: 20px;           /* an earnings stream's value */
+  --ring-w: 160px;
+  --earn-spark-h: 19px;
+  --attn-ic: 40px;
+  --status-bar-h: 13px;       /* the users-by-status bar */
+  --dcal-w: 266px;            /* the date filter's month grid */
+  --toast-w: 360px;
+  --cb-edge: 1.5px;           /* a row-select box's edge */
+  --radius-cb: 5px;           /* the row-select box (stated radius exception) */
+  --shadow-bar: 0 1px 2px rgba(17, 17, 17, .05), 0 8px 20px rgba(17, 17, 17, .1), 0 2px 6px rgba(17, 17, 17, .06);
+
+  /* ---- Next in Leadership run-up (Phase 1 30-nil.css + §63) -------------
+     ANOTHER COMPANY'S PAGE, SO ITS OWN BRAND: navy + lime, a condensed
+     display face, its own sizes. Read only by components/nil/. The hexes
+     were sampled by eye from the nextinleadership.com screenshots in Phase 1;
+     swap them for the brand sheet's when it lands. */
+  --nil-navy: #0b2245;
+  --nil-navy-2: #153260;
+  --nil-lime: #c8fa4b;
+  --nil-lime-2: #bdf033;
+  --nil-ink: #333333;
+  --nil-sub: #5d6a76;
+  --nil-priv: #8b959d;
+  --nil-field: #ebedee;
+  --nil-field-ink: #1b2c3f;
+  --nil-ph: #9aa4ac;
+  --nil-card-line: #e4e7ea;
+  --nil-hair: #c9ced3;
+  --nil-ghost-hover: #f4f6f7;
+  --nil-req: #e0264c;
+  --nil-link: #2f80ed;
+  --nil-focus: 0 0 0 3px rgba(11, 34, 69, .14);
+  --nil-display: 'Arial Narrow', 'Liberation Sans Narrow', 'Nimbus Sans Narrow', 'Inter', system-ui, sans-serif;
+  --nil-sans: 'Inter', system-ui, sans-serif;
+  --nil-w-heavy: 800;
+  --nil-w-bold: 700;
+  --nil-w-semi: 600;
+  --nil-wrap: 1064px;
+  --nil-wrap-wide: 1196px;
+  --nil-logo-h: 38px;
+  --nil-logo-h-m: 32px;
+  --nil-bar-py: 10px;
+  --nil-cta-py: 9px;
+  --nil-pill-py: 6px;
+  --nil-share-py: 7px;
+  --nil-radius-card: 10px;
+  --nil-radius-card-m: 8px;
+  --nil-radius: 6px;
+  --nil-radius-pill: 4px;
+  --nil-radius-cta: 3px;
+  --nil-field-h: 52px;
+  --nil-btn-h: 48px;
+  --nil-otp-w: 62px;   --nil-otp-h: 70px;
+  --nil-otp-w-m: 44px; --nil-otp-h-m: 56px;
+  --nil-ico: 19px;
+  --nil-ico-step: 20px;
+  --nil-ico-btn: 17px;
+  --nil-ico-cta: 15px;
+  --nil-ico-share: 16px;
+  --nil-t-nav: 13px;
+  --nil-t-label: 12.5px;
+  --nil-t-eyebrow: 20px;
+  --nil-t-h1: 42px;     --nil-t-h1-m: 27px;
+  --nil-t-sub: 14.5px;
+  --nil-t-field: 15px;
+  --nil-t-otp: 30px;    --nil-t-otp-m: 24px;
+  --nil-t-hey: 25px;    --nil-t-hey-m: 19px;
+  --nil-t-type: 72px;   --nil-t-type-m: 48px;
+  --nil-t-h3: 24px;
+  --nil-t-h2: 46px;     --nil-t-h2-m: 30px;
+  --nil-t-share: 13px;
+  --nil-t-band: 36px;
+  --nil-sub-w: 60ch;
+  --nil-para-w: 42ch;
+  /* the navy head of the result panel is a speech bubble (the NIL mark's shape) */
+  --nil-bubble: polygon(0 0, 100% 0, 100% 72%, 26% 84%, 20% 100%, 15% 85%, 0 88%);
+
+  /* ---- Prototype chrome (the frame around the device, not the product) ---- */
+  --frame-mobile-w: 390px;
+  --frame-mobile-h: 844px;
+  --frame-tablet-w: 744px;
+  --frame-tablet-h: 1024px;
+  --chrome-ground: #ececea;
+
+  /* ---- Type ------------------------------------------------------------
+     Eight sizes, eleven roles, two weights. Plus Jakarta Sans. */
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --t-w-book: 400;
+  --t-w-strong: 500;
+  --btn-lh: 18px;   /* Phase 1 .btn computed line height */
+  --btn-ls: .05px;  /* Phase 1 .btn / rail tracking */
+  --t-adm-btn-size: 13px; /* the Super Admin's small heading buttons */
+  --t-badge-size: 10px; /* the bell count, the ladder rung code */
+  --t-rung-ls: .4px;
+  --t-w-semibold: 600;        /* stated exceptions only (auth welcome h2) */
+
+  --t-display-size: 34px; --t-display-lh: 40px; --t-display-ls: -1px;
+  /* the page heading (PageHeader: title or greeting), every page, every width (Maryam 15 Oct 2026: 22px) */
+  --t-page-size: 22px;    --t-page-lh: 28px;    --t-page-ls: -.4px;
+  --t-h1-size: 24px;      --t-h1-lh: 30px;      --t-h1-ls: -.5px;
+  --t-h2-size: 20px;      --t-h2-lh: 26px;      --t-h2-ls: -.3px;
+  --t-h3-size: 17px;      --t-h3-lh: 23px;      --t-h3-ls: -.2px;
+  --t-h4-size: 14px;      --t-h4-lh: 19px;      --t-h4-ls: -.02px;
+  --t-sec-size: 16px;     --t-sec-lh: 22px;     --t-sec-ls: -.15px;
+  --t-sec-lg-size: 18px;  --t-sec-lg-lh: 24px;  --t-sec-lg-ls: -.2px;
+  --t-body-size: 13.5px;  --t-body-lh: 22px;    --t-body-ls: .1px;
+  --t-compact-size: 13.5px; --t-compact-lh: 19px; --t-compact-ls: .1px;
+  --t-desc-size: 13.5px;  --t-desc-lh: normal;  --t-desc-ls: .1px;
+  --t-label-size: 12.5px; --t-label-lh: 17px;   --t-label-ls: .1px;
+  --t-eyebrow-size: 11.5px; --t-eyebrow-lh: 16px; --t-eyebrow-ls: .2px;
+  --t-caption-size: 11.5px; --t-caption-lh: 16px; --t-caption-ls: .1px;
+
+  /* ---- Motion -------------------------------------------------------- */
+  --mo-quick: 150ms;
+  --mo-base: 240ms;
+  --mo-enter: cubic-bezier(.05, .7, .1, 1);
+  --mo-standard: cubic-bezier(.2, 0, 0, 1);
+}
+
+/* The only breakpoints that change a token. Components never restate a
+   value per width; they read the token, and the token moves here. */
+@container app (min-width: 900px) {
+  .app-root {
+    --t-h1-size: 28px; --t-h1-lh: 34px; --t-h1-ls: -.7px;
+  }
+}
+@container app (min-width: 1200px) {
+  .app-root { --pad-x: 32px; }
+}

@@ -1,0 +1,51 @@
+/* ============================================================
+   DROPDOWN — our own, never a native <select> (Phase 1 §123/§128).
+   filter: a 36px bordered trigger in a toolbar.
+   form:   a 40px underlined trigger in a form, full width.
+   The menu opens DOWNWARD and overlays the content below it.
+   ============================================================ */
+.dd { position: relative; min-width: 0; }
+.form { width: 100%; }
+
+.t {
+  display: inline-flex; align-items: center; justify-content: space-between;
+  gap: var(--s02);
+  width: 100%;
+  white-space: nowrap;
+  text-align: left;
+  color: var(--text-primary);
+}
+.t svg { width: var(--s05); height: var(--s05); color: var(--text-secondary); transition: transform var(--mo-quick) var(--mo-standard); }
+.t:disabled { cursor: not-allowed; border-bottom-style: dashed; }
+.t:disabled svg { opacity: .4; }
+.t[aria-expanded="true"] svg { transform: rotate(180deg); }
+.filter .t { height: var(--filter-h); padding: 0 var(--s04); background: transparent; border: var(--hairline) solid var(--rule); }
+.form .t { height: var(--ctrl-h); padding: 0 var(--s05) 0 0; border-bottom: var(--hairline) solid var(--rule); }
+.form .t[aria-expanded="true"] { border-bottom-color: var(--focus); box-shadow: inset 0 calc(var(--hairline) * -1) 0 var(--focus); }
+.ph { color: var(--text-placeholder); }
+.lbl { color: var(--text-secondary); }
+
+.menu {
+  position: absolute;
+  top: calc(100% + var(--s02));
+  right: 0;
+  min-width: 100%;
+  max-height: calc(var(--s12) * 4);
+  overflow-y: auto;
+  display: flex; flex-direction: column;
+  background: var(--layer-01);
+  border: var(--hairline) solid var(--rule);
+  box-shadow: var(--shadow-menu);
+  z-index: 40;
+}
+.form .menu { left: 0; right: auto; }
+.opt {
+  display: flex; align-items: center; gap: var(--s02);
+  padding: var(--s03) var(--s04);
+  white-space: nowrap;
+  text-align: left;
+}
+.opt:hover { background: var(--overlay-hover); }
+.opt.on { background: var(--overlay-selected); }
+.opt img { width: var(--s06); height: var(--s06); border-radius: var(--radius-pill); object-fit: cover; }
+.meta { margin-left: auto; padding-left: var(--s05); color: var(--text-secondary); }

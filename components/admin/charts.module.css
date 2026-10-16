@@ -1,0 +1,34 @@
+/* Dashboard charts (Phase 1 .lchart / .gfilt / .pring / sparklines), measured 15 Oct 2026. */
+.chart { display: flex; flex-direction: column; gap: var(--s05); }
+.leg { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s04); }
+.chips { display: flex; flex-wrap: wrap; gap: var(--s03) var(--s05); }
+.chip { display: inline-flex; align-items: center; gap: var(--s02); color: var(--text-secondary); }
+.chip i, .ringRow i { width: var(--legend-dot); height: var(--legend-dot); border-radius: var(--radius-pill); background: var(--c); flex: none; }
+.gfilt { display: flex; gap: var(--s02); }
+/* Phase 1 .gfilt button: 12px Medium on a 12px line, 4 by 9 inside. */
+.gfilt button { padding: var(--s02) var(--gfilt-px); border-radius: var(--radius-pill); font-size: var(--t-gfilt-size); line-height: var(--t-gfilt-size); font-weight: var(--t-w-strong); color: var(--text-secondary); }
+.gfilt button:hover { background: var(--overlay-hover); }
+.gfilt button.on { background: var(--accent); color: var(--on-accent); }
+.svg { display: block; width: 100%; height: auto; }
+.grid { stroke: var(--rule); stroke-width: 1; }
+.ax { font-size: var(--svg-axis-size); letter-spacing: var(--svg-axis-ls); fill: var(--text-helper); }
+.knob { stroke: var(--background); stroke-width: 1; }
+.pill { fill: var(--text-primary); }
+.pillT { font-size: var(--svg-axis-size); fill: var(--on-dark); }
+.fig { display: flex; flex-direction: column; gap: var(--s01); margin: var(--s08) 0 var(--s04); }
+.total { font-size: var(--t-fig-size); line-height: 1; letter-spacing: var(--t-fig-ls); font-weight: var(--t-w-strong); color: var(--text-primary); }
+
+.ring { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s06) calc(var(--s09) + var(--s01)); margin-top: var(--s05); }
+.ring svg { width: var(--ring-w); height: var(--ring-w); flex: none; }
+.track { stroke: var(--chart-track); stroke-width: 8.519; }
+.arc { stroke-width: 14; stroke-linecap: round; }
+.rl { font-size: var(--svg-ring-label); fill: var(--text-secondary); }
+.rv { font-size: var(--svg-ring-value); font-weight: var(--t-w-strong); fill: var(--text-primary); }
+.ringLeg { display: flex; flex-direction: column; gap: var(--s05); }
+.ringRow { display: flex; align-items: center; gap: var(--s03); }
+.ringRow i { border-radius: var(--radius-dot); }
+.ringRow b { margin-left: var(--s02); font-weight: var(--t-w-strong); color: var(--text-primary); }
+
+.spark { stroke: var(--accent); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.earnSpark { width: auto; height: var(--earn-spark-h); flex: none; }
+.earnSpark path { stroke: var(--chart-up); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }

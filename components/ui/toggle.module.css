@@ -1,0 +1,10 @@
+/* A settings toggle row (Phase 1 .tg): title + description left, switch right. */
+.row { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--s06); padding: var(--s05) 0; border-bottom: var(--hairline) solid var(--rule); }
+.b { display: flex; flex-direction: column; gap: var(--s02); min-width: 0; }
+.sw { position: relative; flex: none; width: var(--s08); height: var(--s06); border-radius: var(--radius-pill); background: var(--gray-30); transition: background-color var(--mo-quick) var(--mo-standard); }
+.sw::after { content: ""; position: absolute; top: var(--s01); left: var(--s01); width: calc(var(--s06) - var(--s02)); height: calc(var(--s06) - var(--s02)); border-radius: var(--radius-pill); background: var(--layer-01); transition: transform var(--mo-quick) var(--mo-standard); }
+.sw[aria-checked="true"] { background: var(--accent); }
+.sw[aria-checked="true"]::after { transform: translateX(calc(var(--s08) - var(--s06))); }
+
+/* The last row draws no line of its own: the section's divider or air closes the list, so two lines never stack. */
+.row:last-child { border-bottom: 0; }

@@ -1,0 +1,15 @@
+/* The 15-rung level ladder on the black card (Phase 1 .ladder): rungs 28px
+   tall, 2px apart; passed rungs accent, the current rung a deep accent,
+   rungs ahead a faint white; track names under the first rung of each. */
+.ladder { display: flex; gap: var(--s01); }
+.r { font-style: normal; flex: 1 1 0; height: var(--rung-h); display: grid; place-items: center; background: var(--on-dark-rule); color: var(--on-dark); }
+.r.done { background: var(--accent); }
+.r.on { background: color-mix(in srgb, var(--accent) 40%, var(--surface-dark)); }
+.lab { display: grid; grid-template-columns: repeat(15, minmax(0, 1fr)); gap: var(--s01); margin-top: var(--s03); color: var(--on-dark-2); }
+.lab span { white-space: nowrap; }
+.lab span:nth-child(1) { grid-column: 1; }
+.lab span:nth-child(2) { grid-column: 6; }
+.lab span:nth-child(3) { grid-column: 11; }
+
+/* The rung code: 10 SemiBold, .4 tracking, white on every rung (Phase 1 .ladder b). */
+.r b { font-size: var(--t-badge-size); line-height: var(--t-badge-size); letter-spacing: var(--t-rung-ls); font-weight: var(--t-w-semibold); color: var(--on-dark); }

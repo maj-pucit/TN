@@ -1,0 +1,69 @@
+/* ============================================================
+   THE AUTH SCENE — Phase 1 §17/§57/§132 as it renders: a photo slider
+   panel on the left (900 and up), the form card on the right. Below 900
+   the panel is gone and the form fills the frame.
+   ============================================================ */
+.wrap { min-height: 100%; display: grid; grid-template-columns: minmax(0, 1fr); background: var(--background); }
+@container app (min-width: 900px) {
+  .wrap { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); background: var(--surface-2); }
+}
+
+/* ---- Brand panel: three photos cross-fade on a pure-CSS 15s cycle ---- */
+.brand { display: none; position: relative; overflow: hidden; color: var(--on-dark); background: var(--surface-dark); }
+@container app (min-width: 900px) { .brand { display: flex; flex-direction: column; justify-content: space-between; } }
+.slide { position: absolute; inset: 0; background: center / cover no-repeat; opacity: 0; animation: authSlide 15s infinite; }
+.s1 { background-image: url(/images/art/auth-slide-1.webp); animation-delay: 0s; }
+.s2 { background-image: url(/images/art/auth-slide-2.webp); animation-delay: 5s; }
+.s3 { background-image: url(/images/art/auth-slide-3.webp); animation-delay: 10s; }
+@keyframes authSlide { 0% { opacity: 0; } 6% { opacity: 1; } 33% { opacity: 1; } 39% { opacity: 0; } 100% { opacity: 0; } }
+.brand::before, .brand::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+.brand::before { background-image: var(--auth-shade-top); }
+.brand::after { background-image: var(--auth-shade); }
+.logo { position: relative; z-index: 2; width: var(--auth-logo-w); margin: var(--s10) 0 0 var(--s08); color: var(--on-dark); }
+.logo svg { width: 100%; height: auto; display: block; }
+.copy { position: relative; z-index: 2; display: flex; flex-direction: column; gap: var(--s03); padding: 0 var(--s08) var(--s07); }
+.welcome { font-weight: var(--t-w-semibold); }
+.lede { max-width: var(--auth-lede-w); color: var(--on-dark); }
+.foot { display: flex; align-items: center; justify-content: space-between; gap: var(--s05); margin-top: var(--s07); color: var(--on-dark); }
+.bars { display: flex; gap: var(--s03); }
+.bar { position: relative; width: var(--auth-bar-w); height: var(--auth-bar-h); border-radius: var(--radius-pill); background: var(--auth-bar-track); overflow: hidden; }
+.bar::before { content: ""; position: absolute; inset: 0; background: var(--accent); transform: scaleX(0); transform-origin: left; animation: authBar 15s infinite; }
+.bar:nth-child(2)::before { animation-delay: 5s; }
+.bar:nth-child(3)::before { animation-delay: 10s; }
+@keyframes authBar { 0% { transform: scaleX(0); transform-origin: left; } 8% { transform: scaleX(1); transform-origin: left; } 30% { transform: scaleX(1); transform-origin: right; } 38% { transform: scaleX(0); transform-origin: right; } 100% { transform: scaleX(0); } }
+@media (prefers-reduced-motion: reduce) { .slide { animation: none; } .s1 { opacity: 1; } .bar:first-child::before { animation: none; transform: none; } }
+
+/* ---- The form column ---- */
+.col { display: flex; flex-direction: column; justify-content: center; padding: var(--s07) var(--pad-x); }
+.card { width: 100%; max-width: var(--auth-card-w); margin: 0 auto; display: flex; flex-direction: column; gap: var(--s07); }
+@container app (min-width: 900px) {
+  .card { background: var(--layer-01); border: var(--hairline) solid var(--rule); padding: var(--s06) var(--s07) var(--s07); }
+}
+.mobLogo { width: var(--auth-logo-w); color: var(--text-primary); }
+.mobLogo svg { width: 100%; height: auto; display: block; }
+@container app (min-width: 900px) { .mobLogo { display: none; } }
+.head { display: flex; flex-direction: column; gap: var(--s03); }
+.back { align-self: flex-start; width: var(--s08); height: var(--s08); margin-left: calc(var(--s04) * -1); display: grid; place-items: center; color: var(--text-primary); }
+.back svg { width: var(--icon-row); height: var(--icon-row); }
+
+/* The email banner: a neutral grey chip with black text (Phase 1 §57.4). */
+.id { display: flex; flex-direction: column; gap: var(--s02); padding: var(--s05); background: var(--auth-chip); color: var(--text-primary); }
+.idRow { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s03); }
+.notYou { text-decoration: underline; color: var(--text-primary); }
+
+/* Password field with its show/hide eye. */
+.pw { position: relative; }
+.eye { position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: var(--s07); height: var(--s07); display: grid; place-items: center; color: var(--text-secondary); }
+.eye svg { width: var(--icon-page); height: var(--icon-page); }
+
+/* Consent boxes (a 4px corner, the stated radius exception). */
+.cbxs { display: flex; flex-direction: column; gap: var(--s04); }
+.cbx { display: flex; align-items: flex-start; gap: var(--s03); color: var(--text-secondary); cursor: pointer; }
+.cbx input { appearance: none; flex: none; width: var(--s05); height: var(--s05); margin: var(--s01) 0 0; border: var(--hairline) solid var(--border-subtle-02); border-radius: var(--radius-cbx); background: var(--layer-01); display: grid; place-items: center; }
+.cbx input:checked { background: var(--accent); border-color: var(--accent); }
+.cbx input:checked::after { content: ""; width: var(--s02); height: var(--s03); border: solid var(--on-accent); border-width: 0 var(--tab-mark) var(--tab-mark) 0; transform: rotate(45deg) translate(-1px, -1px); }
+.cbx a { color: var(--link); text-decoration: underline; }
+
+.link { color: var(--accent-text); align-self: flex-start; }
+.alt { color: var(--text-secondary); }
+.alt a { color: var(--accent-text); font-weight: var(--t-w-strong); text-decoration: underline; }

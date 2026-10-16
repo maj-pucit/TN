@@ -1,0 +1,22 @@
+/* The head-band figure (Phase 1 .prog): candidate 90-day progress, agent earnings. */
+.prog { display: flex; flex-direction: column; gap: var(--s05); max-width: var(--qa-max); }
+.prog.full { max-width: none; padding: var(--s03) 0; }
+.top { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--s06); }
+.pct { display: flex; align-items: baseline; flex-wrap: wrap; gap: var(--s03); }
+.pct small, .dn small { font-size: var(--t-label-size); line-height: var(--t-label-size); letter-spacing: normal; font-weight: var(--t-w-book); color: var(--text-secondary); }
+.day { display: flex; flex-direction: column; gap: var(--s02); text-align: right; }
+.dn { color: var(--link); }
+/* The candidate's "Day N of 90" reads in the accent as ink, the whole figure (Maryam 16 Oct 2026). */
+:global([data-portal="candidate"]) .prog.full .dn, :global([data-portal="candidate"]) .prog.full .dn small { color: var(--accent-text); }
+.seg { display: flex; gap: var(--s02); }
+.seg i { flex: 1 1 0; height: var(--prog-seg-h); background: var(--layer-accent-01); }
+.seg i.done { background: var(--accent); }
+.seg i.now { background: var(--accent); opacity: .4; }
+.figs { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s04) var(--s03); }
+.fig { display: flex; align-items: center; gap: var(--s03); color: var(--text-helper); }
+.fig svg { width: var(--icon-page); height: var(--icon-page); color: var(--icon-primary); }
+.figB { display: flex; flex-direction: column; }
+/* Phase 1 .prog-figs: the figure 14 Medium in the description grey, its label in the helper grey. */
+.figB b { font-size: var(--t-h4-size); line-height: var(--t-h4-lh); letter-spacing: var(--t-h4-ls); color: var(--text-secondary); font-weight: var(--t-w-strong); }
+/* The candidate dashboard's insights lead with a heading, so it reads black (Maryam 16 Oct 2026). */
+:global([data-portal="candidate"]) .prog.full .figB b { color: var(--text-primary); }

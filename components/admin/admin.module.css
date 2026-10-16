@@ -1,0 +1,95 @@
+/* ============================================================
+   SUPER ADMIN PIECES — Phase 1 tn-admin-portal.html (measured 15 Oct 2026).
+   ============================================================ */
+.dates { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: var(--s03); }
+
+/* Needs your attention (Phase 1 .attn-grid): two up, hairline grid */
+.attn { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: var(--hairline) solid var(--rule); border-left: var(--hairline) solid var(--rule); }
+.attnC { display: flex; align-items: center; gap: var(--s04); padding: var(--s05); background: transparent; border-right: var(--hairline) solid var(--rule); border-bottom: var(--hairline) solid var(--rule); }
+.attnC:hover .go { color: var(--accent); }
+.attnIc { width: var(--attn-ic); height: var(--attn-ic); flex: none; display: grid; place-items: center; border-radius: var(--radius-pill); background: var(--accent-tint); color: var(--accent); }
+.attnIc svg { width: var(--icon-page); height: var(--icon-page); }
+.attnB { display: flex; flex-direction: column; gap: var(--s01); flex: 1 1 auto; min-width: 0; }
+.go { width: var(--icon-page); height: var(--icon-page); color: var(--text-secondary); flex: none; }
+
+/* Users by status: one stacked bar + a one-line legend */
+.sbar { display: flex; gap: var(--s02); margin: var(--s05) 0; }
+.sbar span { flex: var(--n) 1 0; min-width: var(--s03); height: var(--status-bar-h); border-radius: var(--radius-cbx); background: var(--c); }
+.sleg { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s04); }
+.slegI { display: inline-flex; align-items: center; gap: var(--s02); }
+.slegI i { width: var(--s03); height: var(--s03); border-radius: var(--radius-dot); background: var(--c); }
+.slegI b { margin-left: var(--s01); color: var(--text-primary); font-weight: var(--t-w-strong); }
+.sep { margin-right: var(--s04); color: var(--border-subtle-02); }
+
+/* Earnings & Payouts: two cards, the payouts card sized to its content */
+.payRow { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s06); }
+@container page (min-width: 700px) { .payRow { grid-template-columns: minmax(0, 1fr) max-content; } }
+.card { padding: var(--s06); border: var(--hairline) solid var(--rule); background: transparent; min-width: 0; }
+.figRow { display: flex; align-items: center; gap: var(--s03); }
+.total { font-size: var(--t-fig-size); line-height: 1; letter-spacing: var(--t-fig-ls); font-weight: var(--t-w-strong); color: var(--text-primary); }
+.up { padding: var(--s01) var(--s03); border-radius: var(--radius-pill); background: var(--chip-up-bg); color: var(--support-success-ink); font-weight: var(--t-w-strong); }
+.earn { margin-top: var(--s05); }
+.earnRow { display: flex; align-items: center; gap: var(--s04); padding: var(--s05) 0; }
+.earnRow + .earnRow { border-top: var(--hairline) solid var(--rule); }
+.earnIc { width: var(--icon-page); height: var(--icon-page); color: var(--icon-primary); flex: none; }
+.earnTxt { display: flex; flex-direction: column; gap: var(--s01); flex: 1 1 auto; min-width: 0; }
+.earnTxt > :last-child { font-weight: var(--t-w-book); }
+.earnV { font-size: var(--t-fig-sm); line-height: 1; font-weight: var(--t-w-strong); color: var(--text-primary); }
+
+/* Candidates by Track: three stat cards with a sparkline */
+.bcards { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s05); }
+@container page (min-width: 700px) { .bcards { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.bcard { display: flex; align-items: center; justify-content: space-between; gap: var(--s04); padding: var(--s05) var(--s06); border: var(--hairline) solid var(--rule); background: transparent; }
+.bcardL { display: flex; flex-direction: column; gap: var(--s02); }
+.spark { width: calc(var(--s10) + var(--s06)); height: auto; flex: none; }
+
+.score { display: inline-flex; align-items: center; gap: var(--s01); }
+.score svg { width: var(--s04); height: var(--s04); color: var(--star); }
+
+/* An empty list (Phase 1 emptyState) */
+.empty { display: flex; flex-direction: column; align-items: center; gap: var(--s02); padding: var(--s10) var(--s05); text-align: center; }
+.empty > svg { width: var(--s07); height: var(--s07); color: var(--text-secondary); margin-bottom: var(--s03); }
+/* The 5-star picker (initial Agent Score) */
+.stars { display: inline-flex; gap: var(--s02); }
+.stars button { display: grid; place-items: center; color: var(--gray-30); }
+.stars button.on { color: var(--star); }
+.stars svg { width: var(--s07); height: var(--s07); }
+
+/* ---- A person's record ---- */
+.nameRow { display: flex; align-items: center; flex-wrap: wrap; gap: var(--s03); }
+.verify { width: var(--icon-page); height: var(--icon-page); color: var(--support-success-ink); }
+.crsThumb { width: calc(var(--s09) + var(--s03)); aspect-ratio: 9 / 5; object-fit: contain; background: var(--surface-2); flex: none; margin-right: var(--s04); }
+.crsProg { display: flex; flex-direction: column; gap: var(--s05); }
+.chList { display: flex; flex-direction: column; }
+.ch { display: flex; align-items: center; gap: var(--s05); padding: var(--s04) 0; }
+.chB { display: flex; flex-direction: column; gap: var(--s01); flex: 1 1 auto; min-width: 0; }
+.chDone { width: var(--s06); height: var(--s06); color: var(--support-success); flex: none; }
+.chTodo { width: var(--s06); height: var(--s06); color: var(--gray-20); flex: none; }
+.ivFound { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--s05); padding: var(--s04) 0; border-bottom: var(--hairline) solid var(--rule); }
+.ivFound > div { flex: 1 1 auto; min-width: 0; }
+.txLink { flex: none; color: var(--accent-text); font-weight: var(--t-w-strong); }
+.scenes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s05); margin-top: var(--s05); }
+.scenes > div { display: flex; flex-direction: column; gap: var(--s03); }
+.quiz { display: flex; flex-direction: column; gap: var(--s07); }
+.quiz b { color: var(--text-primary); font-weight: var(--t-w-strong); }
+.quizG { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s07); }
+.quizG ol { margin: var(--s05) 0 0; padding-left: var(--s05); display: flex; flex-direction: column; gap: var(--s03); color: var(--text-secondary); }
+.ok { color: var(--support-success-ink); }
+.qzOk { color: var(--sig-green); }
+.acc { color: var(--accent-text); }
+.quote { color: var(--text-primary); }
+.quote span { color: var(--accent-text); font-weight: var(--t-w-strong); }
+.sig { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s05); margin: var(--s06) 0 var(--s05); }
+.stars5 { display: inline-flex; gap: var(--s01); color: var(--star); margin-bottom: var(--s03); }
+.stars5 svg { width: var(--s05); height: var(--s05); }
+.act { display: flex; align-items: center; gap: var(--s04); padding: var(--s04) 0; }
+.actAv { width: var(--avatar-list); height: var(--avatar-list); border-radius: var(--radius-pill); display: grid; place-items: center; background: var(--surface-dark-2); color: var(--on-dark); font-size: var(--t-caption-size); font-weight: var(--t-w-strong); flex: none; }
+.actB { display: flex; flex-direction: column; gap: var(--s01); flex: 1 1 auto; min-width: 0; }
+
+/* A two-line cell: the value over a caption (Phase 1 date + time, status + reason). */
+.two { display: inline-flex; flex-direction: column; gap: var(--s01); }
+/* A detail heading's right slot: a state word beside the kebab. */
+.headAct { display: inline-flex; align-items: center; gap: var(--s03); }
+
+/* The last row draws no line of its own: the section's divider or air closes the list, so two lines never stack. */
+.ivFound:last-child { border-bottom: 0; }

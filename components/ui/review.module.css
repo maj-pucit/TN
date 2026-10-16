@@ -1,0 +1,17 @@
+/* The rating capsule (Phase 1 §130): a white pill at the foot of the page
+   ("How would you rate this course?"); it opens IN PLACE to a centred card
+   with stars and a note, then thanks you and disappears. */
+.float { position: sticky; bottom: var(--s06); display: flex; justify-content: center; padding: 0 var(--pad-x); pointer-events: none; z-index: 20; }
+.float > * { pointer-events: auto; }
+.cap { display: inline-flex; align-items: center; gap: var(--s03); padding: var(--s03) var(--s06); border-radius: var(--radius-pill); background: var(--layer-01); border: var(--hairline) solid var(--rule); box-shadow: var(--shadow-menu); color: var(--accent-text); }
+.cap svg { width: var(--s05); height: var(--s05); }
+.card { position: relative; width: 100%; max-width: calc(var(--qa-max) - var(--s10)); padding: var(--s06); background: var(--layer-01); border: var(--hairline) solid var(--rule); box-shadow: var(--shadow-menu); display: flex; flex-direction: column; align-items: center; gap: var(--s05); text-align: center; }
+.x { position: absolute; right: var(--s03); top: var(--s03); width: var(--s08); height: var(--s08); display: grid; place-items: center; color: var(--text-secondary); }
+.x svg { width: var(--icon-rail); height: var(--icon-rail); }
+.stars { display: flex; gap: var(--s02); }
+.star { color: var(--border-subtle-02); }
+.star svg { width: var(--s07); height: var(--s07); }
+.star.on { color: var(--accent); }
+.ta { width: 100%; min-height: calc(var(--s12) + var(--s04)); padding: var(--s04); border: var(--hairline) solid var(--rule); font-family: var(--font-sans); font-size: var(--t-body-size); line-height: var(--t-body-lh); color: var(--text-primary); resize: vertical; outline: none; text-align: left; }
+.ta:focus { border-color: var(--text-primary); }
+.acts { display: flex; gap: var(--s04); }

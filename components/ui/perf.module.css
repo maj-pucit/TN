@@ -1,0 +1,36 @@
+/* The performance chart (Phase 1 .perf): a 900×180 plot, gridlines on the
+   rule, the score line in --chart-line with dots, the lowest point red with a
+   halo, a dashed average line, and an "Average score" callout beside the
+   latest point. Legend above, key insight + "View Scores" below. */
+.leg { display: flex; flex-wrap: wrap; gap: var(--s03) var(--s06); color: var(--text-secondary); }
+.legTop { margin-bottom: var(--s04); }
+.lg { display: inline-flex; align-items: center; gap: var(--s03); }
+/* Phase 1 draws "Your score" a size down and at book weight. */
+.lg:first-child { font-size: var(--t-caption-size); line-height: var(--t-caption-lh); font-weight: var(--t-w-book); }
+.lgL { width: var(--s05); height: var(--prog-seg-h); background: var(--chart-line); }
+.lgD { width: var(--s05); height: 0; border-top: var(--hairline) dashed var(--chart-line); }
+.plot { width: 100%; overflow-x: auto; scrollbar-width: none; }
+.plot::-webkit-scrollbar { display: none; }
+.plot svg { display: block; width: 100%; min-width: calc(var(--s12) * 5); height: auto; }
+.grid { stroke: var(--rule); }
+.axis { fill: var(--text-helper); font-family: var(--font-sans); font-size: var(--t-caption-size); }
+.line { stroke: var(--chart-line); fill: none; }
+.avg { stroke: var(--chart-line); stroke-dasharray: 4 4; }
+.dot { fill: var(--chart-line); stroke: var(--layer-01); }
+.lo { fill: var(--chart-lo); }
+.halo { fill: color-mix(in srgb, var(--chart-lo) 22%, transparent); }
+.haloHi { fill: color-mix(in srgb, var(--chart-line) 22%, transparent); }
+.cal rect { fill: var(--layer-01); stroke: color-mix(in srgb, var(--chart-line) 34%, transparent); }
+.calTrk { fill: none; stroke: color-mix(in srgb, var(--chart-line) 20%, transparent); }
+.calArc { fill: none; stroke: var(--chart-line); }
+.calL { fill: var(--text-secondary); font-family: var(--font-sans); font-size: var(--t-caption-size); }
+.calV { fill: var(--text-primary); font-family: var(--font-sans); font-size: var(--t-label-size); font-weight: var(--t-w-strong); }
+.foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s05) var(--s06); margin-top: var(--s06); padding-top: var(--s06); border-top: var(--hairline) solid var(--rule); }
+.ins { display: flex; align-items: flex-start; gap: var(--s04); min-width: 0; flex: 1 1 calc(var(--s12) * 3); }
+.insMk { width: var(--s05); height: var(--s05); color: var(--accent); flex: none; margin-top: var(--s01); }
+.insB { display: flex; flex-direction: column; gap: var(--s01); }
+.rows { display: flex; flex-direction: column; }
+.row { display: flex; justify-content: space-between; gap: var(--s05); padding: var(--s04) 0; border-bottom: var(--hairline) solid var(--rule); }
+
+/* The last row draws no line of its own: the section's divider or air closes the list, so two lines never stack. */
+.row:last-child { border-bottom: 0; }

@@ -1,0 +1,72 @@
+/* ============================================================
+   TALENT AGENT PIECES — the recommendation form (ladder picker, TALENT
+   letters), the recording card, Tal's read, the transcript. Values are
+   Phase 1's (tn-agent-portal.html, measured 15 Oct 2026), as tokens.
+   ============================================================ */
+.briefSub { margin-bottom: var(--s02); }
+.warn b { font-weight: var(--t-w-strong); }
+
+/* ---- The Interview figures' transcript link (Phase 1 .stat-link) ---- */
+.statLink { display: inline-flex; align-items: center; gap: var(--s01); color: var(--link); }
+.statLink svg { width: var(--s04); height: var(--s04); }
+
+/* ---- The recording card (Phase 1 .iv-rec, 480 wide) ---- */
+.rec { display: flex; align-items: center; gap: var(--s04); max-width: var(--rec-card-w); padding: var(--s03) var(--s04) var(--s03) 0; border: var(--hairline) solid var(--rule); background: transparent; }
+.rec:hover { background: var(--overlay-hover); }
+.recThumb { width: var(--rec-thumb-w); height: var(--rec-thumb-h); flex: none; margin-left: var(--s03); background: var(--surface-dark) url(/images/art/iv-rec-still.webp) center / cover no-repeat; }
+.recB { display: flex; flex-direction: column; gap: var(--s01); min-width: 0; flex: 1 1 auto; }
+.recOpen { width: var(--s08); height: var(--s08); display: grid; place-items: center; flex: none; color: var(--text-primary); }
+.recOpen svg { width: var(--icon-rail); height: var(--icon-rail); }
+
+/* ---- Tal's read: highlighted phrases (Phase 1 .tal-eval b) ---- */
+.talEval { display: flex; flex-direction: column; gap: var(--s05); }
+.talEval > div { display: flex; flex-direction: column; gap: var(--s05); }
+.talEval p { line-height: var(--t-body-lh); }
+.evalLede b { font-weight: var(--t-w-book); }
+.talEval b { color: var(--accent-text); font-weight: var(--t-w-strong); background: var(--ai-hl-bg); border-radius: var(--radius-cbx); padding: var(--hairline) var(--s02); margin: 0 calc(var(--hairline) * -1); }
+
+/* ---- The recommendation form ---- */
+.evalForm { display: flex; flex-direction: column; gap: var(--s07); }
+.evalForm b { font-weight: var(--t-w-strong); }
+.lbl { display: block; margin-bottom: var(--s03); }
+.ladder { display: flex; gap: var(--s01); margin-top: var(--s04); }
+.ladder button { flex: 1 1 0; min-width: 0; height: var(--ladder-h); display: grid; place-items: center; background: var(--rule); color: var(--text-secondary); font-size: var(--t-badge-size); line-height: var(--t-badge-size); letter-spacing: var(--t-rung-ls); font-weight: var(--t-w-semibold); font-style: normal; cursor: pointer; }
+.ladder button:hover { background: var(--gray-20); }
+.ladder button.done { background: var(--accent); color: var(--on-accent); }
+.ladder button.on { background: var(--accent-tint); color: var(--text-primary); }
+.ladder b { font-weight: inherit; }
+.ladderLab { display: flex; justify-content: space-between; margin-top: var(--s03); color: var(--text-helper); font-size: var(--t-eyebrow-size); line-height: var(--t-eyebrow-lh); letter-spacing: var(--t-eyebrow-ls); font-weight: var(--t-w-strong); }
+.diverge { margin-top: var(--s04); }
+/* TALENT letter chips (Phase 1 .ltr-chip): 30 tall, 7 by 14 inside, the letter Medium black and its name grey, both on a 13.5 line. */
+.ltrs { display: flex; flex-wrap: wrap; gap: var(--s03); }
+.ltr { display: inline-flex; align-items: center; gap: var(--s02); padding: var(--ltr-py) var(--ltr-px); border: var(--hairline) solid var(--border-subtle-02); border-radius: var(--radius-pill); background: transparent; color: var(--text-secondary); font-size: var(--t-compact-size); line-height: var(--t-compact-size); }
+.ltr.on { border-color: var(--accent); background: var(--accent-wash); color: var(--accent-text); }
+.ltrC { color: var(--text-primary); font-weight: var(--t-w-strong); }
+.ltr.on .ltrC { color: var(--accent-text); }
+@container page (max-width: 599.98px) {
+  .ladder b { font-size: var(--t-micro-size); }
+  .ladderLab { font-size: var(--t-micro-size); }
+}
+
+/* ---- The transcript (Phase 1 §124 .tx-*) ---- */
+.txSrch { display: flex; align-items: center; gap: var(--s03); height: var(--s08); margin-bottom: var(--s05); border-bottom: var(--hairline) solid var(--rule); color: var(--text-secondary); }
+.txSrch svg { width: var(--icon-page); height: var(--icon-page); flex: none; }
+.txSrch input { flex: 1 1 auto; min-width: 0; height: 100%; border: 0; background: transparent; color: var(--text-primary); font: inherit; font-size: var(--t-body-size); }
+.txSrch input:focus { outline: none; }
+.txSrch:focus-within { border-bottom-color: var(--accent); }
+.txFilters { display: flex; flex-wrap: wrap; gap: var(--s03); margin-bottom: var(--s05); }
+.txF { height: var(--s07); padding: 0 var(--s05); border: var(--hairline) solid var(--rule); border-radius: var(--radius-pill); background: transparent; color: var(--text-secondary); }
+.txF.on { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.txLine { display: grid; grid-template-columns: var(--tx-time-w) minmax(0, 1fr); gap: var(--s04); align-items: baseline; padding: var(--s05) 0; border-bottom: var(--hairline) solid var(--rule); color: var(--text-helper); }
+/* The Super Admin transcript sets its times at book weight, plain tracking (Phase 1 admin .tx-t). */
+:global([data-portal="admin"]) .txLine > :first-child { font-weight: var(--t-w-book); letter-spacing: var(--t-caption-ls); }
+.txB { display: flex; flex-direction: column; gap: var(--s02); color: var(--text-primary); }
+.txW { display: flex; align-items: center; gap: var(--s03); color: var(--text-primary); }
+.me .txW { color: var(--accent-text); }
+.txScene { display: inline-flex; align-items: center; gap: var(--s02); color: var(--support-attention); font-weight: var(--t-w-book); }
+.txScene svg { width: var(--s04); height: var(--s04); }
+
+/* ---- Profile: the active dot on the owner's own photo (Phase 1 §09 .av-on) ---- */
+.avOn { position: absolute; right: var(--s01); bottom: var(--s01); width: 18%; height: 18%; border-radius: var(--radius-pill); background: var(--support-success); border: var(--tab-mark) solid var(--background); z-index: 2; }
+.rate { display: inline-flex; align-items: center; gap: var(--s01); }
+.rate svg { width: var(--s04); height: var(--s04); color: var(--star); }

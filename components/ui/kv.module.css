@@ -1,0 +1,14 @@
+/* Phase 1 .kv (§10.5): label column + value, one hairline under each row. */
+.kv { display: flex; flex-direction: column; }
+.row { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s01); padding: var(--s04) 0; border-bottom: var(--hairline) solid var(--rule); }
+.v { color: var(--text-primary); min-width: 0; }
+.v > * { vertical-align: middle; }
+@container page (min-width: 600px) {
+  .row { grid-template-columns: var(--label-col) minmax(0, 1fr); gap: 0; align-items: baseline; }
+  .k { padding-right: var(--s06); }
+  .ends .row { grid-template-columns: minmax(0, 1fr) auto; }
+  .ends .v { text-align: right; }
+}
+
+/* The last row draws no line of its own: the section's divider or air closes the list, so two lines never stack. */
+.row:last-child { border-bottom: 0; }

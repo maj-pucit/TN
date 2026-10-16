@@ -1,0 +1,61 @@
+/* The prototype frame and its floating menu. Not product UI. */
+.stage {
+  position: fixed; inset: 0;
+  display: grid; place-items: center;
+  background: var(--chrome-ground);
+}
+.device {
+  container-type: inline-size;
+  container-name: app;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: var(--background);
+  overflow: hidden;
+}
+.mobile .device { width: var(--frame-mobile-w); height: min(var(--frame-mobile-h), calc(100% - var(--s07))); border: var(--hairline) solid var(--rule); }
+.tablet .device { width: var(--frame-tablet-w); height: min(var(--frame-tablet-h), calc(100% - var(--s07))); border: var(--hairline) solid var(--rule); }
+
+.fab {
+  position: fixed; right: var(--s05); bottom: var(--s05);
+  width: var(--s08); height: var(--s08);
+  border-radius: var(--radius-pill);
+  background: var(--layer-01);
+  box-shadow: var(--shadow-menu);
+  display: grid; place-items: center;
+  z-index: 100;
+}
+.fab svg { width: var(--icon-rail); height: var(--icon-rail); }
+.panel {
+  position: fixed; right: var(--s05); bottom: calc(var(--s05) + var(--s09));
+  width: calc(var(--drawer-w) + var(--s07));
+  background: var(--layer-01);
+  border: var(--hairline) solid var(--rule);
+  box-shadow: var(--shadow-menu);
+  padding: var(--s05);
+  display: flex; flex-direction: column; gap: var(--s05);
+  z-index: 100;
+}
+.seg { display: grid; grid-template-columns: repeat(3, 1fr); border: var(--hairline) solid var(--rule); }
+.seg button { padding: var(--s03) 0; }
+.seg button[aria-pressed="true"] { background: var(--brand-primary); color: var(--on-brand); }
+.seg button[disabled] { color: var(--text-disabled); cursor: not-allowed; }
+.select {
+  width: 100%;
+  padding: var(--s03) var(--s04);
+  border: var(--hairline) solid var(--border-subtle-02);
+  background: var(--layer-01);
+  font-family: var(--font-sans);
+  font-size: var(--t-body-size);
+  color: var(--text-primary);
+}
+.links { display: flex; flex-direction: column; gap: var(--s03); }
+.links a { color: var(--accent-text); }
+
+/* No slide-in on first paint: the frame is read from storage after mount,
+   and the drawer would animate across the page. Transitions arm once ready. */
+.device:not([data-ready]) * { transition: none !important; }
+
+/* A full-frame scene (no shell): fills the device and scrolls inside it. */
+.scene { position: absolute; inset: 0; overflow-y: auto; background: var(--background); scrollbar-width: none; }
+.scene::-webkit-scrollbar { display: none; }

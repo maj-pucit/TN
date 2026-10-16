@@ -1,0 +1,17 @@
+/* The .found disclosure: a chevron-led heading that opens its body in place. */
+.t { display: inline-flex; align-items: center; gap: var(--s03); color: var(--text-primary); text-align: left; }
+.t svg { width: var(--icon-rail); height: var(--icon-rail); transition: transform var(--mo-quick) var(--mo-standard); transform: rotate(-90deg); }
+.t[aria-expanded="true"] svg { transform: none; }
+.b { padding-top: var(--sec-h-gap); }
+
+/* "How it works" body: a facts band then numbered steps. */
+.facts { display: grid; gap: 0; border-top: var(--hairline) solid var(--rule); border-left: var(--hairline) solid var(--rule); grid-template-columns: repeat(auto-fit, minmax(calc(var(--s12) + var(--s09)), 1fr)); }
+.fact { display: flex; flex-direction: column; gap: var(--s01); padding: var(--s05); background: transparent; border-right: var(--hairline) solid var(--rule); border-bottom: var(--hairline) solid var(--rule); }
+.steps { display: flex; flex-direction: column; margin-top: var(--s07); }
+.step { display: flex; align-items: flex-start; gap: var(--s05); padding: var(--s06) 0; border-bottom: var(--hairline) solid var(--rule); }
+.step:last-child { border-bottom: 0; }
+.n { flex: none; width: var(--s06); height: var(--s06); border-radius: var(--radius-pill); border: var(--hairline) solid var(--rule); display: grid; place-items: center; }
+.sb b { color: var(--text-primary); font-weight: var(--t-w-strong); }
+
+/* The last row draws no line of its own: the section's divider or air closes the list, so two lines never stack. */
+.step:last-child { border-bottom: 0; }

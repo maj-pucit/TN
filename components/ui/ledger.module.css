@@ -1,0 +1,31 @@
+/* The ledger (candidate Payments, agent Earnings) drawn as the admin Table (Maryam 16 Oct 2026,
+   "apply the same admin side table design"): header 13.5 Medium black over the one rule, no
+   lines between rows, the first row 24 off the header, cells the description grey at 13.5, the
+   first column the black strong anchor. Columns size to their widest cell and share the rest. */
+.tbl { display: grid; grid-template-columns: repeat(var(--cols), minmax(max-content, auto)); overflow-x: auto; scrollbar-width: none; }
+.tbl::-webkit-scrollbar { display: none; }
+.r { display: contents; }
+.r > span {
+  padding: var(--s04) var(--s04) var(--s04) 0;
+  display: flex; align-items: center; gap: var(--s03); min-width: 0;
+  white-space: nowrap;
+  font-size: var(--t-compact-size); line-height: var(--t-compact-lh); letter-spacing: var(--t-compact-ls);
+  color: var(--text-secondary);
+}
+.r > span:last-child { padding-right: 0; }
+.head > span { color: var(--text-primary); font-weight: var(--t-w-strong); border-bottom: var(--hairline) solid var(--rule); }
+.head + .r > span { padding-top: var(--s06); }
+.num { justify-content: flex-end; text-align: right; }
+.n { font-weight: var(--t-w-strong); color: var(--text-primary); }
+.d { color: var(--text-secondary); }
+.amt { font-weight: var(--t-w-strong); color: var(--text-primary); }
+.flag { display: inline-flex; align-items: center; gap: var(--s03); color: var(--text-secondary); }
+.flag svg { width: var(--s05); height: var(--s05); }
+.warn { color: var(--support-attention); font-weight: var(--t-w-strong); }
+.ok { color: var(--support-success-ink); font-weight: var(--t-w-strong); }
+.err { color: var(--support-error); font-weight: var(--t-w-strong); }
+/* On a phone the cells may wrap so the ledger fits the column instead of scrolling sideways. */
+@container page (max-width: 599.98px) {
+  .tbl { grid-template-columns: repeat(var(--cols), minmax(0, auto)); }
+  .r > span { white-space: normal; padding-right: var(--s03); }
+}

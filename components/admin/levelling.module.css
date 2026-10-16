@@ -1,0 +1,32 @@
+/* ============================================================
+   LEVELLING — Phase 1 Epic 5 (levellingQueue / levellingChange / the
+   override sheets).
+   ============================================================ */
+/* Due Time: under an hour (or overdue) reads the accent, otherwise the
+   in-progress orange (Maryam 25 Sep 2026). */
+.urgent { color: var(--accent); }
+.soon { color: var(--in-progress); }
+
+/* A person inside a fact cell: a small face beside the name. */
+.face { display: inline-flex; align-items: center; gap: var(--s02); }
+.face img { width: var(--s05); height: var(--s05); border-radius: var(--radius-pill); object-fit: cover; }
+
+/* The Transcript fact: "Ready" with the arrow at the cell's right end. */
+.tx { display: flex; align-items: center; width: 100%; color: var(--link); }
+.tx svg { width: var(--icon-page); height: var(--icon-page); margin-left: auto; }
+
+/* The Tal blob on the "Approve Tal proposal" button. */
+.orb { display: inline-block; vertical-align: middle; margin-right: var(--s02); }
+/* Phase 1 .appr-out: the two quiet decisions carry a visible light-grey edge. */
+.apprOut > * { border-color: var(--border-subtle-02); }
+
+/* TALENT letters: round chips, the picked ones in the accent. */
+.pick { display: flex; flex-wrap: wrap; gap: var(--s03); }
+.chip {
+  display: inline-flex; align-items: center; gap: var(--s02);
+  padding: var(--chip-py) var(--s04); border: var(--hairline) solid var(--border-subtle-02);
+  border-radius: var(--radius-pill); color: var(--text-secondary); background: transparent;
+}
+.chip b { color: var(--text-primary); font-weight: var(--t-w-strong); }
+.chip.on { border-color: var(--accent); background: var(--accent-tint); color: var(--accent-text); }
+.chip.on b { color: var(--accent-text); }

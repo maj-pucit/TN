@@ -1,0 +1,48 @@
+/* ============================================================
+   FIELDS — label over an underlined control (Phase 1 §12/§17).
+   Line is --rule at rest; on focus it turns --focus at 2px by an
+   inset shadow, so the field never changes height.
+   ============================================================ */
+.f { display: flex; flex-direction: column; gap: var(--label-gap); min-width: 0; }
+.req { color: var(--accent); margin-left: var(--s01); }
+.help { color: var(--text-helper); }
+.err { color: var(--support-error); }
+
+.inp {
+  width: 100%;
+  height: var(--ctrl-h);
+  padding: 0 var(--s05) 0 0;
+  border: 0;
+  border-bottom: var(--hairline) solid var(--rule);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--t-compact-size);
+  line-height: var(--t-compact-lh);
+  outline: none;
+}
+.inp::placeholder { color: var(--text-placeholder); }
+.inp:focus { border-bottom-color: var(--focus); box-shadow: inset 0 calc(var(--hairline) * -1) 0 var(--focus); }
+.inp[readonly] { border-bottom-style: dashed; }
+textarea.inp { height: auto; min-height: calc(var(--s12) + var(--s06)); padding-top: var(--s03); resize: vertical; }
+
+/* A form: fields sit 32 apart. */
+.form { display: flex; flex-direction: column; gap: var(--field-gap); }
+.row2 { display: grid; gap: var(--field-gap); grid-template-columns: minmax(0, 1fr); }
+@container page (min-width: 600px) { .row2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* Toolbar search: underline, leading glyph, clear X while it holds text. */
+.srch { position: relative; width: 100%; max-width: calc(var(--s12) * 3 + var(--s06)); }
+.srch > svg { position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: var(--icon-rail); height: var(--icon-rail); color: var(--text-secondary); }
+.srch .inp { padding-left: var(--s07); padding-right: var(--s08); }
+.srchX { position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: var(--s07); height: var(--s07); display: grid; place-items: center; color: var(--text-secondary); }
+.srchX svg { width: var(--s05); height: var(--s05); }
+
+/* List toolbar: search left, filters right (Phase 1 §128). */
+/* The search row stands off the table below it by the heading-to-content gap, 16 (Maryam 16 Oct 2026). */
+.tools { display: flex; align-items: center; flex-wrap: wrap; gap: var(--s04) var(--s05); margin-bottom: var(--sec-h-gap); }
+.filters { display: flex; align-items: center; flex-wrap: wrap; gap: var(--s03); margin-left: auto; }
+
+/* Super Admin forms: the label is the regular grey (Phase 1 admin .f .lbl). */
+:global([data-portal="admin"]) .f > span:first-child { font-weight: var(--t-w-book); color: var(--text-secondary); }

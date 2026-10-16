@@ -1,0 +1,258 @@
+/* ============================================================
+   THE SHELL — app bar, rail, account menu. One shell, three portals.
+   Geometry is Phase 1's (68px bar, 72px collapsed rail, 260px open
+   drawer, 48px rail rows), stated as tokens.
+   ============================================================ */
+
+.app {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-rows: var(--bar-h) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
+  background: var(--background);
+  overflow: hidden;
+}
+
+/* ---- App bar ---- */
+.bar {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: var(--s04);
+  padding: 0 var(--s05) 0 0;
+  border-bottom: var(--hairline) solid var(--rule);
+  background: var(--background);
+  position: relative;
+  z-index: 30;
+}
+.navCell { display: flex; align-items: center; height: 100%; flex: none; }
+.navToggle {
+  width: var(--rail-w-nav);
+  height: 100%;
+  display: grid;
+  place-items: center;
+  flex: none;
+  color: var(--text-primary);
+}
+.navToggle svg { width: var(--icon-rail); height: var(--icon-rail); }
+.navToggle:hover { background: var(--overlay-hover); }
+.navMark, .navMenu { grid-area: 1 / 1; display: grid; place-items: center; }
+.navMark { display: none; }
+.navMark svg { width: var(--nav-mark); height: var(--nav-mark); fill: var(--icon-primary); }
+.brand { display: none; }
+@container app (min-width: 900px) {
+  .navMark { display: grid; }
+  .navMenu { display: none; }
+  .navToggle:hover .navMark { display: none; }
+  .navToggle:hover .navMenu { display: grid; }
+  .navCell[data-open="true"] { width: var(--rail-open-w, var(--drawer-w)); }
+  .navCell[data-open="true"] .navToggle { width: var(--nav-close-w); margin-left: auto; }
+  .brand { display: flex; align-items: center; height: 100%; padding: 0 var(--s03) 0 var(--s06); color: var(--text-primary); }
+  .brand span { display: block; height: var(--nav-logo-h); }
+  .brand svg { height: 100%; width: auto; display: block; }
+}
+.barTitle { min-width: 0; flex: 1 1 auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* The breadcrumb on a sub-page (Phase 1 .crumb-bar): the parent a grey
+   16 Medium link, a 12px chevron with 12 either side, the page in black. */
+.crumbs { display: flex; align-items: center; min-width: 0; flex: 1 1 auto; white-space: nowrap; font-size: var(--t-sec-size); line-height: var(--t-sec-lh); letter-spacing: var(--t-sec-ls); font-weight: var(--t-w-strong); }
+.crumbP { color: var(--text-helper); }
+.crumbP:hover { color: var(--accent-text); }
+.crumbSep { display: inline-grid; place-items: center; padding: 0 var(--s04); color: var(--border-strong-01); }
+.crumbSep svg { width: var(--s04); height: var(--s04); }
+.crumbNow { color: var(--text-primary); overflow: hidden; text-overflow: ellipsis; }
+.barActs { display: flex; align-items: center; gap: var(--s04); flex: none; }
+
+/* Bell 44 square; the count is a 15px pill, 10px Medium, in the error red
+   (Phase 1 .shell-act / .shell-badge, measured). */
+.bell { position: relative; display: grid; place-items: center; width: var(--bell); height: var(--bell); color: var(--text-primary); }
+.bell svg { width: var(--icon-rail); height: var(--icon-rail); }
+.badge {
+  position: absolute; top: var(--badge-top); left: var(--badge-left);
+  min-width: var(--badge-h); height: var(--badge-h); padding: 0 var(--s02);
+  border-radius: var(--radius-pill);
+  background: var(--support-error); color: var(--on-accent);
+  font-size: var(--t-badge-size); line-height: var(--t-badge-size); font-weight: var(--t-w-strong);
+  display: grid; place-items: center;
+}
+
+/* ---- Account trigger + menu ---- */
+.acct { position: relative; }
+.acctT { display: flex; align-items: center; gap: var(--s03); padding: var(--s02); }
+.acctT img { width: var(--avatar-bar); height: var(--avatar-bar); border-radius: var(--radius-pill); object-fit: cover; }
+.acctId { display: flex; flex-direction: column; text-align: left; }
+.acctN { line-height: var(--btn-lh); }
+.acctR { font-weight: var(--t-w-book); }
+.acctT > svg { width: var(--s05); height: var(--s05); color: var(--text-secondary); transition: transform var(--mo-quick) var(--mo-standard); }
+.acctT[aria-expanded="true"] > svg { transform: rotate(180deg); }
+@container app (max-width: 599.98px) { .acctId { display: none; } }
+
+.menu {
+  position: absolute;
+  top: calc(100% + var(--s03));
+  right: 0;
+  min-width: calc(var(--drawer-w) - var(--s07));
+  background: var(--layer-01);
+  border: var(--hairline) solid var(--rule);
+  box-shadow: var(--shadow-menu);
+  padding: var(--s03) 0;
+  z-index: 40;
+}
+.menuI {
+  display: flex; align-items: center; gap: var(--s04);
+  width: 100%; padding: var(--s03) var(--s05);
+  color: var(--text-primary);
+}
+.menuI svg { width: var(--icon-page); height: var(--icon-page); }
+.menuI:hover { background: var(--overlay-hover); }
+.menuSep { height: var(--hairline); background: var(--rule); margin: var(--s03) 0; }
+
+/* ---- Body: rail + main ---- */
+.body {
+  display: grid;
+  grid-template-columns: var(--rail-w-nav) minmax(0, 1fr) auto;
+  min-height: 0;
+  transition: grid-template-columns var(--mo-base) var(--mo-standard);
+}
+.body[data-open="true"] { grid-template-columns: var(--rail-open-w, var(--drawer-w)) minmax(0, 1fr) auto; }
+.sliderSlot { min-height: 0; display: flex; }
+.admin { --rail-open-w: var(--drawer-w-admin); }
+
+.rail {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border-right: var(--hairline) solid var(--rule);
+  background: var(--background);
+  padding: var(--s04) 0;
+  overflow-y: auto;
+  overflow-x: visible;
+  scrollbar-width: none;
+}
+.rail::-webkit-scrollbar { display: none; }
+.railMain { flex: 1 1 auto; }
+.railFoot { border-top: var(--hairline) solid var(--rule); padding-top: var(--s04); }
+
+.item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--s04);
+  height: var(--rail-item-h);
+  width: 100%;
+  padding: 0 var(--s06);
+  color: var(--text-secondary);
+  font-weight: var(--t-w-strong);
+  letter-spacing: var(--btn-ls);
+  white-space: nowrap;
+}
+.item svg { width: var(--icon-rail); height: var(--icon-rail); flex: none; }
+.item:hover { background: var(--overlay-hover); }
+.item.on { color: var(--accent); }
+.item.on::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: var(--rail-bar-w);
+  background: var(--accent);
+}
+.label { overflow: hidden; text-overflow: ellipsis; }
+.chev { margin-left: auto; width: var(--s05); height: var(--s05); transition: transform var(--mo-quick) var(--mo-standard); }
+.chev.up { transform: rotate(180deg); }
+
+/* Collapsed rail: icons only, labels hidden. */
+.body:not([data-open="true"]) .label,
+.body:not([data-open="true"]) .chev { display: none; }
+.body:not([data-open="true"]) .item { justify-content: center; padding: 0; }
+
+.subs { padding: 0 0 var(--s03); }
+.sub {
+  display: flex; align-items: center;
+  height: var(--s08);
+  padding: 0 var(--s06) 0 calc(var(--s06) + var(--icon-rail) + var(--s04));
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+.sub:hover { background: var(--overlay-hover); }
+.sub.on { color: var(--accent); }
+
+/* Collapsed rail: a parent's subs open as a flyout on hover. */
+.node { position: relative; }
+.body:not([data-open="true"]) .subs {
+  display: none;
+  position: absolute;
+  left: 100%; top: 0;
+  min-width: calc(var(--drawer-w) - var(--s07));
+  background: var(--layer-01);
+  border: var(--hairline) solid var(--rule);
+  box-shadow: var(--shadow-menu);
+  padding: var(--s03) 0;
+  z-index: 35;
+}
+.body:not([data-open="true"]) .node:hover .subs { display: block; }
+.body:not([data-open="true"]) .sub { padding: 0 var(--s05); }
+
+.main {
+  position: relative;
+  min-width: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--surface-2);
+  scrollbar-width: none;
+}
+.main::-webkit-scrollbar { display: none; }
+.main { grid-column: 2; grid-row: 1; }
+.dockLayer { grid-column: 2; grid-row: 1; align-self: end; justify-self: center; z-index: 40; pointer-events: none; padding-bottom: var(--dock-gap); }
+.dockLayer:empty { display: none; }
+.dockLayer > * { pointer-events: auto; }
+.column {
+  /* Content components query THIS width (@container page), so a page
+     narrowed by the slider re-flows like a narrower screen would. */
+  container-type: inline-size;
+  container-name: page;
+  position: relative;
+  width: 100%;
+  max-width: var(--content-max);
+  min-height: 100%;
+  margin: 0 auto;
+  background: var(--background);
+}
+/* Phase 1 §10.1 / §14.3b: from 760 the content sheet is drawn — a hairline down
+   each side; from 900 it is set in from the rail and the right wall by a
+   proportional margin (12% of the frame, 24..200), dropped while the drawer
+   is open (the drawer has taken that width). The sheet's grey ground shows
+   in the margin. */
+@container app (min-width: 760px) {
+  .column { border-left: var(--hairline) solid var(--rule); border-right: var(--hairline) solid var(--rule); }
+}
+@container app (min-width: 900px) {
+  .main { padding: 0 var(--content-gutter); }
+  .body[data-open="true"] .main { padding: 0; }
+  .column { max-width: none; }
+}
+
+/* ---- Below 900: the rail becomes an overlay drawer opened from the bar ---- */
+@container app (max-width: 899.98px) {
+  .body, .body[data-open="true"] { grid-template-columns: minmax(0, 1fr); }
+  /* one column here, so the page and the dock layer sit in it (column 2 would be an implicit, content-sized track) */
+  .main, .dockLayer { grid-column: 1; }
+  .sliderSlot { display: contents; }
+  .rail {
+    position: absolute;
+    top: var(--bar-h); bottom: 0; left: 0;
+    width: var(--rail-open-w, var(--drawer-w));
+    transform: translateX(-100%);
+    transition: transform var(--mo-base) var(--mo-standard);
+    z-index: 25;
+  }
+  .body[data-open="true"] .rail { transform: none; box-shadow: var(--shadow-menu); }
+  .body[data-open="true"] .label, .body[data-open="true"] .chev { display: inline; }
+  .scrim { position: absolute; inset: var(--bar-h) 0 0 0; background: var(--overlay); z-index: 24; }
+}
+@container app (min-width: 900px) { .scrim { display: none; } }
+
+/* The modal layer: covers the whole frame (app bar included) when it holds a
+   dialog, and lets clicks through when it is empty. */
+.modalLayer { position: absolute; inset: 0; z-index: 70; pointer-events: none; }
+.modalLayer:empty { display: none; }
+.modalLayer > * { pointer-events: auto; }

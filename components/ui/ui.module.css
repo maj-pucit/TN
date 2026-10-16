@@ -1,0 +1,117 @@
+/* ============================================================
+   UI — buttons and dialogs (Phase 1 §02 + §134).
+   ============================================================ */
+
+/* ---- Buttons — measured off Phase 1 (computed, 15 Oct 2026) ----
+   40px, radius 0, 13.5 Medium on an 18px line at .05px tracking, Title
+   Case by CSS. 16px sides, icon or not; icon 20 with an 8px gap. Small:
+   32 tall (Phase 1 .btn-sm; the black card and admin heading actions lift theirs to 40), 12px sides, 4px gap, 18px icon. A few
+   components shape their own padding (the black card's actions). */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: var(--s03);
+  height: var(--s08);
+  padding: 0 var(--s05);
+  border: var(--hairline) solid transparent;
+  border-radius: var(--radius);
+  font-size: var(--t-compact-size);
+  line-height: var(--btn-lh);
+  letter-spacing: var(--btn-ls);
+  font-weight: var(--t-w-strong);
+  text-transform: capitalize;
+  white-space: nowrap;
+  transition: background-color var(--mo-quick) var(--mo-standard);
+}
+.btn svg { width: var(--icon-rail); height: var(--icon-rail); flex: none; }
+.btn[disabled] { pointer-events: none; }
+.sm { height: var(--s07); padding: 0 var(--s04); gap: var(--s02); }
+.sm svg { width: var(--icon-page); height: var(--icon-page); }
+/* Super Admin: its small buttons are heading actions, 40 tall at 13px; a quiet one has no sides (Phase 1 §120). */
+:global([data-portal="admin"]) .sm { height: var(--s08); font-size: var(--t-adm-btn-size); }
+:global([data-portal="admin"]) .sm.ghost { padding-left: 0; padding-right: 0; }
+.full { width: 100%; }
+/* An icon-only button is a square at its own height (Phase 1 .pfe-ic: 32, an 18px mark). */
+.iconOnly { padding: 0; aspect-ratio: 1; }
+:global([data-portal]) .sm.iconOnly { width: var(--s07); height: var(--s07); padding: 0; }
+/* A label Phase 1 prints as written ("Add a Card", "Book a Call with Priya"): no Title Case by CSS. */
+.asIs { text-transform: none; }
+
+.primary { background: var(--brand-primary); color: var(--on-brand); }
+.primary:hover { background: var(--brand-primary-hover); }
+.primary[disabled] { background: var(--layer-02); color: var(--text-disabled); }
+
+.accent { background: var(--accent); color: var(--on-accent); }
+.accent:hover { background: var(--accent-hover); }
+
+/* Secondary = the filled grey Cancel half of a pair (Phase 1 .btn-s, 2 Oct 2026). */
+.secondary { background: var(--rule); color: var(--text-primary); border-color: var(--rule); }
+.secondary:hover { background: var(--gray-20); }
+
+/* Ghost = Phase 1 .btn-g: transparent, and its edge is transparent too. */
+.ghost { background: transparent; color: var(--text-primary); }
+.ghost:hover { background: var(--overlay-hover); }
+/* text: kept as an alias of ghost now that ghost has no edge ("View Scores"). */
+.text { background: transparent; color: var(--text-primary); }
+.text:hover { background: var(--overlay-hover); }
+
+/* Link = Phase 1 .acc-link: no box, accent ink, 32 tall, 4px gap, 18 icon.
+   On the agent and admin portals it hugs its line (min-height 0, Phase 1 2 Oct). */
+.link { background: transparent; border: 0; color: var(--accent-text); padding: 0; height: var(--s07); gap: var(--s02); }
+:global([data-portal="agent"]) .link { height: auto; }
+.link svg { width: var(--icon-page); height: var(--icon-page); }
+
+.danger { background: var(--accent); color: var(--on-accent); }
+/* Phase 1 .btn-p.danger: the deep danger red (the agent's Delete Account). */
+.dangerInk { background: var(--danger-ink); color: var(--on-accent); }
+/* A quiet destructive word in a row (Phase 1 session "Sign Out"): no box, the danger ink. */
+.dangerText { background: transparent; border: 0; color: var(--danger-ink); padding: 0; height: var(--s07); }
+
+/* A quiet button on the black card: transparent, white ink. */
+.onDark { background: transparent; color: var(--on-dark); padding: 0; height: auto; }
+
+/* Disabled accent (a gated Join) keeps the accent look, cannot be pressed. */
+.accent[disabled] { background: var(--accent); color: var(--on-accent); }
+
+/* ---- Modal + the .conf confirmation ---- */
+.scrim {
+  position: absolute; inset: 0;
+  background: var(--overlay);
+  display: grid; place-items: center;
+  padding: var(--s05);
+  z-index: 70;
+}
+.conf {
+  width: 100%;
+  max-width: var(--modal-w);
+  background: var(--layer-01);
+  box-shadow: var(--shadow-modal);
+  padding: var(--s05);
+  display: flex; flex-direction: column;
+}
+.confB { display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--s04); padding: var(--s06) var(--s05) 0; }
+.confMk {
+  width: var(--s09); height: var(--s09);
+  border-radius: var(--radius-pill);
+  background: var(--accent); color: var(--on-accent);
+  display: grid; place-items: center;
+}
+.confMk svg { width: var(--icon-row); height: var(--icon-row); }
+.confA { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: var(--s04); padding-top: var(--s06); }
+.fee { display: flex; flex-direction: column; align-items: center; gap: var(--s01); }
+.was { text-decoration: line-through; color: var(--text-secondary); font-weight: var(--t-w-book); }
+.free { color: var(--accent-text); }
+
+/* ---- A plain sheet modal (no disc): body + footer (Phase 1 .sheet) ---- */
+.sheet { width: 100%; max-width: var(--modal-w); max-height: 100%; overflow: auto; background: var(--layer-01); box-shadow: var(--shadow-modal); display: flex; flex-direction: column; }
+.sheetH { position: relative; display: flex; align-items: center; justify-content: space-between; gap: var(--s04); padding: var(--s06) var(--s05) var(--s04) var(--s06); }
+.sheetH::after { content: ""; position: absolute; left: var(--s06); right: var(--s06); bottom: 0; height: var(--hairline); background: var(--rule); }
+.sheetX { width: var(--s07); height: var(--s07); display: grid; place-items: center; color: var(--text-primary); }
+.sheetX svg { width: var(--icon-row); height: var(--icon-row); }
+.sheetB { padding: var(--s06); display: flex; flex-direction: column; gap: var(--s05); }
+/* Modal footer buttons share the full width equally, like the .conf row (Maryam 16 Oct 2026). */
+.sheetF { padding: 0 var(--s06) var(--s06); display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: var(--s04); }
+
+/* The step-up code field inside a .conf (Phase 1 askConfirm({stepup})). */
+.confCode { display: flex; flex-direction: column; gap: var(--label-gap); width: 100%; text-align: left; margin-top: var(--s03); }
+.confCodeIn { height: var(--ctrl-h); padding: 0; border: 0; border-bottom: var(--hairline) solid var(--border-subtle-02); background: transparent; font: inherit; letter-spacing: var(--s01); color: var(--text-primary); }
+.confCodeIn:focus { outline: none; border-bottom: var(--rule-strong-w) solid var(--accent); }

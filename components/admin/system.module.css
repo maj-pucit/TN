@@ -1,0 +1,46 @@
+/* ============================================================
+   ONBOARDING / INTEGRATIONS / SETTINGS — Phase 1 qb-* editor, the
+   integrations .cardrow list, the template editor and the profile grid.
+   ============================================================ */
+/* A row title that opens its editor (a table row whose target is a sheet). */
+.rowBtn { text-align: left; color: inherit; font: inherit; }
+.rowBtn:hover { color: var(--accent-text); }
+
+/* Question editor: an option is label | score | remove. */
+.opt { display: flex; align-items: center; gap: var(--s03); }
+.opt > :first-child { flex: 1; }
+.score { width: var(--s10); flex: none; }
+.x { width: var(--s07); height: var(--s07); display: grid; place-items: center; color: var(--text-secondary); flex: none; }
+.x svg { width: var(--icon-page); height: var(--icon-page); }
+.x:hover { color: var(--accent-text); }
+.check { display: inline-flex; align-items: center; gap: var(--s03); color: var(--text-primary); }
+
+/* A list of service / session rows: mark on a light-grey chip, words, action. */
+.list { display: flex; flex-direction: column; }
+.row { display: flex; align-items: center; gap: var(--s05); padding: var(--s06) 0; border-bottom: var(--hairline) solid var(--rule); }
+.row:last-child { border-bottom: 0; }
+.ic { width: var(--s08); height: var(--s08); display: grid; place-items: center; background: var(--layer-02); color: var(--icon-primary); flex: none; }
+.ic svg { width: var(--icon-page); height: var(--icon-page); }
+.rowB { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--s01); }
+.rowT { display: inline-flex; align-items: center; gap: var(--s03); flex-wrap: wrap; }
+
+/* A plain setting row with a state on the right (two-factor "Always on"). */
+.tg { display: flex; align-items: center; justify-content: space-between; gap: var(--s06); padding: var(--s05) 0; border-bottom: var(--hairline) solid var(--rule); }
+
+/* Template editor. */
+.lbl { display: block; margin-bottom: var(--s02); }
+.chips { display: flex; flex-wrap: wrap; gap: var(--s03); }
+.chip { display: inline-flex; align-items: center; height: var(--s07); padding: 0 var(--s04); border-radius: var(--radius-pill); border: var(--hairline) solid var(--rule); color: var(--text-primary); }
+.preview { display: flex; flex-direction: column; gap: var(--s02); padding: var(--s04); border: var(--hairline) solid var(--rule); }
+
+/* Field grids: three across (profile edit) and two across (general). */
+.g3, .g2 { display: grid; gap: var(--s06); grid-template-columns: minmax(0, 1fr); }
+.g3 { margin-top: var(--s06); }
+@container page (min-width: 700px) {
+  .g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* The last row draws no line of its own: the section's divider or air closes the list, so two lines never stack. */
+.row:last-child { border-bottom: 0; }
+.tg:last-child { border-bottom: 0; }

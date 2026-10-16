@@ -1,0 +1,7068 @@
+{
+ "TAGV": {
+  "active": "green",
+  "settled": "green",
+  "paid": "green",
+  "live": "green",
+  "ok": "green",
+  "approved": "green",
+  "won": "green",
+  "reconciled": "green",
+  "placed": "green",
+  "confirmed": "green",
+  "published": "green",
+  "completed": "green",
+  "verified": "green",
+  "received": "green",
+  "refunded": "green",
+  "failed": "red",
+  "succeeded": "green",
+  "used": "",
+  "ready": "green",
+  "generating": "warn",
+  "overridden": "warn",
+  "held": "warn",
+  "pending": "warn",
+  "review": "warn",
+  "requested": "warn",
+  "invited": "warn",
+  "processing": "warn",
+  "sent": "warn",
+  "overdue": "warn",
+  "unmatched": "warn",
+  "shortlisted": "warn",
+  "reviewing": "warn",
+  "scheduled": "warn",
+  "draft": "warn",
+  "degraded": "warn",
+  "in progress": "warn",
+  "blocked": "red",
+  "declined": "red",
+  "lost": "red",
+  "unverified": "red",
+  "inactive": "red",
+  "rejected": "red",
+  "down": "red",
+  "open": "red",
+  "flagged": "red",
+  "passed": "",
+  "applied": "",
+  "feedback": "green",
+  "n/a": "",
+  "reassign": "warn",
+  "expired": "red",
+  "offboarded": "red",
+  "voided": "red",
+  "permanent": "green",
+  "time-boxed": "warn",
+  "credit": "green",
+  "deleting": "warn",
+  "deleted": "red",
+  "forming": "warn",
+  "running": "green",
+  "cancelled": "red"
+ },
+ "TAGLABEL": {
+  "n/a": "n/a",
+  "ok": "Verified",
+  "held": "Pending"
+ },
+ "ROLES": [
+  {
+   "k": "candidate",
+   "name": "Candidate",
+   "short": "Candidate",
+   "kind": "external",
+   "desc": "Takes the quiz, gets levelled, joins cohorts and books interviews."
+  },
+  {
+   "k": "agent",
+   "name": "Talent Agent",
+   "short": "Agent",
+   "kind": "external",
+   "desc": "Interviews candidates, sets own fee, holds a public marketplace listing."
+  },
+  {
+   "k": "employer",
+   "name": "Employer",
+   "short": "Employer",
+   "kind": "external",
+   "desc": "Searches the candidate database, unlocks interviews, makes hires."
+  },
+  {
+   "k": "reviewer",
+   "name": "Reviewer",
+   "short": "Reviewer",
+   "kind": "internal",
+   "desc": "Owns candidate level decisions. Can see the AI raw score — no one else can."
+  },
+  {
+   "k": "manager",
+   "name": "Manager of Agents",
+   "short": "Manager",
+   "kind": "internal",
+   "desc": "Oversees a book of agents; handles calibration and escalations."
+  },
+  {
+   "k": "supervisor",
+   "name": "Supervisor",
+   "short": "Supervisor",
+   "kind": "internal",
+   "desc": "Reviews agents above the manager line; adjusts an agent’s own level and ranking."
+  },
+  {
+   "k": "admin2",
+   "name": "Admin",
+   "short": "Admin",
+   "kind": "internal",
+   "desc": "Full platform access across every module, working alongside the Super Admin."
+  },
+  {
+   "k": "admin",
+   "name": "Super Admin",
+   "short": "Super Admin",
+   "kind": "internal",
+   "desc": "Full control across every module, with override on any level or setting."
+  }
+ ],
+ "PERM_MODULES": [
+  [
+   "dashboard",
+   "Dashboard",
+   [
+    "view"
+   ]
+  ],
+  [
+   "users",
+   "Users",
+   [
+    "view",
+    "create",
+    "edit",
+    "delete"
+   ]
+  ],
+  [
+   "roles",
+   "Roles",
+   [
+    "view",
+    "create",
+    "edit",
+    "delete"
+   ]
+  ],
+  [
+   "levelling",
+   "Levelling",
+   [
+    "view",
+    "create",
+    "edit",
+    "delete"
+   ]
+  ],
+  [
+   "marketplace",
+   "Marketplace",
+   [
+    "view",
+    "create",
+    "edit",
+    "delete"
+   ]
+  ],
+  [
+   "cohorts",
+   "Cohorts",
+   [
+    "view",
+    "create",
+    "edit",
+    "delete"
+   ]
+  ],
+  [
+   "courses",
+   "Courses",
+   [
+    "view",
+    "create",
+    "edit"
+   ]
+  ],
+  [
+   "interviews",
+   "Interviews",
+   [
+    "view",
+    "create",
+    "edit",
+    "delete"
+   ]
+  ],
+  [
+   "support",
+   "Support Requests",
+   [
+    "view",
+    "edit"
+   ]
+  ],
+  [
+   "finance",
+   "Finance",
+   [
+    "view",
+    "create",
+    "edit",
+    "delete"
+   ]
+  ],
+  [
+   "audit",
+   "Audit Log",
+   [
+    "view"
+   ]
+  ],
+  [
+   "onboarding",
+   "Onboarding Questions",
+   [
+    "view",
+    "edit"
+   ]
+  ],
+  [
+   "settings",
+   "Settings",
+   [
+    "view",
+    "edit"
+   ]
+  ]
+ ],
+ "PERM_ACT_LABEL": {
+  "view": "View",
+  "create": "Create",
+  "edit": "Edit",
+  "delete": "Delete"
+ },
+ "PERM_SENSITIVE": [
+  [
+   "approvelevel",
+   "Candidate Level",
+   "Approving, denying or overriding a level (5.2, 5.3), and Override level on the candidate detail (3.7)",
+   [
+    "view",
+    "edit"
+   ]
+  ],
+  [
+   "approvescore",
+   "Agent Score",
+   "The quarterly Agent Score review",
+   [
+    "view",
+    "edit"
+   ]
+  ],
+  [
+   "releasepayout",
+   "Payout",
+   "Releasing payouts, placing and clearing holds, early release, and clearing held funds inside 3.4 and 3.6",
+   [
+    "view",
+    "edit"
+   ]
+  ],
+  [
+   "changefee",
+   "Fee",
+   "Agent commission (3.2, 3.9 and the agent record), course price (7.1) and discount codes",
+   [
+    "view",
+    "edit"
+   ]
+  ],
+  [
+   "dataexport",
+   "Data Export",
+   "Every export on the platform",
+   [
+    "view"
+   ]
+  ],
+  [
+   "viewrawscore",
+   "AI Raw Score",
+   "Seeing the AI raw score (3.7 and the levelling stories)",
+   [
+    "view"
+   ]
+  ],
+  [
+   "setrange",
+   "Assessment Range",
+   "Setting an agent’s assessment range (3.8, 6.1)",
+   [
+    "view",
+    "edit"
+   ]
+  ],
+  [
+   "playrecording",
+   "Recording",
+   "Playing an interview recording (8.4)",
+   [
+    "view"
+   ]
+  ]
+ ],
+ "PERM_RESERVED": [
+  [
+   "grantsa",
+   "Grant or revoke Super Admin",
+   "Giving or removing the Super Admin role (1.3)"
+  ],
+  [
+   "overridetraining",
+   "Override the training-module listing gate",
+   "Listing an agent who has not completed the LightspeedVT training module (6.2)"
+  ]
+ ],
+ "BUILTIN_ROLES": [
+  "admin",
+  "admin2",
+  "reviewer",
+  "supervisor",
+  "manager"
+ ],
+ "PERMSET": {
+  "admin": [
+   "approvelevel:view",
+   "approvelevel:edit",
+   "approvescore:view",
+   "approvescore:edit",
+   "releasepayout:view",
+   "releasepayout:edit",
+   "changefee:view",
+   "changefee:edit",
+   "dataexport:view",
+   "viewrawscore:view",
+   "setrange:view",
+   "setrange:edit",
+   "playrecording:view",
+   "dashboard:view",
+   "users:view",
+   "users:create",
+   "users:edit",
+   "users:delete",
+   "roles:view",
+   "roles:create",
+   "roles:edit",
+   "roles:delete",
+   "levelling:view",
+   "levelling:create",
+   "levelling:edit",
+   "levelling:delete",
+   "marketplace:view",
+   "marketplace:create",
+   "marketplace:edit",
+   "marketplace:delete",
+   "courses:view",
+   "courses:create",
+   "courses:edit",
+   "interviews:view",
+   "interviews:create",
+   "interviews:edit",
+   "interviews:delete",
+   "support:view",
+   "support:edit",
+   "finance:view",
+   "finance:create",
+   "finance:edit",
+   "finance:delete",
+   "audit:view",
+   "onboarding:view",
+   "onboarding:edit",
+   "settings:view",
+   "settings:edit",
+   "grantsa",
+   "overridetraining"
+  ],
+  "admin2": [
+   "approvelevel:view",
+   "approvelevel:edit",
+   "approvescore:view",
+   "approvescore:edit",
+   "releasepayout:view",
+   "releasepayout:edit",
+   "changefee:view",
+   "changefee:edit",
+   "dataexport:view",
+   "viewrawscore:view",
+   "setrange:view",
+   "setrange:edit",
+   "playrecording:view",
+   "dashboard:view",
+   "users:view",
+   "users:create",
+   "users:edit",
+   "users:delete",
+   "roles:view",
+   "roles:create",
+   "roles:edit",
+   "roles:delete",
+   "levelling:view",
+   "levelling:create",
+   "levelling:edit",
+   "levelling:delete",
+   "marketplace:view",
+   "marketplace:create",
+   "marketplace:edit",
+   "marketplace:delete",
+   "courses:view",
+   "courses:create",
+   "courses:edit",
+   "interviews:view",
+   "interviews:create",
+   "interviews:edit",
+   "interviews:delete",
+   "support:view",
+   "support:edit",
+   "finance:view",
+   "finance:create",
+   "finance:edit",
+   "finance:delete",
+   "audit:view",
+   "onboarding:view",
+   "onboarding:edit",
+   "settings:view",
+   "settings:edit"
+  ],
+  "reviewer": [
+   "dashboard:view",
+   "users:view",
+   "levelling:view",
+   "interviews:view",
+   "interviews:edit",
+   "marketplace:view",
+   "onboarding:view",
+   "approvelevel:view",
+   "approvelevel:edit"
+  ],
+  "supervisor": [
+   "dashboard:view",
+   "users:view",
+   "users:edit",
+   "marketplace:view",
+   "marketplace:edit",
+   "interviews:view",
+   "levelling:view",
+   "finance:view",
+   "approvescore:view",
+   "approvescore:edit"
+  ],
+  "manager": [
+   "dashboard:view",
+   "users:view",
+   "users:edit",
+   "marketplace:view",
+   "marketplace:edit",
+   "interviews:view",
+   "interviews:edit",
+   "levelling:view"
+  ]
+ },
+ "DEPARTMENTS": [
+  {
+   "name": "Operations",
+   "status": "active"
+  },
+  {
+   "name": "Talent Success",
+   "status": "active"
+  },
+  {
+   "name": "Trust & Safety",
+   "status": "active"
+  },
+  {
+   "name": "Finance",
+   "status": "active"
+  },
+  {
+   "name": "Engineering",
+   "status": "active"
+  }
+ ],
+ "SETTINGS": {
+  "autoSignout": 30,
+  "exportLimit": 50000,
+  "reportDeadline": 24,
+  "rebookWindow": 14,
+  "attendanceMin": 5,
+  "leaderReconnect": 10,
+  "talLimit": 25,
+  "payoutDelay": 3,
+  "payoutRunDay": "Monday",
+  "closureGrace": 30,
+  "cohortCreation": "manual"
+ },
+ "HOLIDAYS": [
+  {
+   "date": "2026-01-01",
+   "name": "New Year's Day"
+  },
+  {
+   "date": "2026-05-25",
+   "name": "Spring Bank Holiday"
+  },
+  {
+   "date": "2026-12-25",
+   "name": "Christmas Day"
+  },
+  {
+   "date": "2026-12-28",
+   "name": "Boxing Day (substitute)"
+  }
+ ],
+ "STAFF_ROLE_KEYS": [
+  "reviewer",
+  "supervisor",
+  "manager",
+  "admin2",
+  "admin"
+ ],
+ "USERS": [
+  {
+   "id": "u1",
+   "name": "Dana Whitfield",
+   "email": "dana@talentnext.io",
+   "roles": [
+    "agent"
+   ],
+   "level": "—",
+   "job": "Engineering Manager, Stripe",
+   "rating": 4.9,
+   "interviewed": 64,
+   "status": "active",
+   "joined": "03-12-2026",
+   "origin": "individual",
+   "last": "2h ago",
+   "fee": 180,
+   "range": [
+    "E3",
+    "B2"
+   ],
+   "rubric": 4.9,
+   "candRatings": 58,
+   "scoreApproved": true,
+   "approvedScore": 4.9,
+   "scoreAt": "Jun 30, 2026",
+   "training": "complete",
+   "payoutMethod": "Bank •••• 4471",
+   "rank": 1
+  },
+  {
+   "id": "u2",
+   "name": "Marcus Ozoro",
+   "email": "marcus@northgate.health",
+   "roles": [
+    "agent"
+   ],
+   "level": "—",
+   "job": "Clinical Lead, Northgate Health",
+   "rating": 4.6,
+   "interviewed": 28,
+   "status": "active",
+   "joined": "02-04-2026",
+   "origin": "individual",
+   "last": "1d ago",
+   "fee": 160,
+   "range": [
+    "E1",
+    "E4"
+   ],
+   "rubric": 4.6,
+   "candRatings": 24,
+   "scoreApproved": false,
+   "startingScore": 4.6,
+   "quarterEnd": "Sep 30, 2026",
+   "training": "complete",
+   "payoutMethod": "Bank •••• 8123",
+   "rank": 4
+  },
+  {
+   "id": "u3",
+   "name": "Priya Raman",
+   "email": "priya@talentnext.io",
+   "roles": [
+    "agent",
+    "reviewer"
+   ],
+   "level": "—",
+   "job": "Product Director, Atlassian",
+   "rating": 4.8,
+   "interviewed": 52,
+   "status": "active",
+   "joined": "01-21-2026",
+   "origin": "individual",
+   "last": "20m ago",
+   "fee": 225,
+   "range": [
+    "B1",
+    "T1"
+   ],
+   "rubric": 4.8,
+   "candRatings": 47,
+   "scoreApproved": true,
+   "approvedScore": 4.7,
+   "scoreAt": "Jun 30, 2026",
+   "training": "complete",
+   "payoutMethod": "Bank •••• 2290",
+   "rank": 2
+  },
+  {
+   "id": "u4",
+   "name": "Maryam Naz",
+   "email": "maryam.naz@tkxel.io",
+   "roles": [
+    "candidate"
+   ],
+   "level": "E2 · Explorer",
+   "status": "active",
+   "joined": "03-12-2026",
+   "origin": "individual",
+   "last": "just now"
+  },
+  {
+   "id": "u40",
+   "name": "Bruno Sella",
+   "email": "bruno@sella.io",
+   "roles": [
+    "candidate"
+   ],
+   "level": "B3 · Builder",
+   "status": "active",
+   "joined": "02-20-2026",
+   "origin": "individual",
+   "last": "3h ago"
+  },
+  {
+   "id": "u5",
+   "name": "Jordan Vale",
+   "email": "jordan@vale.co",
+   "roles": [
+    "candidate"
+   ],
+   "level": "B1 · Builder",
+   "status": "active",
+   "joined": "04-02-2026",
+   "origin": "signal",
+   "last": "3d ago"
+  },
+  {
+   "id": "u6",
+   "name": "Amara Okafor",
+   "email": "amara@brightpath.io",
+   "roles": [
+    "employer"
+   ],
+   "level": "—",
+   "status": "ok",
+   "joined": "03-18-2026",
+   "origin": "individual",
+   "last": "5h ago",
+   "company": "BrightPath"
+  },
+  {
+   "id": "u7",
+   "name": "Tom Reeves",
+   "email": "tom@filtergo.com",
+   "roles": [
+    "candidate"
+   ],
+   "level": "Explorer",
+   "status": "active",
+   "joined": "03-29-2026",
+   "origin": "filtergo",
+   "last": "6d ago"
+  },
+  {
+   "id": "u8",
+   "name": "Nadia Haddad",
+   "email": "nadia@talentnext.io",
+   "roles": [
+    "admin2"
+   ],
+   "level": "—",
+   "status": "active",
+   "joined": "01-10-2026",
+   "origin": "internal",
+   "last": "40m ago",
+   "internal": true,
+   "job": "Head of Operations",
+   "dept": "Operations",
+   "phone": "+1 (415) 555-0180",
+   "invitedBy": "u9"
+  },
+  {
+   "id": "u9",
+   "name": "Derek Sole",
+   "email": "derek@talentnext.io",
+   "roles": [
+    "admin"
+   ],
+   "level": "—",
+   "status": "active",
+   "joined": "01-02-2026",
+   "origin": "internal",
+   "last": "just now",
+   "internal": true,
+   "job": "Founder & Platform Owner",
+   "dept": "",
+   "phone": "+1 (415) 555-0100",
+   "orig": true
+  },
+  {
+   "id": "u10",
+   "name": "Lena Fisher",
+   "email": "lena@signal.co",
+   "roles": [
+    "employer"
+   ],
+   "level": "—",
+   "status": "ok",
+   "joined": "03-22-2026",
+   "origin": "individual",
+   "last": "2d ago",
+   "company": "Signal (sponsoring)"
+  },
+  {
+   "id": "u11",
+   "name": "Chris Boone",
+   "email": "chris@boone.dev",
+   "roles": [
+    "candidate"
+   ],
+   "level": "Explorer",
+   "status": "active",
+   "joined": "04-01-2026",
+   "origin": "individual",
+   "last": "12d ago"
+  },
+  {
+   "id": "u12",
+   "name": "Sofia Marchetti",
+   "email": "sofia@talentnext.io",
+   "roles": [
+    "admin2"
+   ],
+   "level": "—",
+   "status": "active",
+   "joined": "01-15-2026",
+   "origin": "internal",
+   "last": "25m ago",
+   "internal": true,
+   "job": "Platform Admin",
+   "dept": "Operations",
+   "phone": "+1 (206) 555-0121",
+   "invitedBy": "u9"
+  },
+  {
+   "id": "u41",
+   "name": "Elif Demir",
+   "email": "elif@talentnext.io",
+   "roles": [
+    "reviewer"
+   ],
+   "level": "—",
+   "status": "active",
+   "joined": "02-02-2026",
+   "origin": "internal",
+   "last": "1h ago",
+   "internal": true,
+   "job": "Level Reviewer",
+   "dept": "Talent Success",
+   "phone": "+1 (312) 555-0141",
+   "invitedBy": "u9"
+  },
+  {
+   "id": "u42",
+   "name": "Marco Bianchi",
+   "email": "marco@talentnext.io",
+   "roles": [
+    "supervisor"
+   ],
+   "level": "—",
+   "status": "active",
+   "joined": "02-11-2026",
+   "origin": "internal",
+   "last": "5h ago",
+   "internal": true,
+   "job": "Agent Supervisor",
+   "dept": "Talent Success",
+   "phone": "+39 02 555 0142",
+   "invitedBy": "u9"
+  },
+  {
+   "id": "u43",
+   "name": "Grace Nolan",
+   "email": "grace@talentnext.io",
+   "roles": [
+    "admin"
+   ],
+   "level": "—",
+   "status": "active",
+   "joined": "01-08-2026",
+   "origin": "internal",
+   "last": "2h ago",
+   "internal": true,
+   "job": "Co-Owner",
+   "dept": "Operations",
+   "phone": "+44 20 7946 0143",
+   "invitedBy": "u9"
+  },
+  {
+   "id": "u44",
+   "name": "Tomas Vega",
+   "email": "tomas@talentnext.io",
+   "roles": [
+    "manager"
+   ],
+   "level": "—",
+   "status": "active",
+   "joined": "02-24-2026",
+   "origin": "internal",
+   "last": "3d ago",
+   "internal": true,
+   "job": "Manager of Agents",
+   "dept": "Talent Success",
+   "phone": "+1 (628) 555-0144",
+   "invitedBy": "u8"
+  },
+  {
+   "id": "u46",
+   "name": "Yara Suleiman",
+   "email": "yara@talentnext.io",
+   "roles": [
+    "reviewer"
+   ],
+   "level": "—",
+   "status": "invited",
+   "joined": "09-13-2026",
+   "origin": "internal",
+   "last": "Never",
+   "internal": true,
+   "job": "Level Reviewer",
+   "dept": "Talent Success",
+   "phone": "+971 4 555 0146",
+   "invitedBy": "u9",
+   "invitedOn": "09-13-2026"
+  },
+  {
+   "id": "u47",
+   "name": "Paul Adeyemi",
+   "email": "paul@talentnext.io",
+   "roles": [
+    "manager"
+   ],
+   "level": "—",
+   "status": "inactive",
+   "joined": "01-30-2026",
+   "origin": "internal",
+   "last": "34d ago",
+   "internal": true,
+   "job": "Manager of Agents",
+   "dept": "Talent Success",
+   "phone": "+234 1 555 0147",
+   "invitedBy": "u9",
+   "deactivatedOn": "2026-08-30"
+  },
+  {
+   "id": "u48",
+   "name": "Tomas Vega",
+   "email": "tomas.vega@gmail.com",
+   "roles": [
+    "agent"
+   ],
+   "level": "—",
+   "job": "Sales Director, Vega Co",
+   "rating": 0,
+   "interviewed": 0,
+   "onboarded": false,
+   "status": "invited",
+   "joined": "09-24-2026",
+   "origin": "individual",
+   "last": "Never",
+   "fee": 150,
+   "commission": 20,
+   "commissionAt": "09-24-2026",
+   "invitedOn": "09-24-2026",
+   "invitedBy": "u9",
+   "range": [
+    "E1",
+    "E3"
+   ],
+   "rubric": 0,
+   "rank": null
+  },
+  {
+   "id": "u49",
+   "name": "Aisha Rahman",
+   "email": "aisha.rahman@gmail.com",
+   "roles": [
+    "agent"
+   ],
+   "level": "—",
+   "job": "Head of People, Rahman Group",
+   "rating": 0,
+   "interviewed": 0,
+   "onboarded": false,
+   "status": "invited",
+   "joined": "09-26-2026",
+   "origin": "individual",
+   "last": "Never",
+   "fee": 175,
+   "commission": 20,
+   "commissionAt": "09-26-2026",
+   "invitedOn": "09-26-2026",
+   "invitedBy": "u9",
+   "range": [
+    "E1",
+    "E3"
+   ],
+   "rubric": 0,
+   "rank": null
+  },
+  {
+   "id": "u50",
+   "name": "Marco Bianchi",
+   "email": "marco.bianchi@gmail.com",
+   "roles": [
+    "agent"
+   ],
+   "level": "—",
+   "job": "Regional Manager, Bianchi Retail",
+   "rating": 0,
+   "interviewed": 0,
+   "onboarded": false,
+   "status": "invited",
+   "joined": "09-28-2026",
+   "origin": "individual",
+   "last": "Never",
+   "fee": 160,
+   "commission": 20,
+   "commissionAt": "09-28-2026",
+   "invitedOn": "09-28-2026",
+   "invitedBy": "u9",
+   "range": [
+    "E1",
+    "E3"
+   ],
+   "rubric": 0,
+   "rank": null
+  },
+  {
+   "id": "u51",
+   "name": "Omar Haddad",
+   "email": "omar@talentnext.io",
+   "roles": [
+    "manager"
+   ],
+   "level": "—",
+   "status": "invited",
+   "joined": "09-20-2026",
+   "origin": "internal",
+   "last": "Never",
+   "internal": true,
+   "job": "Operations Manager",
+   "dept": "Operations",
+   "phone": "+971 4 555 0151",
+   "invitedBy": "u9",
+   "invitedOn": "09-20-2026"
+  },
+  {
+   "id": "u52",
+   "name": "Lena Fischer",
+   "email": "lena@talentnext.io",
+   "roles": [
+    "reviewer"
+   ],
+   "level": "—",
+   "status": "invited",
+   "joined": "09-22-2026",
+   "origin": "internal",
+   "last": "Never",
+   "internal": true,
+   "job": "Level Reviewer",
+   "dept": "Talent Success",
+   "phone": "+971 4 555 0152",
+   "invitedBy": "u9",
+   "invitedOn": "09-22-2026"
+  },
+  {
+   "id": "u13",
+   "name": "Owen Blake",
+   "email": "owen@blake.io",
+   "roles": [
+    "agent"
+   ],
+   "level": "—",
+   "job": "Startup Founder & Ex-VC",
+   "rating": 4.5,
+   "interviewed": 19,
+   "status": "active",
+   "joined": "02-08-2026",
+   "origin": "individual",
+   "last": "4h ago",
+   "fee": 150,
+   "range": [
+    "E1",
+    "E3"
+   ],
+   "rubric": 4.3,
+   "candRatings": 16,
+   "scoreApproved": true,
+   "approvedScore": 4.4,
+   "scoreAt": "Jun 30, 2026",
+   "training": "overridden",
+   "trainingBy": "Derek Sole",
+   "trainingAt": "Aug 14, 2026",
+   "payoutMethod": "Bank •••• 5561",
+   "rank": 5
+  },
+  {
+   "id": "u14",
+   "name": "Naomi Frost",
+   "email": "naomi@frost.co",
+   "roles": [
+    "agent"
+   ],
+   "level": "—",
+   "job": "Design Lead, Figma",
+   "rating": 4.7,
+   "interviewed": 37,
+   "status": "active",
+   "joined": "01-19-2026",
+   "origin": "individual",
+   "last": "1h ago",
+   "fee": 200,
+   "range": [
+    "E2",
+    "B1"
+   ],
+   "rubric": 4.7,
+   "candRatings": 33,
+   "scoreApproved": true,
+   "approvedScore": 4.7,
+   "scoreAt": "Jun 30, 2026",
+   "training": "complete",
+   "payoutMethod": "Bank •••• 6702",
+   "rank": 3
+  },
+  {
+   "id": "u45",
+   "name": "Karim Haddad",
+   "email": "karim@haddad.dev",
+   "roles": [
+    "agent"
+   ],
+   "level": "—",
+   "job": "Staff Engineer, Linear",
+   "rating": 0,
+   "interviewed": 0,
+   "status": "active",
+   "joined": "03-01-2026",
+   "origin": "individual",
+   "last": "6d ago",
+   "fee": 170,
+   "onboarded": false,
+   "range": [
+    "E1",
+    "E3"
+   ],
+   "rubric": 0,
+   "candRatings": 0,
+   "scoreApproved": false,
+   "startingScore": 3.5,
+   "quarterEnd": "Dec 31, 2026",
+   "training": "notcomplete",
+   "rank": null
+  },
+  {
+   "id": "u15",
+   "name": "Victor Huang",
+   "email": "victor@nimbus.io",
+   "roles": [
+    "employer"
+   ],
+   "level": "—",
+   "status": "ok",
+   "joined": "03-25-2026",
+   "origin": "individual",
+   "last": "1d ago",
+   "company": "Nimbus Labs"
+  },
+  {
+   "id": "u16",
+   "name": "Elena Ruiz",
+   "email": "elena@corewell.health",
+   "roles": [
+    "employer"
+   ],
+   "level": "—",
+   "status": "ok",
+   "joined": "03-27-2026",
+   "origin": "individual",
+   "last": "3d ago",
+   "company": "Corewell"
+  },
+  {
+   "id": "u17",
+   "name": "Aisha Bello",
+   "email": "aisha@bello.io",
+   "roles": [
+    "candidate"
+   ],
+   "level": "E1",
+   "status": "active",
+   "joined": "03-30-2026",
+   "origin": "individual",
+   "last": "2h ago"
+  },
+  {
+   "id": "u18",
+   "name": "Leo Martins",
+   "email": "leo@martins.br",
+   "roles": [
+    "candidate"
+   ],
+   "level": "E2",
+   "status": "active",
+   "joined": "03-14-2026",
+   "origin": "signal",
+   "last": "1d ago"
+  },
+  {
+   "id": "u19",
+   "name": "Hana Sato",
+   "email": "hana@sato.jp",
+   "roles": [
+    "candidate"
+   ],
+   "level": "B2",
+   "status": "active",
+   "joined": "02-20-2026",
+   "origin": "individual",
+   "last": "5h ago"
+  },
+  {
+   "id": "u20",
+   "name": "Omar Haddad",
+   "email": "omar@haddad.me",
+   "roles": [
+    "candidate"
+   ],
+   "level": "E1",
+   "status": "active",
+   "joined": "04-02-2026",
+   "origin": "filtergo",
+   "last": "8d ago"
+  },
+  {
+   "id": "u21",
+   "name": "Grace Kim",
+   "email": "grace.kim@kim.co",
+   "roles": [
+    "candidate"
+   ],
+   "level": "E3",
+   "status": "active",
+   "joined": "03-11-2026",
+   "origin": "individual",
+   "last": "30m ago"
+  },
+  {
+   "id": "u22",
+   "name": "Diego Alvarez",
+   "email": "diego@alvarez.mx",
+   "roles": [
+    "candidate"
+   ],
+   "level": "B1",
+   "status": "active",
+   "joined": "02-06-2026",
+   "origin": "individual",
+   "last": "2d ago"
+  },
+  {
+   "id": "u23",
+   "name": "Fatima Noor",
+   "email": "fatima@noor.io",
+   "roles": [
+    "candidate"
+   ],
+   "level": "E1",
+   "status": "active",
+   "joined": "04-01-2026",
+   "origin": "signal",
+   "last": "9d ago"
+  },
+  {
+   "id": "u24",
+   "name": "Sam Whitfield",
+   "email": "sam@whitfield.co",
+   "roles": [
+    "candidate"
+   ],
+   "level": "E2",
+   "status": "active",
+   "joined": "03-17-2026",
+   "origin": "individual",
+   "last": "6h ago"
+  },
+  {
+   "id": "u25",
+   "name": "Yuki Tanaka",
+   "email": "yuki@tanaka.jp",
+   "roles": [
+    "candidate"
+   ],
+   "level": "T1",
+   "status": "active",
+   "joined": "01-22-2026",
+   "origin": "individual",
+   "last": "1d ago"
+  },
+  {
+   "id": "u26",
+   "name": "Noah Bright",
+   "email": "noah@bright.io",
+   "roles": [
+    "candidate"
+   ],
+   "level": "E1",
+   "status": "active",
+   "joined": "04-03-2026",
+   "origin": "individual",
+   "last": "just now"
+  },
+  {
+   "id": "u27",
+   "name": "Zara Ahmed",
+   "email": "zara@ahmed.io",
+   "roles": [
+    "candidate"
+   ],
+   "level": "B2",
+   "status": "active",
+   "joined": "02-09-2026",
+   "origin": "filtergo",
+   "last": "4d ago"
+  },
+  {
+   "id": "u28",
+   "name": "Ethan Cole",
+   "email": "ethan@cole.dev",
+   "roles": [
+    "candidate"
+   ],
+   "level": "E2",
+   "status": "inactive",
+   "joined": "03-13-2026",
+   "origin": "individual",
+   "last": "21d ago"
+  },
+  {
+   "id": "u29",
+   "name": "Mia Rossi",
+   "email": "mia@rossi.it",
+   "roles": [
+    "candidate"
+   ],
+   "level": "E1",
+   "status": "active",
+   "joined": "03-31-2026",
+   "origin": "individual",
+   "last": "3h ago"
+  },
+  {
+   "id": "u30",
+   "name": "Kofi Mensah",
+   "email": "kofi@mensah.gh",
+   "roles": [
+    "candidate"
+   ],
+   "level": "B1",
+   "status": "active",
+   "joined": "02-28-2026",
+   "origin": "signal",
+   "last": "2d ago"
+  },
+  {
+   "id": "u31",
+   "name": "Lucia Moretti",
+   "email": "lucia@moretti.it",
+   "roles": [
+    "candidate"
+   ],
+   "level": "E2",
+   "status": "active",
+   "joined": "03-16-2026",
+   "origin": "individual",
+   "last": "5h ago"
+  },
+  {
+   "id": "u32",
+   "name": "Aaron Feld",
+   "email": "aaron@feld.io",
+   "roles": [
+    "candidate"
+   ],
+   "level": "E1",
+   "status": "active",
+   "joined": "04-02-2026",
+   "origin": "individual",
+   "last": "7d ago"
+  },
+  {
+   "id": "u53",
+   "name": "Marcus Reyes",
+   "email": "marcus.reyes@reyes.co",
+   "roles": [
+    "candidate"
+   ],
+   "level": "B2 · Builder",
+   "status": "active",
+   "joined": "02-14-2026",
+   "origin": "individual",
+   "last": "1d ago"
+  },
+  {
+   "id": "u54",
+   "name": "Elena Fischer",
+   "email": "elena.fischer@fischer.de",
+   "roles": [
+    "candidate"
+   ],
+   "level": "T2 · Trailblazer",
+   "status": "active",
+   "joined": "01-27-2026",
+   "origin": "individual",
+   "last": "2d ago"
+  },
+  {
+   "id": "u55",
+   "name": "Priya Nair",
+   "email": "priya.nair@nair.in",
+   "roles": [
+    "candidate"
+   ],
+   "level": "B2 · Builder",
+   "status": "active",
+   "joined": "02-03-2026",
+   "origin": "individual",
+   "last": "4h ago"
+  },
+  {
+   "id": "u56",
+   "name": "Tomas Vidal",
+   "email": "tomas.vidal@vidal.es",
+   "roles": [
+    "candidate"
+   ],
+   "level": "T3 · Trailblazer",
+   "status": "active",
+   "joined": "01-12-2026",
+   "origin": "individual",
+   "last": "6h ago"
+  },
+  {
+   "id": "u57",
+   "name": "Sofia Marin",
+   "email": "sofia.marin@marin.ro",
+   "roles": [
+    "candidate"
+   ],
+   "level": "B1 · Builder",
+   "status": "active",
+   "joined": "03-04-2026",
+   "origin": "individual",
+   "last": "3d ago"
+  },
+  {
+   "id": "u58",
+   "name": "Zoe Park",
+   "email": "zoe.park@park.kr",
+   "roles": [
+    "candidate"
+   ],
+   "level": "T1 · Trailblazer",
+   "status": "active",
+   "joined": "02-18-2026",
+   "origin": "individual",
+   "last": "1d ago"
+  }
+ ],
+ "CANDS": [
+  {
+   "id": "u4",
+   "name": "Maryam Naz",
+   "bucket": "Explorer",
+   "level": "E2",
+   "cohort": "Cohort 1",
+   "agent": "Dana Whitfield",
+   "consent": {
+    "video": 1,
+    "ai": 1,
+    "scenes": 1,
+    "vis": 1
+   },
+   "status": "active",
+   "last": "just now",
+   "letters": [
+    "L",
+    "A",
+    "E"
+   ]
+  },
+  {
+   "id": "u5",
+   "name": "Jordan Vale",
+   "bucket": "Builder",
+   "level": "B1",
+   "cohort": "Cohort 3",
+   "agent": "Priya Raman",
+   "consent": {
+    "video": 1,
+    "ai": 1,
+    "scenes": 0,
+    "vis": 1
+   },
+   "status": "active",
+   "last": "3d ago",
+   "letters": [
+    "E",
+    "L"
+   ]
+  },
+  {
+   "id": "u7",
+   "name": "Tom Reeves",
+   "bucket": "Explorer",
+   "level": "E1",
+   "cohort": "Cohort 2",
+   "agent": "—",
+   "consent": {
+    "video": 1,
+    "ai": 1,
+    "scenes": 0,
+    "vis": 0
+   },
+   "status": "active",
+   "last": "6d ago",
+   "letters": [
+    "T1"
+   ]
+  },
+  {
+   "id": "u11",
+   "name": "Chris Boone",
+   "bucket": "Explorer",
+   "level": "E1",
+   "cohort": "Cohort 2",
+   "agent": "—",
+   "consent": {
+    "video": 1,
+    "ai": 1,
+    "scenes": 0,
+    "vis": 1
+   },
+   "status": "active",
+   "last": "12d ago",
+   "letters": [
+    "T1"
+   ]
+  },
+  {
+   "id": "u17",
+   "name": "Aisha Bello",
+   "bucket": "Explorer",
+   "level": "E1",
+   "cohort": "Cohort 2",
+   "agent": "Dana Whitfield",
+   "consent": {
+    "video": 1,
+    "ai": 1,
+    "scenes": 1,
+    "vis": 1
+   },
+   "status": "active",
+   "last": "2h ago",
+   "letters": [
+    "L",
+    "A",
+    "E"
+   ]
+  },
+  {
+   "id": "u18",
+   "name": "Leo Martins",
+   "bucket": "Explorer",
+   "level": "E2",
+   "cohort": "Cohort 1",
+   "agent": "Priya Raman",
+   "consent": {
+    "video": 1,
+    "ai": 1,
+    "scenes": 0,
+    "vis": 1
+   },
+   "status": "active",
+   "last": "1d ago",
+   "letters": [
+    "L",
+    "A"
+   ]
+  },
+  {
+   "id": "u19",
+   "name": "Hana Sato",
+   "bucket": "Builder",
+   "level": "B2",
+   "cohort": "Cohort 3",
+   "agent": "Marcus Ozoro",
+   "consent": {
+    "video": 1,
+    "ai": 1,
+    "scenes": 1,
+    "vis": 1
+   },
+   "status": "active",
+   "last": "5h ago",
+   "letters": [
+    "T1"
+   ]
+  },
+  {
+   "id": "u20",
+   "name": "Omar Haddad",
+   "bucket": "Explorer",
+   "level": "E1",
+   "cohort": "Cohort 2",
+   "agent": "—",
+   "consent": {
+    "video": 1,
+    "ai": 1,
+    "scenes": 0,
+    "vis": 0
+   },
+   "status": "active",
+   "last": "8d ago",
+   "letters": [
+    "T1"
+   ]
+  },
+  {
+   "id": "u21",
+   "name": "Grace Kim",
+   "bucket": "Explorer",
+   "level": "E3",
+   "cohort": "Cohort 1",
+   "agent": "Dana Whitfield",
+   "consent": {
+    "video": 1,
+    "ai": 1,
+    "scenes": 1,
+    "vis": 1
+   },
+   "status": "active",
+   "last": "30m ago",
+   "letters": [
+    "E"
+   ]
+  },
+  {
+   "id": "u22",
+   "name": "Diego Alvarez",
+   "bucket": "Builder",
+   "level": "B1",
+   "cohort": "Cohort 3",
+   "agent": "Naomi Frost",
+   "consent": {
+    "video": 1,
+    "ai": 1,
+    "scenes": 0,
+    "vis": 1
+   },
+   "status": "active",
+   "last": "2d ago",
+   "letters": [
+    "L",
+    "A",
+    "E"
+   ]
+  },
+  {
+   "id": "u23",
+   "name": "Fatima Noor",
+   "bucket": "Explorer",
+   "level": "E1",
+   "cohort": "Cohort 2",
+   "agent": "—",
+   "consent": {
+    "video": 1,
+    "ai": 1,
+    "scenes": 0,
+    "vis": 0
+   },
+   "status": "active",
+   "last": "9d ago",
+   "letters": [
+    "L"
+   ]
+  },
+  {
+   "id": "u24",
+   "name": "Sam Whitfield",
+   "bucket": "Explorer",
+   "level": "E2",
+   "cohort": "Cohort 1",
+   "agent": "Owen Blake",
+   "consent": {
+    "video": 1,
+    "ai": 1,
+    "scenes": 1,
+    "vis": 1
+   },
+   "status": "active",
+   "last": "6h ago",
+   "letters": [
+    "T1"
+   ]
+  },
+  {
+   "id": "u25",
+   "name": "Yuki Tanaka",
+   "bucket": "Trailblazer",
+   "level": "T1",
+   "cohort": "—",
+   "agent": "Priya Raman",
+   "consent": {
+    "video": 1,
+    "ai": 1,
+    "scenes": 1,
+    "vis": 1
+   },
+   "status": "active",
+   "last": "1d ago",
+   "letters": [
+    "L",
+    "A",
+    "E"
+   ]
+  },
+  {
+   "id": "u26",
+   "name": "Noah Bright",
+   "bucket": "Explorer",
+   "level": "E1",
+   "cohort": "Cohort 4",
+   "agent": "—",
+   "consent": {
+    "video": 1,
+    "ai": 1,
+    "scenes": 0,
+    "vis": 1
+   },
+   "status": "active",
+   "last": "just now",
+   "letters": [
+    "E",
+    "L"
+   ]
+  },
+  {
+   "id": "u27",
+   "name": "Zara Ahmed",
+   "bucket": "Builder",
+   "level": "B2",
+   "cohort": "Cohort 3",
+   "agent": "Marcus Ozoro",
+   "consent": {
+    "video": 1,
+    "ai": 1,
+    "scenes": 1,
+    "vis": 1
+   },
+   "status": "active",
+   "last": "4d ago",
+   "letters": [
+    "L"
+   ]
+  },
+  {
+   "id": "u28",
+   "name": "Ethan Cole",
+   "bucket": "Explorer",
+   "level": "E2",
+   "cohort": "Cohort 1",
+   "agent": "Dana Whitfield",
+   "consent": {
+    "video": 1,
+    "ai": 1,
+    "scenes": 0,
+    "vis": 0
+   },
+   "status": "inactive",
+   "last": "21d ago",
+   "letters": [
+    "A",
+    "N"
+   ]
+  },
+  {
+   "id": "u29",
+   "name": "Mia Rossi",
+   "bucket": "Explorer",
+   "level": "E1",
+   "cohort": "Cohort 4",
+   "agent": "—",
+   "consent": {
+    "video": 1,
+    "ai": 1,
+    "scenes": 0,
+    "vis": 1
+   },
+   "status": "active",
+   "last": "3h ago",
+   "letters": [
+    "L",
+    "A",
+    "E"
+   ]
+  },
+  {
+   "id": "u30",
+   "name": "Kofi Mensah",
+   "bucket": "Builder",
+   "level": "B1",
+   "cohort": "Cohort 5",
+   "agent": "Naomi Frost",
+   "consent": {
+    "video": 1,
+    "ai": 1,
+    "scenes": 1,
+    "vis": 1
+   },
+   "status": "active",
+   "last": "2d ago",
+   "letters": [
+    "A",
+    "N"
+   ]
+  },
+  {
+   "id": "u31",
+   "name": "Lucia Moretti",
+   "bucket": "Explorer",
+   "level": "E2",
+   "cohort": "Cohort 2",
+   "agent": "Dana Whitfield",
+   "consent": {
+    "video": 1,
+    "ai": 1,
+    "scenes": 1,
+    "vis": 1
+   },
+   "status": "active",
+   "last": "5h ago",
+   "letters": [
+    "T1"
+   ]
+  },
+  {
+   "id": "u32",
+   "name": "Aaron Feld",
+   "bucket": "Explorer",
+   "level": "E1",
+   "cohort": "Cohort 4",
+   "agent": "—",
+   "consent": {
+    "video": 1,
+    "ai": 1,
+    "scenes": 0,
+    "vis": 0
+   },
+   "status": "active",
+   "last": "7d ago",
+   "letters": [
+    "A",
+    "N"
+   ]
+  },
+  {
+   "id": "u53",
+   "name": "Marcus Reyes",
+   "bucket": "Builder",
+   "level": "B2",
+   "cohort": "—",
+   "agent": "—",
+   "consent": {
+    "video": 1,
+    "ai": 1,
+    "scenes": 0,
+    "vis": 1
+   },
+   "status": "active",
+   "last": "1d ago",
+   "letters": [
+    "L",
+    "A"
+   ]
+  },
+  {
+   "id": "u54",
+   "name": "Elena Fischer",
+   "bucket": "Trailblazer",
+   "level": "T2",
+   "cohort": "—",
+   "agent": "—",
+   "consent": {
+    "video": 1,
+    "ai": 1,
+    "scenes": 0,
+    "vis": 1
+   },
+   "status": "active",
+   "last": "2d ago",
+   "letters": [
+    "T1",
+    "L"
+   ]
+  },
+  {
+   "id": "u55",
+   "name": "Priya Nair",
+   "bucket": "Builder",
+   "level": "B2",
+   "cohort": "—",
+   "agent": "—",
+   "consent": {
+    "video": 1,
+    "ai": 1,
+    "scenes": 0,
+    "vis": 1
+   },
+   "status": "active",
+   "last": "4h ago",
+   "letters": [
+    "T1"
+   ]
+  },
+  {
+   "id": "u56",
+   "name": "Tomas Vidal",
+   "bucket": "Trailblazer",
+   "level": "T3",
+   "cohort": "—",
+   "agent": "—",
+   "consent": {
+    "video": 1,
+    "ai": 1,
+    "scenes": 0,
+    "vis": 1
+   },
+   "status": "active",
+   "last": "6h ago",
+   "letters": [
+    "E",
+    "L"
+   ]
+  },
+  {
+   "id": "u57",
+   "name": "Sofia Marin",
+   "bucket": "Builder",
+   "level": "B1",
+   "cohort": "—",
+   "agent": "—",
+   "consent": {
+    "video": 1,
+    "ai": 1,
+    "scenes": 0,
+    "vis": 1
+   },
+   "status": "active",
+   "last": "3d ago",
+   "letters": [
+    "E",
+    "L"
+   ]
+  },
+  {
+   "id": "u58",
+   "name": "Zoe Park",
+   "bucket": "Trailblazer",
+   "level": "T1",
+   "cohort": "—",
+   "agent": "—",
+   "consent": {
+    "video": 1,
+    "ai": 1,
+    "scenes": 0,
+    "vis": 1
+   },
+   "status": "active",
+   "last": "1d ago",
+   "letters": [
+    "E",
+    "L"
+   ]
+  }
+ ],
+ "COURSES": [
+  {
+   "id": "co1",
+   "name": "Foundations of Leadership",
+   "track": "Explorer",
+   "levels": [
+    "E1",
+    "E2",
+    "E3"
+   ],
+   "intent": "role",
+   "chapters": 12,
+   "lsvt": "Leadership Foundations (LSVT)",
+   "desc": "Builds the everyday operating habits a first leadership role asks for: taking work end to end, handing it over cleanly, and saying the hard thing early. For people stepping up in the job they are already in.",
+   "price": 100,
+   "days": 90,
+   "status": "live"
+  },
+  {
+   "id": "co2",
+   "name": "Leading High-Performing Teams",
+   "track": "Builder",
+   "levels": [
+    "B1",
+    "B2",
+    "B3"
+   ],
+   "intent": "role",
+   "chapters": 14,
+   "lsvt": "Team Dynamics (LSVT)",
+   "desc": "Develops the craft of holding a team steady through conflict, coaching rather than fixing, and running a weekly rhythm people leave knowing what to do. For those already leading who want the team to carry more.",
+   "price": 180,
+   "days": 90,
+   "status": "live"
+  },
+  {
+   "id": "co3",
+   "name": "Executive Strategy & Vision",
+   "track": "Builder",
+   "levels": [
+    "B3",
+    "B4",
+    "B5"
+   ],
+   "intent": "ownership",
+   "chapters": 12,
+   "lsvt": "Strategic Thinking (LSVT)",
+   "desc": "Turns a leader outward: setting direction under incomplete information, telling a decision you can reverse from one you cannot, and carrying a team through a change nobody chose. For people building toward ownership.",
+   "price": 260,
+   "days": 90,
+   "status": "draft"
+  },
+  {
+   "id": "co4",
+   "name": "Communicating with Impact",
+   "track": "Explorer",
+   "levels": [
+    "E1",
+    "E2",
+    "E3",
+    "E4",
+    "E5"
+   ],
+   "intent": "another",
+   "chapters": 10,
+   "lsvt": "Communication & Influence (LSVT)",
+   "desc": "Sharpens how a message lands: opening a hard conversation without an ambush, giving feedback that changes what happens next, and reading what a room is not saying. Useful at every level and every intent.",
+   "price": 120,
+   "days": 90,
+   "status": "live"
+  },
+  {
+   "id": "co5",
+   "name": "Influencing Without Authority",
+   "track": "Builder",
+   "levels": [
+    "B2",
+    "B3",
+    "B4"
+   ],
+   "intent": "another",
+   "chapters": 12,
+   "lsvt": "Coaching for Performance (LSVT)",
+   "desc": "The skill of moving work through people who do not report to you: building trust at speed, managing up, and making small commitments in public and keeping them. For those leading across a business, not just down a line.",
+   "price": 200,
+   "days": 90,
+   "status": "live"
+  },
+  {
+   "id": "co6",
+   "name": "Communication Essentials",
+   "track": "Explorer",
+   "levels": [
+    "E1",
+    "E2"
+   ],
+   "intent": "role",
+   "chapters": 8,
+   "lsvt": "Communication & Influence (LSVT)",
+   "desc": "The groundwork of being understood at work: saying what you mean in one sentence other people repeat, listening for what matters, and giving your manager the version of a problem they can act on. The entry course.",
+   "price": 90,
+   "days": 90,
+   "status": "live"
+  },
+  {
+   "id": "co7",
+   "name": "Team Leadership",
+   "track": "Builder",
+   "levels": [
+    "B1",
+    "B2",
+    "B3",
+    "B4"
+   ],
+   "intent": "role",
+   "chapters": 13,
+   "lsvt": "Team Dynamics (LSVT)",
+   "desc": "Everything a group needs from the person in front of it: delegation without drop-off, repair after a working relationship breaks, and holding the line while two people are still angry. For established team leads.",
+   "price": 210,
+   "days": 90,
+   "status": "live"
+  },
+  {
+   "id": "co8",
+   "name": "Leading Through Change",
+   "track": "Builder",
+   "levels": [
+    "B4",
+    "B5"
+   ],
+   "intent": "ownership",
+   "chapters": 12,
+   "lsvt": "Change Leadership (LSVT)",
+   "desc": "How to keep the work going while the ground moves: saying what you know and what you do not, taking the heat out of a disagreement without avoiding it, and leading people through a change they did not choose. The senior Builder course.",
+   "price": 280,
+   "days": 90,
+   "status": "draft"
+  }
+ ],
+ "BOOKINGS": [
+  {
+   "id": "bk1",
+   "cand": "Maryam Naz",
+   "agent": "Dana Whitfield",
+   "slot": "Thu 14:00",
+   "date": "2026-08-13",
+   "fee": 180,
+   "escrow": "released",
+   "paid": true,
+   "kind": "Re-interview",
+   "status": "active",
+   "stage": "reported",
+   "recExists": true,
+   "recLen": "28:00",
+   "transcript": "Generating"
+  },
+  {
+   "id": "bk2",
+   "cand": "Jordan Vale",
+   "agent": "Priya Raman",
+   "slot": "Wed 16:00",
+   "date": "2026-08-12",
+   "fee": 225,
+   "escrow": "held",
+   "paid": true,
+   "kind": "Interview",
+   "status": "active",
+   "stage": "held",
+   "overdue": false,
+   "overdueDays": 0,
+   "recExists": true,
+   "recLen": "35:13",
+   "transcript": "Ready",
+   "recDeleted": true
+  },
+  {
+   "id": "bk3",
+   "cand": "Chris Boone",
+   "agent": "Marcus Ozoro",
+   "slot": "Fri 09:00",
+   "date": "2026-08-14",
+   "fee": 0,
+   "escrow": "n/a",
+   "paid": false,
+   "kind": "First (discounted)",
+   "status": "pending",
+   "stage": "booked",
+   "recExists": false
+  },
+  {
+   "id": "bk4",
+   "cand": "Ava Stone",
+   "agent": "Dana Whitfield",
+   "slot": "Mon 10:00",
+   "date": "2026-08-10",
+   "fee": 180,
+   "escrow": "held",
+   "paid": true,
+   "kind": "Interview",
+   "status": "active",
+   "stage": "nothld",
+   "recExists": false
+  },
+  {
+   "id": "bk5",
+   "cand": "Liam Fletcher",
+   "agent": "Priya Raman",
+   "slot": "Mon 13:30",
+   "date": "2026-08-10",
+   "fee": 200,
+   "escrow": "held",
+   "paid": true,
+   "kind": "Interview",
+   "status": "active",
+   "stage": "await",
+   "apprOverdue": true,
+   "apprOverdueDays": 2,
+   "filed": "08-10-2026",
+   "recExists": true,
+   "recLen": "31:52",
+   "transcript": "Ready"
+  },
+  {
+   "id": "bk6",
+   "cand": "Noah Kim",
+   "agent": "Marcus Ozoro",
+   "slot": "Tue 11:00",
+   "date": "2026-08-11",
+   "fee": 0,
+   "escrow": "n/a",
+   "paid": false,
+   "kind": "First (discounted)",
+   "status": "pending",
+   "stage": "booked",
+   "recExists": false
+  },
+  {
+   "id": "bk7",
+   "cand": "Sofia Marin",
+   "agent": "Dana Whitfield",
+   "slot": "Tue 15:00",
+   "date": "2026-08-11",
+   "fee": 180,
+   "escrow": "released",
+   "paid": true,
+   "kind": "Re-interview",
+   "status": "active",
+   "stage": "resolved",
+   "recExists": true,
+   "recLen": "45:18",
+   "transcript": "Ready"
+  },
+  {
+   "id": "bk8",
+   "cand": "Ethan Cole",
+   "agent": "Marcus Ozoro",
+   "slot": "Wed 09:30",
+   "date": "2026-08-12",
+   "fee": 210,
+   "escrow": "held",
+   "paid": false,
+   "kind": "Interview",
+   "status": "pending",
+   "stage": "booked",
+   "recExists": false
+  },
+  {
+   "id": "bk9",
+   "cand": "Maya Patel",
+   "agent": "Priya Raman",
+   "slot": "Wed 14:00",
+   "date": "2026-08-12",
+   "fee": 225,
+   "escrow": "held",
+   "paid": true,
+   "kind": "Interview",
+   "status": "active",
+   "stage": "awaitcand",
+   "creditAmt": 225,
+   "creditSource": "Candidate",
+   "creditDays": 14,
+   "creditStart": "08-12-2026",
+   "recExists": false
+  },
+  {
+   "id": "bk10",
+   "cand": "Lucas Ferreira",
+   "agent": "Marcus Ozoro",
+   "slot": "Thu 10:30",
+   "date": "2026-08-13",
+   "fee": 0,
+   "escrow": "n/a",
+   "paid": false,
+   "kind": "First (discounted)",
+   "status": "pending",
+   "stage": "booked",
+   "recExists": false
+  },
+  {
+   "id": "bk11",
+   "cand": "Emma Novak",
+   "agent": "Dana Whitfield",
+   "slot": "Thu 16:30",
+   "date": "2026-08-13",
+   "fee": 180,
+   "escrow": "released",
+   "paid": true,
+   "kind": "Re-interview",
+   "status": "active",
+   "stage": "reported",
+   "recExists": true,
+   "recLen": "48:10",
+   "transcript": "Failed"
+  },
+  {
+   "id": "bk12",
+   "cand": "Oliver Grant",
+   "agent": "Dana Whitfield",
+   "slot": "Fri 11:30",
+   "date": "2026-08-14",
+   "fee": 195,
+   "escrow": "held",
+   "paid": true,
+   "kind": "Interview",
+   "status": "active",
+   "stage": "held",
+   "overdue": false,
+   "overdueDays": 0,
+   "recExists": true,
+   "recLen": "30:23",
+   "transcript": "Generating"
+  },
+  {
+   "id": "bk13",
+   "cand": "Isla Bennett",
+   "agent": "Priya Raman",
+   "slot": "Fri 15:30",
+   "date": "2026-08-14",
+   "fee": 225,
+   "escrow": "held",
+   "paid": false,
+   "kind": "Interview",
+   "status": "pending",
+   "stage": "booked",
+   "recExists": false
+  },
+  {
+   "id": "bk14",
+   "cand": "Grace Kim",
+   "agent": "Priya Raman",
+   "slot": "Mon 10:00",
+   "date": "2026-08-17",
+   "fee": 200,
+   "escrow": "held",
+   "paid": true,
+   "kind": "Re-interview",
+   "status": "active",
+   "stage": "booked",
+   "recExists": false
+  },
+  {
+   "id": "bk15",
+   "cand": "Diego Alvarez",
+   "agent": "Dana Whitfield",
+   "slot": "Tue 14:00",
+   "date": "2026-08-18",
+   "fee": 180,
+   "escrow": "held",
+   "paid": true,
+   "kind": "Re-interview",
+   "status": "active",
+   "stage": "booked",
+   "recExists": false
+  }
+ ],
+ "TXNS": [
+  {
+   "id": "t1",
+   "ref": "TXN-9042",
+   "stripeRef": "ch_3Rk8vA",
+   "when": "Sep 28",
+   "date": "2026-09-28",
+   "time": "2:14 PM",
+   "type": "course",
+   "cat": "course",
+   "who": "Maryam Naz",
+   "party": "Candidate",
+   "email": "maryam.naz@gmail.com",
+   "kind": "Course — Foundations of Leadership",
+   "desc": "Foundations of Leadership · 90-day cycle",
+   "amt": 100,
+   "dir": "in",
+   "method": "Visa •4242",
+   "fee": 3.2,
+   "status": "succeeded",
+   "cause": {
+    "l": "Course enrolment",
+    "go": "users/users?role=candidate"
+   }
+  },
+  {
+   "id": "t2",
+   "ref": "TXN-9040",
+   "stripeRef": "ch_3Rk7pQ",
+   "when": "Sep 28",
+   "date": "2026-09-28",
+   "time": "9:40 AM",
+   "type": "interview",
+   "cat": "interview",
+   "who": "Jordan Vale",
+   "party": "Candidate",
+   "email": "jordan.vale@gmail.com",
+   "kind": "Interview with Priya Raman",
+   "desc": "Interview · Priya Raman",
+   "amt": 225,
+   "dir": "in",
+   "method": "Visa •1180",
+   "fee": 6.83,
+   "status": "pending",
+   "funder": "Candidate",
+   "agent": "Priya Raman",
+   "sp": {
+    "fee": 225,
+    "share": 180,
+    "pct": 20,
+    "com": 45
+   },
+   "cause": {
+    "l": "Interview booking",
+    "go": "market/bookings"
+   }
+  },
+  {
+   "id": "t3",
+   "ref": "TXN-9038",
+   "stripeRef": "ch_3Rk6mZ",
+   "when": "Sep 27",
+   "date": "2026-09-27",
+   "time": "7:50 AM",
+   "type": "scene",
+   "cat": "scene",
+   "who": "Sophia Ali",
+   "party": "Candidate",
+   "email": "sophia.ali@gmail.com",
+   "kind": "Interview scenes ×2",
+   "desc": "2 saved scenes, beyond the free set",
+   "amt": 30,
+   "dir": "in",
+   "method": "Visa •4242",
+   "fee": 0.98,
+   "status": "pending",
+   "cause": {
+    "l": "Interview",
+    "go": "market/bookings"
+   }
+  },
+  {
+   "id": "t4",
+   "ref": "TXN-9036",
+   "stripeRef": "ch_3Rk5jY",
+   "when": "Sep 27",
+   "date": "2026-09-27",
+   "time": "6:03 PM",
+   "type": "course",
+   "cat": "course",
+   "who": "Ava Thompson",
+   "party": "Candidate",
+   "email": "ava.thompson@gmail.com",
+   "kind": "Course — Foundations of Leadership",
+   "desc": "Foundations of Leadership · 90-day cycle",
+   "amt": 100,
+   "dir": "in",
+   "method": "Mastercard •5100",
+   "fee": 3.2,
+   "status": "pending",
+   "cause": {
+    "l": "Course enrolment",
+    "go": "users/users?role=candidate"
+   }
+  },
+  {
+   "id": "t14",
+   "ref": "TXN-9034",
+   "stripeRef": "ch_3Rk4hX",
+   "when": "Sep 26",
+   "date": "2026-09-26",
+   "time": "4:20 PM",
+   "type": "interview",
+   "cat": "interview",
+   "who": "TALENTnext",
+   "party": "Platform",
+   "email": "",
+   "kind": "First interview — Grace Kim with Marcus Ozoro",
+   "desc": "First interview · Grace Kim · Marcus Ozoro · 100% discount",
+   "amt": 95,
+   "dir": "in",
+   "method": "Platform funded",
+   "fee": 0,
+   "status": "succeeded",
+   "funder": "Platform",
+   "agent": "Marcus Ozoro",
+   "sp": {
+    "fee": 95,
+    "share": 76,
+    "pct": 20,
+    "com": 19
+   },
+   "cause": {
+    "l": "Interview booking",
+    "go": "market/bookings"
+   }
+  },
+  {
+   "id": "t5",
+   "ref": "TXN-9032",
+   "stripeRef": "ch_3Rk3gW",
+   "when": "Sep 26",
+   "date": "2026-09-26",
+   "time": "3:22 PM",
+   "type": "interview",
+   "cat": "interview",
+   "who": "Emma Novak",
+   "party": "Candidate",
+   "email": "emma.novak@gmail.com",
+   "kind": "Re-interview with Dana Whitfield",
+   "desc": "Re-interview · Dana Whitfield",
+   "amt": 180,
+   "dir": "in",
+   "method": "Amex •3007",
+   "fee": 5.52,
+   "status": "failed",
+   "funder": "Candidate",
+   "agent": "Dana Whitfield",
+   "sp": {
+    "fee": 180,
+    "share": 144,
+    "pct": 20,
+    "com": 36
+   },
+   "cause": {
+    "l": "Interview booking",
+    "go": "market/bookings"
+   }
+  },
+  {
+   "id": "t6",
+   "ref": "TXN-9030",
+   "stripeRef": "po_1Rk2fV",
+   "when": "Sep 26",
+   "date": "2026-09-26",
+   "time": "12:03 AM",
+   "type": "payout",
+   "cat": "payout",
+   "who": "Marcus Ozoro",
+   "party": "Talent agent",
+   "email": "marcus.ozoro@gmail.com",
+   "kind": "Payout — interview with Sophia Ali",
+   "desc": "Payout · interview with Sophia Ali",
+   "amt": 150,
+   "dir": "out",
+   "method": "Bank ••2231",
+   "fee": 0,
+   "status": "succeeded",
+   "funder": "Candidate",
+   "agent": "Marcus Ozoro",
+   "sp": {
+    "fee": 150,
+    "share": 120,
+    "pct": 20,
+    "com": 30
+   },
+   "cause": {
+    "l": "Payout run",
+    "go": "finance/payouts"
+   }
+  },
+  {
+   "id": "t7",
+   "ref": "TXN-9028",
+   "stripeRef": "ch_3Rk1eU",
+   "when": "Sep 25",
+   "date": "2026-09-25",
+   "time": "10:41 AM",
+   "type": "interview",
+   "cat": "interview",
+   "who": "Oliver Grant",
+   "party": "Candidate",
+   "email": "oliver.grant@gmail.com",
+   "kind": "Interview with Dana Whitfield",
+   "desc": "Interview · Dana Whitfield",
+   "amt": 195,
+   "dir": "in",
+   "method": "Visa •4242",
+   "fee": 5.96,
+   "status": "succeeded",
+   "funder": "Candidate",
+   "agent": "Dana Whitfield",
+   "sp": {
+    "fee": 195,
+    "share": 156,
+    "pct": 20,
+    "com": 39
+   },
+   "cause": {
+    "l": "Interview booking",
+    "go": "market/bookings"
+   }
+  },
+  {
+   "id": "t18",
+   "ref": "TXN-9026",
+   "stripeRef": "ch_3Rk0dT",
+   "when": "Sep 25",
+   "date": "2026-09-25",
+   "time": "8:15 AM",
+   "type": "scene",
+   "cat": "scene",
+   "who": "Liam Chen",
+   "party": "Candidate",
+   "email": "liam.chen@gmail.com",
+   "kind": "Interview scene ×1",
+   "desc": "1 saved scene, beyond the free set",
+   "amt": 15,
+   "dir": "in",
+   "method": "Mastercard •8823",
+   "fee": 0.59,
+   "status": "succeeded",
+   "cause": {
+    "l": "Interview",
+    "go": "market/bookings"
+   }
+  },
+  {
+   "id": "t9",
+   "ref": "TXN-9024",
+   "stripeRef": "po_1Rj9cS",
+   "when": "Sep 24",
+   "date": "2026-09-24",
+   "time": "12:00 AM",
+   "type": "payout",
+   "cat": "payout",
+   "who": "Liam Foster",
+   "party": "Talent agent",
+   "email": "liam.foster@gmail.com",
+   "kind": "Payout — interview with Nathan Brooks",
+   "desc": "Payout · interview with Nathan Brooks",
+   "amt": 165,
+   "dir": "out",
+   "method": "Bank ••3390",
+   "fee": 0,
+   "status": "pending",
+   "funder": "Candidate",
+   "agent": "Liam Foster",
+   "sp": {
+    "fee": 165,
+    "share": 132,
+    "pct": 20,
+    "com": 33
+   },
+   "cause": {
+    "l": "Payout run",
+    "go": "finance/payouts"
+   }
+  },
+  {
+   "id": "t10",
+   "ref": "TXN-9022",
+   "stripeRef": "ch_3Rj8bR",
+   "when": "Sep 24",
+   "date": "2026-09-24",
+   "time": "9:12 AM",
+   "type": "interview",
+   "cat": "interview",
+   "who": "Sophia Ali",
+   "party": "Candidate",
+   "email": "sophia.ali@gmail.com",
+   "kind": "Interview with Marcus Ozoro",
+   "desc": "Interview · Marcus Ozoro",
+   "amt": 150,
+   "dir": "in",
+   "method": "Mastercard •6621",
+   "fee": 4.65,
+   "status": "succeeded",
+   "funder": "Candidate",
+   "agent": "Marcus Ozoro",
+   "sp": {
+    "fee": 150,
+    "share": 120,
+    "pct": 20,
+    "com": 30
+   },
+   "cause": {
+    "l": "Interview booking",
+    "go": "market/bookings"
+   }
+  },
+  {
+   "id": "t19",
+   "ref": "TXN-9020",
+   "stripeRef": "ch_3Rj7aQ",
+   "when": "Sep 23",
+   "date": "2026-09-23",
+   "time": "2:30 PM",
+   "type": "scene",
+   "cat": "scene",
+   "who": "Kai Andersen",
+   "party": "Candidate",
+   "email": "kai.andersen@gmail.com",
+   "kind": "Interview scenes ×3",
+   "desc": "3 saved scenes, beyond the free set",
+   "amt": 45,
+   "dir": "in",
+   "method": "Visa •9931",
+   "fee": 1.36,
+   "status": "succeeded",
+   "cause": {
+    "l": "Interview",
+    "go": "market/bookings"
+   }
+  },
+  {
+   "id": "t12",
+   "ref": "TXN-9018",
+   "stripeRef": "po_1Rj6ZP",
+   "when": "Sep 23",
+   "date": "2026-09-23",
+   "time": "12:00 AM",
+   "type": "payout",
+   "cat": "payout",
+   "who": "Priya Raman",
+   "party": "Talent agent",
+   "email": "priya.raman@gmail.com",
+   "kind": "Payout — interview with Emma Novak",
+   "desc": "Payout · interview with Emma Novak",
+   "amt": 225,
+   "dir": "out",
+   "method": "Bank ••5540",
+   "fee": 0,
+   "status": "failed",
+   "funder": "Candidate",
+   "agent": "Priya Raman",
+   "sp": {
+    "fee": 225,
+    "share": 180,
+    "pct": 20,
+    "com": 45
+   },
+   "cause": {
+    "l": "Payout run",
+    "go": "finance/payouts"
+   }
+  },
+  {
+   "id": "t13",
+   "ref": "TXN-9016",
+   "stripeRef": "ch_3Rj5YO",
+   "when": "Sep 22",
+   "date": "2026-09-22",
+   "time": "11:04 AM",
+   "type": "course",
+   "cat": "course",
+   "who": "Liam Chen",
+   "party": "Candidate",
+   "email": "liam.chen@gmail.com",
+   "kind": "Course — Foundations of Leadership",
+   "desc": "Foundations of Leadership · 90-day cycle",
+   "amt": 100,
+   "dir": "in",
+   "method": "Visa •8823",
+   "fee": 3.2,
+   "status": "succeeded",
+   "cause": {
+    "l": "Course enrolment",
+    "go": "users/users?role=candidate"
+   }
+  },
+  {
+   "id": "t20",
+   "ref": "TXN-9014",
+   "stripeRef": "po_1Rj4XN",
+   "when": "Sep 22",
+   "date": "2026-09-22",
+   "time": "12:00 AM",
+   "type": "payout",
+   "cat": "payout",
+   "who": "Marcus Ozoro",
+   "party": "Talent agent",
+   "email": "marcus.ozoro@gmail.com",
+   "kind": "Payout — first interview with Grace Kim",
+   "desc": "Payout · first interview with Grace Kim",
+   "amt": 95,
+   "dir": "out",
+   "method": "Bank ••2231",
+   "fee": 0,
+   "status": "succeeded",
+   "funder": "Platform",
+   "agent": "Marcus Ozoro",
+   "sp": {
+    "fee": 95,
+    "share": 76,
+    "pct": 20,
+    "com": 19
+   },
+   "cause": {
+    "l": "Payout run",
+    "go": "finance/payouts"
+   }
+  },
+  {
+   "id": "t21",
+   "ref": "RBC-4007",
+   "stripeRef": "—",
+   "when": "Sep 21",
+   "date": "2026-09-21",
+   "time": "10:20 AM",
+   "type": "rbcredit",
+   "cat": "rbcredit",
+   "who": "Diego Alvarez",
+   "party": "Candidate",
+   "email": "diego.alvarez@gmail.com",
+   "kind": "Rebooking credit — interview not held",
+   "desc": "Interview not held — the agent could not attend",
+   "amt": 95,
+   "dir": "in",
+   "method": "—",
+   "fee": 0,
+   "status": "active",
+   "funder": "Candidate",
+   "cr": {
+    "original": 95,
+    "applied": 0,
+    "returned": 0,
+    "remaining": 95,
+    "expiry": "2026-10-21",
+    "source": "BKG-3181",
+    "sourceGo": "market/bookings",
+    "replacement": "",
+    "replacementGo": ""
+   },
+   "cause": {
+    "l": "Source booking BKG-3181",
+    "go": "market/bookings"
+   }
+  },
+  {
+   "id": "t22",
+   "ref": "RBC-4004",
+   "stripeRef": "—",
+   "when": "Sep 18",
+   "date": "2026-09-18",
+   "time": "3:48 PM",
+   "type": "rbcredit",
+   "cat": "rbcredit",
+   "who": "Noor Adib",
+   "party": "Candidate",
+   "email": "noor.adib@gmail.com",
+   "kind": "Rebooking credit — applied to replacement",
+   "desc": "Applied in full to a replacement booking",
+   "amt": 150,
+   "dir": "in",
+   "method": "—",
+   "fee": 0,
+   "status": "used",
+   "funder": "Candidate",
+   "cr": {
+    "original": 150,
+    "applied": 150,
+    "returned": 0,
+    "remaining": 0,
+    "expiry": "2026-10-18",
+    "source": "BKG-3140",
+    "sourceGo": "market/bookings",
+    "replacement": "BKG-3166",
+    "replacementGo": "market/bookings"
+   },
+   "cause": {
+    "l": "Source BKG-3140 → replacement BKG-3166",
+    "go": "market/bookings"
+   }
+  },
+  {
+   "id": "t23",
+   "ref": "RBC-4001",
+   "stripeRef": "—",
+   "when": "Sep 12",
+   "date": "2026-09-12",
+   "time": "12:00 AM",
+   "type": "rbcredit",
+   "cat": "rbcredit",
+   "who": "Yusuf Demir",
+   "party": "Candidate",
+   "email": "yusuf.demir@gmail.com",
+   "kind": "Rebooking credit — expired, balance returned",
+   "desc": "Window lapsed — balance returned to the card",
+   "amt": 120,
+   "dir": "in",
+   "method": "—",
+   "fee": 0,
+   "status": "expired",
+   "funder": "Candidate",
+   "cr": {
+    "original": 120,
+    "applied": 0,
+    "returned": 120,
+    "remaining": 0,
+    "expiry": "2026-09-12",
+    "source": "BKG-3098",
+    "sourceGo": "market/bookings",
+    "replacement": "",
+    "replacementGo": ""
+   },
+   "cause": {
+    "l": "Source booking BKG-3098",
+    "go": "market/bookings"
+   }
+  }
+ ],
+ "PAYOUTS": [
+  {
+   "id": "p1",
+   "ref": "PO-2311",
+   "agent": "Dana Whitfield",
+   "agentEmail": "dana.whitfield@gmail.com",
+   "candidate": "Oliver Grant",
+   "ivDate": "2026-09-25",
+   "ivKind": "Interview",
+   "gross": 195,
+   "agentShare": 156,
+   "commissionPct": 20,
+   "funder": "Candidate",
+   "state": "escrow",
+   "releases": "2026-10-02",
+   "releasedOn": "",
+   "reportFiled": true,
+   "runFailed": null,
+   "noDest": false,
+   "method": "Bank ••6789",
+   "bookingRef": "BKG-3201",
+   "net": 156,
+   "status": "held",
+   "when": "Payable on the next run",
+   "date": "2026-10-02",
+   "period": "—",
+   "interviews": 1,
+   "split": "20/80"
+  },
+  {
+   "id": "p2",
+   "ref": "PO-2310",
+   "agent": "Priya Raman",
+   "agentEmail": "priya.raman@gmail.com",
+   "candidate": "Jordan Vale",
+   "ivDate": "2026-09-24",
+   "ivKind": "Interview",
+   "gross": 225,
+   "agentShare": 180,
+   "commissionPct": 20,
+   "funder": "Candidate",
+   "state": "escrow",
+   "releases": "",
+   "releasedOn": "",
+   "reportFiled": false,
+   "runFailed": null,
+   "noDest": false,
+   "method": "Bank ••5540",
+   "bookingRef": "BKG-3199",
+   "net": 180,
+   "status": "held",
+   "when": "Report outstanding",
+   "date": "—",
+   "period": "—",
+   "interviews": 1,
+   "split": "20/80"
+  },
+  {
+   "id": "p3",
+   "ref": "PO-2308",
+   "agent": "Marcus Ozoro",
+   "agentEmail": "marcus.ozoro@gmail.com",
+   "candidate": "Sophia Ali",
+   "ivDate": "2026-09-20",
+   "ivKind": "Interview",
+   "gross": 150,
+   "agentShare": 120,
+   "commissionPct": 20,
+   "funder": "Candidate",
+   "state": "paid",
+   "releases": "2026-09-26",
+   "releasedOn": "2026-09-26",
+   "reportFiled": true,
+   "runFailed": null,
+   "noDest": false,
+   "method": "Bank ••2231",
+   "bookingRef": "BKG-3190",
+   "net": 120,
+   "status": "settled",
+   "when": "Paid",
+   "date": "2026-09-26",
+   "period": "—",
+   "interviews": 1,
+   "split": "20/80"
+  },
+  {
+   "id": "p4",
+   "ref": "PO-2307",
+   "agent": "Priya Raman",
+   "agentEmail": "priya.raman@gmail.com",
+   "candidate": "Emma Novak",
+   "ivDate": "2026-09-19",
+   "ivKind": "Re-interview",
+   "gross": 225,
+   "agentShare": 180,
+   "commissionPct": 20,
+   "funder": "Candidate",
+   "state": "escrow",
+   "releases": "2026-09-26",
+   "releasedOn": "",
+   "reportFiled": true,
+   "runFailed": "Insufficient funds at the receiving bank",
+   "noDest": false,
+   "method": "Bank ••5540",
+   "bookingRef": "BKG-3188",
+   "net": 180,
+   "status": "held",
+   "when": "Last run failed",
+   "date": "2026-09-26",
+   "period": "—",
+   "interviews": 1,
+   "split": "20/80"
+  },
+  {
+   "id": "p5",
+   "ref": "PO-2306",
+   "agent": "Sofia Reyes",
+   "agentEmail": "sofia.reyes@gmail.com",
+   "candidate": "Kai Andersen",
+   "ivDate": "2026-09-18",
+   "ivKind": "Interview",
+   "gross": 165,
+   "agentShare": 132,
+   "commissionPct": 20,
+   "funder": "Candidate",
+   "state": "escrow",
+   "releases": "2026-10-02",
+   "releasedOn": "",
+   "reportFiled": true,
+   "runFailed": null,
+   "noDest": true,
+   "method": "—",
+   "bookingRef": "BKG-3185",
+   "net": 132,
+   "status": "held",
+   "when": "No payout destination",
+   "date": "2026-10-02",
+   "period": "—",
+   "interviews": 1,
+   "split": "20/80"
+  },
+  {
+   "id": "p6",
+   "ref": "PO-2304",
+   "agent": "Marcus Ozoro",
+   "agentEmail": "marcus.ozoro@gmail.com",
+   "candidate": "Grace Kim",
+   "ivDate": "2026-09-16",
+   "ivKind": "Interview",
+   "gross": 95,
+   "agentShare": 76,
+   "commissionPct": 20,
+   "funder": "Platform",
+   "state": "paid",
+   "releases": "2026-09-22",
+   "releasedOn": "2026-09-22",
+   "reportFiled": true,
+   "runFailed": null,
+   "noDest": false,
+   "method": "Bank ••2231",
+   "bookingRef": "BKG-3180",
+   "net": 76,
+   "status": "settled",
+   "when": "Paid",
+   "date": "2026-09-22",
+   "period": "—",
+   "interviews": 1,
+   "split": "20/80"
+  },
+  {
+   "id": "p7",
+   "ref": "PO-2303",
+   "agent": "Liam Foster",
+   "agentEmail": "liam.foster@gmail.com",
+   "candidate": "Nathan Brooks",
+   "ivDate": "2026-09-15",
+   "ivKind": "Interview",
+   "gross": 165,
+   "agentShare": 132,
+   "commissionPct": 20,
+   "funder": "Candidate",
+   "state": "escrow",
+   "releases": "2026-10-02",
+   "releasedOn": "",
+   "reportFiled": true,
+   "runFailed": null,
+   "noDest": false,
+   "method": "Bank ••3390",
+   "bookingRef": "BKG-3176",
+   "net": 132,
+   "status": "held",
+   "when": "Payable on the next run",
+   "date": "2026-10-02",
+   "period": "—",
+   "interviews": 1,
+   "split": "20/80"
+  },
+  {
+   "id": "p8",
+   "ref": "PO-2301",
+   "agent": "Dana Whitfield",
+   "agentEmail": "dana.whitfield@gmail.com",
+   "candidate": "Noor Adib",
+   "ivDate": "2026-09-12",
+   "ivKind": "Re-interview",
+   "gross": 150,
+   "agentShare": 120,
+   "commissionPct": 20,
+   "funder": "Candidate",
+   "state": "returned",
+   "releases": "",
+   "releasedOn": "",
+   "reportFiled": false,
+   "runFailed": null,
+   "noDest": false,
+   "method": "Bank ••6789",
+   "bookingRef": "BKG-3140",
+   "net": 120,
+   "status": "returned",
+   "when": "Redirected to a rebooking credit",
+   "date": "2026-09-12",
+   "period": "—",
+   "interviews": 1,
+   "split": "20/80"
+  }
+ ],
+ "FEES": [
+  {
+   "k": "course",
+   "t": "Course fee",
+   "v": "$100",
+   "unit": "per cycle",
+   "note": "Foundations of Leadership, upfront for the 90-day cycle",
+   "state": "set",
+   "effective": "2026-06-01",
+   "by": "Umair"
+  },
+  {
+   "k": "platform",
+   "t": "Platform fee",
+   "v": "$10/mo",
+   "unit": "per month",
+   "note": "Bundled into the course fee",
+   "state": "set",
+   "effective": "2026-06-01",
+   "by": "Umair"
+  },
+  {
+   "k": "unlock",
+   "t": "Interview unlock",
+   "v": "$40",
+   "unit": "per unlock",
+   "note": "Per interview, beyond the free highlight clip",
+   "state": "set",
+   "effective": "2026-06-01",
+   "by": "Umair"
+  },
+  {
+   "k": "scene",
+   "t": "Interview scene",
+   "v": "$15",
+   "unit": "per scene",
+   "note": "A candidate buying an extra saved scene from their interview, beyond the free set",
+   "state": "set",
+   "effective": "2026-06-01",
+   "by": "Umair"
+  },
+  {
+   "k": "reinterview",
+   "t": "Re-interview fee",
+   "v": "Agent-set",
+   "unit": "per booking",
+   "note": "Agent names their own rate for a repeat interview",
+   "state": "set",
+   "effective": "2026-06-01",
+   "by": "Umair"
+  },
+  {
+   "k": "placement",
+   "t": "Placement fee",
+   "v": "Not set",
+   "unit": "per hire",
+   "note": "Charged when an employer confirms a hire",
+   "state": "open",
+   "effective": "—",
+   "by": "—"
+  },
+  {
+   "k": "split",
+   "t": "Platform fee share",
+   "v": "20%",
+   "unit": "per interview",
+   "note": "The platform’s share of each interview payment; the balance is the agent’s payout",
+   "state": "set",
+   "effective": "2026-07-30",
+   "by": "Reed"
+  },
+  {
+   "k": "refundwin",
+   "t": "Refund window",
+   "v": "14 days",
+   "unit": "from purchase",
+   "note": "Course fee refundable before cohort start",
+   "state": "set",
+   "effective": "2026-06-01",
+   "by": "Umair"
+  },
+  {
+   "k": "firstiv",
+   "t": "First interview discount",
+   "v": "100%",
+   "unit": "first booking",
+   "note": "The first interview is free; the cost is absorbed by the platform (SA-08 A4)",
+   "state": "set",
+   "effective": "2026-06-01",
+   "by": "Reed"
+  },
+  {
+   "k": "intent",
+   "t": "Cohort price by intent",
+   "v": "Not set",
+   "unit": "per intent",
+   "note": "A course price per stated intent — no figures set (SA-08 A1)",
+   "state": "open",
+   "effective": "—",
+   "by": "—"
+  },
+  {
+   "k": "sponsored",
+   "t": "Sponsored pricing",
+   "v": "Not set",
+   "unit": "per sponsored seat",
+   "note": "Signal-sponsored candidates — action open with Derek (SA-08 A3)",
+   "state": "open",
+   "effective": "—",
+   "by": "—"
+  },
+  {
+   "k": "refundthr",
+   "t": "Refund approval threshold",
+   "v": "Not set",
+   "unit": "per refund",
+   "note": "Above it a Super Admin must approve (SA-06 E1) — unset, so every refund comes here",
+   "state": "open",
+   "effective": "—",
+   "by": "—"
+  }
+ ],
+ "FEE_LOG": [
+  {
+   "id": "fl1",
+   "valueType": "commission",
+   "agent": "Dana Whitfield",
+   "agentEmail": "dana.whitfield@gmail.com",
+   "from": "20%",
+   "to": "18%",
+   "changedBy": "Reed Castellano",
+   "role": "Super Admin",
+   "on": "2026-09-20, 10:12 AM",
+   "reason": "Retention — top-ranked agent, three cohorts running, lowered on review."
+  },
+  {
+   "id": "fl2",
+   "valueType": "commission",
+   "agent": "Priya Raman",
+   "agentEmail": "priya.raman@gmail.com",
+   "from": "Not set",
+   "to": "20%",
+   "changedBy": "Reed Castellano",
+   "role": "Super Admin",
+   "on": "2026-09-14, 3:40 PM",
+   "reason": "Standard commission set at grant of the Talent Agent role."
+  },
+  {
+   "id": "fl3",
+   "valueType": "commission",
+   "agent": "Marcus Ozoro",
+   "agentEmail": "marcus.ozoro@gmail.com",
+   "from": "Not set",
+   "to": "20%",
+   "changedBy": "Reed Castellano",
+   "role": "Super Admin",
+   "on": "2026-09-10, 9:05 AM",
+   "reason": "Standard commission set at invite."
+  },
+  {
+   "id": "fl4",
+   "valueType": "runday",
+   "agent": "",
+   "agentEmail": "",
+   "from": "Thursday",
+   "to": "Monday",
+   "changedBy": "Reed Castellano",
+   "role": "Super Admin",
+   "on": "2026-09-08, 4:22 PM",
+   "reason": "Moved the weekly payout run to Monday so it clears at the start of the week."
+  },
+  {
+   "id": "fl5",
+   "valueType": "delay",
+   "agent": "",
+   "agentEmail": "",
+   "from": "Not set",
+   "to": "3 working days",
+   "changedBy": "Reed Castellano",
+   "role": "Super Admin",
+   "on": "2026-09-01, 11:00 AM",
+   "reason": "Set the release delay after a report is filed, per the settlement model."
+  },
+  {
+   "id": "fl6",
+   "valueType": "commission",
+   "agent": "Sofia Reyes",
+   "agentEmail": "sofia.reyes@gmail.com",
+   "from": "Not set",
+   "to": "22%",
+   "changedBy": "Reed Castellano",
+   "role": "Super Admin",
+   "on": "2026-08-28, 2:15 PM",
+   "reason": "Set at invite; higher rate agreed for a specialist range."
+  },
+  {
+   "id": "fl7",
+   "valueType": "commission",
+   "agent": "Liam Foster",
+   "agentEmail": "liam.foster@gmail.com",
+   "from": "Not set",
+   "to": "20%",
+   "changedBy": "Reed Castellano",
+   "role": "Super Admin",
+   "on": "2026-08-20, 10:40 AM",
+   "reason": "Standard commission set at invite."
+  }
+ ],
+ "DISCOUNTS": [
+  {
+   "id": "dc1",
+   "code": "FIRST-INTERVIEW",
+   "name": "Automatic first-interview discount",
+   "pct": 100,
+   "applies": "interview",
+   "application": "automatic",
+   "start": "2026-01-01",
+   "end": "2027-12-31",
+   "limit": null,
+   "perCand": 1,
+   "deactivated": false,
+   "system": true,
+   "red": [
+    {
+     "cand": "Grace Kim",
+     "ref": "TXN-9034",
+     "txId": "t14",
+     "date": "2026-09-26",
+     "original": 95,
+     "discounted": 95,
+     "paid": 0,
+     "source": "Platform"
+    },
+    {
+     "cand": "Noah Kim",
+     "ref": "TXN-8980",
+     "txId": "",
+     "date": "2026-09-20",
+     "original": 95,
+     "discounted": 95,
+     "paid": 0,
+     "source": "Platform"
+    },
+    {
+     "cand": "Lucas Ferreira",
+     "ref": "TXN-8944",
+     "txId": "",
+     "date": "2026-09-14",
+     "original": 110,
+     "discounted": 110,
+     "paid": 0,
+     "source": "Platform"
+    },
+    {
+     "cand": "Chris Boone",
+     "ref": "TXN-8901",
+     "txId": "",
+     "date": "2026-09-08",
+     "original": 95,
+     "discounted": 95,
+     "paid": 0,
+     "source": "Platform"
+    }
+   ]
+  },
+  {
+   "id": "dc2",
+   "code": "WELCOME20",
+   "name": "Welcome — 20% off",
+   "pct": 20,
+   "applies": "both",
+   "application": "checkout",
+   "start": "2026-09-01",
+   "end": "2026-12-31",
+   "limit": 100,
+   "perCand": 1,
+   "deactivated": false,
+   "system": false,
+   "red": [
+    {
+     "cand": "Maryam Naz",
+     "ref": "TXN-9042",
+     "txId": "t1",
+     "date": "2026-09-28",
+     "original": 100,
+     "discounted": 20,
+     "paid": 80,
+     "source": "Candidate"
+    },
+    {
+     "cand": "Ava Thompson",
+     "ref": "TXN-9036",
+     "txId": "t4",
+     "date": "2026-09-27",
+     "original": 100,
+     "discounted": 20,
+     "paid": 80,
+     "source": "Candidate"
+    },
+    {
+     "cand": "Oliver Grant",
+     "ref": "TXN-9028",
+     "txId": "t7",
+     "date": "2026-09-25",
+     "original": 195,
+     "discounted": 39,
+     "paid": 156,
+     "source": "Candidate"
+    },
+    {
+     "cand": "Liam Chen",
+     "ref": "TXN-9016",
+     "txId": "t13",
+     "date": "2026-09-22",
+     "original": 100,
+     "discounted": 20,
+     "paid": 80,
+     "source": "Candidate"
+    }
+   ]
+  },
+  {
+   "id": "dc3",
+   "code": "AUTUMN15",
+   "name": "Autumn course promotion",
+   "pct": 15,
+   "applies": "course",
+   "application": "checkout",
+   "start": "2026-10-15",
+   "end": "2026-12-15",
+   "limit": 50,
+   "perCand": 1,
+   "deactivated": false,
+   "system": false,
+   "red": []
+  },
+  {
+   "id": "dc4",
+   "code": "LAUNCH25",
+   "name": "Launch — 25% off interviews",
+   "pct": 25,
+   "applies": "interview",
+   "application": "checkout",
+   "start": "2026-06-01",
+   "end": "2026-08-31",
+   "limit": 80,
+   "perCand": 1,
+   "deactivated": false,
+   "system": false,
+   "red": [
+    {
+     "cand": "Emma Novak",
+     "ref": "TXN-8790",
+     "txId": "",
+     "date": "2026-08-20",
+     "original": 180,
+     "discounted": 45,
+     "paid": 135,
+     "source": "Candidate"
+    },
+    {
+     "cand": "Sophia Ali",
+     "ref": "TXN-8654",
+     "txId": "",
+     "date": "2026-07-30",
+     "original": 200,
+     "discounted": 50,
+     "paid": 150,
+     "source": "Candidate"
+    },
+    {
+     "cand": "Jordan Vale",
+     "ref": "TXN-8501",
+     "txId": "",
+     "date": "2026-07-12",
+     "original": 220,
+     "discounted": 55,
+     "paid": 165,
+     "source": "Candidate"
+    }
+   ]
+  },
+  {
+   "id": "dc5",
+   "code": "FIRST50",
+   "name": "Early bird — 50% off first course",
+   "pct": 50,
+   "applies": "course",
+   "application": "checkout",
+   "start": "2026-08-01",
+   "end": "2026-11-30",
+   "limit": 4,
+   "perCand": 1,
+   "deactivated": false,
+   "system": false,
+   "red": [
+    {
+     "cand": "Nathan Brooks",
+     "ref": "TXN-8388",
+     "txId": "",
+     "date": "2026-09-05",
+     "original": 100,
+     "discounted": 50,
+     "paid": 50,
+     "source": "Candidate"
+    },
+    {
+     "cand": "Kai Andersen",
+     "ref": "TXN-8299",
+     "txId": "",
+     "date": "2026-08-28",
+     "original": 100,
+     "discounted": 50,
+     "paid": 50,
+     "source": "Candidate"
+    },
+    {
+     "cand": "Noor Adib",
+     "ref": "TXN-8102",
+     "txId": "",
+     "date": "2026-08-18",
+     "original": 100,
+     "discounted": 50,
+     "paid": 50,
+     "source": "Candidate"
+    },
+    {
+     "cand": "Diego Alvarez",
+     "ref": "TXN-8044",
+     "txId": "",
+     "date": "2026-08-06",
+     "original": 100,
+     "discounted": 50,
+     "paid": 50,
+     "source": "Candidate"
+    }
+   ]
+  },
+  {
+   "id": "dc6",
+   "code": "PROMO10",
+   "name": "General 10% promotion",
+   "pct": 10,
+   "applies": "both",
+   "application": "checkout",
+   "start": "2026-07-01",
+   "end": "2026-12-31",
+   "limit": null,
+   "perCand": 2,
+   "deactivated": true,
+   "system": false,
+   "red": [
+    {
+     "cand": "Yusuf Demir",
+     "ref": "TXN-8500",
+     "txId": "",
+     "date": "2026-08-15",
+     "original": 100,
+     "discounted": 10,
+     "paid": 90,
+     "source": "Candidate"
+    },
+    {
+     "cand": "Sophia Ali",
+     "ref": "TXN-8410",
+     "txId": "",
+     "date": "2026-08-02",
+     "original": 150,
+     "discounted": 15,
+     "paid": 135,
+     "source": "Candidate"
+    }
+   ]
+  }
+ ],
+ "SETTLEMENTS": [
+  {
+   "id": "st1",
+   "ref": "BATCH-0093",
+   "providerRef": "po_batch_1Rk8vA",
+   "sent": "2026-09-26",
+   "sentTime": "12:00 AM",
+   "platformTotal": 196,
+   "providerTotal": 196,
+   "status": "settled",
+   "reviewed": null,
+   "ingestErr": null,
+   "list": [
+    {
+     "recipient": "Marcus Ozoro",
+     "forWhat": "First interview · Grace Kim",
+     "platformAmt": 76,
+     "providerAmt": 76,
+     "platformState": "Paid",
+     "providerState": "Paid",
+     "match": "matched",
+     "txId": "t20"
+    },
+    {
+     "recipient": "Marcus Ozoro",
+     "forWhat": "Interview · Sophia Ali",
+     "platformAmt": 120,
+     "providerAmt": 120,
+     "platformState": "Paid",
+     "providerState": "Paid",
+     "match": "matched",
+     "txId": "t6"
+    }
+   ]
+  },
+  {
+   "id": "st2",
+   "ref": "BATCH-0092",
+   "providerRef": "po_batch_1Rj4XN",
+   "sent": "2026-09-19",
+   "sentTime": "12:00 AM",
+   "platformTotal": 468,
+   "providerTotal": 288,
+   "status": "part",
+   "reviewed": null,
+   "ingestErr": null,
+   "list": [
+    {
+     "recipient": "Dana Whitfield",
+     "forWhat": "Interview · Oliver Grant",
+     "platformAmt": 156,
+     "providerAmt": 156,
+     "platformState": "Paid",
+     "providerState": "Paid",
+     "match": "matched",
+     "txId": ""
+    },
+    {
+     "recipient": "Liam Foster",
+     "forWhat": "Interview · Nathan Brooks",
+     "platformAmt": 132,
+     "providerAmt": 132,
+     "platformState": "Paid",
+     "providerState": "Paid",
+     "match": "matched",
+     "txId": "t9"
+    },
+    {
+     "recipient": "Priya Raman",
+     "forWhat": "Interview · Jordan Vale",
+     "platformAmt": 180,
+     "providerAmt": null,
+     "platformState": "Paid",
+     "providerState": "—",
+     "match": "missing",
+     "txId": ""
+    }
+   ]
+  },
+  {
+   "id": "st3",
+   "ref": "BATCH-0091",
+   "providerRef": "po_batch_1Rh9cS",
+   "sent": "2026-09-12",
+   "sentTime": "12:00 AM",
+   "platformTotal": 276,
+   "providerTotal": 270,
+   "status": "discrepancy",
+   "reviewed": {
+    "by": "Reed Castellano",
+    "on": "2026-09-13",
+    "note": "Provider under-reported one item by $6 — Stripe FX rounding, accepted after review."
+   },
+   "ingestErr": null,
+   "list": [
+    {
+     "recipient": "Dana Whitfield",
+     "forWhat": "Interview · Oliver Grant",
+     "platformAmt": 156,
+     "providerAmt": 156,
+     "platformState": "Paid",
+     "providerState": "Paid",
+     "match": "matched",
+     "txId": ""
+    },
+    {
+     "recipient": "Marcus Ozoro",
+     "forWhat": "Interview · Sophia Ali",
+     "platformAmt": 120,
+     "providerAmt": 114,
+     "platformState": "Paid",
+     "providerState": "Paid",
+     "match": "amount",
+     "txId": "t6"
+    }
+   ]
+  },
+  {
+   "id": "st4",
+   "ref": "BATCH-0090",
+   "providerRef": "po_batch_1Rg2ZP",
+   "sent": "2026-09-05",
+   "sentTime": "12:00 AM",
+   "platformTotal": 312,
+   "providerTotal": null,
+   "status": "sent",
+   "reviewed": null,
+   "ingestErr": null,
+   "list": [
+    {
+     "recipient": "Sofia Reyes",
+     "forWhat": "Interview · Kai Andersen",
+     "platformAmt": 132,
+     "providerAmt": null,
+     "platformState": "Pending",
+     "providerState": "—",
+     "match": "pending",
+     "txId": ""
+    },
+    {
+     "recipient": "Priya Raman",
+     "forWhat": "Re-interview · Emma Novak",
+     "platformAmt": 180,
+     "providerAmt": null,
+     "platformState": "Pending",
+     "providerState": "—",
+     "match": "pending",
+     "txId": ""
+    }
+   ]
+  },
+  {
+   "id": "st5",
+   "ref": "BATCH-0089",
+   "providerRef": "po_batch_1Rf1YO",
+   "sent": "2026-08-29",
+   "sentTime": "12:00 AM",
+   "platformTotal": 264,
+   "providerTotal": 0,
+   "status": "failed",
+   "reviewed": null,
+   "ingestErr": "Provider rejected the batch: the settlement account could not be reached.",
+   "list": [
+    {
+     "recipient": "Dana Whitfield",
+     "forWhat": "Interview · Noor Adib",
+     "platformAmt": 120,
+     "providerAmt": 0,
+     "platformState": "Paid",
+     "providerState": "Failed",
+     "match": "state",
+     "txId": ""
+    },
+    {
+     "recipient": "Priya Raman",
+     "forWhat": "Interview · Emma Novak",
+     "platformAmt": 144,
+     "providerAmt": 0,
+     "platformState": "Paid",
+     "providerState": "Failed",
+     "match": "state",
+     "txId": ""
+    }
+   ]
+  }
+ ],
+ "AUDIT": [
+  {
+   "when": "Today 09:41",
+   "who": "Nadia Haddad",
+   "role": "Reviewer",
+   "obj": "Maryam Naz — E1 → E2",
+   "act": "Promoted candidate",
+   "mod": "Candidates",
+   "cat": "Level change",
+   "sev": "notice",
+   "ip": "10.2.14.7"
+  },
+  {
+   "when": "Today 09:12",
+   "who": "System",
+   "role": "Automated",
+   "obj": "Course — Foundations of Leadership ($100)",
+   "act": "Payment settled",
+   "mod": "Finance",
+   "cat": "Payment",
+   "sev": "info",
+   "ip": "—"
+  },
+  {
+   "when": "Today 08:55",
+   "who": "Sofia Marchetti",
+   "role": "Supervisor",
+   "obj": "Raul Mendez",
+   "act": "Approved agent",
+   "mod": "Vetting",
+   "cat": "Approval",
+   "sev": "notice",
+   "ip": "10.2.14.31"
+  },
+  {
+   "when": "Today 08:20",
+   "who": "System",
+   "role": "Automated",
+   "obj": "Maryam Naz — full account export",
+   "act": "Data export requested",
+   "mod": "System",
+   "cat": "Data rights",
+   "sev": "high",
+   "ip": "—"
+  },
+  {
+   "when": "Today 07:48",
+   "who": "Derek Sole",
+   "role": "Super Admin",
+   "obj": "SCENES to employers → on",
+   "act": "Changed feature flag",
+   "mod": "System",
+   "cat": "Configuration",
+   "sev": "high",
+   "ip": "10.2.14.2"
+  },
+  {
+   "when": "Yest 18:22",
+   "who": "System",
+   "role": "Automated",
+   "obj": "BrightPath ($40)",
+   "act": "Interview unlock",
+   "mod": "Employers",
+   "cat": "Payment",
+   "sev": "info",
+   "ip": "—"
+  },
+  {
+   "when": "Yest 16:10",
+   "who": "Derek Sole",
+   "role": "Super Admin",
+   "obj": "Marcus Ozoro — $160 released early",
+   "act": "Released payout",
+   "mod": "Finance",
+   "cat": "Payout",
+   "sev": "high",
+   "ip": "10.2.14.2"
+  },
+  {
+   "when": "Yest 14:03",
+   "who": "Derek Sole",
+   "role": "Super Admin",
+   "obj": "Marcus Ozoro → T3",
+   "act": "Adjusted agent level",
+   "mod": "Talent Agents",
+   "cat": "Level change",
+   "sev": "high",
+   "ip": "10.2.14.2"
+  },
+  {
+   "when": "Yest 12:39",
+   "who": "Priya Raman",
+   "role": "Admin",
+   "obj": "Learning platform",
+   "act": "Rotated API key",
+   "mod": "System",
+   "cat": "Security",
+   "sev": "high",
+   "ip": "10.2.14.19"
+  },
+  {
+   "when": "Yest 11:20",
+   "who": "Nadia Haddad",
+   "role": "Reviewer",
+   "obj": "Maryam Naz → Cohort 2",
+   "act": "Assigned cohort leader",
+   "mod": "Cohorts",
+   "cat": "Assignment",
+   "sev": "notice",
+   "ip": "10.2.14.7"
+  },
+  {
+   "when": "Yest 09:05",
+   "who": "System",
+   "role": "Automated",
+   "obj": "Raul Mendez — enhanced check",
+   "act": "Background check cleared",
+   "mod": "Vetting",
+   "cat": "Safeguarding",
+   "sev": "notice",
+   "ip": "—"
+  },
+  {
+   "when": "10 Aug 17:44",
+   "who": "Sofia Marchetti",
+   "role": "Supervisor",
+   "obj": "Reviewer role — +AI raw score",
+   "act": "Edited role permissions",
+   "mod": "Users & Roles",
+   "cat": "Configuration",
+   "sev": "high",
+   "ip": "10.2.14.31"
+  },
+  {
+   "when": "10 Aug 15:02",
+   "who": "System",
+   "role": "Automated",
+   "obj": "Course refund — 14-day window ($100)",
+   "act": "Refund approved",
+   "mod": "Finance",
+   "cat": "Refund",
+   "sev": "notice",
+   "ip": "—"
+  },
+  {
+   "when": "10 Aug 10:31",
+   "who": "Derek Sole",
+   "role": "Super Admin",
+   "obj": "Employer account — policy breach",
+   "act": "Suspended account",
+   "mod": "Employers",
+   "cat": "Account",
+   "sev": "high",
+   "ip": "10.2.14.2"
+  },
+  {
+   "when": "09 Aug 14:15",
+   "who": "Priya Raman",
+   "role": "Admin",
+   "obj": "Priya Raman — email corrected",
+   "act": "Corrected candidate data",
+   "mod": "System",
+   "cat": "Data rights",
+   "sev": "notice",
+   "ip": "10.2.14.19"
+  },
+  {
+   "when": "09 Aug 09:50",
+   "who": "System",
+   "role": "Automated",
+   "obj": "Grace Mwangi — SCENES consent",
+   "act": "Consent withdrawn",
+   "mod": "System",
+   "cat": "Data rights",
+   "sev": "notice",
+   "ip": "—"
+  }
+ ],
+ "QUIZ": [
+  "When a plan fails at the last minute, what’s your first move?",
+  "You disagree with a decision your team has already committed to. What do you do?",
+  "How do you respond when someone more junior outperforms you?",
+  "A teammate is struggling and it’s affecting the group. How do you handle it?",
+  "What do you do with feedback you think is wrong?",
+  "How do you decide what to work on when everything feels urgent?",
+  "When did you last change your mind about something important?",
+  "How do you react when credit for your work goes to someone else?",
+  "What’s your instinct when a project has no clear owner?",
+  "How do you handle a deadline you know you’ll miss?",
+  "What do you do when you don’t know the answer in front of others?",
+  "How do you rebuild trust after letting someone down?"
+ ],
+ "INTEGRATIONS": [
+  {
+   "id": "stripe",
+   "name": "Stripe",
+   "cat": "Payments",
+   "detail": "Charges, held funds and agent payouts",
+   "state": "live",
+   "env": "Live mode",
+   "sync": "Real-time",
+   "account": "acct_1TN…9c",
+   "owner": "Finance",
+   "webhooks": 6,
+   "events": "2,481",
+   "keyAge": "Rotated 20 Jul"
+  },
+  {
+   "id": "stripe_ip",
+   "name": "In-progress payments",
+   "cat": "Payments",
+   "detail": "Held-then-settled flow for interviews",
+   "state": "live",
+   "env": "Live mode",
+   "sync": "Real-time",
+   "account": "via Stripe",
+   "owner": "Finance",
+   "webhooks": 3,
+   "events": "640",
+   "keyAge": "—"
+  },
+  {
+   "id": "learn",
+   "name": "Learning platform",
+   "cat": "Learning",
+   "detail": "Course delivery, assessments and progress",
+   "state": "live",
+   "env": "Production",
+   "sync": "Every 5 min",
+   "account": "tnx-prod",
+   "owner": "Product",
+   "webhooks": 4,
+   "events": "1,120",
+   "keyAge": "Rotated 02 Aug"
+  },
+  {
+   "id": "video",
+   "name": "Video & recording",
+   "cat": "Media",
+   "detail": "1:1 interviews, transcripts and SCENES",
+   "state": "degraded",
+   "env": "Production",
+   "sync": "Real-time",
+   "account": "tnx-media",
+   "owner": "Product",
+   "webhooks": 5,
+   "events": "318",
+   "keyAge": "Rotated 11 Jul"
+  },
+  {
+   "id": "ai",
+   "name": "AI assessment",
+   "cat": "Intelligence",
+   "detail": "Quiz scoring and levelling signals",
+   "state": "live",
+   "env": "Production",
+   "sync": "On submit",
+   "account": "tnx-ai",
+   "owner": "Data",
+   "webhooks": 2,
+   "events": "204",
+   "keyAge": "Rotated 28 Jul"
+  },
+  {
+   "id": "crm",
+   "name": "Email / CRM",
+   "cat": "Growth",
+   "detail": "Transactional email and lead attribution",
+   "state": "live",
+   "env": "Production",
+   "sync": "Every 15 min",
+   "account": "tnx-crm",
+   "owner": "Growth",
+   "webhooks": 3,
+   "events": "1,905",
+   "keyAge": "Rotated 15 Jul"
+  },
+  {
+   "id": "db",
+   "name": "Database & storage",
+   "cat": "Infrastructure",
+   "detail": "Primary Postgres + object storage",
+   "state": "live",
+   "env": "Managed",
+   "sync": "Continuous",
+   "account": "tnx-core",
+   "owner": "Platform",
+   "webhooks": 0,
+   "events": "—",
+   "keyAge": "Managed"
+  }
+ ],
+ "ADMIN_NOTIF": [
+  {
+   "ic": "flag",
+   "h": "Vetting queue",
+   "t": "3 talent agents are awaiting approval before they can take interviews.",
+   "w": "12m ago",
+   "rd": false,
+   "go": "vetting/applications"
+  },
+  {
+   "ic": "alert",
+   "h": "Open decision",
+   "t": "Agent compensation is still unreconciled — $100/mo listing fee vs a percentage payout share.",
+   "w": "1h ago",
+   "rd": false,
+   "go": "finance/feeconfig"
+  },
+  {
+   "ic": "money",
+   "h": "Finance & settlement",
+   "t": "Payment settlement rules are undefined — 12 payouts are pending release.",
+   "w": "3h ago",
+   "rd": false,
+   "go": "finance/payouts"
+  },
+  {
+   "ic": "users",
+   "h": "New account",
+   "t": "Employer account created — Signal Home Office. Verification not yet run.",
+   "w": "Yesterday",
+   "rd": true,
+   "go": "employers/empverify"
+  },
+  {
+   "ic": "route",
+   "h": "Cohorts",
+   "t": "Bootstrap gap: no Builders are available to lead the first Explorer cohorts.",
+   "w": "Yesterday",
+   "rd": true,
+   "go": "users/users?role=leader"
+  }
+ ],
+ "ORIGINS": [
+  [
+   "individual",
+   "Individual sign-up"
+  ],
+  [
+   "signal",
+   "Signal (sponsoring employer)"
+  ],
+  [
+   "filtergo",
+   "Filter Go (franchise)"
+  ],
+  [
+   "internal",
+   "Internal user"
+  ]
+ ],
+ "ROLE_OPTS": [
+  [
+   "all",
+   "All"
+  ],
+  [
+   "candidate",
+   "Candidate"
+  ],
+  [
+   "agent",
+   "Talent Agent"
+  ],
+  [
+   "leader",
+   "Cohort Leader"
+  ],
+  [
+   "admin",
+   "Admin"
+  ],
+  [
+   "employer",
+   "Employer"
+  ]
+ ],
+ "USER_STATUS_LABEL": {
+  "invited": "Invited",
+  "active": "Active",
+  "ok": "Active",
+  "inactive": "Deactivated",
+  "deleting": "Deletion in progress",
+  "deleted": "Deleted"
+ },
+ "USER_STATUS_OPTS": [
+  [
+   "all",
+   "All"
+  ],
+  [
+   "invpending",
+   "Invitation pending"
+  ],
+  [
+   "invexpired",
+   "Invitation expired"
+  ],
+  [
+   "active",
+   "Active"
+  ],
+  [
+   "inactive",
+   "Deactivated"
+  ]
+ ],
+ "STAFF_STATUS_LABEL": {
+  "invited": "Invited",
+  "active": "Active",
+  "inactive": "Deactivated",
+  "deleting": "Deletion in progress",
+  "deleted": "Deleted"
+ },
+ "IMP_NOT": [
+  "admin",
+  "candidate",
+  "employer"
+ ],
+ "IMP_SAMPLE": [
+  [
+   "Ava",
+   "Stone",
+   "ava@brightpath.io",
+   "leader"
+  ],
+  [
+   "Max",
+   "Lee",
+   "max@northgate.health",
+   "agent"
+  ],
+  [
+   "Joan",
+   "Roy",
+   "joan@talentnext.io",
+   "supervisor"
+  ],
+  [
+   "Dev",
+   "Kapoor",
+   "dev@talentnext.io",
+   "reviewer"
+  ],
+  [
+   "Sam",
+   "Poe",
+   "not-an-email",
+   "agent"
+  ],
+  [
+   "No Role",
+   "Here",
+   "norole@acme.io",
+   ""
+  ],
+  [
+   "Dupe",
+   "Account",
+   "dana@talentnext.io",
+   "agent"
+  ],
+  [
+   "Zoe",
+   "Fields",
+   "zoe@acme.io",
+   "wizard"
+  ]
+ ],
+ "LEVELS": [
+  "E1",
+  "E2",
+  "E3",
+  "B1",
+  "B2",
+  "B3",
+  "T1",
+  "T2",
+  "T3"
+ ],
+ "INTENTS": [
+  [
+   "role",
+   "Develop in my current role"
+  ],
+  [
+   "another",
+   "Develop for another role"
+  ],
+  [
+   "ownership",
+   "Develop for ownership"
+  ]
+ ],
+ "COURSE_TRACKS": [
+  "Explorer",
+  "Builder"
+ ],
+ "LS_COURSES": [
+  "Leadership Foundations",
+  "Communication & Influence",
+  "Team Dynamics",
+  "Coaching for Performance",
+  "Strategic Thinking",
+  "Change Leadership",
+  "Decision-Making Under Uncertainty",
+  "Executive Presence"
+ ],
+ "TALENT_LETTERS": [
+  {
+   "k": "T1",
+   "ltr": "T",
+   "name": "Top Performer",
+   "meaning": "Consistently clears the bar the level sets."
+  },
+  {
+   "k": "A",
+   "ltr": "A",
+   "name": "Athlete",
+   "meaning": "Trains, recovers and shows up to a standard."
+  },
+  {
+   "k": "L",
+   "ltr": "L",
+   "name": "Leader",
+   "meaning": "Develops others and owns a group outcome."
+  },
+  {
+   "k": "E",
+   "ltr": "E",
+   "name": "Entrepreneur",
+   "meaning": "Starts things and carries the risk of them."
+  },
+  {
+   "k": "N",
+   "ltr": "N",
+   "name": "Not Sure",
+   "meaning": "Capable, still finding the lane."
+  },
+  {
+   "k": "T2",
+   "ltr": "T",
+   "name": "Team Player",
+   "meaning": "Makes the people around them better."
+  }
+ ],
+ "ADM_SCENE_SET": [
+  [
+   "The reorganization call",
+   "02:14"
+  ],
+  [
+   "Handing over the vendor review",
+   "11:02"
+  ],
+  [
+   "The Friday rhythm",
+   "19:37"
+  ],
+  [
+   "Managing up",
+   "24:50"
+  ],
+  [
+   "Conflict with a peer",
+   "31:15"
+  ],
+  [
+   "Closing reflection",
+   "41:03"
+  ]
+ ],
+ "ADM_SCORES": [
+  [
+   "Decisiveness",
+   78
+  ],
+  [
+   "Delegation",
+   41
+  ],
+  [
+   "Directness",
+   66
+  ],
+  [
+   "Coaching",
+   38
+  ],
+  [
+   "Composure",
+   84
+  ]
+ ],
+ "ADM_QZ_STR": [
+  "Execution under pressure",
+  "Comfortable with ambiguity",
+  "Holds a line under challenge"
+ ],
+ "ADM_QZ_DEV": [
+  "Delegates too late",
+  "Avoids conflict until it escalates",
+  "Coaches by telling"
+ ],
+ "CAND_PROFILE": {
+  "u4": {
+   "points": 1095,
+   "courses": 0,
+   "role": "Operations Lead",
+   "industry": "Software",
+   "years": "5 years",
+   "aspiration": "Develop in my current role"
+  }
+ },
+ "CAND_ROLES": [
+  "Operations Lead",
+  "Product Manager",
+  "Team Lead",
+  "Analyst",
+  "Account Manager",
+  "Coordinator"
+ ],
+ "CAND_INDS": [
+  "Software",
+  "Healthcare",
+  "Finance",
+  "Retail",
+  "Logistics"
+ ],
+ "CAND_ASP": [
+  "Develop in my current role",
+  "Develop for another role",
+  "Develop for ownership"
+ ],
+ "CAND_CV": {
+  "experience": [
+   {
+    "role": "Operations Lead",
+    "org": "Tkxel",
+    "kind": "Full-time",
+    "from": "Jan 2024",
+    "to": "Present",
+    "span": "2 yrs 8 mos"
+   },
+   {
+    "role": "Business Operations Analyst",
+    "org": "TechmateTech LLC",
+    "kind": "Full-time",
+    "from": "Mar 2021",
+    "to": "Dec 2023",
+    "span": "2 yrs 10 mos"
+   }
+  ],
+  "education": [
+   {
+    "school": "COMSATS Institute of Information and Technology",
+    "art": "comsats",
+    "from": "2018",
+    "to": "2022",
+    "degree": "",
+    "field": ""
+   }
+  ],
+  "certs": [
+   {
+    "name": "Enterprise Design Thinking Co-Creator",
+    "org": "IBM",
+    "art": "ibmco",
+    "issued": "Jan 2023",
+    "cred": "User Experience Design (UXD)"
+   },
+   {
+    "name": "Enterprise Design Thinking Practitioner",
+    "org": "IBM",
+    "art": "ibmpr",
+    "issued": "Dec 2022",
+    "cred": "Enterprise Design Thinking"
+   }
+  ],
+  "skills": [
+   "Mockups",
+   "Low-fidelity designs",
+   "User Experience Design (UXD)",
+   "Interaction Design",
+   "Visual Design",
+   "Web Design",
+   "Brand Design",
+   "Logo Design",
+   "UX Research",
+   "Wireframing",
+   "Prototyping",
+   "Adobe Photoshop"
+  ]
+ },
+ "SOCIAL_ADM": [
+  {
+   "k": "linkedin",
+   "n": "LinkedIn",
+   "color": "#0A66C2",
+   "handle": "@maryamsss",
+   "svg": "<svg viewBox=\"0 0 24 24\" fill=\"currentColor\"><g transform=\"translate(2 2) scale(0.83333)\"><path d=\"M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z\"/></g></svg>"
+  },
+  {
+   "k": "instagram",
+   "n": "Instagram",
+   "color": "#E4405F",
+   "handle": "@maryam.designs",
+   "svg": "<svg viewBox=\"0 0 24 24\"><rect x=\"2\" y=\"2\" width=\"20\" height=\"20\" rx=\"6\" fill=\"currentColor\"/><circle cx=\"12\" cy=\"12\" r=\"4\" fill=\"none\" stroke=\"#fff\" stroke-width=\"1.8\"/><circle cx=\"17.4\" cy=\"6.6\" r=\"1.3\" fill=\"#fff\"/></svg>"
+  },
+  {
+   "k": "facebook",
+   "n": "Facebook",
+   "color": "#1877F2",
+   "handle": "Maryam Naz",
+   "svg": "<svg viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z\"/></svg>"
+  },
+  {
+   "k": "twitter",
+   "n": "X",
+   "color": "#000000",
+   "handle": "@maryamsss",
+   "svg": "<svg viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.451-6.231zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644z\"/></svg>"
+  },
+  {
+   "k": "youtube",
+   "n": "YouTube",
+   "color": "#FF0000",
+   "handle": "@maryamnaz",
+   "svg": "<svg viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z\"/></svg>"
+  },
+  {
+   "k": "tiktok",
+   "n": "TikTok",
+   "color": "#010101",
+   "handle": "@maryam.designs",
+   "svg": "<svg viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z\"/></svg>"
+  }
+ ],
+ "CAND_LINKED": {
+  "linkedin": true,
+  "instagram": true,
+  "twitter": true
+ },
+ "CAND_COURSE_LIST": [
+  {
+   "name": "Foundations of Leadership",
+   "lvl": "e1",
+   "status": "Completed",
+   "on": "March 2026",
+   "chapters": "13 of 13",
+   "avg": "83%",
+   "time": "11h 40m",
+   "tasks": "12 of 13"
+  },
+  {
+   "name": "Communicating with Impact",
+   "lvl": "e2",
+   "status": "In progress",
+   "series": [
+    75,
+    80,
+    78,
+    50,
+    92
+   ],
+   "assessed": 5,
+   "avg": 75,
+   "cohort": 79,
+   "growth": [
+    3
+   ],
+   "insight": "Five chapters are assessed so far. Chapter 4, Delegation Without Drop-Off, is the lowest at 50%."
+  },
+  {
+   "name": "Leading High-Performing Teams",
+   "lvl": "e3",
+   "status": "Not started"
+  }
+ ],
+ "AG_STATE": {
+  "listed": [
+   "active",
+   "Listed"
+  ],
+  "paused": [
+   "inactive",
+   "Paused"
+  ],
+  "notlisted": [
+   "",
+   "Not listed"
+  ],
+  "invited": [
+   "warn",
+   "Invited"
+  ],
+  "deactivated": [
+   "inactive",
+   "Deactivated"
+  ]
+ },
+ "PAST_IVS": [
+  {
+   "id": "piv1",
+   "agent": "Dana Whitfield",
+   "cand": "Maryam Naz",
+   "fee": 180,
+   "kind": "Level interview",
+   "when": "20 Aug 2026",
+   "rating": 5,
+   "tal": "<p>Tal suggests <b>Explorer – E3</b>. On the transcript Maryam reads as someone who <b>reasons from consequence, not policy</b>: she starts from the people a decision lands on and works back.</p><p>What earns E3: three worked examples that each <b>carry a date and a name</b>, and a reorganization she can explain call by call rather than in outline.</p><p>What holds it below E4: the growth is <b>coaching rather than fixing</b>. She still solves a problem herself where developing someone else would be the E4 move.</p><p>Ask in the room: one time she coached a report through a hard call, and what changed. A real outcome there is what would put <b>E4</b> on the table.</p>",
+   "strengths": "You reason from consequence to people, not policy. Three examples, each with a date and a name attached.",
+   "growth": "Delegation, and coaching rather than fixing. Chapters 4 and 12 are built on exactly this.",
+   "note": "She talks cautiously, but she has already run a reorganization and can explain every call she made in it. That is an E3, not an E2.",
+   "review": "Dana was direct and fair. She pushed on the parts I was vague about and I left knowing exactly what to work on.",
+   "agentLevel": "E3",
+   "talLevel": "E3",
+   "agentLetters": [
+    "L",
+    "A"
+   ],
+   "talLetters": [
+    "L"
+   ],
+   "submitted": "20 Aug 2026",
+   "filed": "20 Aug 2026, 4:10 PM",
+   "deadline": "21 Aug 2026, 4:10 PM",
+   "dueInMin": 42,
+   "overdue": false,
+   "transcript": "Ready",
+   "decision": null,
+   "talType": "Leader"
+  },
+  {
+   "id": "piv2",
+   "agent": "Dana Whitfield",
+   "cand": "Ava Stone",
+   "fee": 180,
+   "kind": "Interview",
+   "when": "10 Aug 2026",
+   "rating": 4,
+   "tal": "<p>Tal suggests <b>Explorer – E2</b>, at the <b>E2 to E3 boundary</b>. Ava is <b>clear about the outcomes she owns</b> and honest about the ones she missed.</p><p>What earns the read: she <b>separates the decision from the result</b>, so a miss is examined rather than explained away.</p><p>What holds it at E2: almost every example is <b>her acting alone</b>. There is little evidence yet of coaching someone else through a hard call.</p><p>Ask in the room: one time she brought a second person into the work and developed them. That is the evidence that moves this to <b>E3</b>.</p>",
+   "strengths": "Clear on the outcomes you own and honest about the ones you missed. You separate the decision from the result when you talk it through.",
+   "growth": "Bring a second person into the story. Most examples are you acting alone rather than you developing someone else.",
+   "note": "Solid and self-aware. I would want to see one example of her coaching a report before I called it above E2.",
+   "review": "A calm, well-structured hour. Fair questions and useful pointers on where to focus next.",
+   "agentLevel": "E2",
+   "talLevel": "E2",
+   "agentLetters": [
+    "T2"
+   ],
+   "talLetters": [
+    "T2"
+   ],
+   "submitted": "Today",
+   "filed": "Today, 9:15 AM",
+   "deadline": "Tomorrow, 9:15 AM",
+   "dueInMin": 1290,
+   "overdue": false,
+   "transcript": "Failed",
+   "decision": null,
+   "talType": "Team Player"
+  },
+  {
+   "id": "piv3",
+   "agent": "Priya Raman",
+   "cand": "Jordan Vale",
+   "fee": 225,
+   "kind": "Interview",
+   "when": "12 Aug 2026",
+   "rating": 5,
+   "tal": "<p>Tal suggests <b>Explorer – E4</b>. Jordan reads as someone who can <b>frame a trade-off across teams</b> and name what each option costs.</p><p>What earns E4: he <b>holds two competing priorities in view</b> at once, and his examples span more than one team rather than one desk.</p><p>What keeps it at E4 rather than higher: he <b>leaves the ending open</b>. He explores a decision well but does not always close it.</p><p>Ask in the room: one decision he closed cleanly under pressure, and how it landed. A clean close is what confirms <b>E4</b> and hints at more.</p>",
+   "strengths": "You hold two competing priorities in view and can say what each one costs. Examples span more than one team.",
+   "growth": "Tighten how you close a decision. You explore well but the ending is sometimes left open.",
+   "note": "Reads a room and a roadmap at the same time. Comfortable at E4.",
+   "review": "Priya asked sharp questions and gave me a genuinely useful read on my blind spots.",
+   "agentLevel": "E4",
+   "talLevel": "E4",
+   "agentLetters": [
+    "T1",
+    "L"
+   ],
+   "talLetters": [
+    "T1",
+    "L"
+   ],
+   "submitted": "12 Aug 2026",
+   "filed": "12 Aug 2026, 1:00 PM",
+   "deadline": "13 Aug 2026, 1:00 PM",
+   "dueInMin": -1,
+   "overdue": false,
+   "transcript": "Ready",
+   "decision": "approved",
+   "finalLevel": "E4",
+   "finalLetters": [
+    "T1",
+    "L"
+   ],
+   "talType": "Top Performer"
+  },
+  {
+   "id": "piv4",
+   "agent": "Marcus Ozoro",
+   "cand": "Sophia Ali",
+   "fee": 150,
+   "kind": "Interview",
+   "when": "9 Aug 2026",
+   "rating": 4,
+   "tal": "<p>Tal suggests <b>Explorer – E2</b>. Sophia reads as a <b>dependable, clear operator</b>: she keeps people informed without being asked and her handovers are clean.</p><p>What earns E2: <b>reliable delivery</b> and communication you do not have to chase, across a full cycle of work.</p><p>What holds it below E3: she tends to <b>absorb a problem before naming it</b>. She handles issues well once they land, but raises them late.</p><p>Ask in the room: one problem she named early, before it became urgent. The growth here is timing, not capability, and that is what moves it to <b>E3</b>.</p>",
+   "strengths": "Dependable and clear. You keep people informed without being asked and your handovers are clean.",
+   "growth": "Name a problem earlier. You handle issues well once they land but you tend to absorb them first.",
+   "note": "Trustworthy operator. The growth is timing, not capability.",
+   "review": "Marcus put me at ease and the feedback was specific and kind.",
+   "agentLevel": "E3",
+   "talLevel": "E2",
+   "agentLetters": [
+    "A",
+    "L"
+   ],
+   "talLetters": [
+    "A"
+   ],
+   "submitted": "9 Aug 2026",
+   "filed": "9 Aug 2026, 2:30 PM",
+   "deadline": "10 Aug 2026, 2:30 PM",
+   "dueInMin": -95,
+   "overdue": true,
+   "transcript": "Ready",
+   "decision": null,
+   "talType": "Athlete"
+  }
+ ],
+ "LEVEL_LOG": [
+  {
+   "cand": "Maryam Naz",
+   "from": "E1",
+   "fromLetters": [
+    "A",
+    "L"
+   ],
+   "to": "E2",
+   "toLetters": [
+    "A",
+    "L",
+    "E"
+   ],
+   "proposedBy": "Dana Whitfield",
+   "decidedOn": "Agent proposal",
+   "approvedBy": "Nadia Haddad",
+   "approvedRole": "Reviewer",
+   "source": "Re-interview",
+   "date": "12 Aug 2026",
+   "filed": "12 Aug 2026, 4:10 PM",
+   "rating": 5,
+   "talType": "Leader",
+   "agentLevel": "E2",
+   "agentLetters": [
+    "A",
+    "L",
+    "E"
+   ],
+   "talLevel": "E2",
+   "talLetters": [
+    "A",
+    "L"
+   ],
+   "reasoning": "Reads from consequence to people; three dated examples.",
+   "strengths": "Clear ownership of the outcomes she owns, with three examples that each carry a date and a name.",
+   "growth": "Coaching rather than fixing. She still solves a problem herself where developing someone else would be the next move.",
+   "note": "She talks cautiously, but she has already run a reorganization and can explain every call she made in it. That is a solid E2 with E3 in reach.",
+   "aiRaw": "0.71",
+   "tal": "<p>Tal suggests <b>Explorer – E2</b>. Maryam reads as someone who <b>reasons from consequence, not policy</b>: she starts from the people a decision lands on and works back.</p><p>What earns E2: <b>three dated examples</b> she can walk through call by call. What would move it to E3 is coaching a report through a hard call rather than solving it herself.</p>",
+   "direction": "Up",
+   "id": "lc107"
+  },
+  {
+   "cand": "Jordan Vale",
+   "from": "E5",
+   "fromLetters": [
+    "E"
+   ],
+   "to": "B1",
+   "toLetters": [
+    "E",
+    "L"
+   ],
+   "proposedBy": "Priya Raman",
+   "decidedOn": "Tal proposal",
+   "approvedBy": "Derek Sole",
+   "approvedRole": "Super Admin",
+   "source": "Re-interview",
+   "date": "2 Aug 2026",
+   "filed": "2 Aug 2026, 1:00 PM",
+   "rating": 5,
+   "talType": "Leader",
+   "agentLevel": "E5",
+   "agentLetters": [
+    "E"
+   ],
+   "talLevel": "B1",
+   "talLetters": [
+    "E",
+    "L"
+   ],
+   "reasoning": "Frames trade-offs across teams; closes cleanly under pressure.",
+   "strengths": "Holds two competing priorities in view and can say what each one costs. Examples span more than one team.",
+   "growth": "Tighten how a decision is closed. He explores well but the ending is sometimes left open.",
+   "note": "Reads a room and a roadmap at once. Comfortable stepping into Builder.",
+   "aiRaw": "0.83",
+   "tal": "<p>Tal suggests <b>Builder – B1</b>. Jordan <b>frames a trade-off across teams</b> and names what each option costs.</p><p>What earns B1: examples that <b>span more than one team</b> and a decision he can defend call by call.</p>",
+   "direction": "Up",
+   "id": "lc106"
+  },
+  {
+   "cand": "Ava Stone",
+   "from": "E1",
+   "fromLetters": [
+    "N"
+   ],
+   "to": "E2",
+   "toLetters": [
+    "L"
+   ],
+   "proposedBy": "Dana Whitfield",
+   "decidedOn": "Reviewer override",
+   "approvedBy": "Derek Sole",
+   "approvedRole": "Super Admin",
+   "source": "First interview",
+   "date": "28 Jul 2026",
+   "filed": "28 Jul 2026, 2:30 PM",
+   "rating": 4,
+   "talType": "Team Player",
+   "reason": "Transcript shows one clear coaching example the report understated.",
+   "agentLevel": "E2",
+   "agentLetters": [
+    "L",
+    "A"
+   ],
+   "talLevel": "E2",
+   "talLetters": [
+    "L"
+   ],
+   "reasoning": "Separates decision from result.",
+   "strengths": "Clear about the outcomes she owns and honest about the ones she missed.",
+   "growth": "Bring a second person into the work. Most examples are her acting alone.",
+   "note": "Solid and self-aware. One example of coaching a report would move her above E2.",
+   "aiRaw": "0.64",
+   "tal": "<p>Tal suggests <b>Explorer – E2</b>. Ava is <b>clear about the outcomes she owns</b> and honest about the ones she missed.</p><p>What holds it at E2: most examples are <b>her acting alone</b>. Bringing a second person into the work is the next move.</p>",
+   "direction": "Up",
+   "id": "lc105"
+  },
+  {
+   "cand": "Kai Andersen",
+   "from": "E3",
+   "fromLetters": [
+    "T1"
+   ],
+   "to": "E3",
+   "toLetters": [
+    "T1",
+    "L"
+   ],
+   "proposedBy": "",
+   "decidedOn": "",
+   "approvedBy": "Derek Sole",
+   "approvedRole": "Super Admin",
+   "source": "",
+   "date": "20 Jul 2026",
+   "filed": "20 Jul 2026",
+   "rating": 5,
+   "talType": "Leader",
+   "reason": "Adding Leader after the cohort feedback; level unchanged.",
+   "tal": "<p>Tal keeps the level at <b>Explorer – E3</b> and adds the <b>Leader</b> letter after the cohort feedback.</p><p>The read did not change; the letter recognises how he carried the group.</p>",
+   "direction": "Held",
+   "id": "lc104"
+  },
+  {
+   "cand": "Ava Stone",
+   "from": "",
+   "fromLetters": [],
+   "to": "E1",
+   "toLetters": [
+    "N"
+   ],
+   "proposedBy": "",
+   "decidedOn": "Preliminary quiz result",
+   "approvedBy": "System",
+   "approvedRole": "System",
+   "source": "Preliminary quiz",
+   "date": "2 Jul 2026",
+   "quiz": {
+    "result": "Explorer – E1",
+    "answers": [
+     [
+      "Where are you right now?",
+      "In a job I want to move up in"
+     ],
+     [
+      "Which of these sounds most like you?",
+      "Not Sure"
+     ],
+     [
+      "How many years have you been working?",
+      "1 to 3"
+     ]
+    ]
+   },
+   "direction": "",
+   "id": "lc103"
+  },
+  {
+   "cand": "Noah Park",
+   "from": "",
+   "fromLetters": [],
+   "to": "E1",
+   "toLetters": [
+    "N"
+   ],
+   "proposedBy": "",
+   "decidedOn": "Preliminary quiz result",
+   "approvedBy": "System",
+   "approvedRole": "System",
+   "source": "Preliminary quiz",
+   "date": "10 Jul 2026",
+   "email": "noah@park.dev",
+   "quiz": {
+    "result": "Explorer – E1",
+    "answers": [
+     [
+      "Where are you right now?",
+      "Between things"
+     ],
+     [
+      "Which of these sounds most like you?",
+      "Athlete"
+     ],
+     [
+      "How many years have you been working?",
+      "Under 1"
+     ]
+    ]
+   },
+   "direction": "",
+   "id": "lc102"
+  },
+  {
+   "cand": "Mia Torres",
+   "from": "",
+   "fromLetters": [],
+   "to": "E2",
+   "toLetters": [
+    "A",
+    "L"
+   ],
+   "proposedBy": "",
+   "decidedOn": "Preliminary quiz result",
+   "approvedBy": "System",
+   "approvedRole": "System",
+   "source": "Preliminary quiz",
+   "date": "5 Jul 2026",
+   "email": "mia@torres.dev",
+   "quiz": {
+    "result": "Explorer – E2",
+    "answers": [
+     [
+      "Where are you right now?",
+      "Running something of my own, or trying to start it"
+     ],
+     [
+      "Which of these sounds most like you?",
+      "Entrepreneur"
+     ],
+     [
+      "How many years have you been working?",
+      "3 to 7"
+     ]
+    ]
+   },
+   "direction": "",
+   "id": "lc101"
+  }
+ ],
+ "IV_TOPICS": [
+  "A vendor review I had to hand over mid-cycle. I planned who owned each thread, but I did not start the hard conversation the delay needed. I want to work through how to open that earlier.",
+  "Leading a project where two of my team disagreed on scope. I made the call in the end, but I am not sure I brought them along with me.",
+  "A deadline that moved on me last quarter. I cut scope rather than push the date and told the team the same afternoon. I want to test whether that was the right call.",
+  "Covering for my manager for six weeks. I kept things running but struggled to hand off the parts I usually hold myself.",
+  "Giving difficult feedback to a peer. It landed fine in the end, but I sat on it far too long first.",
+  "Rolling out a process the team pushed back on. I want to talk about how I read the room and where I lost people."
+ ],
+ "COURSE_LEARN": [
+  "Decide with incomplete information and explain the call afterwards",
+  "Hand work over without it dropping, and without taking it back",
+  "Say the hard thing directly, and give feedback that lands",
+  "Coach people through a problem instead of fixing it for them",
+  "Hold a team steady through conflict, repair and change"
+ ],
+ "COURSE_CH": [
+  [
+   "Why We Exist",
+   45
+  ],
+  [
+   "The Operator Mindset",
+   60
+  ],
+  [
+   "Reading the Room",
+   50
+  ],
+  [
+   "Delegation Without Drop-Off",
+   70
+  ],
+  [
+   "Hard Conversations",
+   55
+  ],
+  [
+   "Building Trust at Speed",
+   60
+  ],
+  [
+   "Decisions Under Incomplete Information",
+   65
+  ],
+  [
+   "Managing Up",
+   50
+  ],
+  [
+   "Feedback That Lands",
+   55
+  ],
+  [
+   "Running the Weekly Rhythm",
+   45
+  ],
+  [
+   "Conflict and Repair",
+   60
+  ],
+  [
+   "Coaching vs Fixing",
+   55
+  ],
+  [
+   "Leading Through Change",
+   60
+  ]
+ ],
+ "COURSE_SYL": [
+  {
+   "learn": [
+    "Say what the business is for in one sentence other people repeat",
+    "Trace your own work back to the outcome it is paid for",
+    "Tell a value the company lives from a slogan on a wall"
+   ],
+   "skills": [
+    "Purpose",
+    "Business literacy",
+    "Strategic context",
+    "Storytelling"
+   ]
+  },
+  {
+   "learn": [
+    "Take a problem end to end instead of passing it on",
+    "Pick the smallest change that moves the number",
+    "Tell being busy apart from being effective"
+   ],
+   "skills": [
+    "Ownership",
+    "Prioritisation",
+    "Execution",
+    "Bias to action"
+   ]
+  },
+  {
+   "learn": [
+    "Notice what a room is not saying, and name it safely",
+    "Read when agreement in a meeting is not agreement",
+    "Change how you say a thing for who is in front of you"
+   ],
+   "skills": [
+    "Situational awareness",
+    "Listening",
+    "Reading stakeholders",
+    "Influence"
+   ]
+  },
+  {
+   "learn": [
+    "Hand work over without it dropping, and without taking it back",
+    "Agree the check-in before the work starts, not after it slips",
+    "Match how closely you follow up to how much is at stake"
+   ],
+   "skills": [
+    "Delegation",
+    "Accountability",
+    "Trust",
+    "Follow-through"
+   ]
+  },
+  {
+   "learn": [
+    "Open a hard conversation without it being an ambush",
+    "Say the thing once, plainly, and early",
+    "Stay in the conversation after the other person reacts"
+   ],
+   "skills": [
+    "Directness",
+    "Difficult conversations",
+    "Candour",
+    "Composure"
+   ]
+  },
+  {
+   "learn": [
+    "Be useful enough to be trusted inside the first week",
+    "Make small commitments in public and keep them",
+    "Repair trust quickly when you get something wrong"
+   ],
+   "skills": [
+    "Trust",
+    "Credibility",
+    "Reliability",
+    "Building relationships"
+   ]
+  },
+  {
+   "learn": [
+    "Decide with incomplete information and explain the call afterwards",
+    "Separate a decision you can reverse from one you cannot",
+    "Name what would change your mind before you commit"
+   ],
+   "skills": [
+    "Decisiveness",
+    "Judgement",
+    "Weighing risk",
+    "Reasoning out loud"
+   ]
+  },
+  {
+   "learn": [
+    "Give your manager the version of the problem they can act on",
+    "Ask for a decision rather than for permission",
+    "Disagree with someone senior and keep the relationship"
+   ],
+   "skills": [
+    "Managing up",
+    "Escalation",
+    "Written updates",
+    "Stakeholder management"
+   ]
+  },
+  {
+   "learn": [
+    "Give feedback that changes what happens next",
+    "Separate what somebody did from who they are",
+    "Ask for feedback in a way that gets you the real answer"
+   ],
+   "skills": [
+    "Feedback",
+    "Directness",
+    "Developing people",
+    "Growth conversations"
+   ]
+  },
+  {
+   "learn": [
+    "Run a weekly meeting people leave knowing what to do",
+    "Keep one list that tells you what is actually moving",
+    "Close last week before you open this one"
+   ],
+   "skills": [
+    "Operating rhythm",
+    "Running meetings",
+    "Planning",
+    "Follow-through"
+   ]
+  },
+  {
+   "learn": [
+    "Take the heat out of a disagreement without avoiding it",
+    "Hold a team steady while two people are still angry",
+    "Repair a working relationship after it has broken"
+   ],
+   "skills": [
+    "Handling conflict",
+    "Repair",
+    "Mediation",
+    "Composure"
+   ]
+  },
+  {
+   "learn": [
+    "Coach people through a problem instead of fixing it for them",
+    "Ask the question instead of giving the answer",
+    "Know when coaching is the wrong tool and step in"
+   ],
+   "skills": [
+    "Coaching",
+    "Questioning",
+    "Developing people",
+    "Restraint"
+   ]
+  },
+  {
+   "learn": [
+    "Keep the work going while the ground moves",
+    "Say what you know, what you do not, and when you will know",
+    "Take a team through a change nobody chose"
+   ],
+   "skills": [
+    "Leading change",
+    "Communication",
+    "Resilience",
+    "Composure"
+   ]
+  }
+ ],
+ "BK_STAGE": {
+  "booked": "Booked",
+  "held": "Held",
+  "await": "Awaiting approval",
+  "reported": "Reported",
+  "nothld": "Not held",
+  "awaitcand": "Awaiting candidate",
+  "resolved": "Resolved"
+ },
+ "BK_STAGE_ORDER": [
+  "booked",
+  "held",
+  "await",
+  "reported",
+  "nothld",
+  "awaitcand",
+  "resolved"
+ ],
+ "BK_STAGE_HUE": {
+  "booked": "",
+  "held": "pending",
+  "await": "pending",
+  "reported": "active",
+  "nothld": "inactive",
+  "awaitcand": "pending",
+  "resolved": ""
+ },
+ "BK_ESCROW": {
+  "held": [
+   "pending",
+   "Funds held"
+  ],
+  "released": [
+   "paid",
+   "Paid"
+  ],
+  "refunded": [
+   "",
+   "Refunded"
+  ]
+ },
+ "TX_TAGS_ADM": [
+  [
+   "all",
+   "Everything"
+  ],
+  [
+   "scene",
+   "Marked scenes"
+  ],
+  [
+   "delegation",
+   "Delegation"
+  ],
+  [
+   "conflict",
+   "Hard conversations"
+  ],
+  [
+   "decisions",
+   "Decisions"
+  ]
+ ],
+ "OB_TYPES": [
+  [
+   "single",
+   "Single choice"
+  ],
+  [
+   "text",
+   "Free text"
+  ],
+  [
+   "dropdown",
+   "Dropdown"
+  ]
+ ],
+ "ONBOARDING_Q": [
+  {
+   "id": "obq1",
+   "text": "Where are you right now?",
+   "type": "single",
+   "weight": 1,
+   "options": [
+    {
+     "label": "In a job I want to move up in",
+     "score": 3
+    },
+    {
+     "label": "In a job I don't plan to stay in",
+     "score": 2
+    },
+    {
+     "label": "Running something of my own, or trying to start it",
+     "score": 4
+    },
+    {
+     "label": "Between things",
+     "score": 1
+    }
+   ]
+  },
+  {
+   "id": "obq2",
+   "text": "Which of these sounds most like you? Pick one.",
+   "type": "single",
+   "weight": 1,
+   "options": [
+    {
+     "label": "Top Performer",
+     "score": 5
+    },
+    {
+     "label": "Athlete",
+     "score": 4
+    },
+    {
+     "label": "Leader",
+     "score": 5
+    },
+    {
+     "label": "Entrepreneur",
+     "score": 4
+    },
+    {
+     "label": "Not Sure",
+     "score": 1
+    },
+    {
+     "label": "Team Player",
+     "score": 3
+    }
+   ]
+  },
+  {
+   "id": "obq3",
+   "text": "What do you do now?",
+   "type": "text",
+   "weight": 0,
+   "placeholder": "\"Operations coordinator,\" \"student,\" \"own a detailing business.\"",
+   "options": []
+  },
+  {
+   "id": "obq4",
+   "text": "What industry is that in?",
+   "type": "dropdown",
+   "weight": 0,
+   "other": true,
+   "options": [
+    {
+     "label": "Security"
+    },
+    {
+     "label": "Franchise ownership"
+    },
+    {
+     "label": "Retail"
+    },
+    {
+     "label": "Food and hospitality"
+    },
+    {
+     "label": "Trades and construction"
+    },
+    {
+     "label": "Healthcare"
+    },
+    {
+     "label": "Transportation and logistics"
+    },
+    {
+     "label": "Sales"
+    },
+    {
+     "label": "Education"
+    },
+    {
+     "label": "Technology"
+    },
+    {
+     "label": "Student"
+    }
+   ]
+  },
+  {
+   "id": "obq5",
+   "text": "How many years have you been working?",
+   "type": "single",
+   "weight": 1,
+   "options": [
+    {
+     "label": "Under 1",
+     "score": 1
+    },
+    {
+     "label": "1 to 3",
+     "score": 2
+    },
+    {
+     "label": "3 to 7",
+     "score": 3
+    },
+    {
+     "label": "7 to 15",
+     "score": 4
+    },
+    {
+     "label": "15 or more",
+     "score": 5
+    }
+   ]
+  }
+ ],
+ "METHOD_LABEL": {},
+ "TX_TYPE_LABEL": {
+  "course": "Course fee",
+  "interview": "Interview fee",
+  "scene": "Scenes",
+  "payout": "Payout",
+  "rbcredit": "Rebooking credit"
+ },
+ "TX_STATUS_META": {
+  "succeeded": [
+   "green",
+   "Succeeded"
+  ],
+  "pending": [
+   "warn",
+   "Pending"
+  ],
+  "failed": [
+   "red",
+   "Failed"
+  ],
+  "active": [
+   "green",
+   "Active"
+  ],
+  "used": [
+   "",
+   "Used"
+  ],
+  "expired": [
+   "",
+   "Expired"
+  ]
+ },
+ "PO_STATE_META": {
+  "escrow": [
+   "warn",
+   "Funds held"
+  ],
+  "paid": [
+   "green",
+   "Paid"
+  ],
+  "returned": [
+   "",
+   "Refunded"
+  ]
+ },
+ "BATCH_STATUS_META": {
+  "sent": [
+   "warn",
+   "Sent"
+  ],
+  "settled": [
+   "green",
+   "Settled"
+  ],
+  "part": [
+   "warn",
+   "Part settled"
+  ],
+  "discrepancy": [
+   "red",
+   "Discrepancy"
+  ],
+  "failed": [
+   "red",
+   "Failed"
+  ]
+ },
+ "MATCH_META": {
+  "matched": [
+   "green",
+   "Matched"
+  ],
+  "amount": [
+   "red",
+   "Amount differs"
+  ],
+  "state": [
+   "red",
+   "State differs"
+  ],
+  "missing": [
+   "warn",
+   "Missing at provider"
+  ],
+  "extra": [
+   "red",
+   "Not in platform"
+  ],
+  "pending": [
+   "",
+   "—"
+  ]
+ },
+ "FEE_VALUE_LABEL": {
+  "commission": "Agent commission",
+  "delay": "Payout release delay",
+  "runday": "Payout run day"
+ },
+ "DISC_APPLIES": {
+  "course": "Course fees",
+  "interview": "Interviews",
+  "both": "Both"
+ },
+ "DISC_APPLY": {
+  "checkout": "Entered at checkout",
+  "automatic": "Automatic"
+ },
+ "DISC_ORDER": {
+  "live": 0,
+  "scheduled": 1,
+  "exhausted": 2,
+  "expired": 3,
+  "deactivated": 4
+ },
+ "NOTIF_PREFS": {
+  "email": {
+   "vetting": true,
+   "payouts": true,
+   "accounts": false,
+   "summary": true
+  },
+  "inapp": {
+   "badge": true,
+   "decisions": true,
+   "compliance": true
+  }
+ },
+ "SEC": {
+  "twofa": true
+ },
+ "GENERAL": {
+  "org": "TalentNext",
+  "support": "support@talentnext.io",
+  "phone": "+44 20 7946 0123",
+  "landing": "Dashboard",
+  "tz": "Europe/London (GMT+1)",
+  "lang": "English (United Kingdom)",
+  "dates": "MM-DD-YYYY",
+  "ccy": "USD ($)"
+ },
+ "SESSIONS": [
+  {
+   "id": "s1",
+   "dev": "MacBook Pro",
+   "browser": "Chrome on macOS",
+   "loc": "London, UK",
+   "started": "Today 08:41",
+   "when": "Active now",
+   "current": true
+  },
+  {
+   "id": "s2",
+   "dev": "iPhone 15",
+   "browser": "Safari on iOS",
+   "loc": "London, UK",
+   "started": "Yesterday 19:02",
+   "when": "2h ago",
+   "current": false
+  },
+  {
+   "id": "s3",
+   "dev": "Windows PC",
+   "browser": "Firefox on Windows",
+   "loc": "Manchester, UK",
+   "started": "09-12-2026 09:30",
+   "when": "Yesterday",
+   "current": false
+  }
+ ],
+ "SET_GROUPS": {
+  "sessions": {
+   "title": "Sessions",
+   "desc": "How long an internal user’s session may sit idle before it ends. A change applies to sessions started after it; one already running keeps the period it started under.",
+   "fields": [
+    {
+     "k": "autoSignout",
+     "l": "Auto sign-out period",
+     "unit": "minutes",
+     "min": 5,
+     "max": 240,
+     "hint": "Internal accounts only. Candidates and agents have no inactivity sign-out."
+    }
+   ]
+  },
+  "exports": {
+   "title": "Exports",
+   "desc": "Every export tests the size of its filtered set against this before a file is generated. A change applies to exports requested after it.",
+   "fields": [
+    {
+     "k": "exportLimit",
+     "l": "Export row limit",
+     "unit": "rows",
+     "min": 1000,
+     "max": 250000,
+     "hint": "An export already generating finishes."
+    }
+   ]
+  },
+  "interviews": {
+   "title": "Interviews",
+   "desc": "The report clock and the rebooking window. A change applies to interviews held / credits issued after it; one already running does not move.",
+   "fields": [
+    {
+     "k": "reportDeadline",
+     "l": "Report deadline",
+     "unit": "hours",
+     "min": 1,
+     "max": 168,
+     "hint": "FN:() => `How long an agent has to file a report after an interview is held. The candidate's report-ready promise is this plus the fixed ${REVIEW_WINDOW_HRS}-hour review window — currently ${SETTINGS.reportDeadline + REVIEW_WINDOW_HRS} hours.`"
+    },
+    {
+     "k": "rebookWindow",
+     "l": "Rebooking credit window",
+     "unit": "days",
+     "min": 1,
+     "max": 60,
+     "hint": "How long a candidate has to use a rebooking credit or free rebooking after a failed or cancelled interview."
+    }
+   ]
+  },
+  "cohorts": {
+   "title": "Cohorts",
+   "desc": "Session-room rules. A session captures these at the moment it is held and keeps them; a change applies to sessions held after it and never rewrites a register already written.",
+   "fields": [
+    {
+     "k": "attendanceMin",
+     "l": "Attendance minimum",
+     "unit": "minutes",
+     "min": 1,
+     "max": 60,
+     "hint": "Time in the room (counted cumulatively across the session) to count as having attended it."
+    },
+    {
+     "k": "leaderReconnect",
+     "l": "Leader reconnection gap",
+     "unit": "minutes",
+     "min": 1,
+     "max": 60,
+     "hint": "How long a room stays open after the leader’s connection drops before it closes and the register is written."
+    }
+   ]
+  },
+  "tal": {
+   "title": "Tal",
+   "desc": "The Ask Tal ceiling — each question is a call the platform pays for. Counted per candidate per calendar day in their own time zone. A change applies to days beginning after it.",
+   "fields": [
+    {
+     "k": "talLimit",
+     "l": "Tal question limit",
+     "unit": "questions per day",
+     "min": 5,
+     "max": 200,
+     "hint": "A suggestion chip counts against it. Tal’s compulsory onboarding conversation is outside this limit."
+    }
+   ]
+  },
+  "closure": {
+   "title": "Account closure and deactivation",
+   "desc": "How long an external account stays Deactivated after administrator deactivation or self-closure before it moves automatically to Deleted. A change applies to deactivations committed after it.",
+   "fields": [
+    {
+     "k": "closureGrace",
+     "l": "Closure grace period",
+     "unit": "days",
+     "min": 7,
+     "max": 90,
+     "hint": "Reactivating during the grace period cancels the move to Deleted. An internal account stays Deactivated indefinitely."
+    }
+   ]
+  }
+ },
+ "PAYOUT_DAYS": [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday"
+ ],
+ "NT_TYPE": {
+  "C": "Condition-based",
+  "I": "Informational"
+ },
+ "NT_RCP": {
+  "staff": "Admin",
+  "agent": "Talent Agent",
+  "candidate": "Candidate",
+  "leader": "Cohort Leader"
+ },
+ "NT_SAMPLE": {
+  "name": "Jordan Blake",
+  "first": "Jordan",
+  "admin": "Dana Whitfield",
+  "agent": "Priya Nair",
+  "leader": "Bruno Adler",
+  "cohort": "Cohort 3",
+  "course": "Communicating with Impact",
+  "chapter": "Chapter 4",
+  "level": "E3",
+  "date": "12-03-2026",
+  "time": "3:00 PM",
+  "amount": "$95",
+  "count": "3",
+  "department": "Talent Success",
+  "role": "Reviewer",
+  "badge": "Fast Starter",
+  "points": "50",
+  "rank": "#12"
+ },
+ "NOTIF_TEMPLATES": [
+  {
+   "id": "nt0",
+   "recipient": "staff",
+   "name": "Admin role changed",
+   "type": "I",
+   "sentWhen": "An admin’s role is changed",
+   "title": "An admin’s role was changed",
+   "body": "{admin}’s role is now {role}.",
+   "ph": [
+    "admin",
+    "role"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt1",
+   "recipient": "staff",
+   "name": "Admin details changed",
+   "type": "I",
+   "sentWhen": "An admin’s details are changed",
+   "title": "An admin’s details were changed",
+   "body": "{admin}’s account details were updated.",
+   "ph": [
+    "admin"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt2",
+   "recipient": "staff",
+   "name": "Password changed",
+   "type": "I",
+   "sentWhen": "Your password is changed",
+   "title": "Your password was changed",
+   "body": "Your password was changed. Every other session was signed out.",
+   "ph": [],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt3",
+   "recipient": "staff",
+   "name": "Phone number changed",
+   "type": "I",
+   "sentWhen": "Your phone number is changed",
+   "title": "Your phone number was changed",
+   "body": "The number where your sign-in codes are sent was updated.",
+   "ph": [],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt4",
+   "recipient": "staff",
+   "name": "Admin access restored",
+   "type": "I",
+   "sentWhen": "A deactivated admin account is restored",
+   "title": "An admin’s access was restored",
+   "body": "{admin}’s access has been restored.",
+   "ph": [
+    "admin"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt5",
+   "recipient": "staff",
+   "name": "Admin marked as a Cohort Leader",
+   "type": "I",
+   "sentWhen": "An admin is marked as a Cohort Leader",
+   "title": "Marked as a Cohort Leader",
+   "body": "{admin} can now lead a cohort.",
+   "ph": [
+    "admin"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt6",
+   "recipient": "staff",
+   "name": "Cohort Leader marking removed",
+   "type": "I",
+   "sentWhen": "An admin’s Cohort Leader marking is removed",
+   "title": "Cohort Leader marking removed",
+   "body": "{admin} is no longer marked as a Cohort Leader.",
+   "ph": [
+    "admin"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt7",
+   "recipient": "staff",
+   "name": "Requested export ready",
+   "type": "I",
+   "sentWhen": "An export you requested is ready",
+   "title": "Your export is ready",
+   "body": "The export you requested is ready to download for the next 7 days.",
+   "ph": [],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt8",
+   "recipient": "staff",
+   "name": "Interview report overdue",
+   "type": "C",
+   "sentWhen": "A report passes its deadline",
+   "title": "An interview report is overdue",
+   "body": "{agent}’s report for their interview with {name} is past its deadline.",
+   "ph": [
+    "agent",
+    "name"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt9",
+   "recipient": "staff",
+   "name": "Interview not held and awaiting resolution",
+   "type": "C",
+   "sentWhen": "An interview is not held",
+   "title": "An interview was not held",
+   "body": "{name}’s interview with {agent} was not held and is awaiting resolution.",
+   "ph": [
+    "name",
+    "agent"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt10",
+   "recipient": "staff",
+   "name": "Candidate level awaiting approval for over 24 hours",
+   "type": "C",
+   "sentWhen": "A level waits over 24 hours for approval",
+   "title": "A level is awaiting approval",
+   "body": "{name}’s level has been awaiting approval for over 24 hours.",
+   "ph": [
+    "name"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt11",
+   "recipient": "staff",
+   "name": "Candidate level awaiting approval for over 48 hours",
+   "type": "C",
+   "sentWhen": "A level waits over 48 hours for approval",
+   "title": "A level is awaiting approval (48h)",
+   "body": "{name}’s level has been awaiting approval for over 48 hours.",
+   "ph": [
+    "name"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt12",
+   "recipient": "staff",
+   "name": "Cohort has no leader",
+   "type": "C",
+   "sentWhen": "A cohort has no leader assigned",
+   "title": "A cohort has no leader",
+   "body": "{cohort} has no leader assigned.",
+   "ph": [
+    "cohort"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt13",
+   "recipient": "staff",
+   "name": "Cohort reached its start date below minimum size",
+   "type": "C",
+   "sentWhen": "A cohort starts below its minimum size",
+   "title": "A cohort started below its minimum",
+   "body": "{cohort} reached its start date below the minimum size.",
+   "ph": [
+    "cohort"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt14",
+   "recipient": "staff",
+   "name": "Payout run failed",
+   "type": "I",
+   "sentWhen": "The scheduled payout run fails",
+   "title": "The payout run failed",
+   "body": "The scheduled payout run did not complete.",
+   "ph": [],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt15",
+   "recipient": "staff",
+   "name": "Payout run completed with failures",
+   "type": "I",
+   "sentWhen": "The payout run finishes with some failures",
+   "title": "Payout run completed with failures",
+   "body": "The payout run finished, but {count} payouts failed.",
+   "ph": [
+    "count"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt16",
+   "recipient": "staff",
+   "name": "Settlement discrepancy found",
+   "type": "C",
+   "sentWhen": "A settlement discrepancy is found",
+   "title": "A settlement discrepancy was found",
+   "body": "A settlement discrepancy needs review.",
+   "ph": [],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt17",
+   "recipient": "staff",
+   "name": "Course lost its learning-platform mapping",
+   "type": "C",
+   "sentWhen": "A course loses its mapping",
+   "title": "A course lost its mapping",
+   "body": "{course} is no longer mapped to the learning platform.",
+   "ph": [
+    "course"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt18",
+   "recipient": "leader",
+   "name": "Assigned to lead a cohort",
+   "type": "I",
+   "sentWhen": "You are assigned a cohort",
+   "title": "You were assigned a cohort",
+   "body": "You are now leading {cohort}.",
+   "ph": [
+    "cohort"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt19",
+   "recipient": "leader",
+   "name": "Cohort being led starts in seven days",
+   "type": "I",
+   "sentWhen": "Your cohort is seven days from its start",
+   "title": "Your cohort starts in seven days",
+   "body": "{cohort} starts in seven days.",
+   "ph": [
+    "cohort"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt20",
+   "recipient": "leader",
+   "name": "Candidate withdrew from a cohort being led",
+   "type": "I",
+   "sentWhen": "A candidate withdraws from your cohort",
+   "title": "A candidate withdrew",
+   "body": "{name} withdrew from {cohort}.",
+   "ph": [
+    "name",
+    "cohort"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt21",
+   "recipient": "leader",
+   "name": "Cohort being led was cancelled",
+   "type": "I",
+   "sentWhen": "Your cohort is cancelled",
+   "title": "Your cohort was cancelled",
+   "body": "{cohort} has been cancelled.",
+   "ph": [
+    "cohort"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt22",
+   "recipient": "agent",
+   "name": "Account access restored",
+   "type": "I",
+   "sentWhen": "Your deactivated account is restored",
+   "title": "Your access was restored",
+   "body": "Your account access has been restored.",
+   "ph": [],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt23",
+   "recipient": "agent",
+   "name": "Interview slot booked",
+   "type": "I",
+   "sentWhen": "A candidate books one of your slots",
+   "title": "An interview was booked",
+   "body": "{name} booked an interview with you on {date} at {time}.",
+   "ph": [
+    "name",
+    "date",
+    "time"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt24",
+   "recipient": "agent",
+   "name": "Candidate rescheduled an interview",
+   "type": "I",
+   "sentWhen": "A candidate reschedules",
+   "title": "An interview was rescheduled",
+   "body": "{name} moved their interview to {date} at {time}.",
+   "ph": [
+    "name",
+    "date",
+    "time"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt25",
+   "recipient": "agent",
+   "name": "Candidate cancelled an interview",
+   "type": "I",
+   "sentWhen": "A candidate cancels",
+   "title": "An interview was cancelled",
+   "body": "{name} cancelled their interview.",
+   "ph": [
+    "name"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt26",
+   "recipient": "agent",
+   "name": "Interview reminder, 24 hours before",
+   "type": "I",
+   "sentWhen": "24 hours before an interview",
+   "title": "Interview tomorrow",
+   "body": "Your interview with {name} is in 24 hours, on {date} at {time}.",
+   "ph": [
+    "name",
+    "date",
+    "time"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt27",
+   "recipient": "agent",
+   "name": "Interview reminder, one hour before",
+   "type": "I",
+   "sentWhen": "One hour before an interview",
+   "title": "Interview in one hour",
+   "body": "Your interview with {name} starts in one hour.",
+   "ph": [
+    "name"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt28",
+   "recipient": "agent",
+   "name": "Interview report due",
+   "type": "C",
+   "sentWhen": "A filed report is still outstanding",
+   "title": "An interview report is due",
+   "body": "Your report for {name}’s interview is due within {count} hours.",
+   "ph": [
+    "name",
+    "count"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt29",
+   "recipient": "agent",
+   "name": "Interview report overdue",
+   "type": "C",
+   "sentWhen": "Your report passes its deadline",
+   "title": "An interview report is overdue",
+   "body": "Your report for {name}’s interview is past its deadline.",
+   "ph": [
+    "name"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt30",
+   "recipient": "agent",
+   "name": "Agent’s proposed level approved",
+   "type": "I",
+   "sentWhen": "Your proposed level is approved",
+   "title": "Your proposed level was approved",
+   "body": "Your proposed level for {name} was approved.",
+   "ph": [
+    "name"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt31",
+   "recipient": "agent",
+   "name": "Marketplace listing paused",
+   "type": "I",
+   "sentWhen": "Your listing is paused",
+   "title": "Your listing was paused",
+   "body": "Your marketplace listing has been paused.",
+   "ph": [],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt32",
+   "recipient": "agent",
+   "name": "Marketplace listing restored",
+   "type": "I",
+   "sentWhen": "Your listing is restored",
+   "title": "Your listing was restored",
+   "body": "Your marketplace listing is live again.",
+   "ph": [],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt33",
+   "recipient": "candidate",
+   "name": "Account access restored",
+   "type": "I",
+   "sentWhen": "Your deactivated account is restored",
+   "title": "Your access was restored",
+   "body": "Your account access has been restored.",
+   "ph": [],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt34",
+   "recipient": "candidate",
+   "name": "Interview confirmed",
+   "type": "I",
+   "sentWhen": "Your interview is confirmed",
+   "title": "Your interview is confirmed",
+   "body": "Your interview with {agent} is confirmed for {date} at {time}.",
+   "ph": [
+    "agent",
+    "date",
+    "time"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt35",
+   "recipient": "candidate",
+   "name": "Interview reminder, 24 hours before",
+   "type": "I",
+   "sentWhen": "24 hours before your interview",
+   "title": "Interview tomorrow",
+   "body": "Your interview with {agent} is in 24 hours, on {date} at {time}.",
+   "ph": [
+    "agent",
+    "date",
+    "time"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt36",
+   "recipient": "candidate",
+   "name": "Interview reminder, one hour before",
+   "type": "I",
+   "sentWhen": "One hour before your interview",
+   "title": "Interview in one hour",
+   "body": "Your interview with {agent} starts in one hour.",
+   "ph": [
+    "agent"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt37",
+   "recipient": "candidate",
+   "name": "Interview rescheduled",
+   "type": "I",
+   "sentWhen": "Your interview moves",
+   "title": "Your interview moved",
+   "body": "Your interview with {agent} is now on {date} at {time}.",
+   "ph": [
+    "agent",
+    "date",
+    "time"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt38",
+   "recipient": "candidate",
+   "name": "Agent cancelled the interview",
+   "type": "I",
+   "sentWhen": "The agent cancels your interview",
+   "title": "Your interview was cancelled",
+   "body": "{agent} cancelled your interview. You can book another.",
+   "ph": [
+    "agent"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt39",
+   "recipient": "candidate",
+   "name": "Interview report pending",
+   "type": "C",
+   "sentWhen": "Your report is still being prepared",
+   "title": "Your report is on its way",
+   "body": "{agent} is preparing your interview report.",
+   "ph": [
+    "agent"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt40",
+   "recipient": "candidate",
+   "name": "Interview report ready and level set",
+   "type": "I",
+   "sentWhen": "Your report is ready and your level is set",
+   "title": "Your level is set",
+   "body": "Your interview report is ready and your level is now {level}.",
+   "ph": [
+    "level"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt41",
+   "recipient": "candidate",
+   "name": "Paid rebooking credit active",
+   "type": "C",
+   "sentWhen": "You hold a live rebooking credit",
+   "title": "You have a rebooking credit",
+   "body": "You have a rebooking credit worth {amount}, valid until {date}.",
+   "ph": [
+    "amount",
+    "date"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt42",
+   "recipient": "candidate",
+   "name": "Free rebooking active",
+   "type": "C",
+   "sentWhen": "You hold a live free rebooking",
+   "title": "You have a free rebooking",
+   "body": "You have a free rebooking to use by {date}.",
+   "ph": [
+    "date"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt43",
+   "recipient": "candidate",
+   "name": "Paid rebooking credit expired",
+   "type": "I",
+   "sentWhen": "Your rebooking credit expires",
+   "title": "Your rebooking credit expired",
+   "body": "Your rebooking credit has expired.",
+   "ph": [],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt44",
+   "recipient": "candidate",
+   "name": "Free rebooking expired",
+   "type": "I",
+   "sentWhen": "Your free rebooking expires",
+   "title": "Your free rebooking expired",
+   "body": "Your free rebooking has expired.",
+   "ph": [],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt45",
+   "recipient": "candidate",
+   "name": "SCENES ready to choose",
+   "type": "C",
+   "sentWhen": "Your SCENES are ready and unchosen",
+   "title": "Choose your SCENES",
+   "body": "Your interview SCENES are ready to choose.",
+   "ph": [],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt46",
+   "recipient": "candidate",
+   "name": "Level changed through a Super Admin override",
+   "type": "I",
+   "sentWhen": "An override changes your level",
+   "title": "Your level was changed",
+   "body": "Your level was changed to {level}.",
+   "ph": [
+    "level"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt47",
+   "recipient": "candidate",
+   "name": "Enrolled in a cohort",
+   "type": "I",
+   "sentWhen": "You are enrolled in a cohort",
+   "title": "You joined a cohort",
+   "body": "You are enrolled in {cohort}.",
+   "ph": [
+    "cohort"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt48",
+   "recipient": "candidate",
+   "name": "Chapter unlocked",
+   "type": "I",
+   "sentWhen": "A chapter unlocks",
+   "title": "A chapter unlocked",
+   "body": "{chapter} of {course} is now unlocked.",
+   "ph": [
+    "chapter",
+    "course"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt49",
+   "recipient": "candidate",
+   "name": "Task due today",
+   "type": "C",
+   "sentWhen": "A task is due today",
+   "title": "A task is due today",
+   "body": "You have a task due today in {course}.",
+   "ph": [
+    "course"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt50",
+   "recipient": "candidate",
+   "name": "Cohort Leader assigned or replaced",
+   "type": "I",
+   "sentWhen": "Your cohort leader is assigned or replaced",
+   "title": "Your cohort leader",
+   "body": "{leader} is leading {cohort}.",
+   "ph": [
+    "leader",
+    "cohort"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt51",
+   "recipient": "candidate",
+   "name": "Cohort call scheduled",
+   "type": "I",
+   "sentWhen": "A cohort call is scheduled",
+   "title": "A cohort call is scheduled",
+   "body": "A call for {cohort} is set for {date} at {time}.",
+   "ph": [
+    "cohort",
+    "date",
+    "time"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt52",
+   "recipient": "candidate",
+   "name": "Cohort call reminder, 24 hours before",
+   "type": "I",
+   "sentWhen": "24 hours before a cohort call",
+   "title": "Cohort call tomorrow",
+   "body": "Your {cohort} call is in 24 hours, on {date} at {time}.",
+   "ph": [
+    "cohort",
+    "date",
+    "time"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt53",
+   "recipient": "candidate",
+   "name": "Cohort call reminder, one hour before",
+   "type": "I",
+   "sentWhen": "One hour before a cohort call",
+   "title": "Cohort call in one hour",
+   "body": "Your {cohort} call starts in one hour.",
+   "ph": [
+    "cohort"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt54",
+   "recipient": "candidate",
+   "name": "Cohort call changed",
+   "type": "I",
+   "sentWhen": "A cohort call changes",
+   "title": "A cohort call changed",
+   "body": "Your {cohort} call is now on {date} at {time}.",
+   "ph": [
+    "cohort",
+    "date",
+    "time"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt55",
+   "recipient": "candidate",
+   "name": "Cohort call cancelled",
+   "type": "I",
+   "sentWhen": "A cohort call is cancelled",
+   "title": "A cohort call was cancelled",
+   "body": "Your {cohort} call was cancelled.",
+   "ph": [
+    "cohort"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt56",
+   "recipient": "candidate",
+   "name": "Cohort Leader posted an announcement",
+   "type": "I",
+   "sentWhen": "Your leader posts an announcement",
+   "title": "New announcement",
+   "body": "{leader} posted an announcement in {cohort}.",
+   "ph": [
+    "leader",
+    "cohort"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt57",
+   "recipient": "candidate",
+   "name": "Cohort Leader sent a direct message",
+   "type": "I",
+   "sentWhen": "Your leader sends you a message",
+   "title": "New message",
+   "body": "{leader} sent you a message.",
+   "ph": [
+    "leader"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt58",
+   "recipient": "candidate",
+   "name": "Moved to another cohort",
+   "type": "I",
+   "sentWhen": "You are moved to another cohort",
+   "title": "You moved cohort",
+   "body": "You have been moved to {cohort}.",
+   "ph": [
+    "cohort"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt59",
+   "recipient": "candidate",
+   "name": "Removed from a cohort",
+   "type": "I",
+   "sentWhen": "You are removed from a cohort",
+   "title": "You were removed from a cohort",
+   "body": "You have been removed from {cohort}.",
+   "ph": [
+    "cohort"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt60",
+   "recipient": "candidate",
+   "name": "Added to a cohort",
+   "type": "I",
+   "sentWhen": "You are added to a cohort",
+   "title": "You were added to a cohort",
+   "body": "You have been added to {cohort}.",
+   "ph": [
+    "cohort"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt61",
+   "recipient": "candidate",
+   "name": "Cohort start date changed",
+   "type": "I",
+   "sentWhen": "Your cohort’s start date changes",
+   "title": "Your cohort start date changed",
+   "body": "{cohort} now starts on {date}.",
+   "ph": [
+    "cohort",
+    "date"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt62",
+   "recipient": "candidate",
+   "name": "Cohort cancelled with a replacement cohort",
+   "type": "I",
+   "sentWhen": "Your cohort is cancelled with a replacement",
+   "title": "Your cohort was cancelled",
+   "body": "{cohort} was cancelled and your place moved to a replacement cohort.",
+   "ph": [
+    "cohort"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt63",
+   "recipient": "candidate",
+   "name": "Cohort cancelled and paid enrolment moved to Awaiting cohort",
+   "type": "I",
+   "sentWhen": "Your cohort is cancelled and your paid place waits",
+   "title": "Your cohort was cancelled",
+   "body": "{cohort} was cancelled. Your paid place is now Awaiting cohort.",
+   "ph": [
+    "cohort"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt64",
+   "recipient": "candidate",
+   "name": "Badge earned",
+   "type": "I",
+   "sentWhen": "You earn a badge",
+   "title": "You earned a badge",
+   "body": "You earned the {badge} badge.",
+   "ph": [
+    "badge"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt65",
+   "recipient": "candidate",
+   "name": "Points awarded",
+   "type": "I",
+   "sentWhen": "You are awarded points",
+   "title": "You earned points",
+   "body": "You were awarded {points} points.",
+   "ph": [
+    "points"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt66",
+   "recipient": "candidate",
+   "name": "Rank earned or changed",
+   "type": "I",
+   "sentWhen": "Your rank changes",
+   "title": "Your rank changed",
+   "body": "Your rank is now {rank}.",
+   "ph": [
+    "rank"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt67",
+   "recipient": "candidate",
+   "name": "Promotion earned",
+   "type": "I",
+   "sentWhen": "You earn a promotion",
+   "title": "You earned a promotion",
+   "body": "You earned a promotion.",
+   "ph": [],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt68",
+   "recipient": "candidate",
+   "name": "Certificate arrived",
+   "type": "I",
+   "sentWhen": "Your certificate arrives",
+   "title": "Your certificate is ready",
+   "body": "Your certificate for {course} has arrived.",
+   "ph": [
+    "course"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt69",
+   "recipient": "candidate",
+   "name": "Payment succeeded",
+   "type": "I",
+   "sentWhen": "A payment succeeds",
+   "title": "Payment received",
+   "body": "Your payment of {amount} was received.",
+   "ph": [
+    "amount"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  },
+  {
+   "id": "nt70",
+   "recipient": "candidate",
+   "name": "Payment failed",
+   "type": "I",
+   "sentWhen": "A payment fails",
+   "title": "Payment failed",
+   "body": "Your payment of {amount} did not go through.",
+   "ph": [
+    "amount"
+   ],
+   "on": true,
+   "by": null,
+   "at": null
+  }
+ ],
+ "SETTINGS_TABS": [
+  [
+   "platform",
+   "Platform"
+  ],
+  [
+   "templates",
+   "Notification Templates"
+  ],
+  [
+   "notifications",
+   "Notifications"
+  ],
+  [
+   "security",
+   "Login & Security"
+  ]
+ ],
+ "PW_RULE_LIST": [
+  [
+   "len",
+   "At least 12 characters"
+  ],
+  [
+   "up",
+   "An uppercase letter"
+  ],
+  [
+   "lo",
+   "A lowercase letter"
+  ],
+  [
+   "num",
+   "A number"
+  ],
+  [
+   "sp",
+   "A special character"
+  ]
+ ],
+ "CONFIRMS": {
+  "logout": {
+   "mk": "warning",
+   "title": "Log out?",
+   "body": "You will need your password to sign back in to the admin.",
+   "ok": "Log out",
+   "danger": false,
+   "act": "logout"
+  }
+ },
+ "ME": {
+  "id": "u9",
+  "name": "Derek Sole",
+  "email": "derek@talentnext.io",
+  "roles": [
+   "admin"
+  ],
+  "level": "—",
+  "status": "active",
+  "joined": "01-02-2026",
+  "origin": "internal",
+  "last": "just now",
+  "internal": true,
+  "job": "Founder & Platform Owner",
+  "dept": "Operations",
+  "phone": "+1 (415) 555-0100",
+  "orig": true
+ },
+ "TX_LINES_ADM": [
+  [
+   "00:42",
+   "agent",
+   "Before we start, nothing here is a test you can fail. Tell me about a handover you planned rather than announced.",
+   "",
+   false
+  ],
+  [
+   "01:58",
+   "cand",
+   "The vendor review. I wrote down who owned each thread and set two checkpoints before I handed it over.",
+   "delegation",
+   true
+  ],
+  [
+   "03:10",
+   "agent",
+   "Who did it go to, and what did you keep hold of?",
+   "",
+   false
+  ],
+  [
+   "03:24",
+   "cand",
+   "It went to my second, Sam. I kept the two checkpoints and the final sign-off, nothing in between.",
+   "delegation",
+   false
+  ],
+  [
+   "06:47",
+   "agent",
+   "Tell me about a conversation you had to open yourself, one nobody handed you.",
+   "",
+   false
+  ],
+  [
+   "07:05",
+   "cand",
+   "Honestly, most of those came to me. I handle them once they land, but I could be earlier.",
+   "conflict",
+   true
+  ],
+  [
+   "09:31",
+   "agent",
+   "When a deadline moved on that review, who made the call to change scope?",
+   "",
+   false
+  ],
+  [
+   "09:49",
+   "cand",
+   "I did. I cut the second checkpoint rather than push the date, and told the team why the same afternoon.",
+   "decisions",
+   true
+  ],
+  [
+   "12:15",
+   "cand",
+   "If I am honest, I planned the handover well but I did not start the hard conversation that the delay needed.",
+   "conflict",
+   false
+  ],
+  [
+   "14:02",
+   "agent",
+   "What would you do differently next time?",
+   "",
+   false
+  ],
+  [
+   "14:20",
+   "cand",
+   "Name the problem before it is urgent, and ask for the time I need instead of absorbing it.",
+   "decisions",
+   false
+  ]
+ ],
+ "PERM_ROWS": [
+  [
+   "approvelevel",
+   "Candidate Level",
+   [
+    "view",
+    "edit"
+   ]
+  ],
+  [
+   "approvescore",
+   "Agent Score",
+   [
+    "view",
+    "edit"
+   ]
+  ],
+  [
+   "releasepayout",
+   "Payout",
+   [
+    "view",
+    "edit"
+   ]
+  ],
+  [
+   "changefee",
+   "Fee",
+   [
+    "view",
+    "edit"
+   ]
+  ],
+  [
+   "dataexport",
+   "Data Export",
+   [
+    "view"
+   ]
+  ],
+  [
+   "viewrawscore",
+   "AI Raw Score",
+   [
+    "view"
+   ]
+  ],
+  [
+   "setrange",
+   "Assessment Range",
+   [
+    "view",
+    "edit"
+   ]
+  ],
+  [
+   "playrecording",
+   "Recording",
+   [
+    "view"
+   ]
+  ],
+  [
+   "dashboard",
+   "Dashboard",
+   [
+    "view"
+   ]
+  ],
+  [
+   "users",
+   "Users",
+   [
+    "view",
+    "create",
+    "edit",
+    "delete"
+   ]
+  ],
+  [
+   "roles",
+   "Roles",
+   [
+    "view",
+    "create",
+    "edit",
+    "delete"
+   ]
+  ],
+  [
+   "levelling",
+   "Levelling",
+   [
+    "view",
+    "create",
+    "edit",
+    "delete"
+   ]
+  ],
+  [
+   "marketplace",
+   "Marketplace",
+   [
+    "view",
+    "create",
+    "edit",
+    "delete"
+   ]
+  ],
+  [
+   "courses",
+   "Courses",
+   [
+    "view",
+    "create",
+    "edit"
+   ]
+  ],
+  [
+   "interviews",
+   "Interviews",
+   [
+    "view",
+    "create",
+    "edit",
+    "delete"
+   ]
+  ],
+  [
+   "support",
+   "Support Requests",
+   [
+    "view",
+    "edit"
+   ]
+  ],
+  [
+   "finance",
+   "Finance",
+   [
+    "view",
+    "create",
+    "edit",
+    "delete"
+   ]
+  ],
+  [
+   "audit",
+   "Audit Log",
+   [
+    "view"
+   ]
+  ],
+  [
+   "onboarding",
+   "Onboarding Questions",
+   [
+    "view",
+    "edit"
+   ]
+  ],
+  [
+   "settings",
+   "Settings",
+   [
+    "view",
+    "edit"
+   ]
+  ]
+ ]
+}

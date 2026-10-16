@@ -1,0 +1,21 @@
+/* The black card's call row (Phase 1 crow). */
+/* The action sits at the BOTTOM right of the card, level with the last line of the row,
+   like the recommendation card's "Book a Call" (Maryam 16 Oct 2026). */
+.crow { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--s06); }
+.who { display: flex; align-items: flex-start; gap: var(--s05); min-width: 0; flex: 1 1 calc(var(--s12) * 3); }
+.face { width: var(--avatar-card); height: var(--avatar-card); border-radius: var(--radius-pill); object-fit: cover; flex: none; }
+.b { display: flex; flex-direction: column; gap: var(--s03); min-width: 0; }
+.b b { color: var(--on-dark); font-weight: var(--t-w-strong); }
+.nameRow { display: flex; align-items: center; gap: var(--s03); }
+.verified { color: var(--state-done); width: var(--icon-rail); height: var(--icon-rail); flex: none; }
+.act { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s04); }
+/* Phase 1 .crow-a: every action 40 tall, 16px marks; a quiet one pads 12, and an
+   icon's side of the label takes 4 less than the open side (0 20 0 16 / 0 16 0 20). */
+.crow .act > * { height: var(--s08); padding: 0 var(--s04); }
+.crow .act > :has(> svg) { padding: 0 var(--s05); }
+.crow .act > :has(> svg:first-child) { padding-right: calc(var(--s05) + var(--s02)); }
+.crow .act > :has(> svg:last-child) { padding-left: calc(var(--s05) + var(--s02)); }
+.crow .act svg { width: var(--icon-sm); height: var(--icon-sm); }
+.crow .act > :has(> svg:first-child) { gap: var(--s02); }
+.when { display: inline-flex; align-items: center; gap: var(--s03); }
+.when svg { width: var(--icon-page); height: var(--icon-page); }

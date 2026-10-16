@@ -1,0 +1,7 @@
+/* ============================================================
+   COURSE DETAIL HEAD — Phase 1 .idhead with .crs-idphoto: the course
+   cover is artwork, so a rectangle (not a person's disc), left of the name.
+   ============================================================ */
+.head { display: flex; align-items: center; gap: var(--s05); margin-bottom: var(--s06); }
+.cover { width: var(--course-cover-w); height: var(--course-cover-h); object-fit: cover; flex: none; }
+.headB { display: flex; flex-direction: column; gap: var(--s01); min-width: 0; flex: 1; }

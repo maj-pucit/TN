@@ -1,0 +1,117 @@
+{
+  "ignoreFiles": [
+    "node_modules/**",
+    ".next/**",
+    "out/**",
+    "styles/tokens.css",
+    "styles/orb.css"
+  ],
+  "rules": {
+    "color-no-hex": [
+      true,
+      {
+        "message": "Raw colour. Read a token from styles/tokens.css (DESIGN.md \u00a72)."
+      }
+    ],
+    "color-named": [
+      "never",
+      {
+        "message": "Named colour. Read a token from styles/tokens.css."
+      }
+    ],
+    "function-disallowed-list": [
+      [
+        "rgb",
+        "rgba",
+        "hsl",
+        "hsla"
+      ],
+      {
+        "message": "Raw colour function. Add or read a token in styles/tokens.css."
+      }
+    ],
+    "declaration-property-unit-disallowed-list": [
+      {
+        "/^(margin|padding|gap|row-gap|column-gap|inset)/": [
+          "px",
+          "rem",
+          "em"
+        ],
+        "/^font-size$/": [
+          "px",
+          "rem",
+          "em",
+          "pt"
+        ],
+        "/^line-height$/": [
+          "px",
+          "rem",
+          "em"
+        ],
+        "/^letter-spacing$/": [
+          "px",
+          "rem",
+          "em"
+        ]
+      },
+      {
+        "message": "Spacing and type come from tokens (var(--s0x), var(--t-\u2026)), never a raw unit. DESIGN.md \u00a73."
+      }
+    ],
+    "declaration-property-value-disallowed-list": [
+      {
+        "font-weight": [
+          "/^[0-9]/",
+          "bold",
+          "bolder",
+          "lighter"
+        ],
+        "font-family": [
+          "/^(?!var\\().*/"
+        ],
+        "border-radius": [
+          "/^[1-9]/"
+        ]
+      },
+      {
+        "message": "Weight, face and radius come from tokens (var(--t-w-\u2026), var(--font-sans), var(--radius\u2026))."
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "app/**/*.css"
+      ],
+      "rules": {
+        "property-disallowed-list": [
+          [
+            "/^margin/",
+            "/^padding/",
+            "gap",
+            "row-gap",
+            "column-gap",
+            "/^font/",
+            "line-height",
+            "letter-spacing",
+            "color",
+            "/^background/",
+            "/^border/",
+            "text-transform"
+          ],
+          {
+            "message": "A page/module file may not set spacing, type, colour or lines. Use the primitives in components/ (DESIGN.md \u00a74). A one-screen exception needs Maryam's call and a DESIGN.md entry."
+          }
+        ]
+      }
+    },
+    {
+      "files": [
+        "styles/base.css"
+      ],
+      "rules": {
+        "declaration-property-value-disallowed-list": null
+      }
+    }
+  ]
+}

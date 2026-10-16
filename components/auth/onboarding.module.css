@@ -1,0 +1,70 @@
+/* ============================================================
+   ONBOARDING — Phase 1 §107 as it renders (measured 15 Oct 2026):
+   the welcome (.ob-open: a live orb, the greeting, two paragraphs, an
+   underlined accent "Let's Get Started"), the stepped survey (.ob-survey:
+   a 4px progress bar on the top wall, wordmark + "You're almost there!",
+   a small live orb, the question, grey option pills, Previous / Next at
+   48px), and the finish (.ob-done: the journey panel). Two full-height
+   hairlines 100px in from each wall from 900px up (§107.r).
+   ============================================================ */
+.ob { position: relative; min-height: 100%; display: flex; flex-direction: column; background: var(--background); }
+@container app (min-width: 900px) {
+  .ob::before, .ob::after { content: ""; position: absolute; top: 0; bottom: 0; width: var(--hairline); background: var(--rule); pointer-events: none; }
+  .ob::before { left: var(--ob-rail-x); }
+  .ob::after { right: var(--ob-rail-x); }
+}
+.bar { position: absolute; top: 0; left: 0; right: 0; height: var(--s02); background: var(--rule); z-index: 1; }
+.fill { width: var(--w); height: 100%; background: var(--accent); transition: width var(--mo-base) var(--mo-standard); }
+
+/* Wordmark row: logo left, the hint right. */
+.top { display: flex; align-items: center; justify-content: space-between; gap: var(--s04); padding: var(--s07) var(--pad-x) 0; }
+@container app (min-width: 900px) { .top { padding: var(--s07) calc(var(--ob-rail-x) + var(--s06)) 0; } }
+.logo { width: var(--ob-logo-w); color: var(--text-primary); }
+.logo svg { width: 100%; height: auto; display: block; }
+
+/* ---- Welcome ---- */
+.welcome { flex: 1 1 auto; display: flex; align-items: center; justify-content: center; padding: var(--s06) var(--pad-x); }
+.col { width: 100%; max-width: var(--ob-col); display: flex; flex-direction: column; align-items: center; text-align: center; }
+.col .orb { margin-bottom: var(--s06); }
+.hello { font-size: var(--t-h1-size); line-height: var(--t-h1-lh); letter-spacing: var(--t-h1-ls); font-weight: var(--t-w-book); color: var(--text-primary); margin-bottom: var(--s05); }
+.lede { font-size: var(--t-lede-size); line-height: var(--t-lede-lh); letter-spacing: var(--t-body-ls); color: var(--text-secondary); }
+.lede + .lede { margin-top: var(--s05); }
+.go { margin-top: var(--s07); padding: 0 0 var(--s01); border-bottom: var(--hairline) solid color-mix(in srgb, var(--accent-text) 45%, transparent); color: var(--accent-text); }
+.go:hover { border-bottom-color: var(--accent-text); }
+
+/* ---- Survey + finish ---- */
+.main { flex: 1 1 auto; display: flex; align-items: center; justify-content: center; padding: 0 var(--pad-x); }
+@container app (min-width: 900px) { .main { padding: 0 var(--ob-rail-x); } }
+.wrap { width: 100%; max-width: var(--ob-wrap); padding: var(--s07) var(--s06); }
+@container app (max-width: 599.98px) { .wrap { padding: var(--s07) 0; } }
+.wrap > .orb { margin-bottom: var(--s05); }
+.title { font-size: var(--t-h1-size); line-height: var(--t-h1-lh); letter-spacing: var(--t-h1-ls); font-weight: var(--t-w-book); color: var(--text-primary); }
+@container app (min-width: 900px) { .title { font-size: var(--t-h1-base-size); line-height: var(--t-h1-base-lh); letter-spacing: var(--t-h1-base-ls); } }
+.sub { margin-top: var(--s04); }
+.opts { margin-top: var(--s07); display: flex; flex-direction: column; gap: var(--s03); }
+.field { margin-top: var(--s07); display: flex; flex-direction: column; gap: var(--s04); }
+.opt { display: flex; align-items: center; gap: var(--s04); width: 100%; padding: var(--s05); background: var(--layer-02); border: var(--hairline) solid transparent; text-align: left; color: var(--text-primary); }
+.opt.on { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 8%, var(--background)); }
+.radio { width: var(--icon-page); height: var(--icon-page); flex: none; border-radius: var(--radius-pill); border: var(--ob-radio-w) solid var(--border-strong-01); }
+.on .radio { border-color: var(--accent); background: var(--accent); }
+.foot { margin-top: var(--s08); display: flex; align-items: center; gap: var(--s04); }
+.foot > :last-child { margin-left: auto; }
+.foot button { height: var(--ob-btn-h); }
+.prev button { background: var(--layer-02); border-color: var(--layer-02); }
+
+/* The finish: the journey panel. */
+.plan { margin-top: var(--s07); border: var(--hairline) solid var(--rule); background: transparent; }
+.planH { display: flex; align-items: center; justify-content: space-between; gap: var(--s05); padding: var(--s05); }
+.planT { font-size: var(--t-h4-size); line-height: var(--t-body-lh); font-weight: var(--t-w-strong); color: var(--text-primary); }
+.planN { font-size: var(--t-h4-size); line-height: var(--t-body-lh); color: var(--text-helper); }
+.row { display: flex; align-items: flex-start; gap: var(--s04); padding: var(--s04) var(--s05); border-top: var(--hairline) solid var(--rule); }
+.row > svg { width: var(--icon-row); height: var(--icon-row); flex: none; margin-top: var(--s01); color: var(--text-secondary); }
+.row.done > svg { color: var(--state-done); }
+.row.on > svg { color: var(--accent-text); }
+.rowB { display: flex; flex-direction: column; }
+.rowL { font-size: var(--t-h4-size); line-height: var(--t-body-lh); font-weight: var(--t-w-strong); color: var(--text-primary); }
+.row.on .rowL { color: var(--accent-text); }
+.rowD { font-size: var(--t-h4-size); line-height: var(--t-body-lh); color: var(--text-secondary); }
+
+/* The TN loader, centred. */
+.loader { flex: 1 1 auto; display: grid; place-items: center; }

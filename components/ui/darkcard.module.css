@@ -1,0 +1,57 @@
+/* ============================================================
+   THE BLACK CARD — Phase 1 §75, whole recipe. The one thing a page
+   is about. Inset by --pad-x as a margin, 32 inside, the accent haze
+   as a background layer, head row over a light rule, inks flipped.
+   ============================================================ */
+.card {
+  margin: var(--sec-pad-y) var(--pad-x);
+  padding: var(--s07);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s06);
+  background-color: var(--surface-dark);
+  background-image: var(--dark-haze);
+  color: var(--on-dark);
+}
+@container page (max-width: 599.98px) {
+  .card { padding: var(--s06) var(--s05); }
+}
+.hd { display: flex; flex-direction: column; gap: var(--s05); }
+.hdRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s03) var(--s05);
+  padding-bottom: var(--s05);
+  border-bottom: var(--hairline) solid var(--on-dark-rule);
+}
+.title { flex: 1 1 auto; min-width: 0; }
+.slot { margin-left: auto; display: flex; align-items: center; gap: var(--s03); }
+
+/* "Tal recommends" — the sparkle label. */
+.tal { display: inline-flex; align-items: center; gap: var(--s03); }
+.tal svg { width: var(--s04); height: var(--s04); color: var(--accent); }
+
+.body { display: flex; flex-direction: column; gap: var(--s05); }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s04); }
+
+/* DarkHeadCard: one row, text left (60% measure), the action at the bottom right
+   (Maryam 16 Oct 2026: every black card's action sits bottom right). */
+.ah { display: flex; align-items: flex-end; flex-wrap: wrap; gap: var(--s04) var(--s05); }
+.ahB { display: flex; flex-direction: column; gap: var(--s03); flex: 1 1 auto; max-width: 60%; min-width: 0; }
+.ahT { display: flex; align-items: center; gap: var(--s02); }
+.ahMk { width: var(--s04); height: var(--s04); flex: none; color: var(--accent); }
+.ahB b { color: var(--on-dark); font-weight: var(--t-w-strong); }
+.ahA { margin-left: auto; display: flex; align-items: center; gap: var(--s03); }
+@container page (max-width: 599.98px) {
+  .ahB { max-width: none; flex-basis: 100%; }
+  .ahA { margin-left: 0; }
+}
+
+/* Buttons on a black card (Phase 1 .dark-card .btn): 40 tall even when
+   small, 4px gap, an 18px icon, the words as written (no Title Case). The
+   quiet slot button ("View all agents") is 32 tall with no sides. */
+.ahA > *, .actions > *, .card .cta > * { height: var(--s08); gap: var(--s02); }
+.ahA svg, .actions svg { width: var(--icon-page); height: var(--icon-page); }
+.slot > a, .slot > button { height: var(--s07); }
+.slot svg { width: var(--icon-page); height: var(--icon-page); }

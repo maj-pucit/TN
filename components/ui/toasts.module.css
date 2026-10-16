@@ -1,0 +1,5 @@
+.host { position: absolute; right: var(--s06); bottom: var(--s06); z-index: 80; display: flex; flex-direction: column; align-items: flex-end; gap: var(--s03); width: min(var(--toast-w), calc(100% - var(--s07))); pointer-events: none; }
+.t { display: flex; align-items: flex-start; gap: var(--s03); padding: var(--s04) var(--s05); background: var(--layer-01); border: var(--hairline) solid var(--rule); border-left: var(--rule-strong-w) solid var(--support-success); box-shadow: var(--shadow-menu); color: var(--text-primary); pointer-events: auto; }
+.t svg { width: var(--icon-page); height: var(--icon-page); flex: none; margin-top: var(--s01); color: var(--support-success-ink); }
+.warn { border-left-color: var(--support-attention); }
+.warn svg { color: var(--support-attention); }

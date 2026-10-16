@@ -1,0 +1,123 @@
+/* ============================================================
+   THE NEXT IN LEADERSHIP RUN-UP — Phase 1 30-nil.css, with §63's two
+   changes applied (no capitals; buttons and the CTA take the body size at
+   the strong weight, Title Case). Every value reads a `--nil-*` token or the
+   product's space scale: it is another brand, so nothing here reaches for a
+   product colour or type role.
+   ============================================================ */
+.nil { position: absolute; inset: 0; display: flex; flex-direction: column; background: var(--background); color: var(--nil-ink); font-family: var(--nil-sans); }
+:where(.nil) :where(p, h1, h2, h3, ul) { margin: 0; }
+
+/* ---- 1 · The site bar (mark + links + CTA; the links drop below 900) ---- */
+.bar { flex: none; display: flex; align-items: center; gap: var(--s05); padding: var(--nil-bar-py) var(--s06); background: var(--nil-navy); }
+.logo { height: var(--nil-logo-h); width: auto; flex: none; }
+.logoLine { fill: none; stroke: var(--nil-lime); stroke-width: 3.6; }
+.logoLime, .logoNavy { font-family: var(--nil-display); font-weight: var(--nil-w-bold); }
+.logoLime { fill: var(--nil-lime); }
+.logoNavy { fill: var(--nil-navy); }
+.logoFill { fill: var(--nil-lime); }
+.nav { margin: 0 auto; display: flex; align-items: center; gap: var(--s06); font-family: var(--nil-display); font-weight: var(--nil-w-bold); font-size: var(--nil-t-nav); line-height: 1.2; color: var(--on-dark); }
+.cta { flex: none; display: inline-flex; align-items: center; gap: var(--s03); padding: var(--nil-cta-py) var(--s05); border: 2px solid var(--nil-lime); border-radius: var(--nil-radius-cta); color: var(--nil-lime); font-family: var(--nil-display); font-size: var(--t-body-size); line-height: 1.3; font-weight: var(--t-w-strong); text-transform: capitalize; }
+.cta svg { width: var(--nil-ico-cta); height: var(--nil-ico-cta); }
+
+/* ---- 2 · The scroller (the bar stays; the page scrolls under it) ---- */
+.scroll { flex: 1; min-height: 0; overflow: auto; scrollbar-width: thin; scrollbar-color: var(--rule) transparent; }
+.scroll::-webkit-scrollbar { width: var(--s03); height: var(--s03); }
+.scroll::-webkit-scrollbar-track { background: transparent; }
+.scroll::-webkit-scrollbar-thumb { background: var(--rule); border-radius: var(--radius-pill); }
+.wrap { max-width: var(--nil-wrap); margin: 0 auto; padding: var(--s09) var(--s06) var(--s10); }
+.wrap.wide { max-width: var(--nil-wrap-wide); }
+
+/* ---- 3 · The quiz card (quiz + phone) ---- */
+.card { background: var(--background); border: var(--hairline) solid var(--nil-card-line); border-radius: var(--nil-radius-card); padding: var(--s07) var(--s07) var(--s08); }
+.eyebrow { font-family: var(--nil-display); font-weight: var(--nil-w-heavy); font-size: var(--nil-t-eyebrow); line-height: 1.1; color: var(--nil-navy); }
+.pill { display: inline-block; margin-top: var(--s05); padding: var(--nil-pill-py) var(--s04); background: var(--nil-navy); color: var(--on-dark); border-radius: var(--nil-radius-pill); font-family: var(--nil-display); font-weight: var(--nil-w-heavy); font-size: var(--nil-t-label); line-height: 1.2; }
+.h1 { margin-top: var(--s05); font-family: var(--nil-display); font-weight: var(--nil-w-heavy); font-size: var(--nil-t-h1); line-height: 1.02; color: var(--nil-navy); }
+.sub { margin-top: var(--s05); max-width: var(--nil-sub-w); font-size: var(--nil-t-sub); line-height: 1.6; color: var(--nil-sub); }
+.sub b, .resend b { color: var(--nil-navy); font-weight: var(--nil-w-semi); }
+.lnk { color: var(--nil-link); text-decoration: underline; font: inherit; }
+
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s05) var(--s06); margin-top: var(--s07); }
+.span2 { grid-column: 1 / -1; }
+.f { display: flex; flex-direction: column; gap: var(--s03); min-width: 0; }
+.f label { font-family: var(--nil-display); font-weight: var(--nil-w-heavy); font-size: var(--nil-t-label); line-height: 1.2; color: var(--nil-navy); }
+.req { color: var(--nil-req); margin-left: var(--s01); }
+.f input { width: 100%; height: var(--nil-field-h); padding: 0 var(--s05); background: var(--nil-field); border: var(--hairline) solid transparent; border-radius: var(--nil-radius); font-family: var(--nil-sans); font-size: var(--nil-t-field); color: var(--nil-field-ink); }
+.f input::placeholder { color: var(--nil-ph); }
+.f input:focus-visible, .otp input:focus-visible { outline: none; border-color: var(--nil-navy); box-shadow: var(--nil-focus); }
+
+.otp { display: flex; gap: var(--s04); margin-top: var(--s06); flex-wrap: wrap; }
+.otp input { width: var(--nil-otp-w); height: var(--nil-otp-h); text-align: center; background: var(--nil-field); border: var(--hairline) solid transparent; border-radius: var(--nil-radius); font-family: var(--nil-display); font-weight: var(--nil-w-heavy); font-size: var(--nil-t-otp); color: var(--nil-navy); }
+.resend { margin-top: var(--s05); font-size: var(--t-body-size); line-height: 1.5; color: var(--nil-sub); }
+
+.acts { display: flex; gap: var(--s04); margin-top: var(--s07); flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; gap: var(--s03); height: var(--nil-btn-h); padding: 0 var(--s06); border-radius: var(--nil-radius); background: var(--nil-navy); color: var(--on-dark); border: var(--hairline) solid var(--nil-navy); font-family: var(--nil-display); font-size: var(--t-body-size); line-height: 1.3; font-weight: var(--t-w-strong); text-transform: capitalize; cursor: pointer; transition: background var(--mo-quick) var(--mo-standard); }
+.btn svg { width: var(--nil-ico-btn); height: var(--nil-ico-btn); flex: none; }
+.btn:hover { background: var(--nil-navy-2); border-color: var(--nil-navy-2); }
+.btn.ghost { background: var(--background); color: var(--nil-navy); border-color: var(--nil-hair); }
+.btn.ghost:hover { background: var(--nil-ghost-hover); }
+.btn:disabled { opacity: .45; cursor: default; pointer-events: none; }
+.priv { margin-top: var(--s05); font-size: var(--nil-t-label); line-height: 1.45; color: var(--nil-priv); }
+
+/* ---- 4 · The result (navy/lime panel + two ruled boxes, one outer line) ---- */
+.res { display: flex; gap: var(--s05); align-items: flex-start; }
+.tab { flex: none; writing-mode: vertical-rl; transform: rotate(180deg); padding: var(--s03) 0; font-family: var(--nil-display); font-weight: var(--nil-w-bold); font-size: var(--nil-t-label); line-height: 1.2; color: var(--nil-navy); }
+.resGrid { flex: 1; min-width: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border: var(--hairline) solid var(--nil-navy); }
+.you { background: var(--nil-lime); display: flex; flex-direction: column; }
+.youHead { background: var(--nil-navy); color: var(--nil-lime); padding: var(--s07) var(--s07) var(--s10); clip-path: var(--nil-bubble); }
+.hey { font-family: var(--nil-display); font-weight: var(--nil-w-heavy); font-size: var(--nil-t-hey); line-height: 1.1; }
+.type { margin-top: var(--s01); font-family: var(--nil-display); font-weight: var(--nil-w-heavy); font-size: var(--nil-t-type); line-height: .92; }
+.youBody { flex: 1; padding: var(--s07); color: var(--nil-navy); }
+.h3 { font-family: var(--nil-display); font-weight: var(--nil-w-heavy); font-size: var(--nil-t-h3); line-height: 1.1; color: var(--nil-navy); }
+.para { margin-top: var(--s04); max-width: var(--nil-para-w); font-size: var(--nil-t-field); line-height: 1.6; }
+.grp { margin-top: var(--s07); }
+.ticks, .ideas { list-style: none; padding: 0; margin-top: var(--s05); display: flex; flex-direction: column; gap: var(--s04); }
+.ticks li, .ideas li { display: flex; gap: var(--s04); align-items: flex-start; }
+.ticks li { font-size: var(--nil-t-field); line-height: 1.53; }
+.ideas li { font-size: var(--nil-t-sub); line-height: 1.45; color: var(--nil-ink); }
+.ticks svg, .ideas svg { width: var(--nil-ico); height: var(--nil-ico); flex: none; margin-top: var(--s01); color: var(--nil-navy); }
+
+.side { display: flex; flex-direction: column; border-left: var(--hairline) solid var(--nil-navy); }
+.box { flex: 1; padding: var(--s07); }
+.box + .box { border-top: var(--hairline) solid var(--nil-navy); }
+.h2 { font-family: var(--nil-display); font-weight: var(--nil-w-heavy); font-size: var(--nil-t-h2); line-height: 1; color: var(--nil-navy); }
+.boxP { margin-top: var(--s05); font-size: var(--nil-t-sub); line-height: 1.5; color: var(--nil-ink); }
+
+.steps { display: flex; flex-direction: column; gap: var(--s04); padding: 0 var(--s07) var(--s07); }
+.step { display: flex; align-items: center; justify-content: space-between; gap: var(--s05); width: 100%; padding: var(--s04) var(--s05); text-align: left; border: var(--hairline) solid var(--nil-navy); background: var(--background); font-family: var(--nil-sans); font-size: var(--nil-t-field); line-height: 1.25; color: var(--nil-ink); cursor: default; }
+.stepL { display: inline-flex; align-items: center; gap: var(--s03); min-width: 0; }
+.stepL > span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.step svg { width: var(--nil-ico-step); height: var(--nil-ico-step); flex: none; color: var(--nil-navy); }
+.step.live { background: var(--nil-lime); color: var(--nil-navy); font-weight: var(--nil-w-semi); cursor: pointer; }
+.step.live:hover { background: var(--nil-lime-2); }
+
+.share { display: flex; align-items: center; gap: var(--s05); flex-wrap: wrap; margin-top: var(--s06); padding-left: var(--s07); }
+.share em { font-size: var(--nil-t-sub); line-height: 1.5; color: var(--nil-ink); }
+.sharePill { display: inline-flex; align-items: center; gap: var(--s03); background: var(--nil-lime); border-radius: var(--radius-pill); padding: var(--nil-share-py) var(--s05); font-size: var(--nil-t-share); line-height: 1.4; color: var(--nil-navy); }
+.sharePill svg { width: var(--nil-ico-share); height: var(--nil-ico-share); flex: none; fill: currentColor; }
+
+.band { margin-top: var(--s08); background: var(--nil-lime); overflow: hidden; display: flex; gap: var(--s07); padding: var(--s04) var(--s06); font-family: var(--nil-display); font-weight: var(--nil-w-heavy); font-size: var(--nil-t-band); line-height: 1.1; color: var(--nil-navy); white-space: nowrap; }
+.band span { flex: none; }
+
+/* ---- Below 900: the bar collapses, the columns stack, the type steps down ---- */
+@container app (max-width: 899px) {
+  .bar { padding: var(--nil-bar-py) var(--s05); gap: var(--s04); }
+  .nav { display: none; }
+  .logo { height: var(--nil-logo-h-m); }
+  .wrap { padding: var(--s06) var(--s06) var(--s08); }
+  .card { padding: var(--s06) var(--s05) var(--s07); border-radius: var(--nil-radius-card-m); }
+  .h1 { font-size: var(--nil-t-h1-m); }
+  .grid { grid-template-columns: minmax(0, 1fr); }
+  .otp { gap: var(--s03); }
+  .otp input { width: var(--nil-otp-w-m); height: var(--nil-otp-h-m); font-size: var(--nil-t-otp-m); }
+  .tab { display: none; }
+  .resGrid { grid-template-columns: minmax(0, 1fr); }
+  .youHead { padding: var(--s06) var(--s05) var(--s09); }
+  .hey { font-size: var(--nil-t-hey-m); }
+  .type { font-size: var(--nil-t-type-m); }
+  .youBody, .box { padding: var(--s05); }
+  .side { border-left: 0; border-top: var(--hairline) solid var(--nil-navy); }
+  .h2 { font-size: var(--nil-t-h2-m); }
+  .steps { padding: 0 var(--s05) var(--s05); }
+  .share { padding-left: 0; }
+}

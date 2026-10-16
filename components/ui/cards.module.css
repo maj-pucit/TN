@@ -1,0 +1,33 @@
+/* Saved cards (Phase 1 .cardrow, measured): rows with no lines between
+   them, 12 by --pad-x inside, bleeding to the column edges; a 20px radio
+   (the picked one a black disc with a white centre dot), the brand mark in a 40px box with a
+   hairline, the title 14 Medium with an accent "Default" pill, the expiry
+   in the description grey. */
+.stack { margin: 0 calc(var(--pad-x) * -1); }
+.row { display: flex; align-items: center; gap: var(--s05); width: 100%; padding: var(--s04) var(--pad-x); text-align: left; background: transparent; }
+.row[role="radio"] { cursor: pointer; }
+/* Phase 1 .rad .box: a 20px ring; picked = black disc with a white 8px dot at its centre. */
+.rad { width: var(--icon-rail); height: var(--icon-rail); border-radius: var(--radius-pill); border: var(--hairline) solid var(--border-strong-01); flex: none; display: grid; place-items: center; }
+.rad.on { background: var(--text-primary); border-color: var(--text-primary); }
+.rad.on::after { content: ""; width: var(--s03); height: var(--s03); border-radius: var(--radius-pill); background: var(--on-brand); }
+.ic { width: var(--s09); height: var(--s09); display: grid; place-items: center; border: var(--hairline) solid var(--rule); flex: none; }
+.ic svg { width: var(--icon-row); height: auto; }
+.b { display: flex; flex-direction: column; gap: var(--s01); min-width: 0; flex: 1 1 auto; }
+.t { display: flex; align-items: center; gap: var(--s03); flex-wrap: wrap; font-size: var(--t-h4-size); line-height: var(--t-h4-lh); letter-spacing: var(--t-h4-ls); font-weight: var(--t-w-strong); color: var(--text-primary); }
+.def { padding: var(--s01) var(--s04); border-radius: var(--radius-pill); background: var(--accent); color: var(--on-accent); font-size: var(--t-label-size); line-height: var(--t-label-lh); letter-spacing: var(--t-label-ls); font-weight: var(--t-w-strong); }
+.a { margin-left: auto; display: flex; align-items: center; gap: var(--s04); }
+
+/* The Stripe "Add Payment Method" form, embedded as a picture (third-party
+   UI is embedded, never redrawn). Transparent buttons sit over the picture's
+   own painted tabs and its Cancel/Save row. Positions are Phase 1's payForm
+   (views.js:12234), per picture. */
+.pay { position: relative; width: 100%; max-width: var(--pay-w); max-height: 100%; overflow: auto; }
+.pay img { display: block; width: 100%; height: auto; }
+.hot { position: absolute; background: transparent; border: 0; }
+.tabCard { left: 3.5%; width: 46%; }
+.tabBank { left: 50.4%; width: 46%; }
+.close { left: 48%; width: 50%; }
+.card .tabCard, .card .tabBank { top: 7.75%; height: 8.7%; }
+.card .close { top: 93%; height: 6%; }
+.bank .tabCard, .bank .tabBank { top: 9.7%; height: 10.89%; }
+.bank .close { top: 91.3%; height: 7%; }

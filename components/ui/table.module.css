@@ -1,0 +1,124 @@
+/* ============================================================
+   TABLE — Phase 1 §31/§128/§63 §56b, measured 15 Oct 2026.
+   Header row: 13.5 strong black over the one --rule line. No lines
+   between rows (rows separated by air); the first data row stands
+   24 off the header. Cells are the description grey, the first
+   column is the black strong anchor. One page at a time.
+   ============================================================ */
+.wrap { overflow-x: auto; scrollbar-width: none; }
+.wrap::-webkit-scrollbar { display: none; }
+.tbl { width: 100%; border-collapse: collapse; table-layout: auto; }
+.tbl th {
+  padding: var(--s04) var(--s04) var(--s04) 0;
+  border-bottom: var(--hairline) solid var(--rule);
+  text-align: left;
+  vertical-align: middle;
+  white-space: nowrap;
+  color: var(--text-primary);
+}
+.tbl td {
+  padding: var(--s04) var(--s04) var(--s04) 0;
+  vertical-align: middle;
+  white-space: nowrap;
+  color: var(--text-secondary);
+}
+.tbl tbody tr:first-child td { padding-top: var(--s06); }
+.tbl td:first-child { color: var(--text-primary); }
+/* `even`: equal columns, every cell left-aligned (Maryam 16 Oct 2026). */
+.tbl.even { table-layout: fixed; }
+.tbl.even th.right, .tbl.even td.right { text-align: left; padding-right: 0; }
+.right { text-align: right; }
+.tbl th.right, .tbl td.right { text-align: right; padding-right: var(--s06); }
+.tbl th.right:last-child, .tbl td.right:last-child { padding-right: 0; }
+.clk { cursor: pointer; }
+.clk:hover td:first-child { color: var(--accent-text); }
+.act { width: var(--s09); text-align: right; padding-right: 0; }
+
+/* A person cell: a round face beside the name, optional sub-line. */
+.pcell { display: flex; align-items: center; gap: var(--s03); min-width: 0; }
+.pcell img { width: var(--avatar-row); height: var(--avatar-row); border-radius: var(--radius-pill); object-fit: cover; flex: none; }
+.pcellB { display: flex; flex-direction: column; min-width: 0; }
+
+/* Status is plain coloured text, never a chip (Phase 1 §126). */
+.st-green { color: var(--support-success-ink); }
+.st-warn { color: var(--support-attention); }
+.st-red { color: var(--support-error); }
+.st-plain { color: var(--text-secondary); }
+
+/* ---- Row menu (one kebab per row) ---- */
+.rm { position: relative; display: inline-block; }
+.rmT { width: var(--s07); height: var(--s07); display: grid; place-items: center; color: var(--text-secondary); }
+.rmT svg { width: var(--icon-rail); height: var(--icon-rail); }
+.rmT:hover { color: var(--text-primary); }
+.rmList {
+  position: fixed;
+  top: calc(var(--rm-top) + var(--s02));
+  right: var(--rm-right);
+  min-width: calc(var(--s12) * 2);
+  background: var(--layer-01);
+  border: var(--hairline) solid var(--rule);
+  box-shadow: var(--shadow-menu);
+  padding: var(--s02) 0;
+  z-index: 90;
+  display: flex; flex-direction: column;
+}
+.rmList.up { top: auto; bottom: calc(100vh - var(--rm-top) + var(--s02)); }
+.rmI { display: flex; align-items: center; gap: var(--s04); padding: var(--s03) var(--s05); white-space: nowrap; color: var(--text-primary); text-align: left; }
+.rmI svg { width: var(--icon-page); height: var(--icon-page); }
+.rmI:hover { background: var(--overlay-hover); }
+.rmI.danger { color: var(--support-error); }
+
+/* ---- Pagination ---- */
+.pgn {
+  display: flex; align-items: center; flex-wrap: wrap;
+  gap: var(--s04) var(--s06);
+  margin-top: var(--s05);
+  padding-top: var(--s05);
+  border-top: var(--hairline) solid var(--rule);
+}
+.pgnSize { display: flex; align-items: center; gap: var(--s03); color: var(--text-helper); }
+.pgnInfo { color: var(--text-helper); }
+.pgnNav { display: flex; align-items: center; gap: var(--s02); margin-left: auto; }
+.pgBtn {
+  min-width: var(--pg-btn); height: var(--pg-btn);
+  padding: 0 var(--s02);
+  border: var(--hairline) solid transparent;
+  border-radius: var(--radius-pill);
+  display: grid; place-items: center;
+  color: var(--text-primary);
+  font-size: var(--t-compact-size); font-weight: var(--t-w-strong);
+  line-height: var(--btn-lh); letter-spacing: var(--btn-ls); text-transform: capitalize;
+}
+.pgBtn svg { width: var(--icon-page); height: var(--icon-page); }
+.pgBtn:hover { background: var(--overlay-hover); }
+.pgBtn.on { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.pgBtn[disabled] { background: var(--layer-02); color: var(--text-disabled); pointer-events: none; }
+
+/* Row selection (Phase 1 .tbl-cb): 16px box, radius 5, light edge; accent + white tick when on. */
+.tbl th.sel, .tbl td.sel { width: var(--s07); padding-right: var(--s03); }
+.cb { width: var(--s05); height: var(--s05); display: grid; place-items: center; border: var(--cb-edge) solid var(--gray-30); border-radius: var(--radius-cb); background: var(--layer-01); color: var(--on-accent); vertical-align: middle; }
+.cb svg { width: var(--s04); height: var(--s04); }
+.cbOn { background: var(--accent); border-color: var(--accent); }
+/* The bulk bar: a content-width pill at the foot of the page. */
+.bulk { width: fit-content; display: flex; align-items: center; gap: var(--s04); padding: var(--s03) var(--s04) var(--s03) var(--s06); background: var(--layer-01); border: var(--hairline) solid var(--rule); border-radius: var(--radius-pill); box-shadow: var(--shadow-bar); }
+.bulk b { color: var(--text-primary); font-weight: var(--t-w-strong); }
+.bulkSep { width: var(--hairline); align-self: stretch; background: var(--rule); }
+.bulkB { display: inline-flex; align-items: center; gap: var(--s02); padding: var(--s02) var(--s03); border-radius: var(--radius-pill); color: var(--text-primary); }
+.bulkB:hover { background: var(--overlay-hover); }
+.bulkB svg, .bulkX svg { width: var(--icon-page); height: var(--icon-page); }
+.bulkX { display: grid; place-items: center; width: var(--s07); height: var(--s07); border-radius: var(--radius-pill); color: var(--text-secondary); }
+.bulkX:hover { background: var(--overlay-hover); }
+
+/* With a select column first, the name anchor is the SECOND cell (Phase 1
+   re-pins td.tbl-sel + td to the black strong ink). */
+.tbl td.sel + td { color: var(--text-primary); font-weight: var(--t-w-strong); }
+.clk:hover td.sel + td { color: var(--accent-text); }
+
+/* Phase 1 .tag.sm: 24 tall, 8 sides, a round hairline, 12.5 Medium. */
+.chip { display: inline-flex; align-items: center; gap: var(--s02); height: var(--s06); padding: 0 var(--s03); border: var(--hairline) solid var(--rule); border-radius: var(--radius-pill); font-size: var(--t-label-size); line-height: var(--t-label-lh); font-weight: var(--t-w-strong); white-space: nowrap; }
+.chip.st-green { color: var(--support-success-ink); }
+/* On a phone (the candidate and agent portals are responsive) cells may wrap so a table
+   fits its column instead of scrolling sideways. */
+@container page (max-width: 599.98px) {
+  .tbl th, .tbl td { white-space: normal; padding-right: var(--s03); }
+}

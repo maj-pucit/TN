@@ -1,0 +1,17 @@
+/* Phase 1 .fdate-filter + .dcal (admin), measured 15 Oct 2026. */
+.f { position: relative; display: inline-flex; align-items: center; border: var(--hairline) solid var(--rule); background: transparent; }
+.t { display: flex; align-items: center; gap: var(--s02); min-height: var(--filter-h); padding: var(--s02) var(--s04); color: var(--text-primary); white-space: nowrap; }
+.t svg { width: var(--icon-sm); height: var(--icon-sm); color: var(--text-secondary); }
+.x { display: grid; place-items: center; width: var(--s06); align-self: stretch; margin-right: var(--s02); color: var(--text-secondary); }
+.x svg { width: var(--s04); height: var(--s04); }
+.pop { position: absolute; top: calc(100% + var(--s02)); right: 0; z-index: 60; width: var(--dcal-w); padding: var(--s04); background: var(--layer-01); border: var(--hairline) solid var(--rule); box-shadow: var(--shadow-menu); }
+.h { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--s03); }
+.nav { display: grid; place-items: center; width: var(--s07); height: var(--s07); color: var(--text-primary); }
+.nav svg { width: var(--icon-page); height: var(--icon-page); }
+.nav:hover { background: var(--overlay-hover); }
+.wd { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); margin-bottom: var(--s02); color: var(--text-helper); text-align: center; }
+.grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: var(--s01); }
+.d { aspect-ratio: 1; display: grid; place-items: center; border-radius: var(--radius-pill); color: var(--text-primary); }
+.d:hover { background: var(--overlay-hover); }
+.d.today { border: var(--hairline) solid var(--rule); }
+.d.on { background: var(--accent); color: var(--on-accent); }

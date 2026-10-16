@@ -1,0 +1,93 @@
+/* ============================================================
+   THE AGENT CALENDAR — Phase 1 §41/§42 (tn-agent-portal.html, measured
+   15 Oct 2026): a bordered card, a top bar (Today, ‹ ›, month, the
+   Daily/Weekly/Monthly switch), then a time grid or a month grid.
+   ============================================================ */
+.cal { position: relative; border: var(--hairline) solid var(--rule); background: transparent; }
+.top { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s04); padding: var(--s05); border-bottom: var(--hairline) solid var(--rule); }
+.todayBtn { padding: calc(var(--s03) - var(--hairline)) var(--s05); border: var(--hairline) solid var(--border-strong-01); border-radius: var(--radius-pill); color: var(--text-primary); font-weight: var(--t-w-strong); }
+.todayBtn:hover { background: var(--overlay-hover); }
+.nav { display: flex; gap: var(--s01); }
+.navB { width: var(--s08); height: var(--s08); display: grid; place-items: center; border-radius: var(--radius-pill); color: var(--text-primary); }
+.navB:hover { background: var(--overlay-hover); }
+.navB svg { width: var(--icon-rail); height: var(--icon-rail); }
+.m { flex: 1 1 auto; font-weight: var(--t-w-book); }
+.seg { display: flex; border: var(--hairline) solid var(--rule); background: var(--layer-02); }
+.seg button { padding: calc(var(--s02) + var(--s01)) var(--s04); color: var(--text-secondary); font-weight: var(--t-w-book); }
+.seg button.on { background: var(--layer-01); color: var(--text-primary); font-weight: var(--t-w-strong); }
+
+/* ---- Time grid (week / day) ---- */
+.scroll { overflow-x: auto; scrollbar-width: thin; scrollbar-color: var(--rule) transparent; }
+.calw { min-width: var(--cal-min-w); }
+.calw.single { min-width: 0; }
+.head, .body { display: grid; grid-template-columns: var(--cal-axis-w) repeat(var(--cols), minmax(0, 1fr)); }
+.head { background: var(--layer-02); border-bottom: var(--hairline) solid var(--rule); }
+.corner { display: block; }
+.dh { display: flex; flex-direction: column; align-items: center; gap: var(--s01); padding: var(--s03) var(--s04); border-left: var(--hairline) solid var(--rule); }
+/* Phase 1 .calw-dw: the weekday in capitals at .8 tracking — the calendar's
+   own stated exception to sentence case (measured, agent portal). */
+.dw { color: var(--text-helper); font-weight: var(--t-w-strong); text-transform: uppercase; letter-spacing: var(--cal-dw-ls); }
+.today .dw { color: var(--accent-text); }
+.dn { letter-spacing: var(--t-body-ls); }
+.today .dn { min-width: var(--cal-today-d); height: var(--cal-today-d); display: grid; place-items: center; padding: 0 var(--s02); border-radius: var(--radius-pill); background: var(--accent); color: var(--on-accent); }
+.body { position: relative; background: transparent; }
+.axis { position: relative; }
+.h { display: block; height: var(--cal-hour); padding-right: var(--s03); text-align: right; color: var(--text-helper); transform: translateY(calc(var(--s03) * -1)); }
+.col { position: relative; border-left: var(--hairline) solid var(--rule); }
+.cell { display: block; height: var(--cal-hour); border-top: var(--hairline) solid var(--rule); }
+.cell:first-child { border-top: 0; }
+.ev {
+  position: absolute; left: var(--s01); right: var(--s01);
+  top: calc(var(--m) * var(--cal-hour) / 60 + var(--s01));
+  min-height: calc(45 * var(--cal-hour) / 60 - var(--s02) - var(--s01));
+  display: flex; flex-direction: column; gap: var(--s01);
+  padding: var(--s03); border-radius: var(--radius-ev); overflow: hidden; text-align: left;
+  background: var(--cal-color); color: var(--text-primary); z-index: 1;
+}
+.ev:hover, .ev.picked { box-shadow: var(--shadow-menu); z-index: 2; }
+.evT, .evR { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.evR { color: var(--text-secondary); }
+.evWho { display: flex; align-items: center; gap: var(--s02); min-width: 0; }
+.evWho img { width: var(--cal-who); height: var(--cal-who); border-radius: var(--radius-pill); object-fit: cover; flex: none; }
+.evWho > span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.open { --cal-color: var(--cal-open); }
+.iv { --cal-color: var(--cal-iv); }
+.reiv { --cal-color: var(--cal-reiv); }
+.now { position: absolute; left: var(--cal-axis-w); right: 0; top: calc(var(--m) * var(--cal-hour) / 60); border-top: var(--rule-strong-w) solid var(--text-primary); z-index: 3; pointer-events: none; }
+.nowT { position: absolute; right: 100%; top: calc(var(--s03) * -1 - var(--hairline)); margin-right: calc(var(--s01) * -1); padding: var(--hairline) var(--s03); border-radius: var(--radius-pill); background: var(--text-primary); color: var(--on-dark); font-weight: var(--t-w-strong); white-space: nowrap; }
+
+/* ---- Month grid ---- */
+.grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: var(--hairline); background: var(--rule); }
+.wd { padding: var(--s03) var(--s04); background: var(--layer-02); color: var(--text-secondary); font-weight: var(--t-w-strong); }
+.d { display: flex; flex-direction: column; gap: var(--s01); min-height: var(--cal-day-h); padding: var(--s02); background: transparent; min-width: 0; }
+.out { background: var(--layer-02); }
+.n { font-weight: var(--t-w-strong); color: var(--text-primary); }
+.we .n, .out .n { color: var(--gray-40); }
+.d.today .n { width: var(--cal-today-m); height: var(--cal-today-m); display: grid; place-items: center; border-radius: var(--radius-pill); background: var(--accent); color: var(--on-accent); }
+.slot { display: flex; align-items: center; min-width: 0; padding: var(--hairline) var(--s03); border-radius: var(--radius-slot); background: var(--cal-color); text-align: left; }
+.slot:hover, .slot.picked { box-shadow: var(--shadow-menu); }
+.el { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.et { color: var(--text-secondary); font-weight: var(--t-w-strong); }
+.more { align-self: flex-start; padding: var(--hairline) var(--s02); border-radius: var(--radius-slot); color: var(--text-secondary); font-weight: var(--t-w-strong); }
+.more:hover { background: var(--overlay-hover); }
+@container page (max-width: 599.98px) {
+  .grid .el { font-size: var(--t-caption-size); }
+  .et { display: none; }
+  .d { min-height: var(--cal-day-h-m); }
+}
+
+/* ---- The card a block opens (Phase 1 .cal-pop, 264 wide) ---- */
+.pop { position: absolute; left: var(--x); top: var(--y); width: var(--cal-pop-w); max-width: calc(100% - var(--s05)); padding: var(--s05); background: var(--layer-01); border: var(--hairline) solid var(--rule); box-shadow: var(--shadow-pop); z-index: 5; display: flex; flex-direction: column; gap: var(--s03); }
+.popH { display: flex; align-items: center; justify-content: space-between; gap: var(--s04); }
+.popX { display: grid; place-items: center; color: var(--text-secondary); }
+.popX svg { width: var(--icon-page); height: var(--icon-page); }
+.popT { color: var(--text-helper); }
+.popWho { display: flex; align-items: center; gap: var(--s04); padding: var(--s03) 0 var(--s05); border-bottom: var(--hairline) solid var(--rule); }
+.popWho img { width: var(--avatar-list); height: var(--avatar-list); border-radius: var(--radius-pill); object-fit: cover; flex: none; }
+.popNb { display: flex; flex-direction: column; gap: var(--s01); min-width: 0; }
+.row { display: flex; flex-direction: column; gap: var(--s01); }
+.rl { color: var(--text-secondary); font-weight: var(--t-w-strong); }
+.popA { display: flex; gap: var(--s03); padding-top: var(--s04); }
+
+/* ---- Add-slot time row ---- */
+.tm { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: var(--s04); }
