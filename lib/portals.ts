@@ -152,7 +152,7 @@ export const EXTRA_ROUTES: { portal: PortalKey; slug: string[] }[] = [
   ...AGENT_IV_IDS.map((id) => ({ portal: "agent" as PortalKey, slug: ["interviews", id] })),
   ...AGENT_IV_IDS.map((id) => ({ portal: "agent" as PortalKey, slug: ["interviews", id, "transcript"] })),
   { portal: "admin", slug: ["users", "import"] },
-  ...["platform", "templates", "notifications", "security"].map((k) => ({ portal: "admin" as PortalKey, slug: ["settings", k] })),
+  ...["platform", "security"].map((k) => ({ portal: "admin" as PortalKey, slug: ["settings", k] })),
   ...(adminSeed.TXNS as { id: string; type: string }[]).filter((x) => x.type !== "rbcredit").map((x) => ({ portal: "admin" as PortalKey, slug: ["finance", "transactions", x.id] })),
   ...(adminSeed.DISCOUNTS as { id: string }[]).map((x) => ({ portal: "admin" as PortalKey, slug: ["finance", "discounts", x.id] })),
   ...(adminSeed.SETTLEMENTS as { id: string }[]).map((x) => ({ portal: "admin" as PortalKey, slug: ["finance", "reconciliation", x.id] })),

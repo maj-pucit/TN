@@ -21,7 +21,7 @@ import s from "./agent.module.css";
    ============================================================ */
 const TABS = [
   { key: "me", label: "My Profile" }, { key: "public", label: "Public Profile" },
-  { key: "notif", label: "Notifications" }, { key: "priv", label: "Privacy Settings" },
+  { key: "priv", label: "Privacy Settings" }, /* Notifications tab removed (Maryam 16 Oct 2026) */
 ];
 
 export function AgentProfile() {
@@ -32,16 +32,10 @@ export function AgentProfile() {
   const [fee, setFee] = useState(A.fee);
   return (
     <Page>
-      <PageHeader title="Profile" desc="Your details, the public profile candidates see, notifications and privacy." />
+      <PageHeader title="Profile" desc="Your details, the public profile candidates see, and privacy." />
       <Section kind="tabs"><Tabs value={tab} onChange={setTab} items={TABS} /></Section>
       {tab === "me" && <Mine ind={ind} setInd={setInd} int={int} setInt={setInt} specs={specs} setSpecs={setSpecs} fee={fee} setFee={setFee} />}
       {tab === "public" && <Public ind={ind} int={int} specs={specs} fee={fee} />}
-      {tab === "notif" && (
-        <Section>
-          <SectionHeader title="What reaches you" />
-          {AGENT_NOTIF_TOGGLES.map(([t, d, on]) => <ToggleRow key={t} title={t} desc={d} on={on} />)}
-        </Section>
-      )}
       {tab === "priv" && <Privacy />}
     </Page>
   );

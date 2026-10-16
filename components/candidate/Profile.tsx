@@ -30,19 +30,18 @@ import t from "./interviews.module.css";
    ============================================================ */
 const TABS = [
   { key: "me", label: "My Profile", count: "4/5" }, { key: "linked", label: "Linked Accounts" }, { key: "courses", label: "My Courses" },
-  { key: "notif", label: "Notifications" }, { key: "priv", label: "Privacy Settings" },
+  { key: "priv", label: "Privacy Settings" }, /* Notifications tab removed (Maryam 16 Oct 2026) */
 ];
 
 export function ProfilePage() {
   const [tab, setTab] = useState("me");
   return (
     <Page>
-      <PageHeader title="Profile" desc="Your details, linked accounts, courses, notifications and privacy settings." />
+      <PageHeader title="Profile" desc="Your details, linked accounts, courses and privacy settings." />
       <Section kind="tabs"><Tabs value={tab} onChange={setTab} items={TABS} /></Section>
       {tab === "me" && <MyProfile />}
       {tab === "linked" && <Linked />}
       {tab === "courses" && <Courses />}
-      {tab === "notif" && <Notifications />}
       {tab === "priv" && <Privacy />}
     </Page>
   );

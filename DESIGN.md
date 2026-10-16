@@ -255,7 +255,7 @@ re-flows its forms and lists. **Why (15 Oct 2026):** once the content gutter (12
 page column at 1280 is about 835px, so a 900 rule on `page` never fired at desktop and every
 four-across grid fell to two. Keep the 900 tier on `app`.
 
-Still to port: the notification panel behind the bell.
+No notification panel or bell: Phase 0 has no notifications (16 Oct 2026).
 
 **How the components were checked (15 Oct 2026):** every screen in all three portals was
 captured from the browser (each text element's computed size, line height, weight, tracking,
@@ -357,3 +357,5 @@ Format: `screen · what differs · why · date`.
 - **`<Table even>`**: every column the same width, all cells left-aligned, so the gaps between columns are equal. Used on the agent Earnings Payments table (Maryam 16 Oct 2026).
 - **Super Admin My Profile**: the photo is `--avatar-id-fit` (44px), as tall as the name + email beside it, not the 72px identity disc (`.idhead.fit`); the 8-cell facts grid is its own block section, one section gap (28) under the identity head (Maryam 16 Oct 2026).
 - **Portalled layers find their host before the first paint and draw nothing until they do** (`Overlay`, `BulkBar`, `Slider` use `useLayoutEffect`). A modal first drawn inline in the page and then moved into `#p0-modal` flickers and jumps to the centre (Maryam 16 Oct 2026).
+- **No notifications in Phase 0, on any portal** (Maryam 16 Oct 2026): no bell or notification panel in the top bar; no Notifications tab in the candidate or agent profile; Super Admin Settings is two tabs, Platform and Login & Security (Notification Templates and Notifications are gone). The old components stay defined, unrouted, for an easy restore.
+- **Account menu "Switch to …" rows lead with that portal's person photo** (24px disc, `--avatar-menu`), as in Phase 1; glyph rows share the same leading width so every label starts on one line (Maryam 16 Oct 2026).

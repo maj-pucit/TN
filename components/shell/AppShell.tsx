@@ -103,10 +103,7 @@ export function AppShell({ portal, children }: { portal: PortalKey; children: Re
               </nav>
             ) : <Text role="sec" as="p" className={s.barTitle}>{title}</Text>}
             <div className={s.barActs}>
-              <button className={s.bell} aria-label="Notifications">
-                <Icon name="notification" />
-                <span className={s.badge}>3</span>
-              </button>
+              {/* No notifications in Phase 0, on any portal (Maryam 16 Oct 2026): the bell is gone. */}
               <div className={s.acct}>
                 <button className={s.acctT} onClick={() => setAcct((a) => !a)} aria-expanded={acct} aria-haspopup="menu">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -133,7 +130,9 @@ export function AppShell({ portal, children }: { portal: PortalKey; children: Re
                     <div className={s.menuSep} />
                     {others.map((k) => (
                       <Link key={k} href={href(k)} className={`${s.menuI} t-body`} role="menuitem">
-                        <Icon name="renew" />Switch to {PORTALS[k].name}
+                        {/* The portal's own person, as in Phase 1's account menu (Maryam 16 Oct 2026). */}
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={PORTALS[k].person.img} alt="" />Switch to {PORTALS[k].name}
                       </Link>
                     ))}
                     <div className={s.menuSep} />

@@ -63,19 +63,6 @@
 .crumbNow { color: var(--text-primary); overflow: hidden; text-overflow: ellipsis; }
 .barActs { display: flex; align-items: center; gap: var(--s04); flex: none; }
 
-/* Bell 44 square; the count is a 15px pill, 10px Medium, in the error red
-   (Phase 1 .shell-act / .shell-badge, measured). */
-.bell { position: relative; display: grid; place-items: center; width: var(--bell); height: var(--bell); color: var(--text-primary); }
-.bell svg { width: var(--icon-rail); height: var(--icon-rail); }
-.badge {
-  position: absolute; top: var(--badge-top); left: var(--badge-left);
-  min-width: var(--badge-h); height: var(--badge-h); padding: 0 var(--s02);
-  border-radius: var(--radius-pill);
-  background: var(--support-error); color: var(--on-accent);
-  font-size: var(--t-badge-size); line-height: var(--t-badge-size); font-weight: var(--t-w-strong);
-  display: grid; place-items: center;
-}
-
 /* ---- Account trigger + menu ---- */
 .acct { position: relative; }
 .acctT { display: flex; align-items: center; gap: var(--s03); padding: var(--s02); }
@@ -103,7 +90,11 @@
   width: 100%; padding: var(--s03) var(--s05);
   color: var(--text-primary);
 }
-.menuI svg { width: var(--icon-page); height: var(--icon-page); }
+.menuI svg { width: var(--icon-page); height: var(--icon-page); flex: none; }
+/* A "Switch to …" row leads with that portal's face (Phase 1). The glyph rows sit in the
+   same leading width, so every label starts on one line. */
+.menuI img { width: var(--avatar-menu); height: var(--avatar-menu); border-radius: var(--radius-pill); object-fit: cover; flex: none; }
+.menuI > svg { margin: 0 calc((var(--avatar-menu) - var(--icon-page)) / 2); }
 .menuI:hover { background: var(--overlay-hover); }
 .menuSep { height: var(--hairline); background: var(--rule); margin: var(--s03) 0; }
 

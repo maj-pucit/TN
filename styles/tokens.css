@@ -205,6 +205,7 @@
   --sheet-h-h: 68px;          /* slider / sheet header row */
   --field-gap: var(--s07);    /* field to field in a form */
   --label-gap: var(--s03);    /* field label to its control */
+  --avatar-menu: 24px;        /* the portal face on a "Switch to …" account-menu row (Phase 1) */
   --avatar-row: 28px;         /* a face in a table cell */
   --avatar-list: 36px;        /* a face in a list row (Phase 1 .mem-av) */
   --day-col: 104px;           /* a list row's day/time block (Phase 1 .bk-day) */

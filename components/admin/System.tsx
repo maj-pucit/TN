@@ -162,16 +162,18 @@ function ConnectSheet({ close }: { close: () => void }) {
   );
 }
 
-/* ---------------- Settings (four tabs) ---------------- */
-const TABS = [["platform", "Platform"], ["templates", "Notification Templates"], ["notifications", "Notifications"], ["security", "Login & Security"]];
+/* ---------------- Settings (two tabs) ----------------
+   No notifications in Phase 0 (Maryam 16 Oct 2026): the Notification Templates and
+   Notifications tabs are gone. <Templates /> and <Prefs /> stay defined, unrouted. */
+const TABS = [["platform", "Platform"], ["security", "Login & Security"]];
 export function AdminSettings({ tab }: { tab?: string }) {
   const router = useRouter();
   const cur = TABS.some(([k]) => k === tab) ? tab! : "platform";
   return (
     <Page>
-      <PageHeader title="Settings" desc="How the platform runs — its standing values, its notification wording, your alerts and your sign-in." />
+      <PageHeader title="Settings" desc="How the platform runs — its standing values and your sign-in." />
       <Section kind="tabs"><Tabs value={cur} onChange={(k) => router.push(`/admin/settings/${k}/`)} items={TABS.map(([key, label]) => ({ key, label }))} /></Section>
-      {cur === "platform" ? <Platform /> : cur === "templates" ? <Templates /> : cur === "notifications" ? <Prefs /> : <Security />}
+      {cur === "platform" ? <Platform /> : <Security />}
     </Page>
   );
 }
