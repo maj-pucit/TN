@@ -9,7 +9,7 @@ import { Field, Input, TextArea, Form, FormRow } from "../ui/Field";
 import { ToggleRow } from "../ui/Toggle";
 import { Confirm } from "../ui/Confirm";
 import { Icon } from "../Icon";
-import { AvailableSlots } from "./Slots";
+import { Availability } from "./Slots";
 import { useDemo } from "@/lib/demo";
 import { AGENT as A, PUB, SPECIALISMS, INDUSTRIES, INTENTS, AGENT_NOTIF_TOGGLES } from "@/data/agent";
 import p from "../candidate/profile.module.css";
@@ -111,7 +111,7 @@ function Mine({ ind, setInd, int, setInt, specs, setSpecs, fee, setFee }: {
         <SectionHeader title="About" />
         <Text role="body" ink="secondary">{PUB.about}</Text>
       </Section>
-      <AvailableSlots />
+      <Availability />
       <Section>
         <SectionHeader title="Specialities" actions={edit === "specs" ? acts(() => setEdit(null)) : pen("specs")} />
         {edit === "specs" ? <Editable list={specs} onChange={setSpecs} placeholder="Add a speciality" /> : <Chips items={specs} />}

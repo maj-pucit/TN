@@ -30,7 +30,7 @@
   top: calc(100% + var(--s02));
   right: 0;
   min-width: 100%;
-  max-height: calc(var(--s12) * 4);
+  max-height: min(calc(var(--s12) * 4), var(--menu-room, 100vh));
   overflow-y: auto;
   display: flex; flex-direction: column;
   background: var(--layer-01);

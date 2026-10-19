@@ -1,2 +1,19 @@
-/* Available slots (agent My Profile): the add-slot dialog's "start to end" row (Phase 1 §123 .tm-row). */
+/* Availability (agent My Profile): one card per weekday that has a shift.
+   The grid fills the row (three across from a 760px page content box (1024+ desktop), two from 560,
+   one on a phone); cards are white with the one hairline and radius 0 like every card. */
+.grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s05); align-items: start; }
+@container page (min-width: 560px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@container page (min-width: 760px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.card { display: flex; flex-direction: column; gap: var(--s04); padding: var(--s05); background: var(--layer-01); border: var(--hairline) solid var(--rule); border-radius: var(--radius); }
+.day { display: flex; align-items: baseline; gap: var(--s03); }
+/* The shifts: one per row (a start-to-end window is too long to pair), each a quiet
+   grey block with its remove cross at the right. */
+.times { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s03); }
+.time { display: flex; align-items: center; justify-content: space-between; gap: var(--s02); height: 36px; padding: 0 var(--s02) 0 var(--s04); background: var(--layer-02); border-radius: var(--radius); font-variant-numeric: tabular-nums; }
+.x { display: grid; place-items: center; width: var(--s06); height: var(--s06); color: var(--text-secondary); }
+.x svg { width: var(--s04); height: var(--s04); }
+.x:hover { color: var(--text-primary); }
+/* The add-shift dialog's "start to end" row (Phase 1 §123 .tm-row). */
 .tm { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: var(--s04); }
+/* Why Save is off: the platform's error ink, one line under the fields. */
+.err { color: var(--support-error); }

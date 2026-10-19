@@ -152,6 +152,8 @@ const WD_LONG = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturd
 const tMin = (t: string) => { const [hm, ap] = t.split(" "); const [h, m] = hm.split(":").map(Number); return ((h % 12) + (ap === "PM" ? 12 : 0)) * 60 + m; };
 const tFmt = (n: number) => { const h = Math.floor(n / 60), m = n % 60; return `${((h + 11) % 12) + 1}:${String(m).padStart(2, "0")} ${h < 12 ? "AM" : "PM"}`; };
 export const slotMin = tMin;
+export const SLOT_LEN = 45;
+export const slotEnd = (start: string) => tFmt(tMin(start) + SLOT_LEN);
 export const WEEK_SLOTS: WeekSlot[] = (() => {
   const seen = new Set<string>(); const out: WeekSlot[] = [];
   SLOTS.forEach((x) => {
@@ -161,6 +163,22 @@ export const WEEK_SLOTS: WeekSlot[] = (() => {
   });
   return out;
 })();
+/* The agent's weekly SHIFTS (Maryam 19 Oct 2026): a day carries one or two shifts, each a
+   start-to-end window; candidates book 45-minute interviews inside them. A single start time
+   per interview read wrongly (10:00 and 10:30 on one day overlap a 45-minute call). Authored
+   placeholder (§74), set around the diary's existing booked times. */
+export type Shift = { id: string; day: string; start: string; end: string };
+export const SHIFT_MAX = 2;
+export const WEEK_SHIFTS: Shift[] = [
+  { id: "mon1", day: "Monday", start: "9:00 AM", end: "12:00 PM" },
+  { id: "mon2", day: "Monday", start: "2:00 PM", end: "7:00 PM" },
+  { id: "tue1", day: "Tuesday", start: "1:00 PM", end: "8:00 PM" },
+  { id: "wed1", day: "Wednesday", start: "3:00 PM", end: "8:00 PM" },
+  { id: "thu1", day: "Thursday", start: "9:00 AM", end: "1:00 PM" },
+  { id: "thu2", day: "Thursday", start: "3:00 PM", end: "8:30 PM" },
+  { id: "fri1", day: "Friday", start: "9:00 AM", end: "5:00 PM" },
+  { id: "sat1", day: "Saturday", start: "10:00 AM", end: "2:00 PM" },
+];
 export const SLOT_DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 export const SLOT_TIMES = (() => {
   const out: string[] = [];

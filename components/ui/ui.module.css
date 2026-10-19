@@ -102,6 +102,11 @@
 
 /* ---- A plain sheet modal (no disc): body + footer (Phase 1 .sheet) ---- */
 .sheet { width: 100%; max-width: var(--modal-w); max-height: 100%; overflow: auto; background: var(--layer-01); box-shadow: var(--shadow-modal); display: flex; flex-direction: column; }
+/* An open dropdown OVERLAYS the modal, it is never clipped by it (Phase 1 §123.4, Maryam
+   19 Oct 2026: "dropdown should come above the modal"). The sheet scrolls only to fit a
+   short screen; while a dropdown inside it is open the sheet stops clipping, so the menu
+   floats over the footer and past the sheet's edge. */
+.sheet:has([aria-expanded="true"]) { overflow: visible; }
 .sheetH { position: relative; display: flex; align-items: center; justify-content: space-between; gap: var(--s04); padding: var(--s06) var(--s05) var(--s04) var(--s06); }
 .sheetH::after { content: ""; position: absolute; left: var(--s06); right: var(--s06); bottom: 0; height: var(--hairline); background: var(--rule); }
 .sheetX { width: var(--s07); height: var(--s07); display: grid; place-items: center; color: var(--text-primary); }

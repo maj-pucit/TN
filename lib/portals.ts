@@ -34,7 +34,9 @@ export type Portal = {
 export const STAGES: { key: string; title: string }[] = [
   { key: "nil", title: "Next in Leadership run-up" },
   { key: "signup", title: "Account creation" },
-  { key: "onboard", title: "Onboarding" },
+  /* "onboard" (the Tal onboarding) is hidden (Maryam 19 Oct 2026): its questions are asked
+     before the candidate reaches the product, so Log In lands on "Just joined". Put this
+     line back to bring the flow into the stage menu again; /onboarding/ redirects meanwhile. */
   { key: "new", title: "Just joined" },
   { key: "booked", title: "Interview booked" },
   { key: "resched", title: "Interview reschedule" },
