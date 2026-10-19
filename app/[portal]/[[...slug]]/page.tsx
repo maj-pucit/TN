@@ -10,7 +10,6 @@ import { CourseworkPage } from "@/components/candidate/Coursework";
 import { LevelPage, ResultPage, CoursesPage, CoursePage, CoursePayPage } from "@/components/candidate/Level";
 import { InterviewsHome, AgentsPage, BookPage, CheckoutPage, ReportPage } from "@/components/candidate/Interviews";
 import { AgentDashboard } from "@/components/agent/Dashboard";
-import { AgentAvailability } from "@/components/agent/Availability";
 import { AgentEarnings, AgentStanding } from "@/components/agent/Earnings";
 import { AgentProfile } from "@/components/agent/Profile";
 import { AdminDashboard } from "@/components/admin/Dashboard";
@@ -56,7 +55,6 @@ export default async function Route({ params }: { params: Promise<{ portal: stri
     return <InterviewsHome />;
   }
   if (p === "agent" && slug.length === 0) return <AgentDashboard />;
-  if (p === "agent" && slug[0] === "availability") return <AgentAvailability />;
   if (p === "agent" && slug[0] === "earnings") return <AgentEarnings />;
   if (p === "agent" && slug[0] === "standing") return <AgentStanding />;
   if (p === "agent" && slug[0] === "profile") return <AgentProfile />;

@@ -79,7 +79,6 @@ export const PORTALS: Record<PortalKey, Portal> = {
     nav: [
       { key: "", title: "Home", icon: "dashboard" },
       { key: "interviews", title: "Interviews", icon: "calendar" },
-      { key: "availability", title: "Availability", icon: "time" },
       { key: "earnings", title: "Earnings", icon: "wallet" },
       { key: "standing", title: "Standing", icon: "chart" },
       { key: "profile", title: "Profile", icon: "user", foot: true },

@@ -56,7 +56,7 @@ export function AgentInterviews() {
             <NextCall id={next[0].id} />
           </DarkCard>
           <Section kind="block">
-            <SectionHeader title="Your Schedule" actions={<Button kind="ghost" size="sm" href="/agent/availability/">Availability</Button>} />
+            <SectionHeader title="Your Schedule" actions={<Button kind="ghost" size="sm" href="/agent/profile/">Available Slots</Button>} />
             <PersonList>
               {next.slice(1).map((x) => (
                 <PersonRow key={x.id} href={`${BASE}/${x.id}/`} img={PHOTO[x.id]} name={x.n}

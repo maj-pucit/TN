@@ -1,0 +1,2 @@
+/* Available slots (agent My Profile): the add-slot dialog's "start to end" row (Phase 1 §123 .tm-row). */
+.tm { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: var(--s04); }

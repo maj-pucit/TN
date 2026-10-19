@@ -144,6 +144,23 @@ export const SLOTS: Slot[] = [
   { id: "sp3", y: 2026, m: 8, d: 3, t: "5:00 PM" },
   { id: "sp4", y: 2026, m: 8, d: 4, t: "3:00 PM" }, { id: "sp4b", y: 2026, m: 8, d: 4, t: "6:30 PM" },
 ];
+/* The agent's weekly availability (Maryam 19 Oct 2026: set on the Profile, no calendar
+   module). Read off SLOTS: every weekday and start time the diary offers, each slot the
+   45-minute interview length. */
+export type WeekSlot = { id: string; day: string; start: string; end: string };
+const WD_LONG = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+const tMin = (t: string) => { const [hm, ap] = t.split(" "); const [h, m] = hm.split(":").map(Number); return ((h % 12) + (ap === "PM" ? 12 : 0)) * 60 + m; };
+const tFmt = (n: number) => { const h = Math.floor(n / 60), m = n % 60; return `${((h + 11) % 12) + 1}:${String(m).padStart(2, "0")} ${h < 12 ? "AM" : "PM"}`; };
+export const slotMin = tMin;
+export const WEEK_SLOTS: WeekSlot[] = (() => {
+  const seen = new Set<string>(); const out: WeekSlot[] = [];
+  SLOTS.forEach((x) => {
+    const day = WD_LONG[(new Date(Date.UTC(x.y, x.m, x.d)).getUTCDay() + 6) % 7];
+    const k = `${day} ${x.t}`; if (seen.has(k)) return; seen.add(k);
+    out.push({ id: k, day, start: x.t, end: tFmt(tMin(x.t) + 45) });
+  });
+  return out;
+})();
 export const SLOT_DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 export const SLOT_TIMES = (() => {
   const out: string[] = [];
