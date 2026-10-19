@@ -19,7 +19,7 @@ import { rowActs, UserSheets, type SheetKey } from "./Users";
 import { commit, useStore } from "@/lib/store";
 import {
   RAW, USER_BY_ID, BOOKINGS, PAST_IVS, PAYOUTS, TXNS, userCand, userTrack, staffRoleName,
-  userStatus, agRange, rangeLabel, face, money, agScore, toneOf, userByName, type U,
+  userStatus, agRange, rangeLabel, face, money, agScore, toneOf, userByName, candidatePrice, type U,
 } from "@/data/admin";
 import p from "../candidate/profile.module.css";
 import iv from "../candidate/interviews.module.css";
@@ -165,7 +165,7 @@ function Candidate({ u, menu }: { u: U; menu: React.ReactNode }) {
         <Table rows={pays} rowKey={(t) => t.id} cols={[
           { key: "d", label: "Date", cell: (t) => t.when },
           { key: "i", label: "Item", cell: (t) => t.kind },
-          { key: "a", label: "Amount", right: true, cell: (t) => money(t.amt) },
+          { key: "a", label: "Amount", cell: (t) => money(t.amt) },
           { key: "s", label: "Status", cell: (t) => { const m = RAW.TX_STATUS_META[t.status] ?? ["", t.status]; return <Status tone={toneOf(m[0] || "")}>{m[1]}</Status>; } },
         ]} />
       </Section>
@@ -228,13 +228,20 @@ export function Quiz({ first }: { first: string }) {
 }
 
 /* ---------------- Talent agent ---------------- */
+/* No "Payouts to release" here: payouts are released outside the platform, through
+   QuickBooks / FAS, so the admin never releases one (Maryam's senior, 19 Oct 2026).
+   Every section on the talent-agent detail closes with a divider (Maryam 19 Oct 2026), so
+   its table sections are text sections, like the agent's Earnings page. The identity head
+   and the figure blocks row stay blocks: no line after the blocks (Maryam 19 Oct 2026). */
 function Agent({ u, menu }: { u: U; menu: React.ReactNode }) {
   const pays = PAYOUTS.filter((x) => x.agent === u.name);
   const held = pays.filter((x) => x.status === "held");
   const paid = pays.filter((x) => x.status === "settled").reduce((n, x) => n + x.net, 0);
   const upcoming = BOOKINGS.filter((b) => b.agent === u.name);
   const past = PAST_IVS.filter((x) => x.agent === u.name);
-  const fee = (f: number, kind: string) => (/first/i.test(kind) || !f ? "Free" : money(f));
+  /* The agent is paid for every interview, first included: the first is free to the
+     candidate only, so this page always shows the agent's fee, never "Free". */
+  const fee = (f: number) => money(f || u.fee || 0);
   const kind = (k: string) => (/re-?interview/i.test(k) ? "Re-interview" : "First Interview");
   return (
     <>
@@ -243,53 +250,42 @@ function Agent({ u, menu }: { u: U; menu: React.ReactNode }) {
       </Section>
       <Section kind="block">
         <Stats>
-          <Stat icon="wallet" label="Total earnings" value={money((u.interviewed || 0) * (u.fee || 0) * 0.8)} desc="Net amount" />
+          <Stat icon="wallet" label="Total earnings" value={money((u.interviewed || 0) * (u.fee || 0))} desc="Fees paid in full" />
           <Stat icon="video" label="Interviewed" value={String(u.interviewed || 0)} desc="sessions conducted" />
-          <Stat icon="creditCard" label="Own fee" value={u.fee ? money(u.fee) : "—"} desc="set by the agent" />
+          <Stat icon="creditCard" label="Talent agent fee" value={u.fee ? money(u.fee) : "—"} desc={u.fee ? `Candidates pay ${money(candidatePrice(u))}` : "Not set"} />
           <Stat icon="growth" label="Assessment range" value={rangeLabel(agRange(u))} desc={`Agent Score ${agScore(u)?.toFixed(1) ?? "—"}`} />
         </Stats>
       </Section>
-      <Section kind="block">
-        <SectionHeader title="Payouts to release" desc="Amounts still to be released to this agent, settled weekly." actions={<Button kind="ghost" size="sm" href="/admin/finance/payouts/">All Payouts</Button>} />
-        <Table rows={held} rowKey={(x) => x.id} cols={[
-          { key: "r", label: "Reference", cell: (x) => x.ref },
-          { key: "p", label: "Period", cell: (x) => x.period },
-          { key: "n", label: "Net", right: true, cell: (x) => money(x.net) },
-          { key: "s", label: "Status", cell: () => <Status tone="warn">Pending</Status> },
-          { key: "w", label: "When", cell: (x) => x.when },
-          { key: "a", label: "Actions", cell: (x) => <Button kind="link" go onClick={() => commit(() => { x.status = "settled"; x.state = "paid"; }, `${x.ref} released`)}>Release Now</Button> },
-        ]} />
-      </Section>
-      <Section kind="block">
+      <Section>
         <SectionHeader title="Upcoming interviews" desc="On this agent’s diary. Open one for the candidate and fee." />
         <Table rows={upcoming} rowKey={(b) => b.id} href={(b) => `/admin/users/all/${u.id}/${b.id}/`} cols={[
           { key: "c", label: "Candidate", cell: (b) => <PersonCell name={b.cand} img={face(b.cand)} /> },
           { key: "t", label: "Type", cell: (b) => kind(b.kind) },
-          { key: "f", label: "Fee", right: true, cell: (b) => fee(b.fee, b.kind) },
+          { key: "f", label: "Fee", cell: (b) => fee(b.fee) },
           { key: "w", label: "When", cell: (b) => b.slot },
           { key: "s", label: "Status", cell: () => <Status tone="green">Active</Status> },
         ]} />
       </Section>
-      <Section kind="block">
+      <Section>
         <SectionHeader title="Past interviews" desc="Completed interviews. Open one for the transcript, evaluations and the candidate’s review." />
         <Table rows={past} rowKey={(x) => x.id} href={(x) => `/admin/users/all/${u.id}/${x.id}/`} cols={[
           { key: "c", label: "Candidate", cell: (x) => <PersonCell name={x.cand} img={face(x.cand)} /> },
           { key: "t", label: "Type", cell: (x) => kind(x.kind) },
-          { key: "f", label: "Fee", right: true, cell: (x) => fee(x.fee, kind(x.kind)) },
+          { key: "f", label: "Fee", cell: (x) => fee(x.fee) },
           { key: "w", label: "When", cell: (x) => x.when },
-          { key: "r", label: "Candidate rating", right: true, cell: (x) => <span className={s.score}><Icon name="star" />{x.rating}</span> },
+          { key: "r", label: "Candidate rating", cell: (x) => <span className={s.score}><Icon name="star" />{x.rating}</span> },
         ]} />
       </Section>
-      <Section kind="block">
-        <SectionHeader title="Reports filed" desc="The evaluations this agent has filed — the level they proposed and the candidate’s rating." />
+      <Section>
+        <SectionHeader title="Recommendations sent" desc="The recommendations this agent has sent: the level they proposed and the candidate’s rating." />
         <Table rows={past} rowKey={(x) => x.id} href={(x) => `/admin/users/all/${u.id}/${x.id}/`} cols={[
           { key: "c", label: "Candidate", cell: (x) => <PersonCell name={x.cand} img={face(x.cand)} /> },
-          { key: "l", label: "Proposed level", cell: (x) => x.agentLevel },
-          { key: "f", label: "Filed", cell: (x) => x.submitted },
-          { key: "r", label: "Candidate rating", right: true, cell: (x) => <span className={s.score}><Icon name="star" />{x.rating}</span> },
+          { key: "l", label: "Recommended level", cell: (x) => x.agentLevel },
+          { key: "f", label: "Sent", cell: (x) => x.submitted },
+          { key: "r", label: "Candidate rating", cell: (x) => <span className={s.score}><Icon name="star" />{x.rating}</span> },
         ]} />
       </Section>
-      <Section kind="block">
+      <Section>
         <SectionHeader title="Earnings" desc="Funds held, payouts to date, and the destination they settle to." />
         <Stats>
           <Stat icon="locked" label="Funds held" value={money(held.reduce((n, x) => n + x.net, 0))} desc="awaiting release" />
@@ -364,7 +360,7 @@ export function AgentInterviewDetail({ agentId, id }: { agentId: string; id: str
           <Section kind="block">
             <Facts>
               <Fact icon="user" label="Candidate" value={x.cand} />
-              <Fact icon="wallet" label="Interview fee" value="Free" />
+              <Fact icon="wallet" label="Interview fee" value={agentFee(x.fee, x.agent)} />
               <Fact icon="starOutline" label="Candidate rating" value={<span className={s.score}><Icon name="star" />{x.rating}</span>} />
               <Fact icon="calendar" label="When" value={x.when} />
             </Facts>
@@ -415,6 +411,9 @@ export function Transcript({ cand }: { cand: string }) {
 const TX_FALLBACK: [string, string, string, string, boolean][] = [
   ["00:42", "agent", "Before we start, nothing here is a test you can fail. Tell me about a handover you planned rather than announced.", "", false],
 ];
+/* What the agent is paid for an interview. The first interview is free to the candidate
+   only; the agent still earns their fee, so the agent's pages never read "Free". */
+const agentFee = (f: number | undefined, agent: string) => money(f || userByName(agent)?.fee || 0);
 export const personLink = (name: string) => { const u = userByName(name); return u ? `/admin/users/all/${u.id}/` : undefined; };
 
 /* An upcoming interview (Phase 1 upcomingInterviewBody): the four facts, the
@@ -426,7 +425,7 @@ export function UpcomingBody({ b }: { b: any }) {
       <Section kind="block">
         <Facts>
           <Fact icon="user" label="Candidate" value={b.cand} />
-          <Fact icon="wallet" label="Interview fee" value={b.fee && /re/i.test(b.kind) ? money(b.fee) : "Free"} />
+          <Fact icon="wallet" label="Interview fee" value={agentFee(b.fee, b.agent)} />
           <Fact icon="video" label="Type" value={/re-?interview/i.test(b.kind) ? "Re-interview" : "First Interview"} />
           <Fact icon="calendar" label="When" value={b.slot} />
         </Facts>

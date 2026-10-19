@@ -13,7 +13,7 @@ import { Modal } from "../ui/Modal";
 import { Confirm } from "../ui/Confirm";
 import { Icon } from "../Icon";
 import { useDemo } from "@/lib/demo";
-import { PF, INTENTS, EMPLOYMENT, AVATARS, PF_SCENES, SOCIAL, MY_COURSES, EMAIL_TOGGLES, ALWAYS_ON, LEGAL, LEGAL_META } from "@/data/profile";
+import { PF, INTENTS, EMPLOYMENT, AVATARS, PF_SCENES, SOCIAL, MY_COURSES, EMAIL_TOGGLES, ALWAYS_ON } from "@/data/profile";
 import { levelCard } from "@/data/level";
 import { SCENE_STILL } from "@/data/interviews";
 import { PEOPLE } from "@/data/seed";
@@ -394,13 +394,13 @@ function Notifications() {
   );
 }
 
-/* ---------------- Privacy Settings ---------------- */
+/* ---------------- Privacy Settings ----------------
+   No "Legal & Data Use" section in Phase 0 (Maryam 19 Oct 2026). The notices stay
+   at /auth/terms/, which the sign-up consent links to. */
 function Privacy() {
   const { setUi } = useDemo();
   const [pw, setPw] = useState(false);
   const [del, setDel] = useState(false);
-  const [legal, setLegal] = useState("data"); /* Phase 1 opens on the Data Use Notice */
-  const doc = LEGAL.find((l) => l.key === legal)!;
   return (
     <>
       <Section>
@@ -434,16 +434,6 @@ function Privacy() {
         <div className={s.closeB}>
           <Text role="body" ink="secondary" className={s.closeX}>Deleting your account removes your profile, notes, and interview recordings.</Text>
           <Button kind="dangerInk" onClick={() => setDel(true)}>Delete My Account</Button>
-        </div>
-      </Section>
-      <Section kind="block">
-        <SectionHeader title="Legal & Data Use" />
-        <Tabs value={legal} onChange={setLegal} items={LEGAL.map((l) => ({ key: l.key, label: l.title }))} />
-        <div className={s.legalBody}>
-          <Text role="h3">{doc.title}</Text>
-          <Text role="caption">{LEGAL_META}</Text>
-          {doc.short && <div className={s.short}><Text role="h4" as="span">The Short Version</Text><Text role="body" ink="secondary">{doc.short}</Text></div>}
-          <Accordion noTop={!!doc.short} items={doc.sections.map(([title, body]) => ({ title, body: <Text role="body" ink="secondary">{body}</Text> }))} />
         </div>
       </Section>
       {del && (

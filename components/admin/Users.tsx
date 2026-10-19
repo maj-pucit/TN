@@ -15,7 +15,7 @@ import {
   RAW, USERS, USER_BY_ID, ROLE_FILTER, ROLE_BY_K, STAFF_ROLE_KEYS, USER_STATUS_OPTS, LVL_CODES,
   usersBase, roleGroup, roleMatch, userStatusKey, userStatus, userTypeName, staffRole, staffRoleName,
   userCand, candLevel, userTrack, agState, agStateTone, agTraining, agTrainTone, agRange, rangeLabel, rangeCovers,
-  agScore, face, money, personHref, type U,
+  agScore, face, money, personHref, PLATFORM_FEE, type U,
 } from "@/data/admin";
 import s from "./admin.module.css";
 
@@ -76,12 +76,12 @@ export function AdminUsers() {
       { key: "t", label: "Track", cell: (u: U) => userTrack(u) },
       { key: "s", label: "Status", cell: st }, { key: "a", label: "Last active", cell: (u: U) => u.last }]
     : g === "agent" ? [name,
-      { key: "r", label: "Rank", right: true, cell: (u: U) => (u.rank ? String(u.rank) : "—") },
+      { key: "r", label: "Rank", cell: (u: U) => (u.rank ? String(u.rank) : "—") },
       { key: "sc", label: "Agent Score", cell: (u: U) => (u.status === "invited" ? "—" : <span className={s.score}><Icon name="star" />{agScore(u)?.toFixed(1)}</span>) },
-      { key: "i", label: "Interviews", right: true, cell: (u: U) => String(u.interviewed || 0) },
+      { key: "i", label: "Interviews", cell: (u: U) => String(u.interviewed || 0) },
       { key: "tr", label: "Training", cell: (u: U) => { if (u.status === "invited") return "—"; const [t, l] = agTrainTone(u); return <Status tone={t}>{l}</Status>; } },
       { key: "as", label: "Assesses", cell: (u: U) => rangeLabel(agRange(u)) },
-      { key: "fe", label: "Fee", right: true, cell: (u: U) => (u.fee ? money(u.fee) : "—") },
+      { key: "fe", label: "Fee", cell: (u: U) => (u.fee ? money(u.fee) : "—") },
       { key: "sa", label: "State", cell: (u: U) => { if (u.status === "invited") return st(u); const [t, l] = agStateTone(u); return <Status tone={t}>{l}</Status>; } }]
     : g === "internal" ? [name,
       { key: "j", label: "Job title", cell: (u: U) => u.job || "—" }, { key: "d", label: "Department", cell: (u: U) => u.dept || "—" },
@@ -264,13 +264,31 @@ const RatingField = ({ value, onChange }: { value: number; onChange: (n: number)
   </Field>
 );
 
+/* The two fixed fees that make up an interview's price, with the candidate's price
+   worked out live underneath. Used by every form that creates or edits an agent. */
+const num = (x: string) => Number(String(x).replace(/[^\d.]/g, "")) || 0;
+function FeeFields({ fee, plat, onFee, onPlat }: { fee: string; plat: string; onFee: (x: string) => void; onPlat: (x: string) => void }) {
+  const total = num(fee) + num(plat);
+  return (
+    <>
+      <Field label="Talent agent fee (USD)" required help="Paid to the talent agent in full for each interview.">
+        <Input value={fee} onChange={(e) => onFee(e.target.value)} inputMode="decimal" placeholder="e.g. 100" />
+      </Field>
+      <Field label="Platform fee (USD)" required help="Added to the talent agent fee and retained by TalentNext.">
+        <Input value={plat} onChange={(e) => onPlat(e.target.value)} inputMode="decimal" placeholder={`e.g. ${PLATFORM_FEE}`} />
+      </Field>
+      <Text role="body" as="p">{num(fee) ? <>Candidates pay <b>{money(total)}</b> per interview.</> : "Candidates’ price per interview appears once both fees are set."}</Text>
+    </>
+  );
+}
+
 function MarkAgent({ u, close }: { u: U; close: () => void }) {
-  const [rating, setRating] = useState(0), [comm, setComm] = useState("");
+  const [rating, setRating] = useState(0), [fee, setFee] = useState(""), [plat, setPlat] = useState(String(PLATFORM_FEE));
   return (
     <Sheet title={`Invite ${u.name} to be a talent agent`} onClose={close}
-      footer={<Foot ok="Send Invite" disabled={!rating} close={close} onOk={() => { commit(() => { u.roles = [...u.roles, "agent"]; u.commission = Number(comm) || 20; u.startingScore = rating; u.scoreApproved = false; u.onboarded = false; }, `Agent invite sent to ${u.email}`); close(); }} />}>
-      <Text role="desc" as="p">{u.name} keeps their current account and role. Set the commission and starting Agent Score; an invitation to the agent workspace is sent.</Text>
-      <Field label="Commission (%)"><Input value={comm} onChange={(e) => setComm(e.target.value)} inputMode="decimal" placeholder="The platform’s share of this agent’s fee — defaults to 20%" /></Field>
+      footer={<Foot ok="Send Invite" disabled={!rating || !num(fee) || !num(plat)} close={close} onOk={() => { commit(() => { u.roles = [...u.roles, "agent"]; u.fee = num(fee); u.platformFee = num(plat); u.startingScore = rating; u.scoreApproved = false; u.onboarded = false; }, `Agent invite sent to ${u.email}`); close(); }} />}>
+      <Text role="desc" as="p">{u.name} keeps their current account and role. Set their interview fees and starting Agent Score; an invitation to the agent workspace is sent.</Text>
+      <FeeFields fee={fee} plat={plat} onFee={setFee} onPlat={setPlat} />
       <RatingField value={rating} onChange={setRating} />
     </Sheet>
   );
@@ -281,17 +299,17 @@ function MarkAgent({ u, close }: { u: U; close: () => void }) {
 function AddUser({ close }: { close: () => void }) {
   const roles: [string, string][] = [["agent", "Talent Agent"], ...INTERNAL_ROLES];
   const [role, setRole] = useState("agent");
-  const [v, setV] = useState({ first: "", last: "", email: "", phone: "", job: "", dept: "", comm: "" });
+  const [v, setV] = useState({ first: "", last: "", email: "", phone: "", job: "", dept: "", fee: "", plat: String(PLATFORM_FEE) });
   const [rating, setRating] = useState(0);
   const set = (k: keyof typeof v) => (e: { target: { value: string } }) => setV((x) => ({ ...x, [k]: e.target.value }));
   const internal = role !== "agent";
-  const ready = v.first.trim() && v.last.trim() && v.email.trim() && (internal ? v.job.trim() && v.dept : rating > 0);
+  const ready = v.first.trim() && v.last.trim() && v.email.trim() && (internal ? v.job.trim() && v.dept : rating > 0 && num(v.fee) > 0 && num(v.plat) > 0);
   const send = () => {
     commit(() => {
       USERS.push({
         id: `u${Date.now()}`, name: `${v.first.trim()} ${v.last.trim()}`, email: v.email.trim(), roles: [role], status: "invited", invitedOn: mdy(new Date()),
         joined: mdy(new Date()), last: "Never", level: "—", ...(internal ? { internal: true, job: v.job, dept: v.dept, phone: v.phone }
-          : { commission: Number(v.comm) || 20, startingScore: rating, scoreApproved: false, interviewed: 0, onboarded: false, training: "notcomplete" }),
+          : { fee: num(v.fee), platformFee: num(v.plat), startingScore: rating, scoreApproved: false, interviewed: 0, onboarded: false, training: "notcomplete" }),
       });
     }, `Invite sent to ${v.email.trim()}`);
     close();
@@ -311,7 +329,7 @@ function AddUser({ close }: { close: () => void }) {
           </>
         ) : (
           <>
-            <Field label="Commission (%)"><Input value={v.comm} onChange={set("comm")} inputMode="decimal" placeholder="The platform’s share of this agent’s fee — defaults to 20%" /></Field>
+            <FeeFields fee={v.fee} plat={v.plat} onFee={(x) => setV((y) => ({ ...y, fee: x }))} onPlat={(x) => setV((y) => ({ ...y, plat: x }))} />
             <RatingField value={rating} onChange={setRating} />
           </>
         )}
@@ -324,16 +342,16 @@ const split = (n: string) => { const [first, ...rest] = String(n).split(" "); re
 
 function EditAgent({ u, close }: { u: U; close: () => void }) {
   const r = agRange(u);
-  const [v, setV] = useState({ ...split(u.name), comm: String(u.commission ?? 20), from: r[0], to: r[1] });
+  const [v, setV] = useState({ ...split(u.name), fee: String(u.fee ?? ""), plat: String(u.platformFee ?? PLATFORM_FEE), from: r[0], to: r[1] });
   const lv = LVL_CODES.map((l) => ({ value: l, label: l }));
   return (
     <Slider title={`Edit talent agent — ${u.name}`} open onClose={close}
-      footer={<Foot ok="Save Changes" disabled={!v.first.trim() || !v.last.trim()} close={close} onOk={() => { commit(() => { u.name = `${v.first.trim()} ${v.last.trim()}`; u.commission = Number(v.comm) || 20; u.range = [v.from, v.to]; }, `${u.name} updated`); close(); }} />}>
+      footer={<Foot ok="Save Changes" disabled={!v.first.trim() || !v.last.trim() || !num(v.fee) || !num(v.plat)} close={close} onOk={() => { commit(() => { u.name = `${v.first.trim()} ${v.last.trim()}`; u.fee = num(v.fee); u.platformFee = num(v.plat); u.range = [v.from, v.to]; }, `${u.name} updated`); close(); }} />}>
       <Stack gap={6}>
         <Field label="First name" required><Input value={v.first} onChange={(e) => setV({ ...v, first: e.target.value })} /></Field>
         <Field label="Last name" required><Input value={v.last} onChange={(e) => setV({ ...v, last: e.target.value })} /></Field>
         <Field label="Email address"><Input value={u.email} readOnly /></Field>
-        <Field label="Commission (%)"><Input value={v.comm} onChange={(e) => setV({ ...v, comm: e.target.value })} inputMode="decimal" /></Field>
+        <FeeFields fee={v.fee} plat={v.plat} onFee={(x) => setV({ ...v, fee: x })} onPlat={(x) => setV({ ...v, plat: x })} />
         <Field label="Assessment range (from)"><Dropdown variant="form" value={v.from} onChange={(x) => setV({ ...v, from: x })} options={lv} /></Field>
         <Field label="Assessment range (to)"><Dropdown variant="form" value={v.to} onChange={(x) => setV({ ...v, to: x })} options={lv} /></Field>
       </Stack>

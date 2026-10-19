@@ -94,8 +94,8 @@ function PastTable({ rows }: { rows: Iv[] }) {
         { key: "n", label: "Candidate", cell: (x) => x.n },
         { key: "d", label: "Interviewed", cell: (x) => dayDate(x.day) },
         { key: "l", label: "Level", cell: (x) => (x.st === "report" ? "Recording to confirm" : x.level) },
-        { key: "f", label: "Follow-up", right: true, cell: (x) => (x.follow ?? "—") },
-        { key: "p", label: "Depth", right: true, cell: (x) => (x.depth ?? "—") },
+        { key: "f", label: "Follow-up", cell: (x) => (x.follow ?? "—") },
+        { key: "p", label: "Depth", cell: (x) => (x.depth ?? "—") },
       ]} />
     </Section>
   );
@@ -318,7 +318,7 @@ function Done({ x }: { x: Iv }) {
       </Section>
       <Section>
         <SectionHeader title="The fee" />
-        <KV rows={[["Candidate paid", `$${A.fee}`], ["TalentNext kept", `$${A.cut}`], ["Your share", `$${A.share}`], ["Status", x.money]]} />
+        <KV rows={[["Candidate paid", `$${A.price}`], ["Platform fee", `$${A.cut}`], ["Your fee", `$${A.share}`], ["Status", x.money]]} />
       </Section>
     </Page>
   );

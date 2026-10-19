@@ -85,7 +85,7 @@ export function AdminTransactions() {
             { key: "d", label: "Date", cell: (t) => twoLine(dpFmt(t.date), t.time) },
             { key: "t", label: "Type", cell: (t) => TYPE[t.type] || t.type },
             { key: "p", label: "Party", cell: (t) => <PartyCell t={t} /> },
-            { key: "a", label: "Amount", right: true, cell: (t) => (t.dir === "out" ? "−" : "") + (t.amt ? money(t.amt) : "—") },
+            { key: "a", label: "Amount", cell: (t) => (t.dir === "out" ? "−" : "") + (t.amt ? money(t.amt) : "—") },
             { key: "s", label: "Split", cell: (t) => (t.sp ? `${money(t.sp.share)} agent · ${money(t.sp.com)} platform` : <Text role="caption" as="span">—</Text>) },
             { key: "m", label: "Method", cell: (t) => <MethodMark method={t.method} /> },
             { key: "st", label: "Status", cell: (t) => <St m={RAW.TX_STATUS_META} k={t.status} /> },
@@ -139,39 +139,28 @@ const causeHref = (go: string) => go.startsWith("users/users") ? `/admin/users/a
   : go.startsWith("market/bookings") ? "/admin/interviews/all/" : go.startsWith("finance/payouts") ? "/admin/finance/payouts/" : "/admin/finance/transactions/";
 
 /* ---------------- 9.3 Payouts ---------------- */
-const poEligible = (p: any) => p.state === "escrow" && !!p.releases && !p.noDest;
-function releasePayout(p: any) {
-  p.state = "paid"; p.status = "settled"; p.releasedOn = todayISO(); p.when = "Paid"; p.runFailed = null;
-  TXNS.unshift({ id: `t${Date.now()}${p.id}`, ref: "TXN-" + (9044 + TXNS.length), stripeRef: "po_" + p.id, when: "Just now", date: todayISO(), time: "",
-    type: "payout", cat: "payout", who: p.agent, party: "Talent agent", email: p.agentEmail, kind: `Payout — ${String(p.ivKind).toLowerCase()} with ${p.candidate}`,
-    desc: `Payout · ${String(p.ivKind).toLowerCase()} with ${p.candidate}`, amt: p.gross, dir: "out", method: p.method, fee: 0, status: "succeeded", funder: p.funder,
-    agent: p.agent, sp: { fee: p.gross, share: p.agentShare, pct: p.commissionPct, com: p.gross - p.agentShare }, cause: { l: "Payout run", go: "finance/payouts" } });
-}
+/* Read-only: payouts are released outside the platform, through QuickBooks / FAS
+   (Maryam's senior, 19 Oct 2026), so there is no Release early and no Run Weekly Run. */
 export function AdminPayouts() {
   useStore();
   const [q, setQ] = useState("");
   const [state, setState] = useState("all"), [fund, setFund] = useState("all");
   const [from, setFrom] = useState(""), [to, setTo] = useState("");
-  const [early, setEarly] = useState<string | null>(null);
-  const [run, setRun] = useState(false);
   const ql = q.toLowerCase();
-  const S = RAW.SETTINGS;
   const rows = PAYOUTS.filter((p) => state === "all" || p.state === state)
     .filter((p) => fund === "all" || (fund === "candidate" ? p.funder === "Candidate" : p.funder === "Platform"))
     .filter((p) => inRange(p.ivDate, from, to))
     .filter((p) => !q || [p.agent, p.agentEmail, p.candidate, p.ref].some((x) => String(x || "").toLowerCase().includes(ql)));
-  const eligible = PAYOUTS.filter(poEligible);
-  const total = eligible.reduce((n, p) => n + p.agentShare, 0);
   const releases = (p: any) => {
     if (p.state === "paid") return twoLine(dpFmt(p.releasedOn) || "—", "Paid");
     if (p.state === "returned") return <Text role="caption" as="span">—</Text>;
-    if (!p.releases) return <Status tone="warn">Report outstanding</Status>;
+    if (!p.releases) return <Status tone="warn">Recommendation outstanding</Status>;
     return twoLine(dpFmt(p.releases), p.runFailed ? <span className={f.err}>Last run failed: {p.runFailed}</span> : p.noDest ? <span className={f.warn}>No payout destination — the run skips it</span> : undefined);
   };
   return (
     <Page>
-      <PageHeader title="Payouts" desc={`An agent’s share per interview. Held funds become payable ${S.payoutDelay} working days after the agent files their report, and go out on the weekly ${S.payoutRunDay} run.`}
-        actions={<Stack row gap={3}><ExportBtn what="Payouts" />{eligible.length > 0 && <Button kind="ghost" size="sm" icon="renew" onClick={() => setRun(true)}>Run Weekly Run</Button>}</Stack>} />
+      <PageHeader title="Payouts" desc="An agent’s share per interview and where it stands. Payouts are released outside TalentNext, through QuickBooks / FAS."
+        actions={<ExportBtn what="Payouts" />} />
       <Section kind="tabs">
         <Tabs value={state} onChange={setState} items={[["all", "All"], ["escrow", "Funds held"], ["paid", "Paid"], ["returned", "Refunded"]].map(([k, label]) => ({ key: k, label, count: PAYOUTS.filter((p) => k === "all" || p.state === k).length }))} />
       </Section>
@@ -183,38 +172,18 @@ export function AdminPayouts() {
             <DateFilter label="To" value={to} onChange={setTo} />
           </>} />
         {rows.length ? (
-          <Table rows={rows} rowKey={(p) => p.id} actions={(p): RowAction[] => (p.state === "escrow" && !p.noDest && p.agentShare ? [{ icon: "wallet", label: "Release early", onClick: () => setEarly(p.id) }] : [])} cols={[
+          <Table rows={rows} rowKey={(p) => p.id} cols={[
             { key: "a", label: "Agent", cell: (p) => <PersonCell name={p.agent} img={face(p.agent)} sub={p.agentEmail} /> },
             { key: "c", label: "Candidate", cell: (p) => <PersonCell name={p.candidate} img={face(p.candidate)} /> },
             { key: "i", label: "Interview", cell: (p) => twoLine(dpFmt(p.ivDate), p.ivKind) },
-            { key: "m", label: "Amount", right: true, cell: (p) => twoLine(money(p.gross), `${money(p.agentShare)} to agent`) },
+            { key: "m", label: "Amount", cell: (p) => twoLine(money(p.gross), `${money(p.agentShare)} to agent`) },
             { key: "f", label: "Funded by", cell: (p) => p.funder },
             { key: "s", label: "State", cell: (p) => <St m={RAW.PO_STATE_META} k={p.state} /> },
             { key: "r", label: "Releases", cell: releases },
           ]} />
         ) : <Empty icon="wallet" title="No payouts match" />}
       </Section>
-      {early && <ReleaseEarly id={early} close={() => setEarly(null)} />}
-      {run && <Confirm icon="check" title="Run the weekly payout run now?" ok={`Run · ${money(total)}`}
-        desc={`${eligible.length} payout${eligible.length === 1 ? "" : "s"} totalling ${money(total)} will go to their verified destinations. This simulates the ${S.payoutRunDay} run.`}
-        onCancel={() => setRun(false)} onOk={() => { commit(() => eligible.forEach(releasePayout), `${eligible.length} payout${eligible.length === 1 ? "" : "s"} released on the weekly run`); setRun(false); }} />}
     </Page>
-  );
-}
-function ReleaseEarly({ id, close }: { id: string; close: () => void }) {
-  const p = PAYOUTS.find((x) => x.id === id)!;
-  const [why, setWhy] = useState(""), [ask, setAsk] = useState(false);
-  if (ask) return <Confirm icon="warning" stepup title={`Release ${money(p.agentShare)} to ${p.agent} now?`} desc="This pays before the weekly run and cannot be undone." ok={`Release ${money(p.agentShare)}`}
-    onCancel={close} onOk={() => { commit(() => releasePayout(p), `${money(p.agentShare)} released to ${p.agent}`); close(); }} />;
-  return (
-    <Sheet title={`Release ${p.agent} early`} onClose={close}
-      footer={<><Button kind="secondary" onClick={close}>Cancel</Button><Button kind="primary" disabled={!why.trim()} onClick={() => setAsk(true)}>Continue</Button></>}>
-      <Stack gap={6}>
-        <KV rows={[["Agent", p.agent], ["Candidate", p.candidate], ["Agent share", money(p.agentShare)], ["Destination", p.method || "—"]]} />
-        <Text role="desc" as="p">This pays the agent before the weekly run. Money moves as soon as you confirm.</Text>
-        <Field label="Reason" required><TextArea rows={3} maxLength={500} value={why} onChange={(e) => setWhy(e.target.value)} placeholder="Why this is being released ahead of the run — recorded on the audit log (1–500 characters)." /></Field>
-      </Stack>
-    </Sheet>
   );
 }
 
@@ -306,12 +275,12 @@ export function AdminDiscounts() {
           <Table rows={rows} rowKey={(d) => d.id} href={(d) => `/admin/finance/discounts/${d.id}/`} actions={(d) => discActs(d, setSheet, router.push)} cols={[
             { key: "c", label: "Code", cell: (d) => <span className={f.code}><span>{d.code.toUpperCase()}</span>{d.system && <Text role="label" as="span" strong ink="secondary" className={f.auto}>Automatic</Text>}</span> },
             { key: "n", label: "Name", cell: (d) => d.name },
-            { key: "p", label: "Discount", right: true, cell: (d) => `${d.pct}%` },
+            { key: "p", label: "Discount", cell: (d) => `${d.pct}%` },
             { key: "a", label: "Applies to", cell: (d) => APPLIES[d.applies] || d.applies },
             { key: "ap", label: "Application", cell: (d) => APPLY[d.application] || d.application },
             { key: "v", label: "Valid", cell: valid },
             { key: "u", label: "Used", cell: (d) => (d.limit == null ? `${discUsed(d)} · Unlimited` : `${discUsed(d)} / ${d.limit}`) },
-            { key: "g", label: "Value given", right: true, cell: (d) => money(discValue(d)) },
+            { key: "g", label: "Value given", cell: (d) => money(discValue(d)) },
             { key: "s", label: "Status", cell: (d) => <DiscSt d={d} /> },
           ]} />
         ) : <Empty icon="ticket" title="No discount codes match" />}
@@ -344,9 +313,9 @@ export function AdminDiscount({ id }: { id: string }) {
             { key: "c", label: "Candidate", cell: (r) => <PersonCell name={r.cand} img={face(r.cand)} /> },
             { key: "r", label: "Reference", cell: (r) => (r.txId && TXNS.some((t) => t.id === r.txId) ? <span className={f.ref}>{r.ref}</span> : r.ref) },
             { key: "d", label: "Date", cell: (r) => dpFmt(r.date) },
-            { key: "o", label: "Original", right: true, cell: (r) => money(r.original) },
-            { key: "x", label: "Discounted", right: true, cell: (r) => money(r.discounted) },
-            { key: "p", label: "Paid", right: true, cell: (r) => money(r.paid) },
+            { key: "o", label: "Original", cell: (r) => money(r.original) },
+            { key: "x", label: "Discounted", cell: (r) => money(r.discounted) },
+            { key: "p", label: "Paid", cell: (r) => money(r.paid) },
             { key: "s", label: "Funding source", cell: (r) => r.source },
           ]} />
         ) : <Empty icon="ticket" title="No redemptions yet" desc="No one has used this code." />}
@@ -453,10 +422,10 @@ export function AdminReconciliation() {
           <Table rows={rows} rowKey={(b) => b.id} href={(b) => `/admin/finance/reconciliation/${b.id}/`} cols={[
             { key: "b", label: "Batch", cell: (b) => twoLine(b.ref, b.providerRef) },
             { key: "s", label: "Sent", cell: (b) => twoLine(dpFmt(b.sent), b.sentTime) },
-            { key: "i", label: "Items", right: true, cell: (b) => String(b.list.length) },
-            { key: "p", label: "Platform total", right: true, cell: (b) => money(b.platformTotal) },
-            { key: "pr", label: "Provider total", right: true, cell: (b) => (b.providerTotal == null ? <Text role="caption" as="span">Awaiting provider</Text> : money(b.providerTotal)) },
-            { key: "d", label: "Difference", right: true, cell: (b) => { const x = diff(b); return x == null ? <Text role="caption" as="span">—</Text> : x === 0 ? money(0) : <Status tone="red">{money(x)}</Status>; } },
+            { key: "i", label: "Items", cell: (b) => String(b.list.length) },
+            { key: "p", label: "Platform total", cell: (b) => money(b.platformTotal) },
+            { key: "pr", label: "Provider total", cell: (b) => (b.providerTotal == null ? <Text role="caption" as="span">Awaiting provider</Text> : money(b.providerTotal)) },
+            { key: "d", label: "Difference", cell: (b) => { const x = diff(b); return x == null ? <Text role="caption" as="span">—</Text> : x === 0 ? money(0) : <Status tone="red">{money(x)}</Status>; } },
             { key: "st", label: "Status", cell: (b) => <St m={BATCH} k={b.status} /> },
           ]} />
         ) : <Empty icon="chart" title="No settlement batches match" />}
@@ -499,8 +468,8 @@ export function AdminBatch({ id }: { id: string }) {
           <Table rows={list} rowKey={(it) => `${it.recipient}${it.forWhat}`} href={(it) => (it.txId && TXNS.some((t) => t.id === it.txId) ? `/admin/finance/transactions/${it.txId}/` : undefined)} cols={[
             { key: "r", label: "Recipient", cell: (it) => <PersonCell name={it.recipient} img={face(it.recipient)} /> },
             { key: "f", label: "For", cell: (it) => it.forWhat },
-            { key: "p", label: "Platform", right: true, cell: (it) => money(it.platformAmt) },
-            { key: "pr", label: "Provider", right: true, cell: (it) => (it.providerAmt == null ? <Text role="caption" as="span">—</Text> : money(it.providerAmt)) },
+            { key: "p", label: "Platform", cell: (it) => money(it.platformAmt) },
+            { key: "pr", label: "Provider", cell: (it) => (it.providerAmt == null ? <Text role="caption" as="span">—</Text> : money(it.providerAmt)) },
             { key: "ps", label: "Platform state", cell: (it) => it.platformState },
             { key: "vs", label: "Provider state", cell: (it) => it.providerState },
             { key: "m", label: "Match", cell: (it) => <St m={RAW.MATCH_META} k={it.match} /> },

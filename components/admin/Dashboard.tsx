@@ -42,10 +42,9 @@ export function AdminDashboard() {
   const staff = USERS.filter((u) => u.internal).length;
   const live = COURSES.filter((c) => c.status === "live").length, draft = COURSES.filter((c) => c.status === "draft").length;
   const ivOverdue = BOOKINGS.filter((b) => bkStage(b) === "held" && b.overdue).length;
-  const held = heldPayouts();
   const attn = [
-    ivOverdue > 0 && { icon: "video" as const, t: "Interview reports overdue", d: `${ivOverdue} held interview${ivOverdue === 1 ? "" : "s"} past 24h`, href: "/admin/interviews/all/" },
-    held > 0 && { icon: "wallet" as const, t: "Payouts to release", d: `${held} pending settlement`, href: "/admin/finance/payouts/" },
+    ivOverdue > 0 && { icon: "video" as const, t: "Recommendations overdue", d: `${ivOverdue} held interview${ivOverdue === 1 ? "" : "s"} past 24h`, href: "/admin/interviews/all/" },
+    /* No "Payouts to release": payouts are released through QuickBooks / FAS, not here (19 Oct 2026). */
   ].filter(Boolean) as { icon: "video" | "wallet"; t: string; d: string; href: string }[];
   const courseRev = TXNS.filter((t) => t.cat === "course" && t.dir === "in").reduce((n, t) => n + t.amt, 0);
   const ivRev = TXNS.filter((t) => t.cat === "interview" && t.dir === "in").reduce((n, t) => n + t.amt, 0);
@@ -182,7 +181,7 @@ export function AdminDashboard() {
         <Stats cols={3}>
             <Stat icon="calendar" label="Interviews booked" value={String(BOOKINGS.filter((b) => bkStage(b) === "booked").length)} desc="Scheduled this month" />
             <Stat icon="video" label="Interviews held" value={String(BOOKINGS.filter((b) => bkStage(b) === "held").length)} desc="Conducted so far" />
-            <Stat icon="document" label="Reports filed within 24h" value={String(BOOKINGS.filter((b) => bkStage(b) === "reported").length)} desc="Submitted on time" />
+            <Stat icon="document" label="Recommendations sent within 24h" value={String(BOOKINGS.filter((b) => bkStage(b) === "reported").length)} desc="Submitted on time" />
         </Stats>
         <LineChart vmax={12} step={2} aria="First interviews and re-interviews by period" base={[
           { name: "First interview", color: "var(--accent)", pts: [4, 5, 6, 5, 7, 8, 7, 9, 8, 10, 9, 11] },
@@ -195,8 +194,8 @@ export function AdminDashboard() {
         <Table rows={top} rowKey={(a) => a.id} href={(a) => `/admin/users/all/${a.id}/`} pageSize={10} cols={[
           { key: "a", label: "Agent", cell: (a) => <PersonCell name={a.name} img={face(a.name)} /> },
           { key: "r", label: "Rank", cell: (a) => `#${top.indexOf(a) + 1}` },
-          { key: "s", label: "Agent Score", right: true, cell: (a) => <span className={s.score}><Icon name="star" />{agScore(a).toFixed(1)}{a.scoreApproved === false && <Text role="caption" as="span"> · Starting</Text>}</span> },
-          { key: "i", label: "Interviews conducted", right: true, cell: (a) => <>{a.interviewed} <Text role="caption" as="span">interviews</Text></> },
+          { key: "s", label: "Agent Score", cell: (a) => <span className={s.score}><Icon name="star" />{agScore(a).toFixed(1)}{a.scoreApproved === false && <Text role="caption" as="span"> · Starting</Text>}</span> },
+          { key: "i", label: "Interviews conducted", cell: (a) => <>{a.interviewed} <Text role="caption" as="span">interviews</Text></> },
         ]} />
       </Section>
     </Page>

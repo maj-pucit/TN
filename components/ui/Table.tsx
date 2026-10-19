@@ -8,21 +8,21 @@ import { Dropdown } from "./Dropdown";
 import { Text } from "../primitives/Text";
 import type { IconName } from "@/lib/icons";
 
-export type Col<R> = { key: string; label: string; right?: boolean; cell: (r: R) => ReactNode };
+/* Every column is the same width and every cell is left-aligned, on every table (Maryam
+   19 Oct 2026: one format for all tables, never opt-in). */
+export type Col<R> = { key: string; label: string; cell: (r: R) => ReactNode };
 export type RowAction = { icon: IconName; label: string; onClick: () => void; danger?: boolean };
 
 /* <Table> — one page at a time (5 rows by default; 5/10/25/50). A row with
    `href` opens it; `actions` adds the one kebab per row. */
 export function Table<R>({
-  cols, rows, rowKey, href, actions, pageSize = 5, selected, onSelect, even,
+  cols, rows, rowKey, href, actions, pageSize = 5, selected, onSelect,
 }: {
   cols: Col<R>[]; rows: R[]; rowKey: (r: R) => string;
   href?: (r: R) => string | undefined; actions?: (r: R) => RowAction[]; pageSize?: number;
   /* Row selection (Phase 1 admin tables with a kebab): a box per row and a
      select-all that takes the whole list, every page. */
   selected?: string[]; onSelect?: (ids: string[]) => void;
-  /* Every column the same width, all left-aligned, so the gaps between them are equal. */
-  even?: boolean;
 }) {
   const router = useRouter();
   const [size, setSize] = useState(pageSize);
@@ -34,7 +34,7 @@ export function Table<R>({
   return (
     <div>
       <div className={s.wrap}>
-        <table className={`${s.tbl} ${even ? s.even : ""}`}>
+        <table className={s.tbl} style={{ "--tpl": `${onSelect ? "max-content " : ""}repeat(${cols.length}, auto)${actions ? " max-content" : ""}` } as CSSProperties}>
           <thead>
             <tr>
               {onSelect && (
@@ -43,7 +43,7 @@ export function Table<R>({
                     label="Select all" onClick={() => onSelect(rows.every((r) => selected?.includes(rowKey(r))) ? [] : rows.map(rowKey))} />
                 </th>
               )}
-              {cols.map((c) => <th key={c.key} className={`t-compact w-strong ${c.right ? s.right : ""}`}>{c.label}</th>)}
+              {cols.map((c) => <th key={c.key} className="t-compact w-strong">{c.label}</th>)}
               {actions && <th className={`${s.act} t-compact w-strong`}>Actions</th>}
             </tr>
           </thead>
@@ -59,7 +59,7 @@ export function Table<R>({
                     </td>
                   )}
                   {cols.map((c, i) => (
-                    <td key={c.key} className={`t-compact ${i === 0 ? "w-strong" : ""} ${c.right ? s.right : ""}`}>{c.cell(r)}</td>
+                    <td key={c.key} className={`t-compact ${i === 0 ? "w-strong" : ""}`}>{c.cell(r)}</td>
                   ))}
                   {actions && <td className={s.act} onClick={(e) => e.stopPropagation()}><RowMenu items={actions(r)} /></td>}
                 </tr>
@@ -155,7 +155,7 @@ export function RowMenu({ items }: { items: RowAction[] }) {
         <div ref={list} className={`${s.rmList} ${pos.up ? s.up : ""}`} role="menu"
           style={{ "--rm-top": `${pos.top}px`, "--rm-right": `${pos.right}px` } as CSSProperties}>
           {items.map((a) => (
-            <button key={a.label} role="menuitem" className={`${s.rmI} ${a.danger ? s.danger : ""} t-compact`}
+            <button key={a.label} role="menuitem" className={`${s.rmI} ${a.danger ? s.danger : ""} t-body`}
               onClick={() => { setPos(null); a.onClick(); }}>
               <Icon name={a.icon} />{a.label}
             </button>

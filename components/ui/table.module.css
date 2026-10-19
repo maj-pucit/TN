@@ -7,7 +7,18 @@
    ============================================================ */
 .wrap { overflow-x: auto; scrollbar-width: none; }
 .wrap::-webkit-scrollbar { display: none; }
-.tbl { width: 100%; border-collapse: collapse; table-layout: auto; }
+/* ONE FORMAT FOR EVERY TABLE: EQUAL GAPS BETWEEN COLUMNS (Maryam 19 Oct 2026, asked more
+   than once). Each column is as wide as its widest cell, and the spare width is shared out
+   EQUALLY, so the space from the end of one column to the start of the next is the same
+   everywhere; every cell is left-aligned. (Equal-WIDTH columns, the first attempt, left a
+   short column with a wide gap after it.) A CSS grid gives exactly this: `auto` tracks start
+   at their content width and split the free space evenly. The select box and the kebab are
+   `max-content`, so they take no share. Rows are `display: contents`, so the cells of one
+   row are one grid row; clicks still reach the <tr>. Too wide for its column, the table
+   scrolls sideways. */
+.tbl { display: grid; grid-template-columns: var(--tpl); width: 100%; border-collapse: collapse; }
+.tbl thead, .tbl tbody, .tbl tr { display: contents; }
+.tbl th, .tbl td { display: flex; align-items: center; }
 .tbl th {
   padding: var(--s04) var(--s04) var(--s04) 0;
   border-bottom: var(--hairline) solid var(--rule);
@@ -24,15 +35,10 @@
 }
 .tbl tbody tr:first-child td { padding-top: var(--s06); }
 .tbl td:first-child { color: var(--text-primary); }
-/* `even`: equal columns, every cell left-aligned (Maryam 16 Oct 2026). */
-.tbl.even { table-layout: fixed; }
-.tbl.even th.right, .tbl.even td.right { text-align: left; padding-right: 0; }
-.right { text-align: right; }
-.tbl th.right, .tbl td.right { text-align: right; padding-right: var(--s06); }
-.tbl th.right:last-child, .tbl td.right:last-child { padding-right: 0; }
+.tbl th:last-child, .tbl td:last-child { padding-right: 0; }
 .clk { cursor: pointer; }
 .clk:hover td:first-child { color: var(--accent-text); }
-.act { width: var(--s09); text-align: right; padding-right: 0; }
+.act { width: var(--s09); text-align: left; padding-right: 0; }
 
 /* A person cell: a round face beside the name, optional sub-line. */
 .pcell { display: flex; align-items: center; gap: var(--s03); min-width: 0; }
@@ -50,23 +56,26 @@
 .rmT { width: var(--s07); height: var(--s07); display: grid; place-items: center; color: var(--text-secondary); }
 .rmT svg { width: var(--icon-rail); height: var(--icon-rail); }
 .rmT:hover { color: var(--text-primary); }
+/* Phase 1 .rowmenu-list (§125, measured 19 Oct 2026): 6px under the kebab, right edges
+   aligned, no inner padding, a hairline edge; rows 12 / 16 with an 18px grey mark 8px
+   from the label. The lift is Phase 0's shadow, toned down (Maryam 19 Oct 2026). */
 .rmList {
   position: fixed;
-  top: calc(var(--rm-top) + var(--s02));
+  top: calc(var(--rm-top) + var(--s02) + var(--s01));
   right: var(--rm-right);
   min-width: calc(var(--s12) * 2);
   background: var(--layer-01);
   border: var(--hairline) solid var(--rule);
-  box-shadow: var(--shadow-menu);
-  padding: var(--s02) 0;
+  box-shadow: var(--shadow-menu-soft);
+  padding: 0;
   z-index: 90;
   display: flex; flex-direction: column;
 }
-.rmList.up { top: auto; bottom: calc(100vh - var(--rm-top) + var(--s02)); }
-.rmI { display: flex; align-items: center; gap: var(--s04); padding: var(--s03) var(--s05); white-space: nowrap; color: var(--text-primary); text-align: left; }
-.rmI svg { width: var(--icon-page); height: var(--icon-page); }
+.rmList.up { top: auto; bottom: calc(100vh - var(--rm-top) + var(--s02) + var(--s01)); }
+.rmI { display: flex; align-items: center; gap: var(--s03); padding: var(--s04) var(--s05); white-space: nowrap; color: var(--text-primary); text-align: left; }
+.rmI svg { width: var(--icon-page); height: var(--icon-page); flex: none; color: var(--icon-secondary); }
 .rmI:hover { background: var(--overlay-hover); }
-.rmI.danger { color: var(--support-error); }
+.rmI.danger, .rmI.danger svg { color: var(--support-error); }
 
 /* ---- Pagination ---- */
 .pgn {

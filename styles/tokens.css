@@ -88,6 +88,8 @@
   --on-dark-rule: rgba(255, 255, 255, .16);
   --on-dark-track: rgba(255, 255, 255, .24);
   --shadow-menu: 0 8px 24px rgba(17, 17, 17, .12);
+  --shadow-menu-soft: 0 4px 12px rgba(17, 17, 17, .06); /* the row action menu: Phase 0's lift, toned down (Maryam 19 Oct 2026) */
+  --icon-secondary: #525250;  /* a menu row's mark (Phase 1 .rowmenu-ic) */
   --shadow-modal: 0 24px 64px rgba(17, 17, 17, .18);
 
   /* ---- Data viz (never the brand red) ---------------------------- */

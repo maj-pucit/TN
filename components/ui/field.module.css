@@ -44,5 +44,5 @@ textarea.inp { height: auto; min-height: calc(var(--s12) + var(--s06)); padding-
 .tools { display: flex; align-items: center; flex-wrap: wrap; gap: var(--s04) var(--s05); margin-bottom: var(--sec-h-gap); }
 .filters { display: flex; align-items: center; flex-wrap: wrap; gap: var(--s03); margin-left: auto; }
 
-/* Super Admin forms: the label is the regular grey (Phase 1 admin .f .lbl). */
-:global([data-portal="admin"]) .f > span:first-child { font-weight: var(--t-w-book); color: var(--text-secondary); }
+/* Super Admin forms: the label is book weight in black (Maryam 19 Oct 2026, was the grey). */
+:global([data-portal="admin"]) .f > span:first-child { font-weight: var(--t-w-book); color: var(--text-primary); }

@@ -11,7 +11,9 @@ export const AGENT = {
   name: "Owen Clarke", first: "Owen", email: "owen.clarke@fieldstone.co",
   img: "/images/people/agent.jpg",
   range: "Explorer E2 – Builder B1", rangeShort: "E2 – B1",
-  fee: 85, share: 68, cut: 17,
+  /* Two fixed fees, both set by a Super Admin (Maryam 19 Oct 2026): the agent's fee, paid
+     to them in full, and the platform fee on top. Candidates pay the sum (price). */
+  fee: 85, share: 85, cut: 25, price: 110,
   rating: 4.6, ivs: 164, month: 9,
   rank: 12, pool: 38,
   manager: { name: "Nadia Rahman", img: PEOPLE.lena.img },

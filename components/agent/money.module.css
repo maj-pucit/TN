@@ -7,5 +7,4 @@
 .tick { width: var(--s05); height: var(--s05); color: var(--support-success); }
 .score { display: inline-flex; align-items: center; gap: var(--s01); }
 .star { width: var(--s05); height: var(--s05); color: var(--star); }
-.who { display: inline-flex; align-items: center; gap: var(--s03); }
-.who img { width: var(--avatar-row); height: var(--avatar-row); border-radius: var(--radius-pill); object-fit: cover; }
+

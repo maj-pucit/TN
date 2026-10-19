@@ -71,8 +71,8 @@ export function AdminCatalogue() {
             { key: "l", label: "Levels", cell: (x) => (x.levels || []).join(", ") },
             { key: "i", label: "Intent", cell: (x) => intentName(x.intent) },
             { key: "s", label: "Status", cell: (x) => <Status tone={STATUS[x.status][0]}>{STATUS[x.status][1]}</Status> },
-            { key: "c", label: "Chapters", right: true, cell: (x) => String(x.chapters) },
-            { key: "p", label: "Price", right: true, cell: (x) => money(x.price) },
+            { key: "c", label: "Chapters", cell: (x) => String(x.chapters) },
+            { key: "p", label: "Price", cell: (x) => money(x.price) },
           ]} />
         ) : <div className={s.empty}><Icon name="book" /><Text role="h4" as="span">No courses match</Text><Text role="desc" as="span">Nothing in this filter yet.</Text></div>}
         <BulkBar count={sel.length} actions={bulk} onClear={() => setSel([])} />

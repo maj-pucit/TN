@@ -46,8 +46,8 @@ export function AdminRoles() {
         <Table rows={roles} rowKey={(r) => r.k} cols={[
           { key: "r", label: "Role", cell: (r) => <span className={s.role}>{r.name}{r.k === "admin" && <Text role="label" as="span" strong className={s.default}>Default</Text>}</span> },
           { key: "d", label: "Description", cell: (r) => <span className={s.desc}>{r.desc}</span> },
-          { key: "n", label: "Accounts", right: true, cell: (r) => r.k === "admin" ? String(holders(r.k)) : <Link className={s.acct} href={`/admin/users/all/?role=${r.k}`}>{holders(r.k)}</Link> },
-          { key: "a", label: "Actions", right: true, cell: (r) => r.k === "admin" ? null : (
+          { key: "n", label: "Accounts", cell: (r) => r.k === "admin" ? String(holders(r.k)) : <Link className={s.acct} href={`/admin/users/all/?role=${r.k}`}>{holders(r.k)}</Link> },
+          { key: "a", label: "Actions", cell: (r) => r.k === "admin" ? null : (
             <RowMenu items={[{ icon: "edit", label: "Edit", onClick: () => setSheet({ k: "edit", id: r.k }) }, { icon: "delete", label: "Delete", danger: true, onClick: () => setDel(r.k) }]} />
           ) },
         ]} pageSize={10} />

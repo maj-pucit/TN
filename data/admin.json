@@ -2886,7 +2886,7 @@
    "bookingRef": "BKG-3199",
    "net": 180,
    "status": "held",
-   "when": "Report outstanding",
+   "when": "Recommendation outstanding",
    "date": "—",
    "period": "—",
    "interviews": 1,
@@ -3242,7 +3242,7 @@
    "changedBy": "Reed Castellano",
    "role": "Super Admin",
    "on": "2026-09-01, 11:00 AM",
-   "reason": "Set the release delay after a report is filed, per the settlement model."
+   "reason": "Set the release delay after a recommendation is sent, per the settlement model."
   },
   {
    "id": "fl6",
@@ -5149,7 +5149,7 @@
   "booked": "Booked",
   "held": "Held",
   "await": "Awaiting approval",
-  "reported": "Reported",
+  "reported": "Recommended",
   "nothld": "Not held",
   "awaitcand": "Awaiting candidate",
   "resolved": "Resolved"
@@ -5561,15 +5561,15 @@
   },
   "interviews": {
    "title": "Interviews",
-   "desc": "The report clock and the rebooking window. A change applies to interviews held / credits issued after it; one already running does not move.",
+   "desc": "The recommendation clock and the rebooking window. A change applies to interviews held / credits issued after it; one already running does not move.",
    "fields": [
     {
      "k": "reportDeadline",
-     "l": "Report deadline",
+     "l": "Recommendation deadline",
      "unit": "hours",
      "min": 1,
      "max": 168,
-     "hint": "FN:() => `How long an agent has to file a report after an interview is held. The candidate's report-ready promise is this plus the fixed ${REVIEW_WINDOW_HRS}-hour review window — currently ${SETTINGS.reportDeadline + REVIEW_WINDOW_HRS} hours.`"
+     "hint": "FN:() => `How long an agent has to send a recommendation after an interview is held. The candidate's report-ready promise is this plus the fixed ${REVIEW_WINDOW_HRS}-hour review window — currently ${SETTINGS.reportDeadline + REVIEW_WINDOW_HRS} hours.`"
     },
     {
      "k": "rebookWindow",
@@ -5790,11 +5790,11 @@
   {
    "id": "nt8",
    "recipient": "staff",
-   "name": "Interview report overdue",
+   "name": "Recommendation overdue",
    "type": "C",
-   "sentWhen": "A report passes its deadline",
-   "title": "An interview report is overdue",
-   "body": "{agent}’s report for their interview with {name} is past its deadline.",
+   "sentWhen": "A recommendation passes its deadline",
+   "title": "A recommendation is overdue",
+   "body": "{agent}’s recommendation for their interview with {name} is past its deadline.",
    "ph": [
     "agent",
     "name"
@@ -6093,11 +6093,11 @@
   {
    "id": "nt28",
    "recipient": "agent",
-   "name": "Interview report due",
+   "name": "Recommendation due",
    "type": "C",
-   "sentWhen": "A filed report is still outstanding",
-   "title": "An interview report is due",
-   "body": "Your report for {name}’s interview is due within {count} hours.",
+   "sentWhen": "A recommendation is still outstanding",
+   "title": "A recommendation is due",
+   "body": "Your recommendation for {name}’s interview is due within {count} hours.",
    "ph": [
     "name",
     "count"
@@ -6109,11 +6109,11 @@
   {
    "id": "nt29",
    "recipient": "agent",
-   "name": "Interview report overdue",
+   "name": "Recommendation overdue",
    "type": "C",
-   "sentWhen": "Your report passes its deadline",
-   "title": "An interview report is overdue",
-   "body": "Your report for {name}’s interview is past its deadline.",
+   "sentWhen": "Your recommendation passes its deadline",
+   "title": "A recommendation is overdue",
+   "body": "Your recommendation for {name}’s interview is past its deadline.",
    "ph": [
     "name"
    ],

@@ -56,6 +56,17 @@
   .stat { grid-template-columns: var(--icon-rail) minmax(0, 1fr); grid-template-areas: "ic l" "ic n" "ic d"; }
   .n { text-align: left; align-self: start; }
 }
+/* A figure cell whose content box is narrower than 190px (four across in a narrow desktop column, around 1024
+   and 1280 with the rail open) cannot hold a title beside its value: the title was cut
+   off. Each cell is its own container, so the value drops under the title exactly when
+   that cell is too narrow, whatever the page (Maryam 19 Oct 2026). */
+.grid > .stat { container: stat / inline-size; }
+@container stat (max-width: 189.98px) {
+  .ic { grid-area: auto; grid-column: 1; grid-row: 1 / span 3; align-self: start; }
+  .l { grid-area: auto; grid-column: 2 / -1; grid-row: 1; }
+  .n { grid-area: auto; grid-column: 2 / -1; grid-row: 2; text-align: left; align-self: start; margin-right: 0; }
+  .d { grid-area: auto; grid-column: 2 / -1; grid-row: 3; }
+}
 
 /* ---- One fact (Phase 1 .pf-facts cell, measured): the mark INLINE with a
    12.5 Medium grey label, then the value 8 below at 14 Medium black. ---- */

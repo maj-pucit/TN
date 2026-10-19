@@ -31,7 +31,7 @@ import pr from "../candidate/profile.module.css";
    ============================================================ */
 const St = ({ v }: { v: [Tone, string] | null }) => (v ? <Status tone={v[0]}>{v[1]}</Status> : <>—</>);
 const overdue = (word: string, days: number) => <Status tone="red">{`${word} ${days} day${days === 1 ? "" : "s"} overdue`}</Status>;
-const reportDue = (b: any) => bkStage(b) !== "held" ? "—" : b.overdue ? overdue("Report", b.overdueDays) : "Within 24h";
+const reportDue = (b: any) => bkStage(b) !== "held" ? "—" : b.overdue ? overdue("Recommendation", b.overdueDays) : "Within 24h";
 const approvalDue = (b: any) => bkStage(b) !== "await" ? "—" : b.apprOverdue ? overdue("Approval", b.apprOverdueDays) : "Within 24h";
 const twoLine = (a: string, b: string) => <span className={s.two}><span>{a}</span><Text role="caption" as="span">{b}</Text></span>;
 const inRange = (d: string, from: string, to: string) => (!from || d >= from) && (!to || d <= to);
@@ -73,9 +73,9 @@ export function AdminInterviews() {
             { key: "t", label: "Type", cell: (b) => bkType(b) },
             { key: "w", label: "Scheduled", cell: (b) => twoLine(dpFmt(b.date), slot12(b.slot)) },
             { key: "s", label: "Stage", cell: (b) => <St v={bkStageTone(b)} /> },
-            { key: "f", label: "Fee", right: true, cell: (b) => (bkFirst(b) || !b.fee ? "Free" : money(b.fee)) },
+            { key: "f", label: "Fee", cell: (b) => (bkFirst(b) || !b.fee ? "Free" : money(b.fee)) },
             { key: "p", label: "Payout state", cell: (b) => <St v={bkEscrow(b.escrow)} /> },
-            { key: "r", label: "Report due", cell: reportDue },
+            { key: "r", label: "Recommendation due", cell: reportDue },
             { key: "ap", label: "Approval due", cell: approvalDue },
           ]} actions={(b) => [{ icon: "view", label: "View", onClick: () => router.push(`/admin/interviews/all/${b.id}/`) }]} />
         ) : <Empty title="No interviews match" q={q} />}
@@ -110,10 +110,10 @@ export function AdminBooking({ id }: { id: string }) {
   const tr = b.transcript === "Ready" ? "green" : b.transcript === "Failed" ? "red" : "warn";
   const consent = scenesConsent(b);
   const report: ReactNodeLike =
-    st === "held" ? <KV rows={[["Report", b.overdue ? overdue("Report", b.overdueDays) : "Outstanding, due within 24h of the interview"]]} />
-    : st === "await" ? <KV rows={[["Report", `Filed ${b.filed || "—"}`], ["Approval", b.apprOverdue ? overdue("Approval", b.apprOverdueDays) : "Awaiting a reviewer, within 24h"]]} />
-    : st === "reported" ? <KV rows={[["Report", `Filed ${b.filed || b.date || "—"}`], ["Level", <Status key="l" tone="green">Settled and live on the record</Status>]]} />
-    : st === "nothld" ? <Text role="desc" as="p">No interview took place, so no report is due.</Text>
+    st === "held" ? <KV rows={[["Recommendation", b.overdue ? overdue("Recommendation", b.overdueDays) : "Outstanding, due within 24h of the interview"]]} />
+    : st === "await" ? <KV rows={[["Recommendation", `Sent ${b.filed || "—"}`], ["Approval", b.apprOverdue ? overdue("Approval", b.apprOverdueDays) : "Awaiting a reviewer, within 24h"]]} />
+    : st === "reported" ? <KV rows={[["Recommendation", `Sent ${b.filed || b.date || "—"}`], ["Level", <Status key="l" tone="green">Settled and live on the record</Status>]]} />
+    : st === "nothld" ? <Text role="desc" as="p">No interview took place, so no recommendation is due.</Text>
     : <Text role="desc" as="p">This booking is resolved and needs nothing further.</Text>;
   const menu = b.recExists && !b.recDeleted ? <RowMenu items={[{ icon: "play", label: "Open recording", onClick: () => router.push(`/admin/interviews/recordings/${b.id}/`) }]} /> : null;
   return (
@@ -138,7 +138,7 @@ export function AdminBooking({ id }: { id: string }) {
             ]} />}
       </Section>
       <Section>
-        <SectionHeader title="Report" />
+        <SectionHeader title="Recommendation" />
         {report}
       </Section>
       <Section>
@@ -201,7 +201,7 @@ export function AdminRecordings() {
             { key: "c", label: "Candidate", cell: (b) => <PersonCell name={b.cand} img={face(b.cand)} sub={candEmail(b.cand)} /> },
             { key: "a", label: "Agent", cell: (b) => <PersonCell name={b.agent} img={face(b.agent)} /> },
             { key: "i", label: "Interview", cell: (b) => twoLine(dpFmt(b.date), bkType(b)) },
-            { key: "l", label: "Length", right: true, cell: (b) => b.recLen || "—" },
+            { key: "l", label: "Length", cell: (b) => b.recLen || "—" },
             { key: "t", label: "Transcript", cell: (b) => (
               <span className={s.two}><Status tone={b.transcript === "Ready" ? "green" : b.transcript === "Failed" ? "red" : "warn"}>{b.transcript}</Status>
                 {b.transcript === "Failed" && <Text role="caption" as="span">No transcript, so this interview was not evaluated by Tal.</Text>}</span>) },

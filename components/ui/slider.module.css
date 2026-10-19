@@ -9,14 +9,24 @@
   width: var(--slider-w);
   height: 100%;
   display: flex;
-  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
   background: var(--layer-01);
   border-left: var(--hairline) solid var(--rule);
   min-height: 0;
+  flex: none;
+  transition: width var(--mo-base) var(--mo-standard), opacity var(--mo-base) var(--mo-standard);
 }
+/* Collapsed: zero width, so the page column takes the room back as it opens or closes. The
+   content keeps its full width and is anchored right, so it slides in rather than squashing. */
+.peek[data-state="closed"] { width: 0; opacity: 0; border-left-color: transparent; }
+.in { width: var(--slider-w); flex: none; height: 100%; display: flex; flex-direction: column; min-height: 0; }
 @container app (max-width: 899.98px) {
-  .peek { position: absolute; inset: var(--bar-h) 0 0 0; width: auto; border-left: 0; z-index: 60; }
+  .peek { position: absolute; inset: var(--bar-h) 0 0 0; width: auto; border-left: 0; z-index: 60; transition: transform var(--mo-base) var(--mo-standard), opacity var(--mo-base) var(--mo-standard); }
+  .peek[data-state="closed"] { width: auto; transform: translateX(100%); }
+  .in { width: 100%; }
 }
+@media (prefers-reduced-motion: reduce) { .peek { transition: none; } }
 .h {
   display: flex; align-items: center; gap: var(--s04);
   min-height: var(--sheet-h-h);

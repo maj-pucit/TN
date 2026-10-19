@@ -30,7 +30,7 @@ export function PaymentsPage() {
       <Section>
         <SectionHeader title="Previous Transactions" />
         {/* The shared admin table (Maryam 16 Oct 2026): equal columns, all left-aligned. */}
-        <Table even rows={rows} rowKey={(p) => p.item + p.date} cols={[
+        <Table rows={rows} rowKey={(p) => p.item + p.date} cols={[
           { key: "i", label: "Paid For", cell: (p) => p.item },
           { key: "d", label: "Paid On", cell: (p) => p.date },
           { key: "c", label: "Card", cell: (p) => (p.card ? <span className={s.c}><span className={s.bmk} dangerouslySetInnerHTML={{ __html: bmk(p.brand ?? "card") }} />•••• {p.card}</span> : "—") },

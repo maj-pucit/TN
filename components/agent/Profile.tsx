@@ -67,9 +67,6 @@ function Mine({ ind, setInd, int, setInt, specs, setSpecs, fee, setFee }: {
   specs: string[]; setSpecs: (v: string[]) => void; fee: number; setFee: (v: number) => void;
 }) {
   const [edit, setEdit] = useState<null | "details" | "specs" | "ind" | "int">(null);
-  const [draftFee, setDraftFee] = useState(String(fee));
-  const [feeAsk, setFeeAsk] = useState(false);
-  const net = Math.round((Number(draftFee.replace(/\D/g, "")) || 0) * 0.8);
   const acts = (onSave: () => void) => (
     <Stack row gap={3}>
       <Button kind="secondary" icon="delete" onClick={() => setEdit(null)}>Discard Changes</Button>
@@ -79,10 +76,7 @@ function Mine({ ind, setInd, int, setInt, specs, setSpecs, fee, setFee }: {
   const pen = (k: typeof edit, label?: string) => label
     ? <Button kind="link" icon="add" onClick={() => setEdit(k)}>{label}</Button>
     : <Button kind="ghost" size="sm" icon="edit" label="Edit Specialities" onClick={() => setEdit(k)} />;
-  const saveDetails = () => {
-    const n = Number(draftFee.replace(/\D/g, "")) || fee;
-    if (n !== fee) setFeeAsk(true); else setEdit(null);
-  };
+  const saveDetails = () => setEdit(null);
   return (
     <>
       <Section kind="block">
@@ -95,8 +89,9 @@ function Mine({ ind, setInd, int, setInt, specs, setSpecs, fee, setFee }: {
               <Field label="Name"><Input defaultValue={A.name} /></Field>
               <Field label="Email"><Input defaultValue={A.email} readOnly /></Field>
             </FormRow>
-            <Field label="Interview fee" help={`You keep $${net} of $${Number(draftFee.replace(/\D/g, "")) || 0}. TalentNext keeps 20%.`}>
-              <Input value={`$${draftFee.replace(/\D/g, "")}`} onChange={(e) => setDraftFee(e.target.value)} inputMode="numeric" />
+            {/* The fee is set by TalentNext, not the agent (Maryam 19 Oct 2026), so it is read-only here. */}
+            <Field label="Your interview fee" help={`Set by TalentNext and paid to you in full. Candidates pay $${A.price}, which includes the platform fee.`}>
+              <Input value={`$${fee}`} readOnly />
             </Field>
             <Field label="About"><TextArea rows={5} defaultValue={PUB.about} /></Field>
           </Form>
@@ -131,12 +126,6 @@ function Mine({ ind, setInd, int, setInt, specs, setSpecs, fee, setFee }: {
         <SectionHeader title="Visibility" />
         <ToggleRow title="Listed in the marketplace" desc="Candidates on your track can find and book you" />
       </Section>
-      {feeAsk && (
-        <Confirm icon="warning" title="Change your fee?" ok="Change Fee"
-          desc="Interviews already booked keep the old fee."
-          onCancel={() => setFeeAsk(false)}
-          onOk={() => { setFee(Number(draftFee.replace(/\D/g, "")) || fee); setFeeAsk(false); setEdit(null); }} />
-      )}
     </>
   );
 }

@@ -33,7 +33,7 @@ export function AgentDashboard() {
       <Section kind="block" bare>
         <Stats cols={3}>
           <Stat icon="video" label="Interviews Completed" value={String(A.month)} desc="This month" />
-          <Stat icon="wallet" label="Fee per Interview" value={`$${A.share}`} desc={`Your share of the $${A.fee} fee`} />
+          <Stat icon="wallet" label="Fee per Interview" value={`$${A.share}`} desc="Paid to you in full" />
           <Stat icon="creditCard" label="Gross Held" value={`$${A.grossHeld}`} desc="Released once you send the evaluation" />
         </Stats>
       </Section>

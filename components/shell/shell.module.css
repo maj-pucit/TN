@@ -167,21 +167,12 @@
 .sub:hover { background: var(--overlay-hover); }
 .sub.on { color: var(--accent); }
 
-/* Collapsed rail: a parent's subs open as a flyout on hover. */
+/* Collapsed rail: a parent's subs stay hidden, so hovering a parent shows only its name
+   tooltip, like every other module (Maryam 19 Oct 2026). The hover flyout this replaced
+   was clipped by the rail's own scroll box, so only its shadow ever showed. The subs
+   appear under their parent once the rail is open. */
 .node { position: relative; }
-.body:not([data-open="true"]) .subs {
-  display: none;
-  position: absolute;
-  left: 100%; top: 0;
-  min-width: calc(var(--drawer-w) - var(--s07));
-  background: var(--layer-01);
-  border: var(--hairline) solid var(--rule);
-  box-shadow: var(--shadow-menu);
-  padding: var(--s03) 0;
-  z-index: 35;
-}
-.body:not([data-open="true"]) .node:hover .subs { display: block; }
-.body:not([data-open="true"]) .sub { padding: 0 var(--s05); }
+.body:not([data-open="true"]) .subs { display: none; }
 
 .main {
   position: relative;
@@ -192,7 +183,7 @@
   scrollbar-width: none;
 }
 .main::-webkit-scrollbar { display: none; }
-.main { grid-column: 2; grid-row: 1; }
+.main { grid-column: 2; grid-row: 1; transition: padding var(--mo-base) var(--mo-standard); }
 .dockLayer { grid-column: 2; grid-row: 1; align-self: end; justify-self: center; z-index: 40; pointer-events: none; padding-bottom: var(--dock-gap); }
 .dockLayer:empty { display: none; }
 .dockLayer > * { pointer-events: auto; }
@@ -219,6 +210,14 @@
 @container app (min-width: 900px) {
   .main { padding: 0 var(--content-gutter); }
   .body[data-open="true"] .main { padding: 0; }
+  /* An open right slider takes that width too (Phase 1 .peek-form): the page drops its
+     margin and fills the space from the rail to the slider (Maryam 19 Oct 2026). */
+  .body:has(> .sliderSlot > :not([data-ghost])) .main { padding: 0; }
+  /* ONE STROKE WHERE TWO PANELS MEET (Maryam 19 Oct 2026). With the margin gone the
+     content sheet touches its neighbours, and its own edge line would stack on theirs:
+     the rail already draws the line on the left, the slider on the right. */
+  .body[data-open="true"] .column, .body:has(> .sliderSlot > :not([data-ghost])) .column { border-left: 0; }
+  .body:has(> .sliderSlot > :not([data-ghost])) .column { border-right: 0; }
   .column { max-width: none; }
 }
 

@@ -189,7 +189,7 @@ export function AdminApprovals() {
             { key: "w", label: "Interview Date", cell: (x) => x.when },
             { key: "ap", label: "Agent Proposed", cell: (x) => levelLetters(x.agentLevel, x.agentLetters) },
             { key: "tp", label: "Tal Proposed", cell: (x) => (x.talLevel ? levelLetters(x.talLevel, x.talLetters) : "—") },
-            { key: "f", label: "Report filed", cell: (x) => x.filed || x.submitted || "—" },
+            { key: "f", label: "Recommendation sent", cell: (x) => x.filed || x.submitted || "—" },
             { key: "d", label: "Due Time", cell: (x) => <Due iv={x} /> },
           ]} />
         ) : <div className={s.empty}><Icon name="checkOutline" /><Text role="h4" as="span">Nothing waiting on you</Text><Text role="desc" as="span">Every submitted interview has a decision.</Text></div>}
@@ -228,14 +228,14 @@ export function AdminApproval({ id }: { id: string }) {
       <Section kind="tabs"><Tabs value={tab} onChange={setTab} items={[{ key: "recommendation", label: "Recommendation" }, { key: "transcript", label: "Transcript" }]} /></Section>
       {tab === "transcript" ? (
         iv.transcript === "Failed"
-          ? <Section><Text role="desc" as="p">No transcript exists for this interview. Settle the level on the agent’s report in the Recommendation tab.</Text></Section>
+          ? <Section><Text role="desc" as="p">No transcript exists for this interview. Settle the level on the agent’s recommendation in the Recommendation tab.</Text></Section>
           : <Transcript cand={iv.cand} />
       ) : (
         <>
           <Section kind="block">
             <Facts>
               <Fact icon="starOutline" label="Candidate rating" value={Number(iv.rating).toFixed(1)} />
-              <Fact icon="document" label="Report filed" value={iv.filed || iv.submitted || "—"} />
+              <Fact icon="document" label="Recommendation sent" value={iv.filed || iv.submitted || "—"} />
               <Fact icon="flag" label="Source" value={type} />
               <Fact icon="video" label="Interview" value={isRe(iv.kind) ? "Re-interview" : "First Interview"} />
             </Facts>

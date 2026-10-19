@@ -1,8 +1,9 @@
 /* The ledger (candidate Payments, agent Earnings) drawn as the admin Table (Maryam 16 Oct 2026,
    "apply the same admin side table design"): header 13.5 Medium black over the one rule, no
    lines between rows, the first row 24 off the header, cells the description grey at 13.5, the
-   first column the black strong anchor. Columns size to their widest cell and share the rest. */
-.tbl { display: grid; grid-template-columns: repeat(var(--cols), minmax(max-content, auto)); overflow-x: auto; scrollbar-width: none; }
+   first column the black strong anchor. Columns size to their widest cell and share the spare
+   width equally, so every gap between columns is the same (Maryam 19 Oct 2026). */
+.tbl { display: grid; grid-template-columns: repeat(var(--cols), auto); overflow-x: auto; scrollbar-width: none; }
 .tbl::-webkit-scrollbar { display: none; }
 .r { display: contents; }
 .r > span {
@@ -15,7 +16,8 @@
 .r > span:last-child { padding-right: 0; }
 .head > span { color: var(--text-primary); font-weight: var(--t-w-strong); border-bottom: var(--hairline) solid var(--rule); }
 .head + .r > span { padding-top: var(--s06); }
-.num { justify-content: flex-end; text-align: right; }
+/* Every column left-aligned, like the Table (Maryam 19 Oct 2026). */
+.num { justify-content: flex-start; text-align: left; }
 .n { font-weight: var(--t-w-strong); color: var(--text-primary); }
 .d { color: var(--text-secondary); }
 .amt { font-weight: var(--t-w-strong); color: var(--text-primary); }

@@ -184,7 +184,7 @@ export function AdminSettings({ tab }: { tab?: string }) {
 const SET = RAW.SETTINGS;
 const GROUPS: Record<string, any> = RAW.SET_GROUPS;
 const REVIEW_WINDOW_HRS = 24;
-const hintOf = (f: any) => (String(f.hint).startsWith("FN:") ? `How long an agent has to file a report after an interview is held. The candidate's report-ready promise is this plus the fixed ${REVIEW_WINDOW_HRS}-hour review window — currently ${SET.reportDeadline + REVIEW_WINDOW_HRS} hours.` : f.hint);
+const hintOf = (f: any) => (String(f.hint).startsWith("FN:") ? `How long an agent has to send a recommendation after an interview is held. The candidate's report-ready promise is this plus the fixed ${REVIEW_WINDOW_HRS}-hour review window — currently ${SET.reportDeadline + REVIEW_WINDOW_HRS} hours.` : f.hint);
 const SHOWN: [string, string[]][] = [["sessions", ["autoSignout"]], ["exports", ["exportLimit"]], ["interviews", ["reportDeadline"]]];
 function Platform() {
   useStore();
@@ -240,13 +240,13 @@ function Money() {
   const reset = () => { setEdit(false); setStep(null); setWhy(""); setDelay(String(SET.payoutDelay)); setDay(SET.payoutRunDay); };
   return (
     <Section>
-      <SectionHeader title="Money" desc="When held funds are released and the weekly payout run. These carry the Change fee permission — a reason and a re-authentication step. A change applies to reports filed after it; held funds already releasable are unaffected."
+      <SectionHeader title="Money" desc="When held funds are released and the weekly payout run. These carry the Change fee permission — a reason and a re-authentication step. A change applies to recommendations sent after it; held funds already releasable are unaffected."
         actions={edit
           ? <Stack row gap={3}><Button kind="secondary" size="sm" onClick={reset}>Cancel</Button><Button kind="primary" size="sm" disabled={!ok || !changes.length} onClick={() => setStep("reason")}>Save</Button></Stack>
           : <Button kind="ghost" size="sm" icon="edit" onClick={() => setEdit(true)}>Edit</Button>} />
       {edit ? (
         <Stack gap={5}>
-          <Field label="Payout release delay (working days)" help="How long after a report is filed before held funds become releasable. Counted against the working-days calendar below." error={ok ? undefined : "Enter a whole number between 0 and 30 working days."}>
+          <Field label="Payout release delay (working days)" help="How long after a recommendation is sent before held funds become releasable. Counted against the working-days calendar below." error={ok ? undefined : "Enter a whole number between 0 and 30 working days."}>
             <Input inputMode="numeric" value={delay} onChange={(e) => setDelay(e.target.value.replace(/[^\d]/g, ""))} />
           </Field>
           <Field label="Payout run day" help="The payout run executes at 12:00 AM on this day, in your time zone.">

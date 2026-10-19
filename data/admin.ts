@@ -46,6 +46,14 @@ export function face(name: string) {
 }
 
 export const money = (n: number) => "$" + Math.round(n).toLocaleString("en-US");
+/* An interview's price has two fixed parts (Maryam 19 Oct 2026): the talent agent's fee,
+   paid to the agent in full, and the platform fee TalentNext adds on top. Candidates pay
+   the sum. Both are set by a Super Admin per agent. PLATFORM_FEE is the default for an
+   agent with none set (AUTHORED PLACEHOLDER until the client names a figure). */
+export const PLATFORM_FEE = 25;
+export const agentFee = (u: { fee?: number }) => u.fee || 0;
+export const platformFee = (u: { platformFee?: number }) => u.platformFee ?? PLATFORM_FEE;
+export const candidatePrice = (u: { fee?: number; platformFee?: number }) => agentFee(u) + platformFee(u);
 export const AGENTS = () => USERS.filter((u) => u.roles.includes("agent"));
 export const agScore = (a: U) => (a.scoreApproved === false ? a.startingScore : a.approvedScore ?? a.rating) as number;
 export const bkStage = (b: any) => (b.stage || "booked") as string;
