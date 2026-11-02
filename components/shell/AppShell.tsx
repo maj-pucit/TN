@@ -24,6 +24,11 @@ export function AppShell({ portal, children }: { portal: PortalKey; children: Re
   const { stage, frame, ui, setUi } = useDemo();
   const [open, setOpen] = useState(false);
   const [acct, setAcct] = useState(false);
+  /* The collapsed rail's flyout CLOSES once a sub-module is picked (Maryam 2 Nov 2026). It
+     shows on hover and on focus-within, and after a click the pointer is still over it and
+     the link still has focus, so it stayed. Picking blurs the link and marks the module
+     shut; the flyout comes back only after the pointer leaves the module and returns. */
+  const [shut, setShut] = useState<string | null>(null);
   const [logoutS, setLogoutS] = useState(false);
   const logout = logoutS || !!ui.logout;
   const setLogout = (v: boolean) => { setLogoutS(v); if (!v) setUi({ logout: undefined }); };
@@ -42,6 +47,18 @@ export function AppShell({ portal, children }: { portal: PortalKey; children: Re
   // A phone-width frame starts with the drawer shut; navigating shuts it.
   useEffect(() => { setAcct(false); if (frame !== "desktop") setOpen(false); }, [path, frame]);
 
+  /* The account menu closes on a click anywhere outside it and its trigger, and on
+     Escape, like the prototype panel (Maryam 2 Nov 2026). */
+  const acctRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!acct) return;
+    const away = (e: PointerEvent) => { if (!acctRef.current?.contains(e.target as Node)) setAcct(false); };
+    const esc = (e: KeyboardEvent) => { if (e.key === "Escape") setAcct(false); };
+    document.addEventListener("pointerdown", away);
+    document.addEventListener("keydown", esc);
+    return () => { document.removeEventListener("pointerdown", away); document.removeEventListener("keydown", esc); };
+  }, [acct]);
+
   const others = (Object.keys(PORTALS) as PortalKey[]).filter((k) => k !== portal);
   const effFrame: Frame = P.desktopOnly ? "desktop" : frame;
 
@@ -58,13 +75,13 @@ export function AppShell({ portal, children }: { portal: PortalKey; children: Re
     );
     if (!n.subs) return <li key={n.key || "home"}>{link}</li>;
     return (
-      <li key={n.key} className={s.node}>
+      <li key={n.key} className={s.node} data-shut={shut === n.key || undefined} onMouseLeave={() => { if (shut === n.key) setShut(null); }}>
         {link}
         {/* Open rail: subs show under the current module. Collapsed rail: the admin's flyout on hover (shell.module.css). */}
         <ul className={s.subs} hidden={open && !on}>
           {n.subs.map((x) => (
             <li key={x.key}>
-              <Link href={href(portal, n.key, x.key)} className={`${s.sub} ${on && slug[1] === x.key ? s.on : ""} t-compact w-strong`}>
+              <Link href={href(portal, n.key, x.key)} onClick={(e) => { e.currentTarget.blur(); setShut(n.key); }} className={`${s.sub} ${on && slug[1] === x.key ? s.on : ""} t-compact w-strong`}>
                 {x.title}
               </Link>
             </li>
@@ -106,7 +123,7 @@ export function AppShell({ portal, children }: { portal: PortalKey; children: Re
             ) : <Text role="sec" as="p" className={s.barTitle}>{title}</Text>}
             <div className={s.barActs}>
               {/* No notifications in Phase 0, on any portal (Maryam 16 Oct 2026): the bell is gone. */}
-              <div className={s.acct}>
+              <div className={s.acct} ref={acctRef}>
                 <button className={s.acctT} onClick={() => setAcct((a) => !a)} aria-expanded={acct} aria-haspopup="menu">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={P.person.img} alt="" />

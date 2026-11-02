@@ -50,7 +50,27 @@
 .opt img { width: var(--s06); height: var(--s06); border-radius: var(--radius-pill); object-fit: cover; }
 .meta { margin-left: auto; padding-left: var(--s05); color: var(--text-secondary); }
 
-/* MultiDropdown: the trigger, then its picks as chips 12 below it. A picked
-   row carries no grey ground — its ticked box already says it is on. */
-.multi { display: flex; flex-direction: column; gap: var(--s04); width: 100%; min-width: 0; }
+/* MultiDropdown: the picks are chips INSIDE the field (Maryam 2 Nov 2026), in place of
+   an "N selected" count. The field keeps its 40px height for one line of chips and grows
+   when they wrap. The chips are SMALL (Maryam 2 Nov 2026): the .skl-c grey pill at the
+   label size, 2 by 8 inside, 4 apart, a 12px ×. A picked
+   row in the menu carries no grey ground — its ticked box already says it is on. */
+.multi { display: flex; flex-direction: column; width: 100%; min-width: 0; }
+.form .tMulti { height: auto; min-height: var(--ctrl-h); padding-top: var(--s02); padding-bottom: var(--s02); white-space: normal; cursor: pointer; }
+.tMulti:focus-visible { outline: none; border-bottom-color: var(--focus); }
+.tMulti[aria-disabled="true"] { cursor: not-allowed; border-bottom-style: dashed; }
+.tMulti[aria-disabled="true"] > svg { opacity: .4; }
+.tMulti > svg { flex: none; }
+.picks { display: flex; flex-wrap: wrap; gap: var(--s02); min-width: 0; }
+.pick {
+  display: inline-flex; align-items: center; gap: var(--s01);
+  padding: var(--s01) var(--s03);
+  border-radius: var(--radius-pill);
+  font-size: var(--t-label-size); line-height: var(--t-label-lh); letter-spacing: var(--t-label-ls);
+  background: var(--layer-02);
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+.pick button { display: inline-grid; place-items: center; color: var(--text-secondary); }
+.t .pick svg { width: var(--s04); height: var(--s04); transform: none; }
 .optMulti { gap: var(--s03); }

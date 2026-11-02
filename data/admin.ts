@@ -60,10 +60,13 @@ export const trackFees = (u: { fee?: number; fees?: Partial<Record<TrackKey, num
 const span = (xs: number[]) => { const lo = Math.min(...xs), hi = Math.max(...xs); return lo === hi ? money(lo) : `${money(lo)}–${money(hi)}`; };
 export const commissionPct = (u: { commission?: number }) => u.commission ?? COMMISSION_PCT;
 /* "$85" when the three are equal, "$85–$120" when they differ; the price is each fee with the commission in. */
-export const feeRange = (u: U) => span(Object.values(trackFees(u)));
+/* Only the tracks the agent interviews (fee > 0) count, so an Explorers-only agent reads "$80", not "$0–$80". */
+const offered = (u: U) => { const v = Object.values(trackFees(u)).filter((f) => f > 0); return v.length ? v : [0]; };
+export const feeRange = (u: U) => span(offered(u));
 export const platformFee = (u: { platformFee?: number }) => u.platformFee ?? 0;
-export const priceRange = (u: U) => span(Object.values(trackFees(u)).map((f) => priceFor(f, commissionPct(u), platformFee(u))));
-export const feesSet = (u: U) => Object.values(trackFees(u)).every((f) => f > 0);
+export const priceRange = (u: U) => span(offered(u).map((f) => priceFor(f, commissionPct(u), platformFee(u))));
+/* Listable once at least one track has a fee (an agent need not interview all three). */
+export const feesSet = (u: U) => Object.values(trackFees(u)).some((f) => f > 0);
 export const AGENTS = () => USERS.filter((u) => u.roles.includes("agent"));
 export const agScore = (a: U) => (a.scoreApproved === false ? a.startingScore : a.approvedScore ?? a.rating) as number;
 export const bkStage = (b: any) => (b.stage || "booked") as string;

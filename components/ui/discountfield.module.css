@@ -1,16 +1,22 @@
 /* THE DISCOUNT CODE FIELD (ui/DiscountField.tsx): the input and Apply on one row that
-   stacks below 600, and the applied code as a round chip with a remove cross. */
+   stacks below 600, and the applied code as a square green banner. */
 .f { display: flex; flex-direction: column; gap: var(--label-gap); max-width: var(--rec-card-w); }
 .row { display: flex; align-items: flex-end; gap: var(--s04); }
 .row > input { flex: 1 1 auto; min-width: 0; }
 .err { color: var(--support-error); }
-.applied { display: flex; }
+
 .stack { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s05); }
 .stack > .f { align-self: stretch; }
-.chip { display: inline-flex; align-items: center; gap: var(--s03); padding: var(--chip-py) var(--s03) var(--chip-py) var(--chip-px); border: var(--hairline) solid var(--rule); border-radius: var(--radius-pill); }
-.chip > svg { width: var(--s05); height: var(--s05); color: var(--support-success-ink); }
-.x { display: inline-grid; place-items: center; padding: 0; border: 0; background: transparent; cursor: pointer; color: var(--text-secondary); }
-.x svg { width: var(--s05); height: var(--s05); }
+.banner {
+  display: flex; align-items: center; gap: var(--s04);
+  width: 100%; max-width: var(--rec-card-w);
+  padding: var(--s04) var(--s05);
+  background: color-mix(in srgb, var(--support-success) 8%, var(--layer-01));
+  border: var(--hairline) solid color-mix(in srgb, var(--support-success) 30%, var(--layer-01));
+}
+.banner > svg { flex: none; width: var(--s06); height: var(--s06); color: var(--support-success-ink); }
+.bannerTxt { display: flex; flex-direction: column; gap: var(--s01); flex: 1 1 auto; min-width: 0; }
+.bannerT { color: var(--support-success-ink); }
 @container app (max-width: 599.98px) {
   .row { flex-direction: column; align-items: stretch; }
 }

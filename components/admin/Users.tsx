@@ -277,29 +277,44 @@ const RatingField = ({ value, onChange }: { value: number; onChange: (n: number)
    (was a $25 "Platform fee"); it is a share of the candidate's price (data/fees.ts). The
    labels name the level group, not the word "track". */
 const num = (x: string) => Number(String(x).replace(/[^\d.]/g, "")) || 0;
-type FeeStr = Record<TrackKey, string>;
-const NO_FEES: FeeStr = { explorer: "", builder: "", trailblazer: "" };
+/* AN AGENT INTERVIEWS ONLY THE TRACKS PICKED (Maryam 2 Nov 2026): a "Tracks" picker comes
+   first and each picked track grows its own fee field below it, so an agent can cover
+   Explorers only, Builders and Trailblazers only, or all three. A key present in FeeStr
+   is a picked track; its value is the fee typed for it. An unpicked track saves as 0. */
+type FeeStr = Partial<Record<TrackKey, string>>;
+const NO_FEES: FeeStr = {};
 const COM_DEFAULT = String(COMMISSION_PCT);
-const feeStr = (u: U): FeeStr => { const f = trackFees(u); return { explorer: f.explorer ? String(f.explorer) : "", builder: f.builder ? String(f.builder) : "", trailblazer: f.trailblazer ? String(f.trailblazer) : "" }; };
-const feeNum = (f: FeeStr) => ({ explorer: num(f.explorer), builder: num(f.builder), trailblazer: num(f.trailblazer) });
+const picked = (f: FeeStr) => FEE_TRACKS.filter((t) => t.key in f);
+const feeStr = (u: U): FeeStr => { const f = trackFees(u), o: FeeStr = {}; FEE_TRACKS.forEach((t) => { if (f[t.key] > 0) o[t.key] = String(f[t.key]); }); return o; };
+const feeNum = (f: FeeStr) => ({ explorer: num(f.explorer ?? ""), builder: num(f.builder ?? ""), trailblazer: num(f.trailblazer ?? "") });
 /* A commission is required and 0–99 (100 would leave no price to divide). */
 const comOk = (com: string) => com.trim() !== "" && num(com) < 100;
 /* The platform fee is a required flat dollar amount ($0 allowed). */
 const platOk = (pf: string) => pf.trim() !== "";
-const feesReady = (f: FeeStr, com: string, pf: string) => FEE_TRACKS.every((t) => num(f[t.key]) > 0) && comOk(com) && platOk(pf);
-/* What a save writes: the three fees, `fee` (the Explorer fee) for the single-fee reads, the commission and the platform fee. */
-const feeSave = (f: FeeStr, com: string, pf: string) => ({ fees: feeNum(f), fee: num(f.explorer), commission: num(com), platformFee: num(pf) });
-function FeeFields({ fees, com, pf, onFee, onCom, onPf }: { fees: FeeStr; com: string; pf: string; onFee: (k: TrackKey, x: string) => void; onCom: (x: string) => void; onPf: (x: string) => void }) {
-  const set = FEE_TRACKS.filter((t) => num(fees[t.key]) > 0);
+/* At least one track, and a fee on every track picked. */
+const feesReady = (f: FeeStr, com: string, pf: string) => { const p = picked(f); return p.length > 0 && p.every((t) => num(f[t.key] ?? "") > 0) && comOk(com) && platOk(pf); };
+/* What a save writes: the three fees (0 = not interviewed), `fee` (the first picked track's fee) for the single-fee reads, the commission and the platform fee. */
+const feeSave = (f: FeeStr, com: string, pf: string) => { const n = feeNum(f); return { fees: n, fee: picked(f).map((t) => n[t.key])[0] ?? 0, commission: num(com), platformFee: num(pf) }; };
+const TRACK_OPTS = FEE_TRACKS.map((t) => ({ value: t.key, label: t.label }));
+function FeeFields({ fees, com, pf, setFees, onCom, onPf }: { fees: FeeStr; com: string; pf: string; setFees: (f: FeeStr) => void; onCom: (x: string) => void; onPf: (x: string) => void }) {
+  const on = picked(fees);
+  const set = on.filter((t) => num(fees[t.key] ?? "") > 0);
+  /* Picking keeps any fee already typed; unpicking drops that track's field and value. */
+  const pick = (keys: string[]) => { const o: FeeStr = {}; FEE_TRACKS.forEach((t) => { if (keys.includes(t.key)) o[t.key] = fees[t.key] ?? ""; }); setFees(o); };
   return (
     <>
-      <Stack gap={6}>
-        {FEE_TRACKS.map((t) => (
-          <Field key={t.key} label={`${t.label} fee`} required>
-            <Input value={fees[t.key]} onChange={(e) => onFee(t.key, e.target.value)} inputMode="decimal" placeholder="$100" />
-          </Field>
-        ))}
-      </Stack>
+      <Field label="Tracks they interview" required>
+        <MultiDropdown value={on.map((t) => t.key)} onChange={pick} options={TRACK_OPTS} placeholder="Select tracks" />
+      </Field>
+      {on.length > 0 && (
+        <Stack gap={6}>
+          {on.map((t) => (
+            <Field key={t.key} label={`${t.label} fee`} required>
+              <Input value={fees[t.key] ?? ""} onChange={(e) => setFees({ ...fees, [t.key]: e.target.value })} inputMode="decimal" placeholder="$100" />
+            </Field>
+          ))}
+        </Stack>
+      )}
       <Field label="Interview commission (%)" required>
         <Input value={com} onChange={(e) => onCom(e.target.value)} inputMode="decimal" placeholder={COM_DEFAULT} />
       </Field>
@@ -310,7 +325,7 @@ function FeeFields({ fees, com, pf, onFee, onCom, onPf }: { fees: FeeStr; com: s
       {/* The price line shows only once a fee is set; no placeholder line before that (Maryam 26 Oct 2026). */}
       {set.length > 0 && comOk(com) && platOk(pf) && (
         <Text role="body" as="p">
-          Candidates pay {set.map((t, i) => <span key={t.key}>{i ? (i === set.length - 1 ? " and " : ", ") : ""}<b>{money(priceFor(num(fees[t.key]), num(com), num(pf)))}</b> ({t.label})</span>)} per interview.
+          Candidates pay {set.map((t, i) => <span key={t.key}>{i ? (i === set.length - 1 ? " and " : ", ") : ""}<b>{money(priceFor(num(fees[t.key] ?? ""), num(com), num(pf)))}</b> ({t.label})</span>)} per interview.
         </Text>
       )}
     </>
@@ -323,7 +338,7 @@ function MarkAgent({ u, close }: { u: U; close: () => void }) {
     <Sheet title={`Invite ${u.name} to be a talent agent`} onClose={close}
       footer={<Foot ok="Send Invite" disabled={!rating || !feesReady(fees, com, pf)} close={close} onOk={() => { commit(() => { u.roles = [...u.roles, "agent"]; Object.assign(u, feeSave(fees, com, pf)); u.startingScore = rating; u.scoreApproved = false; u.onboarded = false; }, `Agent invite sent to ${u.email}`); close(); }} />}>
       <Text role="desc" as="p">{u.name} keeps their current account and role. Set their interview fees and starting Agent Score; an invitation to the agent workspace is sent.</Text>
-      <FeeFields fees={fees} com={com} pf={pf} onFee={(k, x) => setFees((f) => ({ ...f, [k]: x }))} onCom={setCom} onPf={setPf} />
+      <FeeFields fees={fees} com={com} pf={pf} setFees={setFees} onCom={setCom} onPf={setPf} />
       <RatingField value={rating} onChange={setRating} />
     </Sheet>
   );
@@ -391,7 +406,7 @@ function AddUser({ close }: { close: () => void }) {
         </Field>
         {agent && (
           <RoleBlock title="Talent Agent" onRemove={() => setRoles((r) => r.filter((k) => k !== "agent"))}>
-            <FeeFields fees={fees} com={v.com} pf={v.pf} onFee={(k, x) => setFees((f) => ({ ...f, [k]: x }))} onCom={(x) => setV((y) => ({ ...y, com: x }))} onPf={(x) => setV((y) => ({ ...y, pf: x }))} />
+            <FeeFields fees={fees} com={v.com} pf={v.pf} setFees={setFees} onCom={(x) => setV((y) => ({ ...y, com: x }))} onPf={(x) => setV((y) => ({ ...y, pf: x }))} />
             <RatingField value={rating} onChange={setRating} />
           </RoleBlock>
         )}
@@ -423,7 +438,7 @@ function EditAgent({ u, close }: { u: U; close: () => void }) {
         <Field label="First name" required><Input value={v.first} onChange={(e) => setV({ ...v, first: e.target.value })} /></Field>
         <Field label="Last name" required><Input value={v.last} onChange={(e) => setV({ ...v, last: e.target.value })} /></Field>
         <Field label="Email address"><Input value={u.email} readOnly /></Field>
-        <FeeFields fees={fees} com={v.com} pf={v.pf} onFee={(k, x) => setFees((f) => ({ ...f, [k]: x }))} onCom={(x) => setV({ ...v, com: x })} onPf={(x) => setV({ ...v, pf: x })} />
+        <FeeFields fees={fees} com={v.com} pf={v.pf} setFees={setFees} onCom={(x) => setV({ ...v, com: x })} onPf={(x) => setV({ ...v, pf: x })} />
         <Field label="Assessment range (from)"><Dropdown variant="form" value={v.from} onChange={(x) => setV({ ...v, from: x })} options={lv} /></Field>
         <Field label="Assessment range (to)"><Dropdown variant="form" value={v.to} onChange={(x) => setV({ ...v, to: x })} options={lv} /></Field>
       </Stack>

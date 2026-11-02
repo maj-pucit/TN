@@ -26,7 +26,7 @@ export const OB_DONE = {
   title: "You’re all set",
   lede: "That is everything I needed. Here is where you are, and what comes next.",
   steps: [
-    ["Next in Leadership Quiz", "You have taken it. Explorer track.", "done"],
+    ["Leadership Quiz", "You have taken it. Explorer track.", "done"],
     ["Interview & Levelling", "You are here. 45 minutes with a talent agent, and it is what sets your level.", "on"],
     ["Course Enrollment", "Locks in your price.", ""],
     ["Course Journey", "13 chapters, at your own pace.", ""],

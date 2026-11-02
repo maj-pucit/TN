@@ -32,6 +32,12 @@ import tg from "../ui/toggle.module.css";
 const OB_TYPE: Record<string, string> = Object.fromEntries(RAW.OB_TYPES);
 
 /* ---------------- Onboarding Questions ---------------- */
+/* The Feeds column replaces Weight, as on the UAT build (Maryam 2 Nov 2026): it names the
+   profile field each answer writes. Read off the UAT page, keyed by question id; a question
+   added here feeds nothing yet, so it reads "—". */
+const OB_FEEDS: Record<string, string> = {
+  obq1: "cohort_intent", obq2: "door_selected", obq3: "current_role", obq4: "industry", obq5: "years_working",
+};
 export function AdminOnboarding() {
   useStore();
   const [q, setQ] = useState("");
@@ -39,7 +45,7 @@ export function AdminOnboarding() {
   const rows = ONBOARDING_Q.filter((x) => !q || x.text.toLowerCase().includes(q.toLowerCase()));
   return (
     <Page>
-      <PageHeader title="Onboarding Questions" desc="The intake quiz new candidates answer. Build the questions, set each one’s answer type and weightage, and the answers are scored against it." />
+      <PageHeader title="Onboarding Questions" desc="The questions a candidate answers when they create an account. Reword them here; what each answer feeds stays fixed." />
       <Section kind="block">
         <Toolbar search={<Search value={q} onChange={setQ} placeholder="Search questions" />} />
         {rows.length ? (
@@ -48,7 +54,7 @@ export function AdminOnboarding() {
             { key: "q", label: "Question", cell: (x) => <button type="button" className={y.rowBtn} onClick={() => setEdit(x.id)}>{x.text}</button> },
             { key: "t", label: "Answer type", cell: (x) => OB_TYPE[x.type] },
             { key: "o", label: "Options", cell: (x) => (x.type === "text" ? "—" : String((x.options || []).length)) },
-            { key: "w", label: "Weight", cell: (x) => (x.type === "single" ? "×" + (x.weight || 0) : "—") },
+            { key: "f", label: "Feeds", cell: (x) => OB_FEEDS[x.id] ?? "—" },
           ]} />
         ) : <div className={s.empty}><Icon name="document" /><Text role="h4" as="span">No questions yet</Text><Text role="desc" as="span">Nothing matches your search.</Text></div>}
       </Section>

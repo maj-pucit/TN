@@ -28,7 +28,7 @@ export const AGENT_PRIYA = {
 
 /* The journey list. CUT (G8): step four read "90-Day Cohort Journey"; the course is self-paced,
    so it is the "Course Journey" (Maryam 16 Oct 2026). */
-export const JOURNEY = ["Next in Leadership Quiz", "Interview & Levelling", "Course Enrollment", "Course Journey"];
+export const JOURNEY = ["Leadership Quiz", "Interview & Levelling", "Course Enrollment", "Course Journey"];
 
 export type Progress = { pct: number; seg: number; chapters: string; tasks: string; time: string };
 

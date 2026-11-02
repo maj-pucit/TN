@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import s from "./dropdown.module.css";
 import t from "./table.module.css";
 import { Icon } from "../Icon";
-import { Chip, Chips } from "./Chip";
 
 export type Option = { value: string; label: string; img?: string; meta?: string };
 
@@ -69,8 +68,8 @@ export function Dropdown({
 
 /* <MultiDropdown> — the form dropdown that takes several picks (Phase 1
    formDdMulti). Each option leads with the table's own row-select box, the
-   menu stays open while picking, the trigger reads "N selected", and the picks
-   show under it as round chips, each with its own remove cross. `value` keeps
+   menu stays open while picking, and the picks show INSIDE the trigger as small
+   round chips, each with its own remove cross. `value` keeps
    the order things were picked in. */
 /* `allLabel` adds an "All …" row on top (Maryam 26 Oct 2026). Ticked, the value is ["*"]:
    EVERY option, including ones added later, so it is saved as "all", not as today's list.
@@ -89,13 +88,35 @@ export function MultiDropdown({
     onChange(allLabel && next.length === options.length ? [ALL] : next);
   };
   const picked = isAll ? [{ value: ALL, label: allLabel! }] : (value.map((v) => options.find((o) => o.value === v)).filter(Boolean) as Option[]);
+  const remove = (o: Option) => (o.value === ALL ? onChange([]) : flip(o.value));
+  /* THE PICKS SIT INSIDE THE FIELD as chips, in place of an "N selected" count (Maryam
+     2 Nov 2026); the field grows a line when they wrap. The trigger is a focusable div,
+     not a <button>, because each chip carries its own remove button and buttons cannot
+     nest. A chip's × stops its click so removing one never opens the menu. */
+  const key = (e: React.KeyboardEvent) => { if (!disabled && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); toggle(); } };
+  /* A <Field> is a <label>, and a click anywhere inside a label is replayed on the first
+     button in it — here a chip's × or the first menu option, so opening the field picked an
+     option and picking an option removed a chip (2 Nov 2026). Cancelling the click's default
+     action stops that replay; every button's own onClick still runs. */
   return (
-    <div className={s.multi}>
+    <div className={s.multi} onClick={(e) => e.preventDefault()}>
       <div ref={ref} className={`${s.dd} ${s.form}`}>
-        <button type="button" className={`${s.t} t-compact`} aria-haspopup="listbox" aria-expanded={open} disabled={disabled} onClick={toggle}>
-          <span>{isAll ? allLabel : picked.length ? `${picked.length} selected` : <span className={s.ph}>{placeholder ?? "Select"}</span>}</span>
+        <div role="combobox" tabIndex={disabled ? -1 : 0} className={`${s.t} ${s.tMulti} t-compact`} aria-haspopup="listbox" aria-expanded={open}
+          aria-disabled={disabled || undefined} onClick={() => !disabled && toggle()} onKeyDown={key}>
+          {picked.length ? (
+            <span className={s.picks}>
+              {picked.map((o) => (
+                <span key={o.value} className={s.pick}>
+                  {o.label}
+                  {!disabled && (
+                    <button type="button" aria-label={`Remove ${o.label}`} onClick={(e) => { e.stopPropagation(); remove(o); }}><Icon name="close" /></button>
+                  )}
+                </span>
+              ))}
+            </span>
+          ) : <span className={s.ph}>{placeholder ?? "Select"}</span>}
           <Icon name="chevDown" />
-        </button>
+        </div>
         {open && (
           <div className={s.menu} role="listbox" aria-multiselectable="true" style={menuStyle}>
             {allLabel && (
@@ -119,16 +140,6 @@ export function MultiDropdown({
           </div>
         )}
       </div>
-      {picked.length > 0 && (
-        <Chips>
-          {picked.map((o) => (
-            <Chip key={o.value}>
-              {o.label}
-              <button type="button" aria-label={`Remove ${o.label}`} onClick={() => (o.value === ALL ? onChange([]) : flip(o.value))}><Icon name="close" /></button>
-            </Chip>
-          ))}
-        </Chips>
-      )}
     </div>
   );
 }

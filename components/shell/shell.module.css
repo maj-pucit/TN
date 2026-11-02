@@ -204,8 +204,8 @@
     transition: opacity var(--mo-quick) var(--mo-standard), transform var(--mo-quick) var(--mo-standard), visibility var(--mo-quick);
     z-index: 60;
   }
-  .admin .body:not([data-open="true"]) .node:hover > .subs,
-  .admin .body:not([data-open="true"]) .node:focus-within > .subs {
+  .admin .body:not([data-open="true"]) .node:not([data-shut]):hover > .subs,
+  .admin .body:not([data-open="true"]) .node:not([data-shut]):focus-within > .subs {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;

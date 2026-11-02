@@ -26,7 +26,7 @@ export const LADDER_HOW: [string, string][] = [
 
 /* The quiz read (Phase 1 SUMDROP.quiz, drawn by quizModal). */
 export const QUIZ = {
-  lead: "You scored 64/100 on the Next in Leadership quiz on 12 Aug, placing you on the Explorer track.",
+  lead: "You scored 64/100 on the Leadership Quiz on 12 Aug, placing you on the Explorer track.",
   read: "Your quiz determines your track: Explorer, Builder, or Trailblazer. Your level (E1–E5) will be assigned after your 45-minute interview with an agent.",
   next: "Book an interview to discover your level, strengths, and growth areas.",
 };
